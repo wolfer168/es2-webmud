@@ -91,9 +91,6 @@ int main(object me, string arg)
 
     SECURED_WIZARD_COMMAND;
 
-    if( wiz_level(me) < wiz_level("(imm)") )
-        return notify_fail("只有 imm 以上的巫師可以使用 link。\n");
-
     if( !arg || sscanf(arg, "%s %s %s", room_a, room_b, direction) != 3 )
         return notify_fail(
             "指令格式：link <房間甲> <房間乙> <方向>\n"
@@ -187,35 +184,31 @@ int main(object me, string arg)
         write("已建立雙向出口。\n");
     }
 
-    command("update " + file_a);
+    call_other("/cmds/wiz/update", "main", me, file_a);
 
     if( !exit_b )
-        command("update " + file_b);
-
-    return 1;
+        call_other("/cmds/wiz/update", "main", me, file_b);
+        return 1;
 }
 
 int help(object me)
 {
-    write(@HELP
-指令格式：link <房間甲> <房間乙> <方向>
-
-範例：
-link /d/snow/area/room1 /d/snow/area/room2 east
-
-若 room2 的 west 出口不存在：
-room1 east → room2
-room2 west → room1
-
-若 room2 的 west 出口已存在：
-room1 east → room2
-room2 保留原本 west 出口，形成單向道路。
-
-支援方向：
-north south east west up down
-northeast northwest southeast southwest
-HELP
-    );
+    write("指令格式：link <房間甲> <房間乙> <方向>\n");
+    write("\n");
+    write("範例：\n");
+    write("link /d/snow/area/room1 /d/snow/area/room2 east\n");
+    write("\n");
+    write("若 room2 的 west 出口不存在：\n");
+    write("room1 east → room2\n");
+    write("room2 west → room1\n");
+    write("\n");
+    write("若 room2 的 west 出口已存在：\n");
+    write("room1 east → room2\n");
+    write("room2 保留原本 west 出口，形成單向道路。\n");
+    write("\n");
+    write("支援方向：\n");
+    write("north south east west up down\n");
+    write("northeast northwest southeast southwest\n");
 
     return 1;
 }

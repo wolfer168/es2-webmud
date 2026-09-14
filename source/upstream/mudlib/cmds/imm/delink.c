@@ -95,9 +95,6 @@ int main(object me, string arg)
 
     SECURED_WIZARD_COMMAND;
 
-    if( wiz_level(me) < wiz_level("(imm)") )
-        return notify_fail("只有 imm 以上的巫師可以使用 delink。\n");
-
     if( !arg )
         return notify_fail("指令格式：delink <方向>\n");
 
@@ -139,7 +136,7 @@ int main(object me, string arg)
     write("已刪除目前房間的 " + direction + " 出口。\n");
     write("備份檔：" + backup_file(file) + "\n");
 
-    command("update " + file);
+    call_other("/cmds/wiz/update", "main", me, file);
 
     return 1;
 }
