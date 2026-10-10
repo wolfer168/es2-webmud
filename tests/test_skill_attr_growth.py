@@ -19,8 +19,11 @@ def test_hook_in_advance_skill():
 def test_growth_table_and_message():
     s = read('feature/char/skill.c')
     assert '#define ATTR_GROWTH_MAX 50' in s
-    for line in ['if( value >= 45 ) return 10;', 'if( value >= 40 ) return 20;',
-                 'if( value >= 30 ) return 30;', 'return 40;']:
+    # 2026-10-11 使用者定案的基礎機率
+    for line in ['if( value <= 10 ) return 100;', 'if( value <= 15 ) return 90;',
+                 'if( value <= 20 ) return 80;', 'if( value <= 25 ) return 60;',
+                 'if( value <= 30 ) return 40;', 'if( value <= 40 ) return 30;',
+                 'if( value <= 45 ) return 15;', 'return 10;']:
         assert line in s
     assert 'attr_growth_base(value) * (100 + lv) * 3 / 5' in s
     assert '"attr_growth/" + skill' in s

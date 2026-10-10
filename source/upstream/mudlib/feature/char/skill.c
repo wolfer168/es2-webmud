@@ -349,7 +349,8 @@ improve_skill(string skill, int amount)
  *
  * 對應表 ATTR_GROWTH：技能代碼 → 屬性代碼。
  * 技能等級每到 5 的倍數擲一次，成功則該屬性（裸值）+1，上限 50。
- *   基礎機率：屬性 30 以下 40%、30~39 30%、40~44 20%、45~49 10%
+ *   基礎機率：屬性 1~10 100%、11~15 90%、16~20 80%、21~25 60%、26~30 40%、
+ *             31~40 30%、41~45 15%、46~49 10%
  *   技能等級倍率：(50 + 等級/2)%，lv5 約 0.5 倍、lv100 1 倍、lv200 1.5 倍
  *   以上再整體 ×1.2
  * 每個門檻一生只擲一次，擲過的最高門檻記在 attr_growth/<技能>。
@@ -372,10 +373,14 @@ static mapping ATTR_GROWTH = ([
 
 private int attr_growth_base(int value)
 {
-    if( value >= 45 ) return 10;
-    if( value >= 40 ) return 20;
-    if( value >= 30 ) return 30;
-    return 40;
+    if( value <= 10 ) return 100;
+    if( value <= 15 ) return 90;
+    if( value <= 20 ) return 80;
+    if( value <= 25 ) return 60;
+    if( value <= 30 ) return 40;
+    if( value <= 40 ) return 30;
+    if( value <= 45 ) return 15;
+    return 10;
 }
 
 private void roll_attr_growth(string skill, int old_level, int new_level)

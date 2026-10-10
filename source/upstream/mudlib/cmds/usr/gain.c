@@ -37,6 +37,9 @@ int main(object me, string arg)
 
     // 這段時間有拿到點數的技能，累積夠了就升一級。
     me->apply_gain_progression(skill_g);
+
+    // 各項經驗都達到升級所需時，人物等級提升一級。
+    me->try_level_up();
     return 1;
 }
 
@@ -53,6 +56,9 @@ int help()
 技能點數只會累積，技能等級要在使用 gain 時才會提升：這段時間有獲得點數的技能，
 累積的點數足夠升級就提升一級，每次 gain 最多一級。尚未學成的技能要累積到學成
 所需的點數，才會在 gain 時一次練成。
+
+人物等級也一樣：各項經驗點數達到升級所需時不會自動升級，要在使用 gain 時才會提
+升一級，每次 gain 最多一級。
 TEXT
     );
     return 1;

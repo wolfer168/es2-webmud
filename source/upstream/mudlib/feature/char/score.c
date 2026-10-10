@@ -63,28 +63,30 @@ void reset_score_gain() { score_gain = ([]); }
 varargs void
 gain_score(string course, int xp)
 {
+    add("score/" + course, xp);
+    if( undefinedp(score_gain[course]) ) score_gain[course] = xp;
+    else score_gain[course] += xp;
+    /* 經驗只累積；人物等級要在使用 gain 時才會提升，見 try_level_up()。 */
+}
+
+/* gain 指令呼叫：各項經驗都達到升級所需時，提升一級（每次 gain 最多一級）。
+ * 傳回 1 表示有升級。 */
+int try_level_up()
+{
     mapping sc, targ_sc;
     string s, save_file;
     int v;
 
-    add("score/" + course, xp);
-    if( undefinedp(score_gain[course]) ) score_gain[course] = xp;
-    else score_gain[course] += xp;
-
-    // Check if we can raise a level.
     sc = query("score");
     targ_sc = query("target_score");
-    if( !mapp(sc) || !mapp(targ_sc) ) return;
+    if( !mapp(sc) || !mapp(targ_sc) ) return 0;
 
     foreach(s, v in targ_sc)
-	if( sc[s] < v ) return;
+	if( sc[s] < v ) return 0;
 
     /* CUSTOM A-H RACE RULE: per-race class level cap from race daemon. */
     v = RACE_D(query_race())->query("class_level_cap/" + query_class());
-    if( v != 0 && query_level() >= v ) {
-        receive(HIY "你目前的種族與職業組合已達等級上限。\n" NOR);
-        return;
-    }
+    if( v != 0 && query_level() >= v ) return 0;   // 已達上限，不提示
 
     receive( HIY "你的等級提昇了﹗\n" NOR );
     RACE_D(query_race())->advance_level(this_object());
@@ -100,6 +102,7 @@ gain_score(string course, int xp)
     cp(save_file, save_file+".backup");
 #endif
     receive("檔案儲存及備份完畢。\n");
+    return 1;
 }
 
 int query_target_score(string course)
