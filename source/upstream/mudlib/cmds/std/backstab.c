@@ -12,7 +12,7 @@ inherit F_CLEAN_UP;
 
 // 練武假人（training_dummy）只能把偷襲暗算練到這個程度，超過就練不出東西
 // （使用者指示，2026-11-02）。
-#define DUMMY_BACKSTAB_LIMIT    30
+#define DUMMY_BACKSTAB_LIMIT    40
 
 int do_backstab(object, object);
 int halt_backstab(object me);
@@ -87,11 +87,6 @@ int main(object me, string arg)
         write("你不需要偷襲這個傢伙，直接上啊！\n");
         return 1;
     }
-
-    // 練武假人可以拿來練粗淺的偷襲暗算；手法超過粗淺的程度就練不出東西了。
-    if( victim->query("training_dummy") && !dummy_learnable(me) )
-        write(victim->name() + "只能讓你習得粗淺的偷襲暗算技巧，"
-            "你的手法早已勝過於此，再練也是徒勞。\n");
 
     me->set_temp("pending/hidden", 0);
     write("你開始不動聲色地從" + victim->name() + "背後慢慢靠近 ... 。\n\n");

@@ -42,9 +42,9 @@ def test_steal_acupuncture_backstab():
     assert '"空空如也，你無從下手。\\n"' in read(MUD / "cmds/std/steal.c")
     assert '"沒有經脈穴道，你無從下手。\\n"' in read(MUD / "cmds/std/acupuncture.c")
     s = read(MUD / "cmds/std/backstab.c")
-    assert "#define DUMMY_BACKSTAB_LIMIT    30" in s
+    assert "#define DUMMY_BACKSTAB_LIMIT    40" in s
     assert 'me->query_skill("backstab", 1) < DUMMY_BACKSTAB_LIMIT' in s
-    assert "TARGET_STAKE" not in s
+    assert "TARGET_STAKE" not in s and "再練也是徒勞" not in s
     assert s.count("!dummy && living(victim) && defend > ability") == 2
     assert 'if( !dummy ) me->gain_score("mortal sin", bonus);' in s
 
