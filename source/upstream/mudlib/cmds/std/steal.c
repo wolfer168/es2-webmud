@@ -50,6 +50,10 @@ int main(object me, string arg)
     victim = present(who, environment(me));
     if( !victim || victim==me || !victim->is_character() )
 	return notify_fail("你想行竊的對象不在這裡。\n");
+
+    // 練武假人是死物，身上沒有東西可偷（使用者指示，2026-11-02）。
+    if( victim->query("training_dummy") )
+	return notify_fail(victim->name() + "空空如也，你無從下手。\n");
     if( !wizardp(me) && wizardp(victim) )
 	return notify_fail("玩家不能偷巫師身上的東西。\n");
 

@@ -161,6 +161,9 @@ varargs int acupuncture_cauterization(object me, string spl, object target)
         enemies = me->query_enemy();
         if( sizeof(enemies) ) target = enemies[0];
     }
+    // 練武假人是死物，沒有經脈穴道可下針（使用者指示，2026-11-02）。
+    if( objectp(target) && target->query("training_dummy") )
+        return notify_fail(target->name() + "沒有經脈穴道，你無從下手。\n");
     if( !objectp(target) || target == me || !objectp(target = needle_target(me, target)) )
         return notify_fail("這裡沒有可以下針的對象。\n");
     return do_wuto(me, key, target);

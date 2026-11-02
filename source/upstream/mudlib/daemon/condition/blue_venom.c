@@ -60,7 +60,12 @@ void venom_tick(object me, int serial)
 // 藍涎刀命中時呼叫。沒中毒就開始計時；已中毒只把剩餘時間重設為 10 tick。
 void poison(object me, object from)
 {
-    mapping data = me->query_condition("blue_venom");
+    mapping data;
+
+    // 練武假人是死物，毒性滲不進去（使用者指示，2026-11-02）。
+    if( !objectp(me) || me->query("training_dummy") ) return;
+
+    data = me->query_condition("blue_venom");
 
     tell_object(me, "你突然感到一陣冷冽的蝕骨之痛從傷口傳了過來！\n");
     if( environment(me) )

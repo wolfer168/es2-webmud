@@ -43,8 +43,10 @@ clear_condition()
 nomask void
 set_condition(string cnd, mixed info)
 {
-    if( !mapp(conditions) ) conditions = ([]);
+    // 練武假人是死物：不會中毒、流血，也不接受任何狀態（使用者指示，2026-11-02）。
+    if( this_object()->query("training_dummy") ) return;
 
+    if( !mapp(conditions) ) conditions = ([]);
 
     if( conditions[cnd] )
 	CONDITION_D(cnd)->condition_unapply(this_object(), cnd,

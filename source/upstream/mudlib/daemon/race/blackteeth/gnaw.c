@@ -24,7 +24,8 @@ int main(object me, string arg) {
     theirs = victim->query_stat("gin") + victim->query_stat("kee"); if (theirs < 1) theirs = 1;
     ratio = (mine * 3 / 2) / theirs;
     roll = 1 + random(3);
-    if (roll < ratio) {
+    // 練武假人是死物，不會中毒（使用者指示，2026-11-02）。
+    if (roll < ratio && !victim->query("training_dummy")) {
         duration = 1 + age / 10; if (duration > 12) duration = 12;
         damage = 5 + age / 15; if (damage > 15) damage = 15;
         load_object("/custom/race/condition/blackteeth_gnaw");

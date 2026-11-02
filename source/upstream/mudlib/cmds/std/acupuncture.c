@@ -26,6 +26,9 @@ int main(object me, string arg)
         target = present(trg, environment(me));
         if( !target ) target = present(trg, me);
         if( !target ) return notify_fail("這裡沒有 " + trg + "。\n");
+        // 練武假人是死物，沒有經脈穴道可下針（使用者指示，2026-11-02）。
+        if( target->query("training_dummy") )
+            return notify_fail(target->name() + "沒有經脈穴道，你無從下手。\n");
         // add by dragoon
         if( userp(target) && !interactive(target) )
             return notify_fail("這人現在不在線上。\n");

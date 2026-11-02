@@ -10,8 +10,19 @@ inherit F_CLEAN_UP;
 #define ENGAGE_COUNTDOWN        DELAY_COUNTDOWN + 2
 #define DOIT_COUNTDOWN          DELAY_COUNTDOWN + 3
 
+// 練武假人（training_dummy）只能把偷襲暗算練到這個程度，超過就練不出東西
+// （使用者指示，2026-11-02）。
+#define DUMMY_BACKSTAB_LIMIT    30
+
 int do_backstab(object, object);
 int halt_backstab(object me);
+
+/* 這次偷襲能不能增長偷襲暗算與殺手本能：對假人只在根基尚淺時能練偷襲暗算，
+ * 殺手本能與罪孽都不會因為假人而增加。 */
+private int dummy_learnable(object me)
+{
+    return me->query_skill("backstab", 1) < DUMMY_BACKSTAB_LIMIT;
+}
 
 private void create() { seteuid(getuid()); }
 
@@ -72,17 +83,15 @@ int main(object me, string arg)
         return 1;
     }
 
-    // 讓玩家可以利用stake來練backstab -Dragoon
-    if( !living(victim) && !victim->query("TARGET_STAKE") ) {
+    if( !living(victim) ) {
         write("你不需要偷襲這個傢伙，直接上啊！\n");
         return 1;
     }
 
-    if( victim->query("TARGET_STAKE")
-    && me->query_skill("backstab") > 40 ) {
-        write("假人類的對象只能讓你習得粗淺的偷襲暗算技巧！\n");
-        return 1;
-    }
+    // 練武假人可以拿來練粗淺的偷襲暗算；手法超過粗淺的程度就練不出東西了。
+    if( victim->query("training_dummy") && !dummy_learnable(me) )
+        write(victim->name() + "只能讓你習得粗淺的偷襲暗算技巧，"
+            "你的手法早已勝過於此，再練也是徒勞。\n");
 
     me->set_temp("pending/hidden", 0);
     write("你開始不動聲色地從" + victim->name() + "背後慢慢靠近 ... 。\n\n");
@@ -95,7 +104,7 @@ int main(object me, string arg)
 
 int do_backstab(object victim, object me)
 {
-    int countdown, ability, defend, bonus, n;
+    int countdown, ability, defend, bonus, n, dummy, learn;
 
     if( !me ) return 0;
 
@@ -105,6 +114,10 @@ int do_backstab(object victim, object me)
         return 0;
     }
 
+
+    // 練武假人是死物：不會察覺、不會反擊，罪孽與殺手本能也不會增加。
+    dummy = victim->query("training_dummy");
+    learn = !dummy || dummy_learnable(me);
 
     countdown = me->query_temp("backstab_countdown");
     if( ! countdown ) countdown = 4;
@@ -123,7 +136,7 @@ int do_backstab(object victim, object me)
         defend = victim->query_ability("awarness")
                  + random(victim->query_stat("gin"));
 
-        if( living(victim) && defend > ability ) {
+        if( !dummy && living(victim) && defend > ability ) {
             write("你被發現了！\n");
             victim->catch_backstab(me);
             return 0;
@@ -134,7 +147,7 @@ int do_backstab(object victim, object me)
                 + "還沒有察覺你的舉動 ... 。\n\n" NOR);
         me->set_temp("backstab_countdown", ENGAGE_COUNTDOWN);
         // 偷襲暗算點數（使用者定案，2026-10-19）：對方沒察覺 random(膽識)。
-        me->improve_skill("backstab", random(me->query_attr("cor")));
+        if( learn ) me->improve_skill("backstab", random(me->query_attr("cor")));
         return 1;
 
     case ENGAGE_COUNTDOWN:
@@ -143,7 +156,7 @@ int do_backstab(object victim, object me)
         defend = victim->query_ability("awarness")
                  + random(victim->query_stat("gin"));
 
-        if( living(victim) && defend > ability ) {
+        if( !dummy && living(victim) && defend > ability ) {
             message_vision(HIY "\n$N發現$n在$P背後想偷施暗算！\n" NOR,
                         victim, me);
             me->kill_ob(victim);
@@ -167,8 +180,8 @@ int do_backstab(object victim, object me)
         }
         write(CYN "\n你成功地來到" + victim->name() + "的背後，準備動手了 ...\n\n" NOR);
         // 來到背後 random(悟性)。
-        me->improve_skill("backstab", random(me->query_attr("int")));
-        me->gain_score("mortal sin", random(10)+1);
+        if( learn ) me->improve_skill("backstab", random(me->query_attr("int")));
+        if( !dummy ) me->gain_score("mortal sin", random(10)+1);
         me->set_temp("backstab_countdown", DOIT_COUNTDOWN);
         return 50;
 
@@ -203,13 +216,14 @@ int do_backstab(object victim, object me)
         // 偷襲出手：random((膽識+悟性)/2)² + random(膽識+悟性)；
         // 殺手本能：(random(膽識)+1)²（使用者定案，2026-10-19）。
         n = random((me->query_attr("cor") + me->query_attr("int")) / 2);
-        me->improve_skill("backstab", n * n
-            + random(me->query_attr("cor") + me->query_attr("int")));
-        if( me->query_learn("killerhood") ) {
+        if( learn )
+            me->improve_skill("backstab", n * n
+                + random(me->query_attr("cor") + me->query_attr("int")));
+        if( !dummy && me->query_learn("killerhood") ) {
             n = random(me->query_attr("cor")) + 1;
             me->improve_skill("killerhood", n * n);
         }
-        me->gain_score("mortal sin", bonus);
+        if( !dummy ) me->gain_score("mortal sin", bonus);
 
         return 0;
 
