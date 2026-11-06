@@ -67,7 +67,7 @@
 | 43 | 凌月蘅 | Ling yue heng | `custom/legacy_npc/ling_yue_heng.c` | 未能判定／花砌居 | 人類 | 武者 | 35 | A | 古劍派（`fighter.ancient`） | — |
 | 44 | 劉尚民 | Liu shang min | `custom/legacy_npc/liu_shang_min.c` | 未能判定／— | 人類 | 武者 | 10 | C | — | — |
 | 45 | 司馬成都 | Si-ma cheng du | `custom/legacy_npc/si_ma_cheng_du.c` | 未能判定／— | 人類 | 軍人 | 70 | A | — | — |
-| 46 | 吳長貴 | Wu changuei | `custom/legacy_npc/wu_changuei.c` | 未能判定／— | 人類 | 盜賊 | 15 | B | 瑯夷派（`thief.longye`） | — |
+| 46 | 吳長貴 | Wu changuei | `custom/legacy_npc/wu_changuei.c` | 亂葬崗／密林 | 人類 | 盜賊 | 15 | B | 瑯夷派（`thief.longye`） | 瑯夷派師父（2026-11-04） |
 | 47 | 地府鬼卒 | Hell soldier | `custom/legacy_npc/hell_soldier.c` | 未能判定／— | 人類 | 軍人 | 25 | B | — | — |
 | 48 | 宇文嵐胥 | Yu wen | `custom/legacy_npc/yu_wen.c` | 未能判定／畫室內堂 | 人類 | 書生 | 20 | B | — | — |
 | 49 | 左國益 | Zuo guo yi | `custom/legacy_npc/zuo_guo_yi.c` | 未能判定／— | 人類 | 軍人 | 30 | B | — | — |
@@ -91,16 +91,16 @@
 | 67 | 蘇瀟 | Su xiao | `custom/legacy_npc/su_xiao.c` | 未能判定／書房 | 人類 | 武者 | 15 | A | — | — |
 | 68 | 語小梅 | Yu shao me | `custom/legacy_npc/yu_shao_me.c` | 未能判定／— | 人類 | 盜賊 | 25 | B | — | — |
 | 69 | 賈秋雨 | Jia qiu yu | `custom/legacy_npc/jia_qiu_yu.c` | 未能判定／— | 人類 | 武者 | 10 | C | — | — |
-| 70 | 野人酋長 | Barbarian chief | `custom/legacy_npc/barbarian_chief.c` | 未能判定／— | 人類 | 武者 | 5 | C | — | 主動攻擊 |
+| 70 | 野人酋長 | Barbarian chief | `custom/legacy_npc/barbarian_chief.c` | 亂葬崗／密林 | 人類 | 武者 | 15 | A | — | 主動攻擊 |
 | 71 | 鍾貙 | Zhong chu | `custom/legacy_npc/zhong_chu.c` | 未能判定／— | 黑齒族 | 軍人 | 40 | A | — | — |
-| 72 | 青衣女郎 | Lady | `custom/legacy_npc/lady.c` | 未能判定／亂葬崗 | 人類 | 盜賊 | 5 | B | — | — |
+| 72 | 青衣女郎 | Lady | `custom/legacy_npc/lady.c` | 亂葬崗／亂葬崗 | 人類 | 盜賊 | 5 | B | — | — |
 | 73 | 韓夫人 | Madam han | `custom/legacy_npc/madam_han.c` | 未能判定／— | 夜叉族 | 平民 | 1 | C | — | — |
 | 74 | 魯飛 | Lu fei | `custom/legacy_npc/lu_fei.c` | 未能判定／— | 厭火族 | 軍人 | 50 | A | — | — |
 | 75 | 黃靖國 | Captain Huang | `custom/legacy_npc/captain_huang.c` | 未能判定／— | 人類 | 軍人 | 30 | A | — | — |
 | 76 | 黑無常 | Black hell agent | `custom/legacy_npc/black_hell_agent.c` | 未能判定／— | 巫首族 | 道士 | 50 | A | 朱衣派（`taoist.fire`） | — |
 | 77 | 李儒 | Li ru | `custom/legacy_npc/li_ru.c` | 柳家／民宅 | 人類 | 書生 | 20 | B | — | — |
 | 78 | 劉開 | Liu kei | `custom/legacy_npc/liu_kei.c` | 檒城／街道 | 人類 | 軍人 | 30 | B | — | — |
-| 79 | 駱易 | Ro yi | `custom/legacy_npc/ro_yi.c` | 步玄派／— | 人類 | 書生 | 65 | S | 步玄派（未列入對照表） | — |
+| 79 | 駱易 | Ro yi | `custom/legacy_npc/ro_yi.c` | 步玄派／沐華居 | 人類 | 書生 | 65 | S | 步玄派（`scholar.myst`） | — |
 | 80 | 武道通 | Wu dauton | `custom/legacy_npc/wu_dauton.c` | 武陀灸堂／武陀灸堂 | 人類 | 方士 | 60 | S | 武陀灸堂（`alchemist.wuto`） | 巡邏（暫放雪亭鎮廣場北邊） |
 | 81 | 張小簽 | Zhang xiao qian | `custom/legacy_npc/zhang_xiao_qian.c` | 水嵐縣／街道 | 人類 | 平民 | 1 | C | — | — |
 | 82 | 白劍飛 | Bai jian fei | `custom/legacy_npc/bai_jian_fei.c` | 漕幫／小船 | 夜叉族 | 武者 | 25 | B | 封山派（`fighter.fonxan`） | — |
@@ -136,7 +136,7 @@
 | 112 | 哭無望 | Ku wu wang | `custom/legacy_npc/ku_wu_wang.c` | 雪吟莊／東廂房 | 厭火族 | 武者 | 40 | A | 哭笑門（`fighter.chin`） | — |
 | 113 | 褚商魂 | Chu xang-when | `custom/legacy_npc/chu_xang_when.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 25 | B | 雪吟莊（`fighter.snow`） | — |
 | 114 | 魚平胤 | Yu pingyin | `custom/legacy_npc/yu_pingyin.c` | 雪吟莊／後花園 | 人類 | 武者 | 20 | B | 雪吟莊（`fighter.snow`） | — |
-| 115 | 魚鐵山 | Yu tieshan | `custom/legacy_npc/yu_tieshan.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 65 | S | 雪吟莊（`fighter.snow`） | — |
+| 115 | 魚鐵山 | Yu tieshan | `custom/legacy_npc/yu_tieshan.c` | 雪吟莊／雪吟莊大廳 | 人類 | 武者 | 65 | S | 雪吟莊（`fighter.snow`） | 雪吟莊師父（收徒、傳授武功，2026-11-05） |
 | 116 | 黑衣人 | Man in black | `custom/legacy_npc/man_in_black.c` | 雲棧市集／客房 | 厭火族 | 盜賊 | 20 | B | — | — |
 | 117 | 任常恩 | Jen commando | `custom/legacy_npc/jen_commando.c` | 青邪宮／上山小路 | 人類 | 軍人 | 25 | B | — | — |
 | 118 | 葬心 | Blade man | `custom/legacy_npc/blade_man.c` | 青邪宮、漕幫／酒館二樓 | 厭火族 | 武者 | 30 | A | 哭笑門（`fighter.chin`） | — |
@@ -196,7 +196,7 @@
 
 | 門派 | NPC |
 |---|---|
-| 步玄派 | 歐陽芝、駱易 |
+| 步玄派 | 歐陽芝（駱易已設 `scholar.myst`，2026-11-01） |
 | 天邪派 | 於蘭兼毅、蕭朗生 |
 | 武陀灸堂 | 雷同、武道通 |
 | 白象寺 | 無念大師 |

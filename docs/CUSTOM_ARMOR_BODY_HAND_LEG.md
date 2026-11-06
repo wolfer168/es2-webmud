@@ -17,7 +17,7 @@
 - **唯一性**：火鷹戰鎧。
 - **職業限制**：霸王鎧、霸王手套（原註 sr only）限軍人；闇之絲甲、闇之護手限盜賊；靈中樞甲（原資料「天師」）限道士。
 - **玄晦戰甲**：原資料「可以讀內功」。繼承 `F_STUDY`，用 `study black harness` 研讀，基本內功（`force`）最高讀到 100，
-  規則與書本相同（耗神、依悟性增加進度）。
+  規則與書本相同（耗神、依悟性增加進度）。要先有基本內功（1 級以上）才能研讀，沒有時顯示「你無法理解玄晦戰甲上記載的內容。」（使用者定案，2026-11-03）。
 - **新技能代碼**（登記於 `docs/SKILL_NAMES.md`）：暗器技巧 `throwing`（混天白龍）、天邪神掌 `celestial palm`（天邪虎爪）。
 - **改依原資料的既有物品**（米沛身上）：`custom/zhenwu/obj/steel_armor.c` 精鋼戰甲補上傷害力 5；
   `custom/zhenwu/obj/fire_gauntlets.c` 冶磺套改為防禦力 5、火焰傷害防禦力 15、雙手斧術 10，價值 200 兩。重量維持原值。
@@ -36,7 +36,7 @@
 | 闇之絲甲 | `armor/dark_armor.c` | dark armor | 3000 | 100 | 原資料 | 限盜賊 |
 | 兩儀雲龍甲 | `armor/double_cloudy_plate.c` | double cloudy plate | 12000 | 200 | 原資料 |  |
 | 怒龍錦冑 | `armor/dragon_armor.c` | dragon armor | 5000 | 1000 | 原資料 |  |
-| 龍鱗璧玉袍 | `armor/dragon_jade_robe.c` | dragon armor | 5000 | 200 | 原資料 |  |
+| 龍鱗璧玉袍 | `armor/dragon_jade_robe.c` | dragon armor | 5000 | 200 | 原資料（敘述）；數值照水嵐縣設計表 | 防禦力 20、防禦能力值 10、火焰防禦 10、冰防禦 20（2026-10-30）；密林賊帥 |
 | 龍騎戰甲 | `armor/dragon_plate_of_knights.c` | dragon plate of knights | 12000 | 300 | 原資料 |  |
 | 火鷹戰鎧 | `armor/full_plate_of_fire_hawk.c` | full plate of fire hawk | 12000 | 1000 | 原資料 | 唯一 |
 | 冥魂戰鎧 | `armor/ghost_hell_plate.c` | ghost-hell plate | 12000 | 300 | 原資料 |  |
