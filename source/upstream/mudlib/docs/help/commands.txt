@@ -1,11 +1,13 @@
 【常用指令總覽】
 
-探索：look、go、enter、search、open、close
-角色：score、hp、inventory、skills、who、finger
-物品：get、drop、give、put、eat、drink、wear、wield、unwield
-交流：say、tell、reply、whisper、shout、emote
-戰鬥：fight、kill、guard、wimpy
-師門：apprentice、acquire、skills <師父>
-其他：help
+探索：look、go、enter、search、open、close、sneak、follow
+角色：score、hp、inventory、skills、analyze、who、finger
+物品：get、drop、give、put、keep、eat、drink、wear、wield、unwield
+買賣：buy、sell、balance、deposit、withdraw、convert
+交流：say、tell、reply、whisper、emote、chat（頻道）、team
+戰鬥：fight、kill、halt、guard、charge、wimpy、enable、perform、exert
+師門：apprentice、acquire、skills <師父>、gain
+存檔：save、backup、quit
+其他：help、time、option、alias
 
 可直接輸入 help <指令> 查看該指令本身的說明，例如 help who。

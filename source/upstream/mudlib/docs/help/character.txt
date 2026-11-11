@@ -1,10 +1,19 @@
 【角色資訊】
 
-  score                角色主要資訊
-  hp                   精、氣、神等目前狀態
+  score                角色主要資訊：出身、業力、形體、食物、飲水、
+                       疲勞與經驗
+  hp                   形體、精、氣、神目前的狀態
   skills               已學技能
-  inventory            隨身物品
+  analyze              攻擊、防禦等能力值，以及技能與裝備的修正
+  estimate             大略評估自己或對手的武藝
+  inventory (i)        隨身物品
   who                  線上玩家
   finger <玩家>        玩家資料
+  describe <描述>      設定別人 look 你時看到的敘述
+  nick <綽號>          設定自己的綽號
+  option               調整畫面選項
 
-相關：help score、help hp、help skills、help skill_help
+形體耗盡會死亡，精、氣、神耗盡會昏迷（見 help death）。
+疲勞會隨昏迷與研讀書籍增加，慢慢隨時間消退；食物與飲水要適時補充。
+
+相關：help score、help hp、help skills、help skill_help、help karma

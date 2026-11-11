@@ -1,8 +1,15 @@
 【拜師與師父】
 
-先找到願意收徒的 NPC，再使用：
-  apprentice <人物>
+先找到願意收徒的人物，再使用：
+  apprentice <人物>         拜師；已是師父時則是向師父請安
+  skills <人物>             查看師父會的技能
+  acquire <技能> from <人物> 向師父求教
 
-可用 skills <人物> 查詢支援技能資訊的師父。技能取得仍依該師父實際規則判定。
+每個門派、每種技能都有各自的拜師與學習條件，有些門派不收特定的職業
+或種族；詳細的條件請看門派說明，例如：
+  help fighter.tiger        虎刀門
+  help fighter.lunmay       冷梅莊
+  help taoist.fire          朱衣派
+完整的門派列表見 help topics。
 
-目前已落地的虎刀門師父高慎另見：help tiger
+相關：help skill_help

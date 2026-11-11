@@ -1,9 +1,17 @@
 【技能與學習】
 
-  skills               查看自己的技能
-  skills <人物>        查詢可提供技能資訊的人物
+  skills               查看自己學過的技能
+  skills -a            連同中止學習的技能一起列出
+  skills <人物>        查看師父等人物的技能
   apprentice <人物>    拜師
-  acquire ...           取得／學習師父可傳授的技能
+  acquire <技能> from <人物>  向師父求教某種技能
+  enable <類別> with <技能>   指定戰鬥時使用的武功
+  disable <技能>       停用某項技能
+  abandon <技能>       中止學習，abandon -c 可以恢復
+  gain                 結算近來的進步（見 help gain）
+  study <物品>         研讀書籍（見 help books）
 
-不同師父、技能有各自條件與上限，實際判定由 Server 上的師父與技能程式決定。
-相關：help skills、help apprentice、help acquire、help master
+技能是靠使用、修練與學習累積進步的；每個師父、每種技能都有各自的
+學習條件。門派的技能列在各門派說明裡，例如 help fighter.lunmay。
+
+相關：help master、help gain、help books、help topics

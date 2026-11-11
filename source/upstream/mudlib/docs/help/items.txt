@@ -1,14 +1,21 @@
 【物品操作】
 
-  inventory            查看身上物品
-  get <物品>           拿取物品
-  drop <物品>          放下物品
-  give <物品> <人物>   交給人物
-  put ...              放入容器
-  eat <食物>           食用
-  drink <飲品>         飲用
-  wear <裝備>          穿戴
-  wield <武器>         裝備武器
-  unwield <武器>       卸下武器
+  inventory (i)        查看身上物品
+  get <物品> [from <容器>]  拿取物品，也可以從容器（包括屍體）裡拿
+  drop <物品>          放下物品，drop all 放下全部沒 keep 的物品
+  give <物品> to <人物>  交給人物
+  put <物品> in <容器>   放入容器
+  keep <物品>          標記重要物品，不會被 drop all 或 sell all 丟掉
+  eat / drink          食用、飲用
+  fill <容器> with <液體源>  裝水
+  wear / remove        穿戴、脫下防具
+  wield / unwield      裝備、卸下武器
+  identify <物品>      鑑定武器裝備
+  id [here]            查看身上或房間裡物品的英文名稱
+  buy <物品> from <人物>   向店家購買
+  sell <物品>          在當鋪或藥鋪賣出
 
-各指令可再用 help <指令> 查詳細格式。
+錢幣有錢、碎銀、黃金、金元寶、復刻紀念金元寶五種，詳見 help money。
+鬼魂沒有形體，拿不起東西。
+
+各指令可再用 help <指令> 查看詳細格式。

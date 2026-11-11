@@ -1,13 +1,16 @@
 【戰鬥指令】
 
-目前可從這些指令開始查：
-  help fight
-  help kill
-  help guard
-  help wimpy
-  help wield
-  help unwield
-  help hp
-  help skills
+  fight、kill、halt     開打與停手
+  wield、unwield        裝備、卸下武器
+  wear、remove          穿上、脫下防具
+  enable、disable       選擇或停用武功
+  perform               施展絕招
+  exert                 內功與功力
+  cast、conjure         施展咒術、法術
+  charge、guard         指定首要攻擊目標、保護對象
+  wimpy                 設定逃跑條件
+  hp、estimate          查看自己的狀態、大略評估對手
+  analyze               查看攻擊、防禦等能力值
 
-特殊武學的可用功能以實際技能 daemon 與目前版本為準。
+直接輸入 help <指令> 可以看每個指令的詳細說明。
+各門派的特殊功能見該門派與武功的說明。

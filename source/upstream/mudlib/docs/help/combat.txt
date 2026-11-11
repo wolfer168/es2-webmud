@@ -1,13 +1,20 @@
 【戰鬥入門】
 
-戰鬥由 MUD Server 的戰鬥系統處理。開始前可先用 look 確認目標。
+  fight <目標>         向對方「討教」，點到為止，只消耗體力不會受傷；
+                       不是每個人都肯接受切磋。
+  kill <目標>          真刀真槍地拚命，會受傷，也會死；單方面就能成立，
+                       被人 kill 時畫面會有紅字警告。
+  halt                 停止比試（拚命的敵人不會輕易罷手）。
+  wield / unwield      裝備、卸下武器。
+  enable <類別> with <技能>  指定要使用的武功，例如劍法、內功。
+  perform <技能:絕招>  戰鬥中施展武功的絕招，見各武功的說明。
+  exert <百分比>       設定出幾成功力，功力越高越耗體力。
+  charge / guard       集中攻擊一個敵人，或保護同伴與東西。
+  wimpy                氣血不足時自動逃跑。
 
-  fight <目標>         提出比武／戰鬥互動
-  kill <目標>          對目標發動攻擊
-  hp                   查看目前狀態
-  skills               查看技能
-  wield <物品>         裝備武器
-  unwield <物品>       卸下武器
+戰鬥中精、氣、神任何一項耗盡會昏迷，形體耗盡就會死亡（見 help death）。
+旅館、廟宇等安全地點禁止戰鬥。
 
-雪亭客棧目前禁止戰鬥。
-相關：help combat_cmds、help death、help skills
+戰鬥結束後用 gain 結算經驗與技能的進步（見 help gain）。
+
+相關：help combat_cmds、help death、help skill_help

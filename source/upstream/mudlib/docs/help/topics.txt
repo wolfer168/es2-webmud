@@ -6,10 +6,12 @@
 【 新手入門 】
   newbie       新手指引          movement     移動與觀察
   combat       戰鬥入門          death        昏迷與死亡
+  karma        業力與轉世
 
 【 常用指令 】
   commands     常用指令總覽      items        物品操作
   communication 溝通聊天         combat_cmds  戰鬥指令
+  money        錢幣與錢莊
 
 【 角色成長 】
   character    角色資訊          skill_help   技能與學習
@@ -17,11 +19,29 @@
 
 【 門派 】
   fighter.fonxan   封山派         fighter.lunmay   冷梅莊
-  fighter.tiger    虎刀門         taoist.fire      朱衣派
-  taoist.storm     玄衣派         mao-shan.fog     幻霧觀
+  fighter.snow     雪吟莊         fighter.tiger    虎刀門
+  taoist.fire      朱衣派         taoist.storm     玄衣派
+  taoist.freeze    素衣派         mao-shan.fog     幻霧觀
   mao-shan.wind    隱風觀         soldier.ber      振武軍營
   scholar.myst     步玄派         alchemist.dragon 龍圖丹派
-  alchemist.wu     武陀灸堂
+  alchemist.wu     武陀灸堂       thief.longye     瑯夷派
+
+【 門派技能 】
+  fonxiaoken   風嘯拳法          uenfon       雲峰筆招
+  tidy_force   凌潮心法          celestial_force 天邪神功
+  deep_blade   深空刀法
+  six-chaos-sword 六陰追魂劍法   myst-force   步玄心法
+  myst-steps   步玄七絕          close_myst-sword 小步玄劍
+  polar-silkworm_force 冰蠶奇功  five-steps   五行迷蹤步
+  longyeforce  瑯夷派內功
+  butterfly-steps 蝶影幻步       dragon_force 龍圖心經
+  zushang      竹上經心法        alchemy-medication 神農之術
+  alchemy-wealth 黃白之術        alchemist.pill 龍圖丹藥煉製
+  cauterization 針灸之術         amazing-needle 驚異二針
+  wuto-needle  五敗針法          potency-needle 引源針法
+  recovery-needle 三自回針法
+  powerblow    重擊術            berserk      狂擊亂鬥
+  heavy_parry  強力格擋
 
 【 茅山技能 】
   mao-shan_magic     茅山法術      taoism_of_nature   茅山幻術
@@ -40,16 +60,14 @@
   yaksa        夜叉              dance        刑天戰舞
 
 【 世界功能 】
-  world        世界與探索        snowkeep     雪亭
-  inn          客棧
-  home_help    私人家園
+  world        世界與探索        snowkeep     雪亭鎮
+  inn          客棧與旅館        home_help    私人家園
 
 【 連線與其他 】
   web          WebMUD            zmud         zMUD
   rules        遊戲基本規則      wizard_help  巫師說明
 
 使用方式：help <主題>
-例如：help newbie、help tiger、help inn
+例如：help newbie、help fighter.tiger、help inn
 
 一般指令也可直接查詢，例如：help look、help who、help skills。
-本 HELP 僅整理目前 ES2 WebMUD 已存在或已確認的功能；未完成內容不會自行補寫。

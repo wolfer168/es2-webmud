@@ -1,0 +1,19 @@
+【錢幣與錢莊】
+
+錢幣有五種，指令裡要寫英文 id：
+  coin     錢                 1 文
+  silver   碎銀               100 文
+  gold     黃金               100 兩碎銀
+  sycee    金元寶             100 兩黃金
+  nugget   復刻紀念金元寶     100 錠金元寶
+
+錢幣沒有重量。付錢時會先用零錢，不夠才拆金元寶，找回的錢整理成黃金、
+碎銀與錢。
+
+錢莊可以存放錢幣，存款跟著角色，在任何地方都能用 balance 查詢：
+  deposit <數量> <錢幣>              存款
+  withdraw <數量> <錢幣>             提款
+  convert <數量> <錢幣> to <另類錢幣>  兌換
+例如：deposit 25 coin、withdraw 1 sycee、convert 100 gold to sycee。
+
+相關：help items

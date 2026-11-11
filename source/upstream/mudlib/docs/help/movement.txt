@@ -1,11 +1,18 @@
 【移動與觀察】
 
-  look                 查看目前環境
-  look <目標>          仔細查看人物或物件
-  go <方向>            往出口方向移動
-  enter <目標>         進入可進入的地方
+  look                 查看目前的環境
+  look <目標>          仔細查看人物、物件，或是房間裡提到的東西
+  go <方向>            往出口方向移動，n、s、e、w 等縮寫也可以
+  enter <目標>         進入可以進入的地方
+  search               在環境中搜尋，也許會有暗門或意外的東西
+  open / close <門>    開門、關門；鎖著的門要用 unlock 配合鑰匙
+  sneak <方向>         悄悄地往某方向潛行
+  follow <某人>        跟著某人移動，follow none 取消
 
-WebMUD 右側周邊地圖會依 Server 回報的房間與出口更新；遊戲實際可走方向仍以
-Server 房間出口為準。
+有些地方不是一般的方向出口，要用 enter、out、climb 之類的指令進出；
+房間裡提到的東西 (look) 通常會附上指令提示。
 
-相關：help look、help go、help world
+WebMUD 的地圖視窗依主機回報的房間與出口更新，實際能走的方向仍以房間
+出口為準。
+
+相關：help world、help search

@@ -28,7 +28,7 @@
 | 門派 | 代碼 | 狀態 |
 |---|---|---|
 | 封山派 | `fighter.fonxan` | 已完成 |
-| 雪吟莊 | `fighter.snow` | 待補說明 |
+| 雪吟莊 | `fighter.snow` | 已完成 |
 | 冷梅莊 | `fighter.lunmay` | 已完成 |
 | 古劍門 | `fighter.au-chan` | 待補說明 |
 | 虎刀門 | `fighter.tiger` | 已完成 |
@@ -39,7 +39,7 @@
 
 | 門派 | 代碼 | 狀態 |
 |---|---|---|
-| 瑯夷派 | `thief.longye` | 待補說明 |
+| 瑯夷派 | `thief.longye` | 已完成 |
 | 隱教 | `thief.yin` | 待補說明 |
 | 黑龍使者（進階） | `thief.adv` | 未製作 |
 
@@ -70,7 +70,7 @@
 |---|---|---|
 | 朱衣派 | `taoist.fire` | 已完成 |
 | 玄衣派 | `taoist.storm` | 已完成 |
-| 素衣派 | `taoist.freeze` | 待補說明 |
+| 素衣派 | `taoist.freeze` | 已完成 |
 | 紫衣派 | `taoist.thunder` | 待補說明 |
 | 幻霧觀 | `mao-shan.fog` | 已完成 |
 | 隱風觀 | `mao-shan.wind` | 已完成 |
