@@ -39,6 +39,6 @@ def test_growth_mapping():
     assert got == {
         'unarmed': 'str', 'force': 'con', 'dodge': 'dex', 'parry': 'cps', 'sneak': 'dex',
         'spells': 'spi', 'magic': 'spi', 'backstab': 'cor', 'killerhood': 'cor',
-        'literate': 'int', 'archaic attainment': 'int',
+        'literate': 'int', 'archaic attainment': 'int', 'mysticism': 'int',
         'absorption': 'wis',
     }
