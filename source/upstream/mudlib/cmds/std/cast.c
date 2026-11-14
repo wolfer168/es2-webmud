@@ -31,6 +31,11 @@ int main(object me, string arg)
 	target = 0;
     }
 
+    if( environment(me)->query("no_fight") ) {
+	tell_object(me, "這裡不准戰鬥。\n");
+	return 1;
+    }
+
     if( environment(me)->query("no_magic")
     && !me->is_fighting(target)
     && !(objectp(target) && target->query("unprotect_mark")) ) {
