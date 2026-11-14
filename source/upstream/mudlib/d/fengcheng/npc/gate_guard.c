@@ -26,10 +26,11 @@ void create()
     carry_object(STOCK_WEAPON("broadsword"))->wield();
 }
 
-// 攔下想往北走的人。
+// 攔下想往北走的人：旁人看到這一句；被攔的人看到的是 general_gate.c 用 notify_fail 給的同一句
+// （valid_leave 傳回 0 時，沒有 notify_fail 會顯示 What?）。
 void warn(object who)
 {
-    message_vision("$N把$n攔了下來。\n", this_object(), who);
+    message("vision", name() + "把" + who->name() + "攔了下來。\n", environment(), who);
 }
 
 int accept_fight(object ob)

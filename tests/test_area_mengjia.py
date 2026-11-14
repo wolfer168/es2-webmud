@@ -74,6 +74,7 @@ def test_inn_herb_and_tiger():
     assert 'inherit HERB;' in h and '"/d/snow/npc/herbalist"' in h   # 同雪亭小藥鋪
     f = read(S / 'forest.c')
     assert 'ob->query("white_tiger")' in f and 'return ::valid_leave(me, dir);' in f
+    assert 'return notify_fail(ob->name() + "低吼著擋在你面前' in f      # 擋人要有 notify_fail，否則會顯示 What?
     assert 'set_beast(8);' in read(S / 'npc' / 'white_tiger.c')
 
 

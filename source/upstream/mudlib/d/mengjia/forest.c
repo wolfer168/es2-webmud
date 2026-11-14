@@ -30,8 +30,8 @@ int valid_leave(object me, string dir)
     if( dir == "north" ) {
         foreach(ob in all_inventory(this_object()))
             if( ob->query("white_tiger") && living(ob) && me->visible(ob) ) {
-                message_vision("$N低吼著擋在$n面前﹐不讓$n往北去。\n", ob, me);
-                return 0;
+                message("vision", ob->name() + "低吼著擋在" + me->name() + "面前﹐不讓" + me->name() + "往北去。\n", this_object(), me);
+                return notify_fail(ob->name() + "低吼著擋在你面前﹐不讓你往北去。\n");
             }
     }
     return ::valid_leave(me, dir);
