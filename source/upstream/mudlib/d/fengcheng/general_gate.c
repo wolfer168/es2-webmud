@@ -32,7 +32,7 @@ int valid_leave(object me, string dir)
         foreach(guard in all_inventory(this_object()))
             if( guard->query("gate_guard") && living(guard) && me->visible(guard) ) {
                 guard->warn(me);
-                return 0;
+                return notify_fail(guard->name() + "把你攔了下來。\n");
             }
     }
     return ::valid_leave(me, dir);

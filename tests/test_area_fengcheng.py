@@ -82,7 +82,9 @@ def test_gate_guard_blocks_until_riddle_solved():
     # 小孩：玩家進來就問要不要猜；用 say 或正面表情同意；答案也用 say（不用 ask）。
     assert 'void relay_say(object who, string msg)' in c and 'void relay_emote(object who, string verb)' in c
     assert 'accept_inquiry' not in c and '要不要來猜個謎語啊' in c and '將軍府裡藏了八個鬼喔' in c
-    assert 'message_vision("$N把$n攔了下來。\\n", this_object(), who);' in read(S / 'npc' / 'gate_guard.c')
+    # 攔人要用 notify_fail 說出被攔的訊息，否則 go 指令會顯示 What?
+    assert 'return notify_fail(guard->name() + "把你攔了下來。\\n");' in g
+    assert 'name() + "把" + who->name() + "攔了下來。\\n"' in read(S / 'npc' / 'gate_guard.c')
     assert len(re.findall(r'^    \(\{ "', c, re.M)) == 10     # 舊資料的十題字謎
     assert '({ "弓上一枝箭，箭邊一把弓", "引" })' in c
 

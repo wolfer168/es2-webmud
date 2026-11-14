@@ -38,3 +38,12 @@ def test_faction_help_exists():
     assert h.startswith('○ 紫衣派資料') and '青雲觀主 華子儀(Hua zi yi)' in h
     for sk in ('taoism-thunder', 'reflecting star sword', 'magic steps'):
         assert '（%s）' % sk in h
+
+
+def test_help_topics_list_new_help_files():
+    # 玄天派、紫衣派、強化之術的說明檔都放進 help 的主題列表（docs/help/topics.txt）。
+    topics = read(MUD / 'docs/help/topics.txt')
+    for tid, name in (('scholar.sky', '玄天派'), ('taoist.thunder', '紫衣派'), ('taoist.freeze', '素衣派'),
+                      ('enchance', '強化之術')):
+        assert tid in topics and name in topics, tid
+        assert (MUD / 'docs/help' / (tid + '.txt')).exists(), tid
