@@ -29,8 +29,10 @@ private void create()
     moves = ({
         ([ "name": "皓風起兮雲飛揚", "attack": 9,  "defense": 4, "force": 2, "bonus": 0,  "damage_type": "刺傷",
            "action": "$N使出劍訣起手式「皓風起兮雲飛揚」﹐手中$w如一條銀蛇般攻向$n的$l" ]),
-        ([ "name": "騰躍萬里風如煙", "attack": 9,  "defense": 5, "force": 2, "bonus": 5,  "damage_type": "割傷",
+        ([ "name": "騰躍萬里風如煙", "attack": 9,  "defense": 5, "force": 2, "bonus": 5,  "damage_type": "割傷", "weight": 3,
            "action": "$N一招「騰躍萬里風如煙」﹐身形陡然幻化成虛影﹐手中$w大開大闔﹐火速斬向$n的$l" ]),
+        ([ "name": "騰躍萬里風如煙", "attack": 9,  "defense": 5, "force": 2, "bonus": 5,  "damage_type": "割傷", "weight": 2,
+           "action": "$N一招「騰躍萬里風如煙」﹐身形陡然幻化成虛影﹐手中$w大開大闔﹐大肆斬向$n的$l" ]),
         ([ "name": "千嬌百媚柔似水", "attack": 10, "defense": 5, "force": 1, "bonus": 0,  "damage_type": "刺傷",
            "action": "$N劍光一閃﹐一招「千嬌百媚柔似水」﹐挑起$w﹐輕靈曼妙的刺向$n的$l" ]),
         ([ "name": "清風送爽塵雪飛", "attack": 10, "defense": 4, "force": 2, "bonus": 5,  "damage_type": "割傷",
@@ -145,20 +147,21 @@ void attack_using(object me, object opponent, object weapon)
 string parry_message(object me, object attacker, int full)
 {
     object w;
-    string wn;
+    string hold, blaze;
 
     w = sword_in_hand(me);
-    wn = objectp(w) ? w->name() : "雙手";
+    hold = objectp(w) ? "手中" + w->name() : "雙手";
+    blaze = objectp(w) ? "劍芒大盛" : "真氣大盛";
     if( full )
         return ({
-            "$n手中" + wn + "劍芒大盛﹐一招「緲盡人世絕惡意」將$N的攻勢完全封住",
+            "$n" + hold + blaze + "﹐一招「緲盡人世絕惡意」將$N的攻勢完全封住",
             "$n身體有如陀螺急轉﹐一招「不識江山多嬌媚」將$N的所有攻勢帶開",
-            "$n將手中" + wn + "一展﹐一式「天始一乾景初開」將$N的攻勢化開",
+            "$n將" + hold + "一展﹐一式「天始一乾景初開」將$N的攻勢化開",
         })[random(3)];
     return ({
-        "$n將手中" + wn + "一橫﹐一招「橫劍破」﹐擋住了$N的攻勢",
-        "$n將手中" + wn + "一揮﹐使出一式「輕柔小扇撲流螢」將$N的攻勢化解掉",
-        "$n將手中" + wn + "一展﹐一式「天始一乾景初開」將$N的攻勢化開",
+        "$n將" + hold + "一橫﹐一招「橫劍破」﹐擋住了$N的攻勢",
+        "$n將" + hold + ({ "一揮", "一挑" })[random(2)] + "﹐使出一式「輕柔小扇撲流螢」將$N的攻勢化解掉",
+        "$n將" + hold + "一展﹐一式「天始一乾景初開」將$N的攻勢化開",
     })[random(3)];
 }
 
