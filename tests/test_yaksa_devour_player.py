@@ -117,7 +117,12 @@ def test_devour_record_fields():
 
 
 def test_devourlog_command():
-    s = (MUD / 'cmds/wiz/devourlog.c').read_text(encoding='utf-8')
+    s = (MUD / 'cmds/arch/devourlog.c').read_text(encoding='utf-8')
+    assert not (MUD / 'cmds/wiz/devourlog.c').exists()
+    # 只給 arch 以上使用、預設列出最近 100 筆（使用者指示，2026-11-15）。
+    main = s[s.index('int main(object me, string arg)'):]
+    assert main.index('SECURED_ARCH_COMMAND;') < main.index('load_all()')
+    assert '#define LIST_MAX    100' in s
     assert '#define DEVOUR_DATA "/data/daemon/yaksa_devour.dat"' in s
     assert 'restore_variable(' in s
     for opt in ('"-d %d"', '"-v %s"', '"-p %s"'):

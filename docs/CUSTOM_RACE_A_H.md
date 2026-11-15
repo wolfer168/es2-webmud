@@ -124,7 +124,7 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
     11. the room where the devour happened.
 
     Storage: `data/daemon/yaksa_devour.log` (readable text, one block per record), `data/daemon/yaksa_devour.dat` (one `save_variable()` mapping per line, read by `devourlog`), `data/daemon/yaksa_devour.serial` (the last record number). The latest 200 records are also kept on the yaksa (`yaksa/devour_records`), so they survive if the files are removed. All under `/data/daemon` because the command runs as `Mudlib`, which the security daemon only lets write there.
-  - **Wizard command `devourlog` (2026-11-15, `cmds/wiz/devourlog.c`):** `devourlog` lists all records (latest 20 shown), `devourlog <yaksa id>` one yaksa, `devourlog -v <id>` one victim account, `devourlog -d <n>` the full record, `devourlog -p <yaksa id>` the records stored on an online yaksa.
+  - **Command `devourlog` (2026-11-15, `cmds/arch/devourlog.c`, arch and above only because records contain player IPs):** `devourlog` lists all records (latest 100 shown), `devourlog <yaksa id>` one yaksa, `devourlog -v <id>` one victim account, `devourlog -d <n>` the full record, `devourlog -p <yaksa id>` the records stored on an online yaksa.
 - 雪亭鎮土地公廟 (`d/snow/small_temple.c`, where ghosts revive) is a no_fight room (2026-11-04), so nobody can wait there to kill or devour reviving ghosts.
 
 ## 阿修羅 (ashura)

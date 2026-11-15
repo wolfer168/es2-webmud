@@ -1,11 +1,13 @@
-// devourlog.c - 查詢夜叉吞魂紀錄（使用者指示，2026-11-15）
+// devourlog.c - 查詢夜叉吞魂紀錄（使用者指示，2026-11-15；只給 arch 以上使用）
 // 紀錄由 /daemon/race/yaksa/devour.c 寫入，只記玩家；規則見 docs/CUSTOM_RACE_A_H.md。
+
+#include <command.h>
 
 inherit F_CLEAN_UP;
 
 #define DEVOUR_DATA "/data/daemon/yaksa_devour.dat"
 #define RECORD_KEY  "yaksa/devour_records"
-#define LIST_MAX    20
+#define LIST_MAX    100
 
 int help(object me);
 
@@ -111,6 +113,8 @@ int main(object me, string arg) {
     string id;
     int serial;
 
+    // 只給 arch 以上使用（使用者指示，2026-11-15）：紀錄裡有玩家的 IP。
+    SECURED_ARCH_COMMAND;
     seteuid(getuid());
     if (!arg || arg == "") return show_list(load_all(), "全部吞魂紀錄");
     if (arg == "-h" || arg == "help") return help(me);
@@ -140,7 +144,7 @@ int main(object me, string arg) {
 
 int help(object me) {
     write(@HELP
-指令格式：devourlog                 列出全部吞魂紀錄（最近 20 筆）
+指令格式：devourlog                 列出全部吞魂紀錄（最近 100 筆）
           devourlog <夜叉代號>      只看某一隻夜叉吞的
           devourlog -v <玩家代號>   只看某個玩家被吞的紀錄
           devourlog -d <編號>       看單筆的完整內容
