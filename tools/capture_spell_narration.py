@@ -43,20 +43,20 @@ OTHERS = [
       ('conjure remedy', '療傷'), ('conjure vision', '陰陽眼')], []),
     ('mao-shan mysticism', 'magic', '茅山道法【奇門術】', ['clone 40 /custom/item/scroll/yin'],
      [('conjure memory', '記憶'), ('north', ''), ('conjure recall', '招魂'), ('clone /d/graveyard/npc/barbarian', ''),
-      ('call barbarian->die()', ''), ('conjure collect on corpse', '收魂'), ('conjure slave on corpse', '役使'),
-      ('conjure devour', '吞噬')], ['taoism of darkness']),
+      ('call barbarian->die()', ''), ('conjure collect on corpse', '收魂'), ('clone /d/graveyard/npc/barbarian', ''),
+      ('call barbarian->die()', ''), ('conjure slave on corpse', '役使'), ('conjure devour', '吞噬')], ['taoism of darkness']),
     ('taoism of dunja', 'magic', '茅山奇術【遁甲書】', ['clone /custom/legacy_npc/barbarian_chief'],
-     [('conjure fate', '天命'), ('conjure experience on chief', '經驗')], []),
+     [('conjure fate', '天命'), ('conjure experience on chief', '經驗'), ('call chief->die()', '')], []),
     ('chivi sutra', 'magic', '天師道法【紫薇心經】', [],
      [('conjure fire_defence', '火防'), ('conjure storm_defence', '風防'), ('conjure freeze_defence', '冰防'),
       ('conjure thunder_defence', '雷防'), ('conjure dispel', '解除')], []),
     ('enchance', 'magic', '強化之術', ['clone /custom/weapon/sword/black_shortsword', 'wield sword', 'clone 20 /obj/money/gold'],
      [('conjure silver_mark on sword', '銀咒'), ('conjure gold_mark on sword', '金咒')], []),
-    ('alchemy-wealth', 'magic', '丹道【黃白之術】', ['clone /custom/weapon/sword/black_shortsword'],
-     [('conjure silver_seal on sword', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
+    ('alchemy-wealth', 'magic', '丹道【黃白之術】', ['unwield sword', 'clone /custom/weapon/staff/god_cane', 'clone /custom/weapon/sword/black_shortsword'],
+     [('conjure silver_seal on god', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
     ('alchemy-medication', 'magic', '丹道【神農之術】', ['clone /obj/alchemist/heat_reactor'],
      [('conjure red_seal on reactor', '赤印封'), ('conjure red_dispel on reactor', '赤印解')], []),
-    ('amazing-needle', 'cauterization', '武陀灸術【驚異二針】', ['clone /custom/weapon/needle/iron_needle', 'wield needle'],
+    ('amazing-needle', 'cauterization', '武陀灸術【驚異二針】', ['unwield sword', 'clone /custom/weapon/needle/iron_needle', 'wield needle'],
      [('acupuncture amazing_armor to stake', '驚異霸甲針'), ('acupuncture amazing_power to stake', '驚異霸氣針'),
       ('acupuncture self_test', '自測')], []),
     ('wuto-needle', 'cauterization', '武陀灸術【五敗針法】', [],
@@ -188,8 +188,8 @@ def main():
         if WIZLIST.exists(): WIZLIST.unlink()
     if a.only and OUT.exists():
         old = json.loads(OUT.read_text(encoding='utf-8'))
-        new = {(r['school'], r['command']) for r in results}
-        results = [r for r in old if (r['school'], r['command']) not in new] + results
+        new = {r['school'] for r in results}
+        results = [r for r in old if r['school'] not in new] + results
         # 依原本的學派順序排列
         order = [x[0] for x in SCHOOLS] + [x[0] for x in OTHERS]
         results.sort(key=lambda r: order.index(r['school']) if r['school'] in order else 99)
