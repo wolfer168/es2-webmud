@@ -56,7 +56,7 @@ int accept_info(object ob, string type)
     return type == "skills";
 }
 
-/* 拜師條件：平民（尚未加入任何職業）。拜師後成為武者（哭笑門弟子）。 */
+/* 拜師條件：平民（尚未加入任何職業）。拜師後成為武者（稱號「哭笑門武士」）。 */
 int accept_apprentice(object me)
 {
     if( me->query_class() != "commoner" ) {
@@ -70,7 +70,7 @@ int init_apprentice(object me)
 {
     if( ::init_apprentice(me) ) {
         me->set_class("fighter");
-        me->set("title", "哭笑門弟子");
+        me->set("title", "哭笑門武士");
         me->set("custom_faction", FACTION);
         command("emote 先是仰天大笑，繼而又眼眶泛紅，好一會兒才止住。");
         command("say 好，從今日起，你就是哭笑門的人了。");
