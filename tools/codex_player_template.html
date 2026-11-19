@@ -613,9 +613,10 @@ svg.map .nm-long { font-size: 10px; }
     const r = { need, n, ghostOk: G0 >= need, selfOk: sg >= need, yaksa };
     if (!r.ghostOk || !r.selfOk) return r;
     const G = yaksa ? G0 * 2 : G0;
-    // 前 10 次必定大幅；之後機率 = 10 / (10 + random(n))，取平均。
-    let p = 1;
-    if (n >= 10) { p = 0; for (let i = 0; i < n; i++) p += 10 / (10 + i); p /= n; }
+    // 大幅機率照 devour.c 的 big_chance()（千分比）：第 1～10 次 100%，第 20 次 20%，第 30 次起 5%。
+    const BIG_CHANCE = [851, 725, 617, 525, 447, 381, 324, 276, 235, 200, 174, 152, 132, 115, 100, 87, 76, 66, 57, 50];
+    const nth = n + 1;
+    const p = (nth <= 10 ? 1000 : nth > 30 ? 50 : BIG_CHANCE[nth - 11]) / 1000;
     const g40 = Math.floor(G / 40), g80 = Math.floor(G / 80);
     r.p = p;
     r.bigGain = { gin: [1 + g40, 1 + g40], kee: [1, Math.max(1, g40)], sen: [1, Math.max(1, g80)] };
