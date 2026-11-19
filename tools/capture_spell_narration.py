@@ -32,7 +32,7 @@ SCHOOLS = [
     ('taoism-storm', '天師道法【風符】', 'cast', [('quick_storm', '疾風'), ('crazy_storm', '暴風'), ('killer_storm', '飛戮風'), ('whirl_storm', '轉輪大風')], None, 'stake'),
     ('taoism-thunder', '天師道法【雷法】', 'cast', [('swamp_thunder', '澤雷'), ('blaster_thunder', '爆雷'), ('divine_thunder', '神光雷'), ('hexagram_thunder', '六卦熒雷')], None, 'stake'),
     ('taoism of darkness', '茅山奇術', 'cast', [('ghost_fire', '鬼火術'), ('smoke', '鬼煙術'), ('hell_fire', '幽冥之火')], '/custom/item/scroll/yin', 'stake'),
-    ('taoism of nature', '茅山幻術', 'cast', [('monkey', '猴'), ('hydra', '巨蟒'), ('rain', '祈雨'), ('dog', '狗')], '/custom/item/scroll/nature', 'stake'),
+    ('taoism of nature', '茅山幻術', 'cast', [('monkey', '猴'), ('hydra', '巨蟒'), ('rain', '祈雨')], '/custom/item/scroll/nature', 'stake'),
 ]
 
 
@@ -53,7 +53,7 @@ OTHERS = [
     ('enchance', 'magic', '強化之術', ['clone /custom/weapon/sword/black_shortsword', 'wield sword', 'clone 20 /obj/money/gold'],
      [('conjure silver_mark on sword', '銀咒'), ('conjure gold_mark on sword', '金咒')], []),
     ('alchemy-wealth', 'magic', '丹道【黃白之術】', ['unwield sword', 'clone /custom/weapon/staff/god_cane', 'clone /custom/weapon/sword/black_shortsword'],
-     [('conjure silver_seal on god', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
+     [('conjure silver_seal on staff', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
     ('alchemy-medication', 'magic', '丹道【神農之術】', ['clone /obj/alchemist/heat_reactor'],
      [('conjure red_seal on reactor', '赤印封'), ('conjure red_dispel on reactor', '赤印解')], []),
     ('amazing-needle', 'cauterization', '武陀灸術【驚異二針】', ['unwield sword', 'clone /custom/weapon/needle/iron_needle', 'wield needle'],
@@ -67,6 +67,8 @@ OTHERS = [
       ('acupuncture move to stake', '移動'), ('acupuncture element to stake', '元素')], []),
     ('recovery-needle', 'cauterization', '武陀灸術【三自回針法】', [],
      [('acupuncture gin-up', '回精針'), ('acupuncture kee-up', '回氣針'), ('acupuncture sen-up', '回神針')], []),
+    ('taoism of nature', 'spells', '茅山幻術', ['clone 20 /custom/item/scroll/nature'],
+     [('cast dog on stake', '狗')], []),
 ]
 
 
@@ -76,6 +78,7 @@ def clean(raw):
     # 路過的 NPC 與先前法術的延遲訊息不是這個指令的畫面
     t = re.sub(r'(?m)^(?:劉乙忘玄|老和尚|小和尚)(?:走了過來|往.{1,2}離開)。\n', '', t)
     t = re.sub(r'(?m)^你眼前那層幽光漸漸淡去。\n', '', t)
+    t = re.sub(r'(?m)^(?:\x1b\[[0-9;]*m)*靈獒(?:\x1b\[[0-9;]*m)*[^\n]*\n', '', t)   # 召來的靈獒會自己攻擊，不是這個指令的畫面
     return t
 
 
