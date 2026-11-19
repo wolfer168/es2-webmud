@@ -1,7 +1,7 @@
 // /custom/wizroom/w/windstory/obj/stone_stake.c — 石製假人（測試用）。
-// 繼承 /inherit/dummy：不還手、不閃避、不格擋、不損壞，偷襲必定成功。
+// 繼承 /feature/npc/dummy：不還手、不閃避、不格擋、不損壞，偷襲必定成功。
 #include <ansi.h>
-inherit "/inherit/dummy";
+inherit "/feature/npc/dummy";
 
 void create()
 {
