@@ -133,7 +133,7 @@
   "spell": "ghost_fire",
   "spell_cname": "鬼火術",
   "command": "cast ghost_fire on stake",
-  "text": "\u001b[1;30m你拈起一張少陰符﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[31m鬼火術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你將少陰符夾在指間一晃﹐符紙化作一團幽綠鬼火﹐飄飄忽忽地撲向石假人。\u001b[0m\n\n\u001b[1;30m鬼火貼著石假人一燎﹐在石假人身上留下一圈幽綠的焦痕。\u001b[0m\n"
+  "text": "\u001b[1;30m你拈起一張少陰符﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[31m鬼火術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你將少陰符夾在指間一晃﹐符紙化作一團幽綠鬼火﹐飄飄忽忽地撲向石假人。\u001b[0m\n\n\u001b[1;30m鬼火貼著石假人一燎﹐在石假人身上留下一圈幽綠的焦痕。\u001b[0m\n野人酋長雙臂一送﹐白骨杖的前端撞向你的右肩﹐但是沒中。\n"
  },
  {
   "school": "taoism of darkness",
@@ -141,7 +141,7 @@
   "spell": "smoke",
   "spell_cname": "鬼煙術",
   "command": "cast smoke on stake",
-  "text": "你並未與人交手﹐用不著遁入煙中。\n"
+  "text": "\u001b[1;30m你拈起一張少陰符﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[31m鬼煙術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你將少陰符往腳下一擲﹐地上騰起一股灰黑濃煙﹐霎時將你的身形吞沒。\u001b[0m\n\n\u001b[1;30m你藉著煙霧斂去氣息﹐悄悄退出了戰圈。\n"
  },
  {
   "school": "taoism of darkness",
@@ -234,22 +234,6 @@
  {
   "school": "mao-shan mysticism",
   "school_cname": "茅山道法【奇門術】",
-  "spell": "memory",
-  "spell_cname": "記憶",
-  "command": "conjure memory",
-  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m記憶之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你屈指在地上畫了一道符紋﹐那符紋閃了一閃便隱入土中。\u001b[0m\n\n\u001b[1;30m你將此地的方位牢牢記在心裡。\n"
- },
- {
-  "school": "mao-shan mysticism",
-  "school_cname": "茅山道法【奇門術】",
-  "spell": "recall",
-  "spell_cname": "招魂",
-  "command": "conjure recall",
-  "text": "你此刻就在記下的地方。\n"
- },
- {
-  "school": "mao-shan mysticism",
-  "school_cname": "茅山道法【奇門術】",
   "spell": "collect",
   "spell_cname": "收魂",
   "command": "conjure collect on stake",
@@ -262,6 +246,38 @@
   "spell_cname": "役使",
   "command": "conjure slave on stake",
   "text": "這木頭疙瘩沒有魂魄可供陰魂棲身。\n"
+ },
+ {
+  "school": "mao-shan mysticism",
+  "school_cname": "茅山道法【奇門術】",
+  "spell": "memory",
+  "spell_cname": "記憶",
+  "command": "conjure memory",
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m記憶之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你屈指在地上畫了一道符紋﹐那符紋閃了一閃便隱入土中。\u001b[0m\n\n\u001b[1;30m你將此地的方位牢牢記在心裡。\n"
+ },
+ {
+  "school": "mao-shan mysticism",
+  "school_cname": "茅山道法【奇門術】",
+  "spell": "recall",
+  "spell_cname": "招魂",
+  "command": "conjure recall",
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m翔空之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你將少陰符往頭頂一拋﹐身子隨著一陣陰風拔地而起﹐轉眼不見了。\u001b[0m\n\n\u001b[1;31m看起來野人酋長想殺死你！\n\u001b[0m亂葬崗 - /d/graveyard/grave7\n    坡腳下有一座破敗的石亭，亭頂缺了好幾片瓦，石柱上的漆早已剝落殆盡。\n亭旁幾座新墳的黃土還未長出青草，低低的誦經聲在墳間迴盪，木魚篤篤，一聲\n接著一聲，像是要替這些無主的亡魂求個安穩。\n    夜幕籠罩著大地。\n    這裡明顯的出口有 \u001b[1mwest\u001b[0m 和 \u001b[1mnorth\u001b[0m。\n哭笑門門主「哭笑野人」劉乙忘玄 (Liuye the master of grimace)\n野人酋長 (Barbarian chief)\n石假人 (Stone stake)\n小和尚 (Young bonze)\n老和尚 (Old bonze)\n\u001b[1;30m陰風散去﹐你已落在記下的地方。\n"
+ },
+ {
+  "school": "mao-shan mysticism",
+  "school_cname": "茅山道法【奇門術】",
+  "spell": "collect",
+  "spell_cname": "收魂",
+  "command": "conjure collect on corpse",
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m集靈之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你蹲在野人的屍體旁邊低誦咒文﹐屍身漸漸化作一縷黑煙﹐被你收入袖中。\u001b[0m\n\n\u001b[1;30m你袖中如今鎮著一縷陰魂。\n"
+ },
+ {
+  "school": "mao-shan mysticism",
+  "school_cname": "茅山道法【奇門術】",
+  "spell": "slave",
+  "spell_cname": "役使",
+  "command": "conjure slave on corpse",
+  "text": "這裡沒有 corpse。\n野人酋長低喝一聲﹐手中白骨杖猛擊你的左臂﹐但是沒中。\n"
  },
  {
   "school": "mao-shan mysticism",
@@ -285,7 +301,7 @@
   "spell": "experience",
   "spell_cname": "經驗",
   "command": "conjure experience on chief",
-  "text": "這裡沒有 chief。\n"
+  "text": "你閉目凝神﹐眉心彷彿睜開了第三隻眼﹐周遭一切都看得通透。\n已經是午夜了。\n"
  },
  {
   "school": "chivi sutra",
@@ -333,7 +349,7 @@
   "spell": "silver_mark",
   "spell_cname": "銀咒",
   "command": "conjure silver_mark on sword",
-  "text": "你手捏法訣，對著黑色短劍唸動「銀咒」。\n黑色短劍的品質變了，傷害力 14 - 19（力量修正 68%，乘數等級 5）。\n"
+  "text": "你手捏法訣，對著黑色短劍唸動「銀咒」。\n黑色短劍的品質變了，傷害力 12 - 87（力量修正 2%，乘數等級 3）。\n野人酋長雙臂一送﹐白骨杖的前端撞向你的頸部﹐但是沒中。\n"
  },
  {
   "school": "enchance",
@@ -341,7 +357,7 @@
   "spell": "gold_mark",
   "spell_cname": "金咒",
   "command": "conjure gold_mark on sword",
-  "text": "你身上的黃金不夠施展金咒。\n"
+  "text": "你手捏法訣，對著黑色短劍唸動「金咒」。\n黑色短劍的品質變了，傷害力 14 - 104（力量修正 130%，乘數等級 3）。\n"
  },
  {
   "school": "alchemy-wealth",
@@ -349,7 +365,7 @@
   "spell": "silver_seal",
   "spell_cname": "銀咒",
   "command": "conjure silver_seal on sword",
-  "text": "你所施用的銀咒，不可施用在這件物品上。\n"
+  "text": "你所施展的銀咒，不足以轉化這把黑色短劍。\n"
  },
  {
   "school": "alchemy-wealth",
@@ -357,7 +373,7 @@
   "spell": "gold_seal",
   "spell_cname": "金咒",
   "command": "conjure gold_seal on sword",
-  "text": "你所施用的金咒，不可施用在這件物品上。\n"
+  "text": "你手捏法訣，對著黑色短劍唸動「金咒」。\n黑色短劍化作一道金光，消失無蹤。\n野人酋長身子一矮﹐白骨杖貼地掃向你的左腳﹐但是沒中。\n"
  },
  {
   "school": "alchemy-medication",
@@ -405,7 +421,7 @@
   "spell": "fear",
   "spell_cname": "敗膽一針",
   "command": "acupuncture fear to stake",
-  "text": "你必須裝備針類醫具才可使用針灸之術。\n"
+  "text": "你必須裝備針類醫具才可使用針灸之術。\n野人酋長退開一步﹐忽然回身以白骨杖敲向你的右手﹐但是沒中。\n"
  },
  {
   "school": "wuto-needle",
@@ -413,7 +429,7 @@
   "spell": "foul",
   "spell_cname": "敗骨二針",
   "command": "acupuncture foul to stake",
-  "text": "你必須裝備針類醫具才可使用針灸之術。\n"
+  "text": "你必須裝備針類醫具才可使用針灸之術。\n野人酋長將白骨杖一提﹐由上往下敲向你的左肩﹐但是沒中。\n"
  },
  {
   "school": "wuto-needle",
@@ -421,7 +437,7 @@
   "spell": "fail",
   "spell_cname": "敗膂三針",
   "command": "acupuncture fail to stake",
-  "text": "你必須裝備針類醫具才可使用針灸之術。\n"
+  "text": "你必須裝備針類醫具才可使用針灸之術。\n野人酋長退開一步﹐忽然回身以白骨杖敲向你的右腿﹐但是沒中。\n"
  },
  {
   "school": "wuto-needle",
