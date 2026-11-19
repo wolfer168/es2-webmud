@@ -175,6 +175,13 @@ svg.map .nm-long { font-size: 10px; }
   .calc-out th, .calc-out td { padding-right: 6px; }
   .calc-out th:first-child, .calc-out td:first-child { width: 5.6em; }
 }
+.attr-big { font: 700 1.9rem var(--serif); color: var(--seal); }
+.attr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 16px; font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+.attr-bars { display: grid; gap: 3px; }
+.attr-bar { display: grid; grid-template-columns: 4.2em minmax(0, 1fr) 4.2em; gap: 8px; align-items: center; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.attr-bar i { display: block; height: 12px; background: var(--accent); border-radius: 2px; }
+.attr-bar.top i { background: var(--seal); }
+.attr-bar span:last-child { text-align: right; }
 .calc-note { margin: 0; padding: 10px 14px; border-radius: 6px; background: var(--seal-soft); color: var(--fg); font-size: 0.9rem; }
 /* 遊戲裡的 ANSI 顏色 */
 .a1 { font-weight: 700; }
@@ -591,9 +598,9 @@ svg.map .nm-long { font-size: 10px; }
 
 
   // ---------------------------------------------------------------- 計算機
-  // 計算機分頁：目前只有吞魂，之後可在 CALCS 加入其他計算機。
+  // 計算機分頁：夜叉吞魂、屬性成長，之後可在 CALCS 加入其他計算機。
   // 吞魂規則照 source/upstream/mudlib/daemon/race/yaksa/devour.c（docs/CUSTOM_RACE_A_H.md 夜叉段落）。
-  const CALCS = [{ key: 'devour', label: '夜叉吞魂' }];
+  const CALCS = [{ key: 'devour', label: '夜叉吞魂' }, { key: 'attr', label: '屬性成長' }];
   const RACES = [
     ['human', '人類'], ['avatar', '人類族'], ['blackteeth', '黑齒'], ['yenhold', '厭火'], ['jiaojao', '焦僥'],
     ['woochan', '無腸'], ['dingling', '釘靈'], ['headless', '刑天'], ['rainner', '雨師妾'], ['malik', '巫首'],
@@ -656,8 +663,110 @@ svg.map .nm-long { font-size: 10px; }
   function numField(id, label) {
     return `<label class="calc-field" for="calc-${id}"><span>${label}</span><input id="calc-${id}" data-calc="${id}" type="number" inputmode="numeric" min="0" step="1" value="${esc(calcVals[id])}" placeholder="${esc(CALC_HINT[id])}"></label>`;
   }
+  // ---- 屬性成長：規則全部來自遊戲程式（feature/char/skill.c），由 build_player_codex.py 讀進 D.attrCalc。
+  const AC = D.attrCalc;
+  const attrVals = { skill: AC.skills[0].code, thief: 'other', attr: '', lv: '', cap: '' };
+  try { Object.assign(attrVals, JSON.parse(localStorage.getItem('es2codex-attr') || '{}')); } catch (e) {}
+  if (!AC.skills.some(k => k.code === attrVals.skill)) attrVals.skill = AC.skills[0].code;
+  const acSkill = () => AC.skills.find(k => k.code === attrVals.skill);
+  const acStep = () => { const k = acSkill(); return (k.slowStep && attrVals.thief !== 'thief') ? k.slowStep : k.step; };
+  const acBase = v => { for (const [m, b] of AC.base) if (v <= m) return b; return AC.baseMax; };
+  // 機率以萬分之一計，和遊戲程式一樣先乘後除再取整數。
+  const acChance = (v, lv) => Math.min(10000, Math.floor(acBase(v) * (100 + lv) * AC.mulNum / AC.mulDen));
+  const pct1 = x => (Math.round(x) / 100).toFixed(1) + ' %';
+  function acThresholds(lv, cap) {
+    const st = acStep(), out = [];
+    for (let t = (Math.floor(lv / st) + 1) * st; t <= cap; t += st) out.push(t);
+    return out;
+  }
+  function attrOnce() {
+    const k = acSkill();
+    if (attrVals.attr === '' || attrVals.lv === '')
+      return '<h3>下一次增加屬性的機會</h3><p class="hint" style="margin:0">填入目前' + esc(k.attr) + '和目前技能等級後，這裡會顯示結果。</p>';
+    const a = num(attrVals.attr), lv = num(attrVals.lv), t = (Math.floor(lv / acStep()) + 1) * acStep();
+    const head = `<h3>下一次增加屬性的機會</h3><p style="margin:0">下一次擲骰：技能 <b>${t}</b> 級（還差 <b>${t - lv}</b> 級）</p>`;
+    if (k.fixed === t) return head + `<p class="calc-verdict ok">這一級固定${esc(k.attr)} +3，不用擲骰</p>`;
+    return head + `<p style="margin:0">增加${esc(k.attr)} +1 的機率　<span class="attr-big">${pct1(acChance(a, t))}</span></p>`;
+  }
+  function attrExpect() {
+    const k = acSkill();
+    if (attrVals.attr === '' || attrVals.lv === '' || attrVals.cap === '')
+      return '<h3>預期可達到的屬性</h3><p class="hint" style="margin:0">再填入天賦技能滿級後，這裡會顯示預期可以達到的' + esc(k.attr) + '。</p>';
+    const A = num(attrVals.attr), L = num(attrVals.lv), M = Math.min(num(attrVals.cap), 999);
+    const ths = acThresholds(L, M);
+    if (!ths.length) return '<h3>預期可達到的屬性</h3><p class="calc-verdict no">不會再有擲骰</p><p style="margin:0">目前技能等級到天賦滿級之間，沒有下一個擲骰的等級。</p>';
+    let dist = new Map([[A, 1]]);
+    const rows = [];
+    for (const t of ths) {
+      let ec = 0;
+      for (const [v, p] of dist) ec += p * acChance(v, t);
+      rows.push([t, ec]);
+      const nd = new Map();
+      const put = (v, p) => nd.set(v, (nd.get(v) || 0) + p);
+      for (const [v, p] of dist) {
+        if (k.fixed === t) { put(v + 3, p); continue; }
+        const c = acChance(v, t) / 10000;
+        put(v + 1, p * c); put(v, p * (1 - c));
+      }
+      dist = nd;
+    }
+    let ex = 0;
+    for (const [v, p] of dist) ex += v * p;
+    const ce = Math.ceil(ex - 1e-9);   // 預期值無條件進位到整數（使用者指示，2026-11-19）
+    const ks = [...dist.keys()].sort((x, y) => x - y);
+    const ge = n => { let s = 0; for (const [v, p] of dist) if (v >= A + n) s += p; return s * 100; };
+    const maxGain = ks[ks.length - 1] - A;
+    const marks = [];
+    for (const n of [1, 3, 5, 8, 10, 12, 15, 20]) if (n <= maxGain && ge(n) >= 0.05 && ge(n) <= 99.95) marks.push(n);
+    const shown = ks.filter(v => dist.get(v) >= 0.002), top = Math.max(...shown.map(v => dist.get(v)));
+    return `<h3>預期可達到的屬性</h3>
+      <p style="margin:0">從 <b>${ths[0]}</b> 級到 <b>${ths[ths.length - 1]}</b> 級，共擲 <b>${ths.length}</b> 次</p>
+      <p style="margin:0">預期${esc(k.attr)}　<span class="attr-big">${ce}</span>　（增加 ${ce - A} 點）</p>
+      <p style="margin:0">可能範圍　<b>${ks[0]} ～ ${ks[ks.length - 1]}</b></p>
+      ${marks.length ? `<h4 class="hint" style="margin:6px 0 0">增加幾點以上的機率</h4><div class="attr-grid">${marks.map(n => `<div>+${n} 點以上　<b>${pct1(ge(n) * 100)}</b></div>`).join('')}</div>` : ''}
+      <h4 class="hint" style="margin:6px 0 0">各增加點數的機率</h4>
+      <div class="attr-bars">${shown.map(v => `<div class="attr-bar${dist.get(v) === top ? ' top' : ''}"><span>+${v - A} 點</span><i style="width:${dist.get(v) / top * 100}%"></i><span>${pct1(dist.get(v) * 10000)}</span></div>`).join('')}</div>
+      <h4 class="hint" style="margin:6px 0 0">每個等級的成功機率（依預期屬性估算）</h4>
+      <div class="attr-grid">${rows.map(([t, c]) => `<div>${t} 級　${pct1(c)}</div>`).join('')}</div>
+      <p class="hint" style="margin:0">屬性是裸值（不含裝備）。每個等級一生只擲一次，已經練過的等級不補擲。</p>`;
+  }
+  function renderAttr() {
+    const k = acSkill();
+    const chips = `<div class="chips" role="group" aria-label="計算機">` + CALCS.map(c =>
+      `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${c.key === 'attr'}">${esc(c.label)}</button>`).join('') + '</div>';
+    const f = (id, label, hint) => `<label class="calc-field" for="attr-${id}"><span>${label}</span><input id="attr-${id}" data-attr="${id}" type="number" inputmode="numeric" min="0" step="1" value="${esc(attrVals[id])}" placeholder="${esc(hint)}"></label>`;
+    return `<div class="tools">${chips}</div><div class="calc">
+      <p class="calc-intro">輸入技能、目前的屬性和技能等級，推算下一次增加屬性的機會；再填天賦技能滿級，就能推算預期可以達到的屬性。</p>
+      <div class="calc-form"><fieldset><legend>你的狀況</legend>
+        <label class="calc-field" for="attr-skill"><span>技能</span><select id="attr-skill" data-attr="skill">${AC.skills.map(x => `<option value="${esc(x.code)}"${x.code === attrVals.skill ? ' selected' : ''}>${esc(x.name)}（增加${esc(x.attr)}）</option>`).join('')}</select></label>
+        <div id="attr-thief">${attrThiefField()}</div>
+        ${f('attr', '目前屬性', '例：28')}${f('lv', '目前技能等級', '例：47')}${f('cap', '天賦技能滿級', '例：120')}
+        <p class="hint" style="margin:0">屬性填裸值，不含裝備加成。</p></fieldset></div>
+      <div class="panel calc-out" id="attr-once" aria-live="polite">${attrOnce()}</div>
+      <div class="panel calc-out" id="attr-exp" aria-live="polite">${attrExpect()}</div>
+    </div>`;
+  }
+  function attrThiefField() {
+    const k = acSkill();
+    if (!k.slowStep) return '';
+    return `<label class="calc-field" for="attr-thief-sel"><span>職業</span><select id="attr-thief-sel" data-attr="thief"><option value="thief"${attrVals.thief === 'thief' ? ' selected' : ''}>盜賊</option><option value="other"${attrVals.thief !== 'thief' ? ' selected' : ''}>其他職業</option></select></label>`;
+  }
+  function onAttr(e) {
+    const el = e.target.closest && e.target.closest('[data-attr]');
+    if (!el) return;
+    const k = el.dataset.attr;
+    attrVals[k] = (k === 'skill' || k === 'thief' || el.value === '') ? el.value : String(num(el.value));
+    try { localStorage.setItem('es2codex-attr', JSON.stringify(attrVals)); } catch (e2) {}
+    if (k === 'skill') $('#attr-thief').innerHTML = attrThiefField();
+    $('#attr-once').innerHTML = attrOnce();
+    $('#attr-exp').innerHTML = attrExpect();
+  }
+  document.addEventListener('input', onAttr);
+  document.addEventListener('change', onAttr);
+
   function renderCalc() {
     const cur = state.sub.calc || CALCS[0].key;
+    if (cur === 'attr') return renderAttr();
     const chips = `<div class="chips" role="group" aria-label="計算機">` + CALCS.map(c =>
       `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${cur === c.key}">${esc(c.label)}</button>`).join('') + '</div>';
     const form = `<div class="calc-form">
