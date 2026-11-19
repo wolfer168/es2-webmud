@@ -36,6 +36,39 @@ SCHOOLS = [
 ]
 
 
+# 其他法術（conjure）與針灸（acupuncture）：(技能代碼, enable 的基本技能, 中文名, 先做的準備指令, [(指令, 中文名)], 技能要先設的其他技能)
+OTHERS = [
+    ('mao-shan magic', 'magic', '茅山法術', ['clone 40 /custom/item/scroll/blank'],
+     [('conjure blank', '空白符'), ('conjure yin', '少陰符'), ('conjure yang', '太陽符'), ('conjure nature', '先天符'),
+      ('conjure remedy', '療傷'), ('conjure vision', '陰陽眼')], []),
+    ('mao-shan mysticism', 'magic', '茅山道法【奇門術】', ['clone 40 /custom/item/scroll/yin'],
+     [('conjure memory', '記憶'), ('conjure recall', '招魂'), ('conjure collect on stake', '收魂'),
+      ('conjure slave on stake', '役使'), ('conjure devour', '吞噬')], ['taoism of darkness']),
+    ('taoism of dunja', 'magic', '茅山奇術【遁甲書】', [],
+     [('conjure fate', '天命'), ('conjure experience on chief', '經驗')], []),
+    ('chivi sutra', 'magic', '天師道法【紫薇心經】', [],
+     [('conjure fire_defence', '火防'), ('conjure storm_defence', '風防'), ('conjure freeze_defence', '冰防'),
+      ('conjure thunder_defence', '雷防'), ('conjure dispel', '解除')], []),
+    ('enchance', 'magic', '強化之術', ['clone /custom/weapon/sword/black_shortsword', 'wield sword'],
+     [('conjure silver_mark on sword', '銀咒'), ('conjure gold_mark on sword', '金咒')], []),
+    ('alchemy-wealth', 'magic', '丹道【黃白之術】', [],
+     [('conjure silver_seal on sword', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
+    ('alchemy-medication', 'magic', '丹道【神農之術】', ['clone /obj/alchemist/heat_reactor'],
+     [('conjure red_seal on reactor', '赤印封'), ('conjure red_dispel on reactor', '赤印解')], []),
+    ('amazing-needle', 'cauterization', '武陀灸術【驚異二針】', ['clone /custom/weapon/needle/iron_needle', 'wield needle'],
+     [('acupuncture amazing_armor to stake', '驚異霸甲針'), ('acupuncture amazing_power to stake', '驚異霸氣針'),
+      ('acupuncture self_test', '自測')], []),
+    ('wuto-needle', 'cauterization', '武陀灸術【五敗針法】', [],
+     [('acupuncture fear to stake', '敗膽一針'), ('acupuncture foul to stake', '敗骨二針'), ('acupuncture fail to stake', '敗膂三針'),
+      ('acupuncture fling to stake', '敗韌四針'), ('acupuncture fumble to stake', '敗敏五針')], []),
+    ('potency-needle', 'cauterization', '武陀灸術【引源針法】', [],
+     [('acupuncture fatigue to stake', '消疲'), ('acupuncture awareness to stake', '警覺'),
+      ('acupuncture move to stake', '移動'), ('acupuncture element to stake', '元素')], []),
+    ('recovery-needle', 'cauterization', '武陀灸術【三自回針法】', [],
+     [('acupuncture gin-up', '回精針'), ('acupuncture kee-up', '回氣針'), ('acupuncture sen-up', '回神針')], []),
+]
+
+
 def clean(raw):
     t = c.TELNET.sub(b'', raw).decode('utf-8', 'replace').replace('\r', '')
     t = re.sub(r'(?m)^(?:\x1b\[[0-9;]*m)*> ?', '', t)       # 提示符號
@@ -111,6 +144,22 @@ def main():
                 print(f'{cname} {sid}: {len(text)} 字元')
                 if sid == 'hydra':
                     run('call chief->heal_up()', 0.3)
+        for skill, usage, cname, pre, cmds, deps in OTHERS:
+            run('call me->set_skill("%s",200)' % skill, 0.4)
+            for d in deps:
+                run('call me->set_skill("%s",200)' % d, 0.4)
+            run('enable %s with %s' % (usage, skill), 0.6)
+            for pc in pre:
+                run(pc, 1.2)
+            for cmd, scname in cmds:
+                run('call me->start_busy(0)', 0.3)
+                run('call me->remove_all_enemy()', 0.3)
+                run('call stake->remove_all_enemy()', 0.3)
+                text = run(cmd, 1.4)
+                time.sleep(1.5)
+                results.append(dict(school=skill, school_cname=cname, spell=cmd.split()[1] if len(cmd.split()) > 1 else cmd,
+                                    spell_cname=scname, command=cmd, text=text))
+                print(f'{cname} {cmd}: {len(text)} 字元')
         s.send('quit')
     finally:
         proc.terminate()

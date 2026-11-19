@@ -25,6 +25,7 @@ CATEGORIES = [
     ('blade', '刀法'), ('twohanded blade', '雙手刀'), ('staff', '杖法'), ('twohanded staff', '雙握杖法'),
     ('pike', '槍法'), ('twohanded pike', '雙手槍'), ('axe', '斧術'), ('twohanded axe', '雙手斧'),
     ('dagger', '錐法'), ('secondhand dagger', '副手錐法'), ('parry', '招架'), ('dodge', '閃躲'), ('force', '內功'),
+    ('magic', '法術'), ('spells', '咒術'), ('cauterization', '灸術'),
 ]
 CAT_NAME = dict(CATEGORIES)
 WEAPON = {   # 範例武器名（取代 $w）
@@ -358,6 +359,9 @@ def chinese_names():
     return dict(re.findall(r'"([^"]+)":"([^"]*)"', s))
 
 
+NEEDLES = ('amazing-needle', 'wuto-needle', 'potency-needle', 'recovery-needle')   # 武陀灸堂針法（沒有 valid_enable，用 acupuncture 指令）
+
+
 def pick_arts():
     cn = chinese_names()
     arts = []
@@ -366,16 +370,25 @@ def pick_arts():
         if stem in GENERIC or stem.startswith(('twohanded_', 'secondhand_')):
             continue
         a = art_info(p)
+        if stem in NEEDLES:
+            a['enables'] = ['cauterization']
         cat = a['usage'] if a['ma'] else (a['enables'][0] if a['enables'] else None)
         if a['ma'] and a['usage'] and a['usage'] not in CAT_NAME:
             cat = a['usage']
         if cat not in CAT_NAME:
             continue
-        if not a['ma'] and cat not in ('dodge', 'force'):
+        if not a['ma'] and cat not in ('dodge', 'force', 'magic', 'spells', 'cauterization'):
+            continue
+        if stem.startswith('taoism-'):   # 天師四破的共用程式與四個外殼：施咒過程見「法術 cast」的實際畫面
             continue
         a['cat'] = cat
         a['name'] = a['cname'] or cn.get(stem.replace('_', ' ')) or cn.get(stem) or stem
         a['stem'] = stem
+        arts.append(a)
+    hdr = SKILL / 'wuto_needle.h'      # 針法共用的函式與敘述
+    if hdr.exists():
+        a = art_info(hdr)
+        a.update(cat='cauterization', enables=['cauterization'], name='針法共用（施針的共通敘述）', stem='wuto needle', file=hdr.name)
         arts.append(a)
     return arts
 
@@ -596,7 +609,7 @@ def load_factions():
         for sk in re.findall(r'"(?:skill|force)":\s*"([^"]+)"', fm.group(3)):
             skill_of.setdefault(norm(sk), key)
     # 設計文件指定、但對照表沒列到的門派武功（docs/martial_arts/瑯夷派_蝶影幻步.md、龍圖丹派_竹上經心法.md）
-    for sk, key in (('butterfly steps', ('thief', '瑯夷派')), ('zushang', ('alchemist', '龍圖丹派'))):
+    for sk, key in (('butterfly steps', ('thief', '瑯夷派')), ('zushang', ('alchemist', '龍圖丹派')), ('wuto needle', ('alchemist', '武陀灸堂'))):
         skill_of.setdefault(sk, key)
     return order, skill_of
 
@@ -613,7 +626,7 @@ def art_section(a, cat_note=True):
     extra = [CAT_NAME[e] for e in a['enables'] if e != a['cat'] and e in CAT_NAME]
     sub = (f'<small>{html.escape(CAT_NAME.get(a["cat"], ""))} · {html.escape(a["stem"])} · {html.escape(a["file"])}'
            + (f' · 也可 enable：{html.escape("、".join(extra))}' if extra else '') + '</small>')
-    body = [f'<section class="art"><h3>{html.escape(a["name"])}{sub}</h3>']
+    body = [f'<details class="art" open><summary><span class="t">{html.escape(a["name"])}</span>{sub}</summary>']
     if not a['entries']:
         body.append('<p class="empty">（沒有可顯示的敘述）</p>')
     last_label = None
@@ -627,7 +640,7 @@ def art_section(a, cat_note=True):
         tag += '</span>'
         nm = f'<span class="mv">{html.escape(e["name"])}</span>' if e['name'] else ''
         body.append(f'<div class="ent">{nm}<pre class="s">{e["sample"]}</pre><pre class="r">{e["raw"]}</pre>{tag}</div>')
-    body.append('</section>')
+    body.append('</details>')
     return ''.join(body)
 
 
@@ -678,7 +691,7 @@ def page(data):
     def spell_block(lst):
         out = []
         for scname, sid, boxes in lst:
-            out.append(f'<section class="art"><h3>{html.escape(scname)}<small>法術 cast · {html.escape(sid)}</small></h3>{"".join(boxes)}</section>')
+            out.append(f'<details class="art" open><summary><span class="t">{html.escape(scname)}</span><small>實際畫面 · {html.escape(sid)}</small></summary>{"".join(boxes)}</details>')
         return ''.join(out)
 
     for cls, cname in CLASS_ORDER:
@@ -731,13 +744,15 @@ nav a{{color:#8fb4ff;text-decoration:none;font-size:.9rem}}
 details{{scroll-margin-top:150px}}
 details.cls{{margin:18px 0 8px;border:1px solid var(--line);border-radius:8px;padding:0 10px 8px;background:#10151a}}
 details.cls>summary{{font-size:1.15rem;font-weight:700;padding:8px 2px}}
+details.art{{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:0 14px 12px;margin:10px 0}}
+details.art>summary{{font-size:1rem;font-weight:600;padding:8px 0}}
+details.art>summary small{{color:var(--muted);font-weight:400;font-size:.75rem;margin-left:10px}}
 details.fac{{margin:10px 0 4px;border-left:3px solid #3a4650;padding:0 0 0 10px}}
 details.fac>summary{{font-size:1.02rem;font-weight:600;padding:5px 2px;color:#c9d6e2}}
 summary{{cursor:pointer;list-style:none}}summary::-webkit-details-marker{{display:none}}
 summary::before{{content:"\\25BE";display:inline-block;width:1.1em;color:#8fb4ff}}details:not([open])>summary::before{{content:"\\25B8"}}
 summary .c{{color:var(--muted);font-weight:400;font-size:.78rem;margin-left:10px}}
 h3{{font-size:1rem;margin:16px 0 4px}}h3 small{{color:var(--muted);font-weight:400;font-size:.75rem;margin-left:10px}}h4{{font-size:.85rem;color:#c79a5a;margin:12px 0 4px}}
-.art{{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 14px 14px;margin:10px 0}}
 .ent{{margin:6px 0}}.meta{{display:block;font-size:.72rem;color:#6d767e;margin:0 0 6px 4px}}.mv{{display:inline-block;font-size:.72rem;color:#c79a5a;margin-left:4px}}
 pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1.5 "Noto Sans Mono","Noto Sans TC","PingFang TC",monospace;white-space:pre;overflow-x:auto;border-radius:3px}}
 .r{{display:none}}body.raw .r{{display:block}}body.raw .s{{display:none}}
@@ -749,7 +764,7 @@ pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1
 <p class="n">範例名稱：$N＝無聊的傢伙、$n＝石假人（練武假人）、$l＝右臂、$w＝該類武器；對假人出招時戰鬥系統會拿掉部位，招式敘述也照這樣呈現；程式裡的變數用〔 〕標出。招式與招架、閃避是接在戰鬥敘述裡的片段（命中、傷害的字句由戰鬥系統接在後面）。法術 cast 是實際施展時遊戲送出的完整畫面，前後空行也保留。實際色彩依 zMUD 設定而定，下面色票只是參考。</p>
 <div class="top">
 <div class="bar"><label><input type="checkbox" id="raw"> 顯示程式原文（$N、$n、$w 不替換）</label>
-<button data-act="open-all">全部展開</button><button data-act="close-fac">收合所有門派</button><button data-act="close-all">收合所有職業</button></div>
+<button data-act="open-all">全部展開</button><button data-act="close-art">收合所有武功</button><button data-act="close-fac">收合所有門派</button><button data-act="close-all">收合所有職業</button></div>
 <div class="pal">{palette}</div>
 <nav>{nav}</nav>
 </div>
@@ -759,6 +774,7 @@ document.getElementById('raw').addEventListener('change',e=>document.body.classL
 document.querySelectorAll('.bar button').forEach(b=>b.addEventListener('click',()=>{{
   const a=b.dataset.act, all=document.querySelectorAll('details');
   if(a==='open-all') all.forEach(d=>d.open=true);
+  if(a==='close-art') {{document.querySelectorAll('details.cls,details.fac').forEach(d=>d.open=true);document.querySelectorAll('details.art').forEach(d=>d.open=false);}}
   if(a==='close-fac') {{document.querySelectorAll('details.cls').forEach(d=>d.open=true);document.querySelectorAll('details.fac').forEach(d=>d.open=false);}}
   if(a==='close-all') document.querySelectorAll('details.cls').forEach(d=>d.open=false);
 }}));
