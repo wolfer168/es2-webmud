@@ -200,7 +200,7 @@ void hide_burst(object me, object victim)
 
     if( !can_follow(me, victim) ) return;
     if( random(me->query_attr("str")) <= random(victim->query_attr("str")) ) {
-        tell_object(victim, BLU "你壓制了體內的大邪氣勁。\n" NOR);   // 只有目標看得到
+        tell_object(victim, HIW "你壓制了體內的大邪氣勁。\n" NOR);   // 只有目標看得到
         return;
     }
 
@@ -208,7 +208,7 @@ void hide_burst(object me, object victim)
     dmg = sk + random(sk / 2 + 1) + me->query_attr("str");
     armor = natural_armor(victim);
     dmg -= armor;
-    message_vision(BLU "$N先前打入$n體內的大邪真氣忽然爆發開來﹐$n只覺周身氣血翻騰！\n" NOR, me, victim);
+    message_vision(HIR "$N先前打入$n體內的大邪真氣忽然爆發開來﹐$n只覺周身氣血翻騰！\n" NOR, me, victim);
     if( dmg > 0 ) victim->receive_damage(dmg, me, me);
     if( objectp(victim) ) show_status(victim, kee_ratio(victim));
 }
