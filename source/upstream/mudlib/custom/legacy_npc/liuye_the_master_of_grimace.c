@@ -11,6 +11,9 @@ inherit "/custom/legacy_npc/legacy_npc";
 
 #define FACTION "fighter.huge"
 
+#define FULL_HEAL_MAX   6       // 補滿的次數上限（每次重生重新計算；使用者指示，2026-11-19）
+#define FULL_HEAL_RATIO 20      // 氣或 HP 低於上限的百分之幾時補滿
+
 void create()
 {
     seteuid(getuid());
@@ -48,6 +51,36 @@ void create()
 }
 
 // ------------------------------------------------------------------
+// 戰鬥行為：氣或 HP 低於兩成時噴血補滿，每次重生最多六次（設計與梅影風、柳東蘆相同）。
+// ------------------------------------------------------------------
+
+private int low_stat(string what)
+{
+    int max = query_stat_maximum(what);
+    return max > 0 && query_stat(what) * 100 < max * FULL_HEAL_RATIO;
+}
+
+private void full_heal()
+{
+    foreach( string what in ({ "kee", "HP" }) ) {
+        if( query_stat_maximum(what) <= 0 ) continue;
+        set_stat_effective(what, query_stat_maximum(what));
+        set_stat_current(what, query_stat_maximum(what));
+    }
+    add_temp("liuye/full_heal", 1);
+    message_vision(HIR "$N怪叫一聲﹐「哇」地噴出一大灘鮮血﹐雙眼卻突然精光大盛！！\n" NOR, this_object());
+}
+
+static void heart_beat()
+{
+    ::heart_beat();
+    if( !this_object() || !living(this_object()) || !is_fighting() ) return;
+
+    if( query_temp("liuye/full_heal") < FULL_HEAL_MAX && (low_stat("kee") || low_stat("HP")) )
+        full_heal();
+}
+
+// ------------------------------------------------------------------
 // 拜師與傳授（使用者指示，2026-11-17：哭笑門師傅，主要武功青邪杖法）
 // ------------------------------------------------------------------
 
@@ -56,7 +89,7 @@ int accept_info(object ob, string type)
     return type == "skills";
 }
 
-/* 拜師條件：平民（尚未加入任何職業）。拜師後成為武者（哭笑門弟子）。 */
+/* 拜師條件：平民（尚未加入任何職業）。拜師後成為武者（稱號「哭笑門武士」）。 */
 int accept_apprentice(object me)
 {
     if( me->query_class() != "commoner" ) {
@@ -70,7 +103,7 @@ int init_apprentice(object me)
 {
     if( ::init_apprentice(me) ) {
         me->set_class("fighter");
-        me->set("title", "哭笑門弟子");
+        me->set("title", "哭笑門武士");
         me->set("custom_faction", FACTION);
         command("emote 先是仰天大笑，繼而又眼眶泛紅，好一會兒才止住。");
         command("say 好，從今日起，你就是哭笑門的人了。");
