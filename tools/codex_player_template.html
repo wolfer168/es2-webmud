@@ -151,6 +151,23 @@ svg.map .nm-long { font-size: 10px; }
 .affix-chip { display: inline-block; padding: 1px 8px; border-radius: 4px; font-weight: 700; letter-spacing: .05em;
   background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 35%, transparent); }
 .affix-chip + .affix-chip { margin-left: 2px; }
+/* 計算機 */
+.calc { display: grid; gap: 16px; padding-top: 16px; max-width: 860px; }
+.calc-intro { margin: 0; line-height: 1.8; }
+.calc-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.calc-form fieldset { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); margin: 0; padding: 10px 14px 14px; display: grid; gap: 8px; min-width: 0; }
+.calc-form legend { font: 600 1rem var(--serif); padding: 0 4px; }
+.calc-field { display: grid; grid-template-columns: 5.5em minmax(0, 1fr); align-items: center; gap: 8px; font-size: 0.92rem; }
+.calc-field input, .calc-field select { width: 100%; min-width: 0; font: 0.95rem var(--sans); font-variant-numeric: tabular-nums; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.calc-field input:focus, .calc-field select:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+.calc-out { display: grid; gap: 10px; }
+.calc-verdict { font: 700 1.1rem var(--serif); margin: 0; }
+.calc-verdict.ok { color: var(--accent); }
+.calc-verdict.no { color: var(--seal); }
+.calc-out table { width: 100%; }
+.calc-out th, .calc-out td { white-space: nowrap; }
+.calc-out td.v { padding-right: 10px; }
+.calc-note { margin: 0; padding: 10px 14px; border-radius: 6px; background: var(--seal-soft); color: var(--fg); font-size: 0.9rem; }
 /* 遊戲裡的 ANSI 顏色 */
 .a1 { font-weight: 700; }
 .a30 { color: var(--c-black); } .a31 { color: var(--c-red); } .a32 { color: var(--c-green); } .a33 { color: var(--c-yellow); }
@@ -224,6 +241,7 @@ svg.map .nm-long { font-size: 10px; }
     { key: 'weapons', label: '武器' },
     { key: 'armors', label: '防具' },
     { key: 'items', label: '物品' },
+    { key: 'calc', label: '計算機' },
   ];
   const state = { tab: 'areas', q: '', sub: {}, open: null, area: D.areas[0] && D.areas[0].key, room: null };
   try { const t = localStorage.getItem('es2codex-tab'); if (t && TABS.some(x => x.key === t)) state.tab = t; } catch (e) {}
@@ -563,9 +581,99 @@ svg.map .nm-long { font-size: 10px; }
     return `<div class="tools">${chips}</div>${stats}<div class="area-grid" style="margin-top:12px"><div class="map-box">${maps}${legend}</div><div class="side">${roomPanel}${npcPanel}</div></div>`;
   }
 
+
+  // ---------------------------------------------------------------- 計算機
+  // 計算機分頁：目前只有吞魂，之後可在 CALCS 加入其他計算機。
+  // 吞魂規則照 source/upstream/mudlib/daemon/race/yaksa/devour.c（docs/CUSTOM_RACE_A_H.md 夜叉段落）。
+  const CALCS = [{ key: 'devour', label: '夜叉吞魂' }];
+  const RACES = [
+    ['human', '人類'], ['avatar', '人類族'], ['blackteeth', '黑齒'], ['yenhold', '厭火'], ['jiaojao', '焦僥'],
+    ['woochan', '無腸'], ['dingling', '釘靈'], ['headless', '刑天'], ['rainner', '雨師妾'], ['malik', '巫首'],
+    ['yaksa', '夜叉'], ['ashura', '阿修羅'],
+  ];
+  const calcVals = { sg: 1000, sk: 300, ss: 300, tg: 1000, tk: 300, ts: 300, race: 'human', big: 0 };
+  try { Object.assign(calcVals, JSON.parse(localStorage.getItem('es2codex-devour') || '{}')); } catch (e) {}
+
+  function devourEstimate(v) {
+    const n = Math.max(0, Math.floor(v.big)), sg = Math.max(0, v.sg), G0 = Math.max(0, v.tg);
+    const yaksa = v.race === 'yaksa';
+    const extra = n >= 10 ? n - 9 : 0;
+    const need = yaksa ? 250 + 25 * extra : 500 + 50 * extra;
+    const r = { need, n, ghostOk: G0 >= need, selfOk: sg >= need, yaksa };
+    if (!r.ghostOk || !r.selfOk) return r;
+    const G = yaksa ? G0 * 2 : G0;
+    // 前 10 次必定大幅；之後機率 = 10 / (10 + random(n))，取平均。
+    let p = 1;
+    if (n >= 10) { p = 0; for (let i = 0; i < n; i++) p += 10 / (10 + i); p /= n; }
+    const g40 = Math.floor(G / 40), g80 = Math.floor(G / 80);
+    r.p = p;
+    r.bigGain = { gin: [1 + g40, 1 + g40], kee: [1, Math.max(1, g40)], sen: [1, Math.max(1, g80)] };
+    r.smallGain = { gin: [1, 2], kee: [0, 1], sen: [0, 0] };
+    return r;
+  }
+  function rng(a) { return a[0] === a[1] ? String(a[0]) : `${a[0]}～${a[1]}`; }
+  function devourResult(v) {
+    const r = devourEstimate(v);
+    const lines = [`<p class="hint" style="margin:0">這是你第 ${r.n + 1} 次有效吞魂（依你填的大幅次數估算），門檻 ${r.need}${r.yaksa ? '（夜叉族的魂魄門檻減半）' : ''}。</p>`];
+    // 前 10 次有效吞魂一定是大幅，所以大幅次數未滿 10 時就等於有效次數；滿 10 次後可能有小幅，實際門檻可能更高。
+    if (r.n >= 10) lines.push('<p class="hint" style="margin:0">大幅次數已滿十次：之後可能有過小幅增加，實際的有效吞魂次數與門檻可能比這裡高。</p>');
+    if (!r.ghostOk || !r.selfOk) {
+      const why = [];
+      if (!r.ghostOk) why.push(`目標的精最大值 ${v.tg} 未達門檻`);
+      if (!r.selfOk) why.push(`你的精最大值 ${v.sg} 未達門檻`);
+      return `<p class="calc-verdict no">不會增加精氣神</p>${lines.join('')}<p style="margin:0">${why.join('；')}。這次吞魂不加成、不計數，但對方照樣魂飛魄散。</p>`;
+    }
+    const pct = Math.round(r.p * 1000) / 10;
+    const row = (label, g, chance) => `<tr><td>${label}</td><td class="v">${chance}</td><td class="v">${rng(g.gin)}</td><td class="v">${rng(g.kee)}</td><td class="v">${rng(g.sen)}</td></tr>`;
+    const after = (k, base) => {
+      const lo = base + Math.min(r.bigGain[k][0], r.smallGain[k][0]), hi = base + Math.max(r.bigGain[k][1], r.smallGain[k][1]);
+      return lo === hi ? String(lo) : `${lo}～${hi}`;
+    };
+    const small = r.p < 1 ? row('小幅增加', r.smallGain, `${Math.round((100 - pct) * 10) / 10}%`) : '';
+    const afterRow = r.p < 1
+      ? `<tr><td>吞後最大值</td><td class="v"></td><td class="v">${after('gin', v.sg)}</td><td class="v">${after('kee', v.sk)}</td><td class="v">${after('sen', v.ss)}</td></tr>`
+      : `<tr><td>吞後最大值</td><td class="v"></td><td class="v">${rng(r.bigGain.gin.map(x => x + v.sg))}</td><td class="v">${rng(r.bigGain.kee.map(x => x + v.sk))}</td><td class="v">${rng(r.bigGain.sen.map(x => x + v.ss))}</td></tr>`;
+    return `<p class="calc-verdict ok">會增加精氣神</p>${lines.join('')}` +
+      `<div class="tbl-wrap"><table><thead><tr><th></th><th>機率</th><th>精</th><th>氣</th><th>神</th></tr></thead><tbody>` +
+      row('大幅增加', r.bigGain, `${pct}%`) + small + afterRow + `</tbody></table></div>` +
+      (r.yaksa ? '<p class="hint" style="margin:0">吞夜叉族的魂魄，增加的量以兩倍的精計算。</p>' : '');
+  }
+  function numField(id, label) {
+    return `<label class="calc-field" for="calc-${id}"><span>${label}</span><input id="calc-${id}" data-calc="${id}" type="number" inputmode="numeric" min="0" step="1" value="${esc(calcVals[id])}"></label>`;
+  }
+  function renderCalc() {
+    const cur = state.sub.calc || CALCS[0].key;
+    const chips = `<div class="chips" role="group" aria-label="計算機">` + CALCS.map(c =>
+      `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${cur === c.key}">${esc(c.label)}</button>`).join('') + '</div>';
+    const form = `<div class="calc-form">
+      <fieldset><legend>你（夜叉）</legend>${numField('sg', '精最大值')}${numField('sk', '氣最大值')}${numField('ss', '神最大值')}
+        ${numField('big', '大幅次數')}<p class="hint" style="margin:0">大幅次數：至今吞下的魂魄中令你功力大進的次數，在遊戲裡不加目標吞魂就能查看。</p></fieldset>
+      <fieldset><legend>目標（玩家的鬼魂）</legend>${numField('tg', '精最大值')}${numField('tk', '氣最大值')}${numField('ts', '神最大值')}
+        <label class="calc-field" for="calc-race"><span>種族</span><select id="calc-race" data-calc="race">${RACES.map(([k, l]) => `<option value="${k}"${calcVals.race === k ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
+        <p class="hint" style="margin:0">填目標角色的最大值，不是變成鬼魂後剩下的量。目標的氣、神不影響結果。</p></fieldset>
+    </div>`;
+    return `<div class="tools">${chips}</div><div class="calc">
+      <p class="calc-intro">輸入你和目標的精、氣、神，估算吞下這縷魂魄後可能增加的數值。只計算吞食玩家的魂魄；吞鬼魂 NPC 只會回復精、神，不會永久增加。</p>
+      ${form}
+      <div class="panel calc-out" id="calc-out" aria-live="polite">${devourResult(calcVals)}</div>
+      <p class="calc-note">此數據為估算數值，每次吞魂皆有隨機性。</p>
+    </div>`;
+  }
+  function onCalc(e) {
+    const el = e.target.closest && e.target.closest('[data-calc]');
+    if (!el) return;
+    const k = el.dataset.calc;
+    calcVals[k] = k === 'race' ? el.value : Math.max(0, parseInt(el.value, 10) || 0);
+    try { localStorage.setItem('es2codex-devour', JSON.stringify(calcVals)); } catch (e2) {}
+    const out = $('#calc-out');
+    if (out) out.innerHTML = devourResult(calcVals);
+  }
+  document.addEventListener('input', onCalc);
+  document.addEventListener('change', onCalc);
+
   // ---------------------------------------------------------------- 事件
   function render() {
-    const f = { skills: renderSkills, weapons: renderWeapons, armors: renderArmors, items: renderItems, npcs: renderNpcs, factions: renderFactions, areas: renderAreas }[state.tab];
+    const f = { skills: renderSkills, weapons: renderWeapons, armors: renderArmors, items: renderItems, npcs: renderNpcs, factions: renderFactions, areas: renderAreas, calc: renderCalc }[state.tab];
     const hadFocus = document.activeElement && document.activeElement.id === 'q';
     const pos = hadFocus ? document.activeElement.selectionStart : 0;
     $('#main').innerHTML = f();
