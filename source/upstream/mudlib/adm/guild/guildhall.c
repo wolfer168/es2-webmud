@@ -20,6 +20,6 @@ LONG
     ]));
 
     setup();
-    // load_object("/daemon/board/wizard");
+    load_object("/daemon/board/wizard_board");   // 巫師留言板
     replace_program (ROOM);
 }

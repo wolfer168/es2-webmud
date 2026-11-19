@@ -199,6 +199,19 @@ varargs object make_corpse (object victim, object killer) {
     if (!killer)
         killer = victim->last_damage_giver();
 
+    // 玩家最近一次死亡的紀錄（使用者指示，2026-11-15）：夜叉吞魂紀錄要查「是誰殺的」。
+    // 變成鬼魂後精會一直流失，最後傷害者會變成自己，所以要在死亡這一刻記下來。
+    if (userp (victim))
+        victim->set ("last_death", ([
+            "time":   time(),
+            "killer": !objectp(killer) ? "不明"
+                    : killer == victim ? "自己（中毒、飢渴或其他非他人造成）"
+                    : sprintf("%s%s(%s)", userp(killer) ? "玩家 " : "NPC ",
+                        killer->name(1), userp(killer) ? killer->query("id")
+                        : base_name(killer)),
+            "room":   environment(victim) ? base_name(environment(victim)) : "不明",
+        ]));
+
     if (objectp (killer)) {
         // Player-killing
         if (userp (victim) && userp (killer) && (victim != killer) && (victim->query_level() > 1) ) {

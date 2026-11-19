@@ -14,11 +14,16 @@ private string *taught_skills = ({
 void create(){
     set_name("魯熙年", ({"lu xinien","lu","xinien","魯熙年"}));
     set_race("human");
-    set_class("soldier"); set_level(25);
+    set_class("soldier"); set_level(50);
     set("gender","male");
+    set("age", 35);
     set("title","徵兵官");
     set("long", "魯熙年是一個身材微胖的中年武官﹐兩眼瞇成一條線﹐臉上總是露出似笑非笑的古怪表情。魯熙年同時也是振武營負責招募新兵的募兵官，如果你想從軍，請向他，辦理入伍(enlist)手續。\n");
-    set_power("B");
+    set_power("A");
+    // 狂擊亂鬥 200 級（使用者指示，2026-11-19）。手動指定的狂擊系統不會自動加戰鬥動作，這裡自己補上。
+    set_skill("berserk", 200);
+    set("chat_chance_combat", 30);
+    set("chat_msg_combat", ({ (: command, "berserk" :) }));
     setup();
     foreach(string sk in taught_skills)
         set_skill(sk, 70);

@@ -151,6 +151,38 @@ svg.map .nm-long { font-size: 10px; }
 .affix-chip { display: inline-block; padding: 1px 8px; border-radius: 4px; font-weight: 700; letter-spacing: .05em;
   background: color-mix(in srgb, currentColor 14%, transparent); border: 1px solid color-mix(in srgb, currentColor 35%, transparent); }
 .affix-chip + .affix-chip { margin-left: 2px; }
+/* 計算機 */
+.calc { display: grid; gap: 16px; padding-top: 16px; max-width: 860px; }
+.calc-intro { margin: 0; line-height: 1.8; }
+.calc-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.calc-form fieldset { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); margin: 0; padding: 10px 14px 14px; display: grid; gap: 8px; min-width: 0; }
+.calc-form legend { font: 600 1rem var(--serif); padding: 0 4px; }
+.calc-field { display: grid; grid-template-columns: 5.5em minmax(0, 1fr); align-items: center; gap: 8px; font-size: 0.92rem; }
+.calc-field input, .calc-field select { width: 100%; min-width: 0; font: 0.95rem var(--sans); font-variant-numeric: tabular-nums; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.calc-field input::placeholder { color: var(--muted); opacity: 0.75; }
+.calc-field input:focus, .calc-field select:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+.calc-out { display: grid; gap: 10px; }
+.calc-out h3 { margin: 0; }
+.calc-verdict { font: 700 1rem var(--sans); margin: 0; }
+.calc-verdict.ok { color: var(--accent); }
+.calc-verdict.no { color: var(--seal); }
+.calc-out table { width: 100%; table-layout: fixed; min-width: 30em; }
+.calc-out th, .calc-out td { white-space: nowrap; padding: 6px 12px 6px 0; }
+.calc-out th:first-child, .calc-out td:first-child { width: 7em; text-align: left; }
+.calc-out th:not(:first-child), .calc-out td:not(:first-child) { text-align: right; }
+@media (max-width: 560px) {
+  .calc-out table { min-width: 0; font-size: 0.8rem; }
+  .calc-out th, .calc-out td { padding-right: 6px; }
+  .calc-out th:first-child, .calc-out td:first-child { width: 5.6em; }
+}
+.attr-big { font: 700 1.9rem var(--serif); color: var(--seal); }
+.attr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 16px; font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+.attr-bars { display: grid; gap: 3px; }
+.attr-bar { display: grid; grid-template-columns: 4.2em minmax(0, 1fr) 4.2em; gap: 8px; align-items: center; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.attr-bar i { display: block; height: 12px; background: var(--accent); border-radius: 2px; }
+.attr-bar.top i { background: var(--seal); }
+.attr-bar span:last-child { text-align: right; }
+.calc-note { margin: 0; padding: 10px 14px; border-radius: 6px; background: var(--seal-soft); color: var(--fg); font-size: 0.9rem; }
 /* 遊戲裡的 ANSI 顏色 */
 .a1 { font-weight: 700; }
 .a30 { color: var(--c-black); } .a31 { color: var(--c-red); } .a32 { color: var(--c-green); } .a33 { color: var(--c-yellow); }
@@ -161,6 +193,10 @@ svg.map .nm-long { font-size: 10px; }
   .row-head .sum { grid-column: 1 / -1; grid-row: 2; }
 }
 @media (prefers-reduced-motion: no-preference) { .row-head { transition: background 0.12s; } }
+/* 嵌入遊戲網頁的計算機視窗（?embed=calc）：只留計算機分頁，固定深色 */
+html.embed header, html.embed #tabs { display: none; }
+html.embed .calc { padding-top: 8px; max-width: none; }
+html.embed .tools { padding-top: 10px; }
 </style>
 </head>
 <body>
@@ -181,6 +217,9 @@ svg.map .nm-long { font-size: 10px; }
 <script>
 (function () {
   const D = JSON.parse(document.getElementById('codex-data').textContent);
+  // 嵌入模式：遊戲網頁左側「計算機」視窗用，只顯示計算機分頁，並固定深色配色。
+  const EMBED = /[?&]embed=calc(?:&|$)/.test(location.search);
+  if (EMBED) { document.documentElement.classList.add('embed'); document.documentElement.setAttribute('data-theme', 'dark'); }
   const $ = (s, el) => (el || document).querySelector(s);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const plain = s => String(s || '').replace(/\x1b\[[0-9;]*m/g, '');
@@ -224,9 +263,11 @@ svg.map .nm-long { font-size: 10px; }
     { key: 'weapons', label: '武器' },
     { key: 'armors', label: '防具' },
     { key: 'items', label: '物品' },
+    { key: 'calc', label: '計算機' },
   ];
   const state = { tab: 'areas', q: '', sub: {}, open: null, area: D.areas[0] && D.areas[0].key, room: null };
   try { const t = localStorage.getItem('es2codex-tab'); if (t && TABS.some(x => x.key === t)) state.tab = t; } catch (e) {}
+  if (EMBED) state.tab = 'calc';
   const hash = location.hash.replace('#', '');
   if (TABS.some(x => x.key === hash)) state.tab = hash;
 
@@ -243,7 +284,7 @@ svg.map .nm-long { font-size: 10px; }
   function go(tab, opts) {
     state.tab = tab; state.open = null; state.q = '';
     Object.assign(state, opts || {});
-    try { localStorage.setItem('es2codex-tab', tab); } catch (e) {}
+    if (!EMBED) try { localStorage.setItem('es2codex-tab', tab); } catch (e) {}
     drawTabs(); render();
     if (state.open) {
       const el = document.querySelector(`[data-row="${CSS.escape(state.open)}"]`);
@@ -563,9 +604,258 @@ svg.map .nm-long { font-size: 10px; }
     return `<div class="tools">${chips}</div>${stats}<div class="area-grid" style="margin-top:12px"><div class="map-box">${maps}${legend}</div><div class="side">${roomPanel}${npcPanel}</div></div>`;
   }
 
+
+  // ---------------------------------------------------------------- 計算機
+  // 計算機分頁：夜叉吞魂、屬性成長，之後可在 CALCS 加入其他計算機。
+  // 吞魂規則照 source/upstream/mudlib/daemon/race/yaksa/devour.c（docs/CUSTOM_RACE_A_H.md 夜叉段落）。
+  const CALCS = [{ key: 'devour', label: '夜叉吞魂' }, { key: 'attr', label: '屬性成長' }, { key: 'level', label: '升級經驗' }];
+  const RACES = [
+    ['human', '人類'], ['avatar', '人類族'], ['blackteeth', '黑齒'], ['yenhold', '厭火'], ['jiaojao', '焦僥'],
+    ['woochan', '無腸'], ['dingling', '釘靈'], ['headless', '刑天'], ['rainner', '雨師妾'], ['malik', '巫首'],
+    ['yaksa', '夜叉'], ['ashura', '阿修羅'],
+  ];
+  // 數值欄預設空白，灰字範例只是提示（使用者指示，2026-11-19）；空白的欄位不當成 0 帶入結果。
+  const CALC_HINT = { sg: '例：1000', sk: '例：300', ss: '例：300', big: '例：0', tg: '例：1000', tk: '例：300', ts: '例：300' };
+  const calcVals = { sg: '', sk: '', ss: '', tg: '', tk: '', ts: '', race: 'human', big: '' };
+  try { Object.assign(calcVals, JSON.parse(localStorage.getItem('es2codex-devour2') || '{}')); } catch (e) {}
+  const num = x => (x === '' || x == null) ? 0 : Math.max(0, Math.floor(Number(x)) || 0);
+
+  function devourEstimate(v) {
+    const n = num(v.big), sg = num(v.sg), G0 = num(v.tg);
+    const yaksa = v.race === 'yaksa';
+    const extra = n >= 10 ? n - 9 : 0;
+    const need = yaksa ? 250 + 25 * extra : 500 + 50 * extra;
+    const r = { need, n, ghostOk: G0 >= need, selfOk: sg >= need, yaksa };
+    if (!r.ghostOk || !r.selfOk) return r;
+    const G = yaksa ? G0 * 2 : G0;
+    // 大幅機率照 devour.c 的 big_chance()（千分比）：第 1～10 次 100%，第 20 次 20%，第 30 次起 5%。
+    const BIG_CHANCE = [851, 725, 617, 525, 447, 381, 324, 276, 235, 200, 174, 152, 132, 115, 100, 87, 76, 66, 57, 50];
+    const nth = n + 1;
+    const p = (nth <= 10 ? 1000 : nth > 30 ? 50 : BIG_CHANCE[nth - 11]) / 1000;
+    const g40 = Math.floor(G / 40), g80 = Math.floor(G / 80);
+    r.p = p;
+    r.bigGain = { gin: [1 + g40, 1 + g40], kee: [1, Math.max(1, g40)], sen: [1, Math.max(1, g80)] };
+    r.smallGain = { gin: [1, 2], kee: [0, 1], sen: [0, 0] };
+    return r;
+  }
+  function rng(a) { return a[0] === a[1] ? String(a[0]) : `${a[0]}～${a[1]}`; }
+  function devourResult(v) {
+    if (v.sg === '' || v.tg === '')
+      return '<h3>結果</h3><p class="hint" style="margin:0">填入你和目標的精最大值後，這裡會顯示估算結果。</p>';
+    const r = devourEstimate(v);
+    const lines = [`<p class="hint" style="margin:0">這是你第 ${r.n + 1} 次有效吞魂（依你填的大幅次數估算），門檻 ${r.need}${r.yaksa ? '（夜叉族的魂魄門檻減半）' : ''}。</p>`];
+    // 前 10 次有效吞魂一定是大幅，所以大幅次數未滿 10 時就等於有效次數；滿 10 次後可能有小幅，實際門檻可能更高。
+    if (r.n >= 10) lines.push('<p class="hint" style="margin:0">大幅次數已滿十次：之後可能有過小幅增加，實際的有效吞魂次數與門檻可能比這裡高。</p>');
+    if (!r.ghostOk || !r.selfOk) {
+      const why = [];
+      if (!r.ghostOk) why.push(`目標的精最大值 ${v.tg} 未達門檻`);
+      if (!r.selfOk) why.push(`你的精最大值 ${v.sg} 未達門檻`);
+      return `<h3>結果</h3><p class="calc-verdict no">不會增加精氣神</p>${lines.join('')}<p style="margin:0">${why.join('；')}。這次吞魂不加成、不計數，但對方照樣魂飛魄散。</p>`;
+    }
+    const pct = Math.round(r.p * 1000) / 10;
+    const row = (label, g, chance) => `<tr><td>${label}</td><td class="v">${chance}</td><td class="v">${rng(g.gin)}</td><td class="v">${rng(g.kee)}</td><td class="v">${rng(g.sen)}</td></tr>`;
+    // 吞後最大值：自己這一項沒填就不顯示。
+    const after = (k, base) => {
+      if (base === '') return '—';
+      const b = num(base), g = r.bigGain[k], sm = r.smallGain[k];
+      const lo = b + (r.p < 1 ? Math.min(g[0], sm[0]) : g[0]), hi = b + (r.p < 1 ? Math.max(g[1], sm[1]) : g[1]);
+      return lo === hi ? String(lo) : `${lo}～${hi}`;
+    };
+    const small = r.p < 1 ? row('小幅增加', r.smallGain, `${Math.round((100 - pct) * 10) / 10}%`) : '';
+    const afterRow = `<tr><td>吞後最大值</td><td class="v"></td><td class="v">${after('gin', v.sg)}</td><td class="v">${after('kee', v.sk)}</td><td class="v">${after('sen', v.ss)}</td></tr>`;
+    return `<h3>結果</h3><p class="calc-verdict ok">會增加精氣神</p>${lines.join('')}` +
+      `<div class="tbl-wrap"><table><thead><tr><th></th><th>機率</th><th>精</th><th>氣</th><th>神</th></tr></thead><tbody>` +
+      row('大幅增加', r.bigGain, `${pct}%`) + small + afterRow + `</tbody></table></div>` +
+      (r.yaksa ? '<p class="hint" style="margin:0">吞夜叉族的魂魄，增加的量以兩倍的精計算。</p>' : '');
+  }
+  function numField(id, label) {
+    return `<label class="calc-field" for="calc-${id}"><span>${label}</span><input id="calc-${id}" data-calc="${id}" type="number" inputmode="numeric" min="0" step="1" value="${esc(calcVals[id])}" placeholder="${esc(CALC_HINT[id])}"></label>`;
+  }
+  // ---- 屬性成長：規則全部來自遊戲程式（feature/char/skill.c），由 build_player_codex.py 讀進 D.attrCalc。
+  const AC = D.attrCalc;
+  const attrVals = { skill: AC.skills[0].code, thief: 'other', attr: '', lv: '', cap: '' };
+  try { Object.assign(attrVals, JSON.parse(localStorage.getItem('es2codex-attr') || '{}')); } catch (e) {}
+  if (!AC.skills.some(k => k.code === attrVals.skill)) attrVals.skill = AC.skills[0].code;
+  const acSkill = () => AC.skills.find(k => k.code === attrVals.skill);
+  const acStep = () => { const k = acSkill(); return (k.slowStep && attrVals.thief !== 'thief') ? k.slowStep : k.step; };
+  const acBase = v => { for (const [m, b] of AC.base) if (v <= m) return b; return AC.baseMax; };
+  // 機率以萬分之一計，和遊戲程式一樣先乘後除再取整數。
+  const acChance = (v, lv) => Math.min(10000, Math.floor(acBase(v) * (100 + lv) * AC.mulNum / AC.mulDen));
+  const pct1 = x => (Math.round(x) / 100).toFixed(1) + ' %';
+  function acThresholds(lv, cap) {
+    const st = acStep(), out = [];
+    for (let t = (Math.floor(lv / st) + 1) * st; t <= cap; t += st) out.push(t);
+    return out;
+  }
+  function attrOnce() {
+    const k = acSkill();
+    if (attrVals.attr === '' || attrVals.lv === '')
+      return '<h3>下一次增加屬性的機會</h3><p class="hint" style="margin:0">填入目前' + esc(k.attr) + '和目前技能等級後，這裡會顯示結果。</p>';
+    const a = num(attrVals.attr), lv = num(attrVals.lv), t = (Math.floor(lv / acStep()) + 1) * acStep();
+    const head = `<h3>下一次增加屬性的機會</h3><p style="margin:0">下一次擲骰：技能 <b>${t}</b> 級（還差 <b>${t - lv}</b> 級）</p>`;
+    if (k.fixed === t) return head + `<p class="calc-verdict ok">這一級固定${esc(k.attr)} +3，不用擲骰</p>`;
+    return head + `<p style="margin:0">增加${esc(k.attr)} +1 的機率　<span class="attr-big">${pct1(acChance(a, t))}</span></p>`;
+  }
+  function attrExpect() {
+    const k = acSkill();
+    if (attrVals.attr === '' || attrVals.lv === '' || attrVals.cap === '')
+      return '<h3>預期可達到的屬性</h3><p class="hint" style="margin:0">再填入天賦技能滿級後，這裡會顯示預期可以達到的' + esc(k.attr) + '。</p>';
+    const A = num(attrVals.attr), L = num(attrVals.lv), M = Math.min(num(attrVals.cap), 999);
+    const ths = acThresholds(L, M);
+    if (!ths.length) return '<h3>預期可達到的屬性</h3><p class="calc-verdict no">不會再有擲骰</p><p style="margin:0">目前技能等級到天賦滿級之間，沒有下一個擲骰的等級。</p>';
+    let dist = new Map([[A, 1]]);
+    const rows = [];
+    for (const t of ths) {
+      let ec = 0;
+      for (const [v, p] of dist) ec += p * acChance(v, t);
+      rows.push([t, ec]);
+      const nd = new Map();
+      const put = (v, p) => nd.set(v, (nd.get(v) || 0) + p);
+      for (const [v, p] of dist) {
+        if (k.fixed === t) { put(v + 3, p); continue; }
+        const c = acChance(v, t) / 10000;
+        put(v + 1, p * c); put(v, p * (1 - c));
+      }
+      dist = nd;
+    }
+    let ex = 0;
+    for (const [v, p] of dist) ex += v * p;
+    const ce = Math.ceil(ex - 1e-9);   // 預期值無條件進位到整數（使用者指示，2026-11-19）
+    const ks = [...dist.keys()].sort((x, y) => x - y);
+    const ge = n => { let s = 0; for (const [v, p] of dist) if (v >= A + n) s += p; return s * 100; };
+    const maxGain = ks[ks.length - 1] - A;
+    const marks = [];
+    for (const n of [1, 3, 5, 8, 10, 12, 15, 20]) if (n <= maxGain && ge(n) >= 0.05 && ge(n) <= 99.95) marks.push(n);
+    const shown = ks.filter(v => dist.get(v) >= 0.002), top = Math.max(...shown.map(v => dist.get(v)));
+    return `<h3>預期可達到的屬性</h3>
+      <p style="margin:0">從 <b>${ths[0]}</b> 級到 <b>${ths[ths.length - 1]}</b> 級，共擲 <b>${ths.length}</b> 次</p>
+      <p style="margin:0">預期${esc(k.attr)}　<span class="attr-big">${ce}</span>　（增加 ${ce - A} 點）</p>
+      <p style="margin:0">可能範圍　<b>${ks[0]} ～ ${ks[ks.length - 1]}</b></p>
+      ${marks.length ? `<h4 class="hint" style="margin:6px 0 0">增加幾點以上的機率</h4><div class="attr-grid">${marks.map(n => `<div>+${n} 點以上　<b>${pct1(ge(n) * 100)}</b></div>`).join('')}</div>` : ''}
+      <h4 class="hint" style="margin:6px 0 0">各增加點數的機率</h4>
+      <div class="attr-bars">${shown.map(v => `<div class="attr-bar${dist.get(v) === top ? ' top' : ''}"><span>+${v - A} 點</span><i style="width:${dist.get(v) / top * 100}%"></i><span>${pct1(dist.get(v) * 10000)}</span></div>`).join('')}</div>
+      <h4 class="hint" style="margin:6px 0 0">每個等級的成功機率（依預期屬性估算）</h4>
+      <div class="attr-grid">${rows.map(([t, c]) => `<div>${t} 級　${pct1(c)}</div>`).join('')}</div>
+      <p class="hint" style="margin:0">屬性是裸值（不含裝備）。每個等級一生只擲一次，已經練過的等級不補擲。</p>`;
+  }
+  function renderAttr() {
+    const k = acSkill();
+    const chips = `<div class="chips" role="group" aria-label="計算機">` + CALCS.map(c =>
+      `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${c.key === 'attr'}">${esc(c.label)}</button>`).join('') + '</div>';
+    const f = (id, label, hint) => `<label class="calc-field" for="attr-${id}"><span>${label}</span><input id="attr-${id}" data-attr="${id}" type="number" inputmode="numeric" min="0" step="1" value="${esc(attrVals[id])}" placeholder="${esc(hint)}"></label>`;
+    return `<div class="tools">${chips}</div><div class="calc">
+      <p class="calc-intro">輸入技能、目前的屬性和技能等級，推算下一次增加屬性的機會；再填天賦技能滿級，就能推算預期可以達到的屬性。</p>
+      <div class="calc-form"><fieldset><legend>你的狀況</legend>
+        <label class="calc-field" for="attr-skill"><span>技能</span><select id="attr-skill" data-attr="skill">${AC.skills.map(x => `<option value="${esc(x.code)}"${x.code === attrVals.skill ? ' selected' : ''}>${esc(x.name)}（增加${esc(x.attr)}）</option>`).join('')}</select></label>
+        <div id="attr-thief">${attrThiefField()}</div>
+        ${f('attr', '目前屬性', '例：28')}${f('lv', '目前技能等級', '例：47')}${f('cap', '天賦技能滿級', '例：120')}
+        <p class="hint" style="margin:0">屬性填裸值，不含裝備加成。</p></fieldset></div>
+      <div class="panel calc-out" id="attr-once" aria-live="polite">${attrOnce()}</div>
+      <div class="panel calc-out" id="attr-exp" aria-live="polite">${attrExpect()}</div>
+    </div>`;
+  }
+  function attrThiefField() {
+    const k = acSkill();
+    if (!k.slowStep) return '';
+    return `<label class="calc-field" for="attr-thief-sel"><span>職業</span><select id="attr-thief-sel" data-attr="thief"><option value="thief"${attrVals.thief === 'thief' ? ' selected' : ''}>盜賊</option><option value="other"${attrVals.thief !== 'thief' ? ' selected' : ''}>其他職業</option></select></label>`;
+  }
+  function onAttr(e) {
+    const el = e.target.closest && e.target.closest('[data-attr]');
+    if (!el) return;
+    const k = el.dataset.attr;
+    attrVals[k] = (k === 'skill' || k === 'thief' || el.value === '') ? el.value : String(num(el.value));
+    try { localStorage.setItem('es2codex-attr', JSON.stringify(attrVals)); } catch (e2) {}
+    if (k === 'skill') $('#attr-thief').innerHTML = attrThiefField();
+    $('#attr-once').innerHTML = attrOnce();
+    $('#attr-exp').innerHTML = attrExpect();
+  }
+  document.addEventListener('input', onAttr);
+  document.addEventListener('change', onAttr);
+
+  // ---- 升級經驗：規則全部來自遊戲程式（daemon/class/*.c 與 daemon/race/*.c），由 build_player_codex.py 讀進 D.levelCalc。
+  const LC = D.levelCalc;
+  const levelVals = { race: LC.races[0].id, cls: LC.classes[0].id, lv: '' };
+  try { Object.assign(levelVals, JSON.parse(localStorage.getItem('es2codex-level') || '{}')); } catch (e) {}
+  if (!LC.races.some(r => r.id === levelVals.race)) levelVals.race = LC.races[0].id;
+  if (!LC.classes.some(c => c.id === levelVals.cls)) levelVals.cls = LC.classes[0].id;
+  const lcFn = {};
+  function lcCalc(expr, lv, coef) {
+    const f = lcFn[expr] || (lcFn[expr] = new Function('L', 'C', 'N', 'return Math.floor(' + expr + ');'));
+    return f(lv, coef, lv - 1);
+  }
+  function levelResult() {
+    const R = LC.races.find(r => r.id === levelVals.race), C = LC.classes.find(c => c.id === levelVals.cls);
+    if (levelVals.lv === '') return '<h3>結果</h3><p class="hint" style="margin:0">填入目標等級後，這裡會顯示升到那一級需要的各項經驗。</p>';
+    const lv = num(levelVals.lv);
+    if (lv < 1) return '<h3>結果</h3><p class="calc-verdict no">目標等級最低是 1 級</p>';
+    const cap = R.caps[C.id];
+    if (cap < 0) return `<h3>結果</h3><p class="calc-verdict no">這個種族不能擔任這個職業</p>`;
+    const rows = C.items.map(it => [it.name, lcCalc(it.expr, lv, R.base)]).filter(r => r[1] > 0);
+    const warn = lv > cap ? `<p class="calc-note" style="margin:0">超過等級上限（${esc(R.name)}${esc(C.name)}最高 ${cap} 級），無法升到這一級；以下數字僅供參考。</p>` : '';
+    const body = rows.length
+      ? `<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>升到 ${lv} 級的累積需求</th></tr></thead><tbody>${rows.map(r => `<tr><td>${esc(r[0])}</td><td class="v">${r[1].toLocaleString('en-US')}</td></tr>`).join('')}</tbody></table></div>`
+      : '<p style="margin:0">這一級不需要任何經驗。</p>';
+    return `<h3>結果</h3>${warn}${body}<p class="hint" style="margin:0">種族基數 ${R.base}%。數字是整個人生累積的點數，不是每一級重新計算。</p>`;
+  }
+  function renderLevel() {
+    const chips = `<div class="chips" role="group" aria-label="計算機">` + CALCS.map(c =>
+      `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${c.key === 'level'}">${esc(c.label)}</button>`).join('') + '</div>';
+    return `<div class="tools">${chips}</div><div class="calc">
+      <p class="calc-intro">選擇種族和職業，填入目標等級，查看升到那一級需要累積的各項經驗。</p>
+      <div class="calc-form"><fieldset><legend>升級所需經驗</legend>
+        <label class="calc-field" for="level-race"><span>種族</span><select id="level-race" data-level="race">${LC.races.map(r => `<option value="${esc(r.id)}"${r.id === levelVals.race ? ' selected' : ''}>${esc(r.name)}</option>`).join('')}</select></label>
+        <label class="calc-field" for="level-cls"><span>職業</span><select id="level-cls" data-level="cls">${LC.classes.map(c => `<option value="${esc(c.id)}"${c.id === levelVals.cls ? ' selected' : ''}>${esc(c.name)}</option>`).join('')}</select></label>
+        <label class="calc-field" for="level-lv"><span>目標等級</span><input id="level-lv" data-level="lv" type="number" inputmode="numeric" min="1" step="1" value="${esc(levelVals.lv)}" placeholder="例：40"></label>
+      </fieldset></div>
+      <div class="panel calc-out" id="level-out" aria-live="polite">${levelResult()}</div>
+    </div>`;
+  }
+  function onLevel(e) {
+    const el = e.target.closest && e.target.closest('[data-level]');
+    if (!el) return;
+    const k = el.dataset.level;
+    levelVals[k] = (k === 'race' || k === 'cls' || el.value === '') ? el.value : String(Math.min(999, num(el.value)));
+    try { localStorage.setItem('es2codex-level', JSON.stringify(levelVals)); } catch (e2) {}
+    $('#level-out').innerHTML = levelResult();
+  }
+  document.addEventListener('input', onLevel);
+  document.addEventListener('change', onLevel);
+
+  function renderCalc() {
+    const cur = state.sub.calc || CALCS[0].key;
+    if (cur === 'attr') return renderAttr();
+    if (cur === 'level') return renderLevel();
+    const chips = `<div class="chips" role="group" aria-label="計算機">` + CALCS.map(c =>
+      `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${cur === c.key}">${esc(c.label)}</button>`).join('') + '</div>';
+    const form = `<div class="calc-form">
+      <fieldset><legend>你（夜叉）</legend>${numField('sg', '精最大值')}${numField('sk', '氣最大值')}${numField('ss', '神最大值')}
+        ${numField('big', '大幅次數')}<p class="hint" style="margin:0">大幅次數：至今吞下的魂魄中令你功力大進的次數，在遊戲裡不加目標吞魂就能查看。</p></fieldset>
+      <fieldset><legend>目標（玩家的鬼魂）</legend>${numField('tg', '精最大值')}${numField('tk', '氣最大值')}${numField('ts', '神最大值')}
+        <label class="calc-field" for="calc-race"><span>種族</span><select id="calc-race" data-calc="race">${RACES.map(([k, l]) => `<option value="${k}"${calcVals.race === k ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
+        <p class="hint" style="margin:0">填目標角色的最大值，不是變成鬼魂後剩下的量。目標的氣、神不影響結果。</p></fieldset>
+    </div>`;
+    return `<div class="tools">${chips}</div><div class="calc">
+      <p class="calc-intro">輸入你和目標的精、氣、神，估算吞下這縷魂魄後可能增加的數值。只計算吞食玩家的魂魄；吞鬼魂 NPC 只會回復精、神，不會永久增加。</p>
+      ${form}
+      <div class="panel calc-out" id="calc-out" aria-live="polite">${devourResult(calcVals)}</div>
+      <div class="calc-note"><p style="margin:0">備註：</p><ol style="margin:0;padding-left:1.4em"><li>此數據為估算數值，每次吞魂皆有隨機性。</li><li>吞食魂魄自第 11 隻起，不再保證大幅增加。</li></ol></div>
+    </div>`;
+  }
+  function onCalc(e) {
+    const el = e.target.closest && e.target.closest('[data-calc]');
+    if (!el) return;
+    const k = el.dataset.calc;
+    calcVals[k] = k === 'race' || el.value === '' ? el.value : String(num(el.value));
+    try { localStorage.setItem('es2codex-devour2', JSON.stringify(calcVals)); } catch (e2) {}
+    const out = $('#calc-out');
+    if (out) out.innerHTML = devourResult(calcVals);
+  }
+  document.addEventListener('input', onCalc);
+  document.addEventListener('change', onCalc);
+
   // ---------------------------------------------------------------- 事件
   function render() {
-    const f = { skills: renderSkills, weapons: renderWeapons, armors: renderArmors, items: renderItems, npcs: renderNpcs, factions: renderFactions, areas: renderAreas }[state.tab];
+    const f = { skills: renderSkills, weapons: renderWeapons, armors: renderArmors, items: renderItems, npcs: renderNpcs, factions: renderFactions, areas: renderAreas, calc: renderCalc }[state.tab];
     const hadFocus = document.activeElement && document.activeElement.id === 'q';
     const pos = hadFocus ? document.activeElement.selectionStart : 0;
     $('#main').innerHTML = f();
