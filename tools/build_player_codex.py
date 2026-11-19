@@ -297,6 +297,55 @@ def attr_calc_data(skill_by_code):
     return {'skills': skills, 'base': base, 'baseMax': int(tail[-1]), 'mulNum': int(mm.group(1)), 'mulDen': int(mm.group(2))}
 
 
+def level_calc_data():
+    """升級經驗計算機用的規則：從 daemon/class/*.c 的 set_next_target()、種族檔的基數與等級上限、
+    data/chinese.o 的項目名稱讀出；遊戲規則改了重新產生圖鑑就會跟著更新，讀不出來直接報錯。"""
+    cdir = MUD / 'daemon' / 'class'
+    zh_dict = dict(re.findall(r'"score of ([^"]+)":"([^"]*)"', bc.read(MUD / 'data' / 'chinese.o')))
+    safe = re.compile(r'^[\d\s+\-*/()?:<>=]*$')
+    classes = []
+    for f in sorted(cdir.glob('*.c')):
+        src = bc.read(f)
+        name_m = re.search(r'query_rank.*?return\s*"([^"]+)"', src, re.S)
+        body_m = re.search(r'void\s+set_next_target\s*\([^)]*\)\s*\{(.*?)\n\}', src, re.S)
+        if not (name_m and body_m):
+            raise SystemExit(f'升級經驗計算機：{f.name} 的格式變了，請更新 level_calc_data()')
+        items = []
+        for course, expr in re.findall(r'set_target_score\(\s*"([^"]+)"\s*,(.*?)\);', body_m.group(1), re.S):
+            e = re.sub(r'\s+', ' ', expr).strip()
+            e = e.replace('cur_lv + 1', 'lv').replace('race_coef(ob)', 'coef')
+            e = re.sub(r'sq_from\(\s*lv\s*,\s*(\d+)\s*\)', r'sq(\1)', e)
+            e = re.sub(r'lin_from\(\s*lv\s*,\s*(\d+)\s*\)', r'lin(\1)', e)
+            e = re.sub(r'sq\((\d+)\)', r'(lv>\1?(lv-\1)*(lv-\1):0)', e)
+            e = re.sub(r'lin\((\d+)\)', r'(lv>\1?lv-\1:0)', e)
+            e = e.replace('coef', 'C').replace('lv', 'L').replace('n', 'N')
+            if not safe.match(re.sub(r'[LCN]', '1', e)):
+                raise SystemExit(f'升級經驗計算機：{f.name} 的公式讀不懂：{expr.strip()}')
+            if course not in zh_dict:
+                raise SystemExit(f'升級經驗計算機：data/chinese.o 沒有項目「{course}」的中文名稱')
+            items.append({'name': zh_dict[course], 'expr': e})
+        classes.append({'id': f.stem, 'name': name_m.group(1), 'items': items})
+    cm = re.search(r'#define\s+COMMONER_LEVEL_CAP\s+(\d+)', bc.read(MUD / 'feature' / 'char' / 'score.c'))
+    commoner_cap = int(cm.group(1)) if cm else 50
+    races = []
+    for f in sorted((MUD / 'daemon' / 'race').glob('*.c')):
+        src = bc.read(f)
+        bm = re.search(r'"commoner_score_base"\s*,\s*(\d+)', src)
+        cm2 = re.search(r'"class_level_cap"\s*,\s*\(\[(.*?)\]\)', src, re.S)
+        zn = re.search(r'"%s":"([^"]+)"' % f.stem, bc.read(MUD / 'data' / 'chinese.o'))
+        if not (bm and cm2 and zn):
+            continue   # beast 等不是玩家種族
+        caps = {k: int(v) for k, v in re.findall(r'"(\w+)"\s*:\s*(-?\d+)', cm2.group(1))}
+        caps['commoner'] = commoner_cap
+        races.append({'id': f.stem, 'name': zn.group(1), 'base': int(bm.group(1)), 'caps': caps})
+    if not classes or not races:
+        raise SystemExit('升級經驗計算機：讀不到職業或種族資料')
+    order = ['fighter', 'taoist', 'alchemist', 'soldier', 'scholar', 'monk', 'thief', 'commoner']
+    classes.sort(key=lambda c: order.index(c['id']) if c['id'] in order else 99)
+    races.sort(key=lambda r: {'human': 0, 'avatar': 1}.get(r['id'], 2))
+    return {'classes': classes, 'races': races}
+
+
 def skill_effects(path):
     """技能檔：練成或升級時增長的屬性、精氣神上限（只取名稱，不取數字）。"""
     if not path:
@@ -615,7 +664,7 @@ def main(out):
     pdata = {
         'areas': areas, 'rooms': out_rooms, 'npcs': out_npcs, 'factions': out_factions, 'skills': out_skills,
         'weapons': out_items['weapons'], 'armors': out_items['armors'], 'items': out_items['items'],
-        'attrCalc': attr_calc_data(skill_by_code), 'weaponKinds': bc.WEAPON_KIND, 'slots': bc.SLOT, 'affixes': load_affixes(),
+        'attrCalc': attr_calc_data(skill_by_code), 'levelCalc': level_calc_data(), 'weaponKinds': bc.WEAPON_KIND, 'slots': bc.SLOT, 'affixes': load_affixes(),
         'counts': {'rooms': len(out_rooms), 'areas': len(areas), 'npcs': len(out_npcs), 'factions': len(out_factions),
                    'skills': len(out_skills), 'weapons': len(out_items['weapons']), 'armors': len(out_items['armors']),
                    'items': len(out_items['items'])},

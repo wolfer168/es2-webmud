@@ -608,7 +608,7 @@ html.embed .tools { padding-top: 10px; }
   // ---------------------------------------------------------------- 計算機
   // 計算機分頁：夜叉吞魂、屬性成長，之後可在 CALCS 加入其他計算機。
   // 吞魂規則照 source/upstream/mudlib/daemon/race/yaksa/devour.c（docs/CUSTOM_RACE_A_H.md 夜叉段落）。
-  const CALCS = [{ key: 'devour', label: '夜叉吞魂' }, { key: 'attr', label: '屬性成長' }];
+  const CALCS = [{ key: 'devour', label: '夜叉吞魂' }, { key: 'attr', label: '屬性成長' }, { key: 'level', label: '升級經驗' }];
   const RACES = [
     ['human', '人類'], ['avatar', '人類族'], ['blackteeth', '黑齒'], ['yenhold', '厭火'], ['jiaojao', '焦僥'],
     ['woochan', '無腸'], ['dingling', '釘靈'], ['headless', '刑天'], ['rainner', '雨師妾'], ['malik', '巫首'],
@@ -772,9 +772,59 @@ html.embed .tools { padding-top: 10px; }
   document.addEventListener('input', onAttr);
   document.addEventListener('change', onAttr);
 
+  // ---- 升級經驗：規則全部來自遊戲程式（daemon/class/*.c 與 daemon/race/*.c），由 build_player_codex.py 讀進 D.levelCalc。
+  const LC = D.levelCalc;
+  const levelVals = { race: LC.races[0].id, cls: LC.classes[0].id, lv: '' };
+  try { Object.assign(levelVals, JSON.parse(localStorage.getItem('es2codex-level') || '{}')); } catch (e) {}
+  if (!LC.races.some(r => r.id === levelVals.race)) levelVals.race = LC.races[0].id;
+  if (!LC.classes.some(c => c.id === levelVals.cls)) levelVals.cls = LC.classes[0].id;
+  const lcFn = {};
+  function lcCalc(expr, lv, coef) {
+    const f = lcFn[expr] || (lcFn[expr] = new Function('L', 'C', 'N', 'return Math.floor(' + expr + ');'));
+    return f(lv, coef, lv - 1);
+  }
+  function levelResult() {
+    const R = LC.races.find(r => r.id === levelVals.race), C = LC.classes.find(c => c.id === levelVals.cls);
+    if (levelVals.lv === '') return '<h3>結果</h3><p class="hint" style="margin:0">填入目標等級後，這裡會顯示升到那一級需要的各項經驗。</p>';
+    const lv = num(levelVals.lv);
+    if (lv < 1) return '<h3>結果</h3><p class="calc-verdict no">目標等級最低是 1 級</p>';
+    const cap = R.caps[C.id];
+    if (cap < 0) return `<h3>結果</h3><p class="calc-verdict no">這個種族不能擔任這個職業</p>`;
+    const rows = C.items.map(it => [it.name, lcCalc(it.expr, lv, R.base)]).filter(r => r[1] > 0);
+    const warn = lv > cap ? `<p class="calc-note" style="margin:0">超過等級上限（${esc(R.name)}${esc(C.name)}最高 ${cap} 級），無法升到這一級；以下數字僅供參考。</p>` : '';
+    const body = rows.length
+      ? `<div class="tbl-wrap"><table><thead><tr><th>項目</th><th>升到 ${lv} 級的累積需求</th></tr></thead><tbody>${rows.map(r => `<tr><td>${esc(r[0])}</td><td class="v">${r[1].toLocaleString('en-US')}</td></tr>`).join('')}</tbody></table></div>`
+      : '<p style="margin:0">這一級不需要任何經驗。</p>';
+    return `<h3>結果</h3>${warn}${body}<p class="hint" style="margin:0">種族基數 ${R.base}%。數字是整個人生累積的點數，不是每一級重新計算。</p>`;
+  }
+  function renderLevel() {
+    const chips = `<div class="chips" role="group" aria-label="計算機">` + CALCS.map(c =>
+      `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${c.key === 'level'}">${esc(c.label)}</button>`).join('') + '</div>';
+    return `<div class="tools">${chips}</div><div class="calc">
+      <p class="calc-intro">選擇種族和職業，填入目標等級，查看升到那一級需要累積的各項經驗。</p>
+      <div class="calc-form"><fieldset><legend>升級所需經驗</legend>
+        <label class="calc-field" for="level-race"><span>種族</span><select id="level-race" data-level="race">${LC.races.map(r => `<option value="${esc(r.id)}"${r.id === levelVals.race ? ' selected' : ''}>${esc(r.name)}</option>`).join('')}</select></label>
+        <label class="calc-field" for="level-cls"><span>職業</span><select id="level-cls" data-level="cls">${LC.classes.map(c => `<option value="${esc(c.id)}"${c.id === levelVals.cls ? ' selected' : ''}>${esc(c.name)}</option>`).join('')}</select></label>
+        <label class="calc-field" for="level-lv"><span>目標等級</span><input id="level-lv" data-level="lv" type="number" inputmode="numeric" min="1" step="1" value="${esc(levelVals.lv)}" placeholder="例：40"></label>
+      </fieldset></div>
+      <div class="panel calc-out" id="level-out" aria-live="polite">${levelResult()}</div>
+    </div>`;
+  }
+  function onLevel(e) {
+    const el = e.target.closest && e.target.closest('[data-level]');
+    if (!el) return;
+    const k = el.dataset.level;
+    levelVals[k] = (k === 'race' || k === 'cls' || el.value === '') ? el.value : String(Math.min(999, num(el.value)));
+    try { localStorage.setItem('es2codex-level', JSON.stringify(levelVals)); } catch (e2) {}
+    $('#level-out').innerHTML = levelResult();
+  }
+  document.addEventListener('input', onLevel);
+  document.addEventListener('change', onLevel);
+
   function renderCalc() {
     const cur = state.sub.calc || CALCS[0].key;
     if (cur === 'attr') return renderAttr();
+    if (cur === 'level') return renderLevel();
     const chips = `<div class="chips" role="group" aria-label="計算機">` + CALCS.map(c =>
       `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${cur === c.key}">${esc(c.label)}</button>`).join('') + '</div>';
     const form = `<div class="calc-form">
