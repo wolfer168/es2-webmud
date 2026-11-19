@@ -193,6 +193,10 @@ svg.map .nm-long { font-size: 10px; }
   .row-head .sum { grid-column: 1 / -1; grid-row: 2; }
 }
 @media (prefers-reduced-motion: no-preference) { .row-head { transition: background 0.12s; } }
+/* 嵌入遊戲網頁的計算機視窗（?embed=calc）：只留計算機分頁，固定深色 */
+html.embed header, html.embed #tabs { display: none; }
+html.embed .calc { padding-top: 8px; max-width: none; }
+html.embed .tools { padding-top: 10px; }
 </style>
 </head>
 <body>
@@ -213,6 +217,9 @@ svg.map .nm-long { font-size: 10px; }
 <script>
 (function () {
   const D = JSON.parse(document.getElementById('codex-data').textContent);
+  // 嵌入模式：遊戲網頁左側「計算機」視窗用，只顯示計算機分頁，並固定深色配色。
+  const EMBED = /[?&]embed=calc(?:&|$)/.test(location.search);
+  if (EMBED) { document.documentElement.classList.add('embed'); document.documentElement.setAttribute('data-theme', 'dark'); }
   const $ = (s, el) => (el || document).querySelector(s);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const plain = s => String(s || '').replace(/\x1b\[[0-9;]*m/g, '');
@@ -260,6 +267,7 @@ svg.map .nm-long { font-size: 10px; }
   ];
   const state = { tab: 'areas', q: '', sub: {}, open: null, area: D.areas[0] && D.areas[0].key, room: null };
   try { const t = localStorage.getItem('es2codex-tab'); if (t && TABS.some(x => x.key === t)) state.tab = t; } catch (e) {}
+  if (EMBED) state.tab = 'calc';
   const hash = location.hash.replace('#', '');
   if (TABS.some(x => x.key === hash)) state.tab = hash;
 
@@ -276,7 +284,7 @@ svg.map .nm-long { font-size: 10px; }
   function go(tab, opts) {
     state.tab = tab; state.open = null; state.q = '';
     Object.assign(state, opts || {});
-    try { localStorage.setItem('es2codex-tab', tab); } catch (e) {}
+    if (!EMBED) try { localStorage.setItem('es2codex-tab', tab); } catch (e) {}
     drawTabs(); render();
     if (state.open) {
       const el = document.querySelector(`[data-row="${CSS.escape(state.open)}"]`);
