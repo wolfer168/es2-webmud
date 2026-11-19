@@ -874,7 +874,11 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
 
   // 視窗：可拖曳標題列移動、拉邊線與角落調整大小，內容依視窗大小等比縮放（使用者指示，2026-11-19）。
   // 內容先以 BASE_W×BASE_H 排版，再整體縮放到視窗的大小（寬高取比較小的那個比例，不會變形）。
-  const BASE_W=980,BASE_H=640,GEO_KEY='es2-automation-window-v1';
+  // 手機（窄螢幕或觸控）上的排版是單欄，基準改成 420×560，內容不會縮得太小。
+  const narrowMQ=typeof window!=='undefined'&&window.matchMedia?window.matchMedia('(max-width:620px), (hover:none) and (pointer:coarse)'):null;
+  const isNarrow=()=>!!narrowMQ?.matches;
+  const baseW=()=>isNarrow()?420:980,baseH=()=>isNarrow()?560:640;
+  const GEO_KEY='es2-automation-window-v1';
   const inner=document.createElement('div');
   inner.className='auto-scale';
   while(dialog.firstChild)inner.appendChild(dialog.firstChild);
@@ -882,7 +886,7 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
   function applyScale(){
     if(!dialog.open)return;
     const w=dialog.clientWidth,h=dialog.clientHeight;if(!w||!h)return;
-    const k=Math.max(.4,Math.min(w/BASE_W,h/BASE_H));
+    const k=Math.max(.4,Math.min(w/baseW(),h/baseH()));
     inner.style.zoom=String(k);
     inner.style.width=(w/k)+'px';inner.style.height=(h/k)+'px';
   }
@@ -894,12 +898,14 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
     let g=null;try{g=JSON.parse(localStorage.getItem(GEO_KEY)||'null');}catch(_){}
     const vw=window.innerWidth,vh=window.innerHeight;
     if(!g||typeof g!=='object'){
-      const width=Math.min(BASE_W,vw-24),height=Math.min(BASE_H,vh-40);
-      g={width,height,left:(vw-width)/2,top:Math.max(12,(vh-height)/3)};
+      // 手機：幾乎佔滿寬度、高度約四分之三，放在左上選單按鈕的下面。
+      const width=isNarrow()?vw-8:Math.min(baseW(),vw-24),height=isNarrow()?Math.min(Math.round(vh*.75),vh-64):Math.min(baseH(),vh-40);
+      g={width,height,left:(vw-width)/2,top:isNarrow()?60:Math.max(12,(vh-height)/3)};
     }
-    const width=Math.min(g.width,vw),height=Math.min(g.height,vh);
+    // 在電腦上存的大小搬到手機也不會超出畫面。
+    const width=Math.min(g.width,vw-8),height=Math.min(g.height,vh-8);
     Object.assign(dialog.style,{width:width+'px',height:height+'px',
-      left:Math.min(Math.max(0,g.left),Math.max(0,vw-width))+'px',top:Math.min(Math.max(0,g.top),Math.max(0,vh-48))+'px'});
+      left:Math.min(Math.max(0,g.left),Math.max(0,vw-width))+'px',top:Math.min(Math.max(0,g.top),Math.max(0,vh-height))+'px'});
   }
   if(typeof document!=='undefined'&&dialog.querySelector('.auto-head')){
     makeDraggable(dialog,dialog.querySelector('.auto-head'),{onEnd:saveGeo});
@@ -907,6 +913,7 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
     dialog.addEventListener('pointerdown',()=>bringToFront(dialog));
     if(typeof ResizeObserver==='function')new ResizeObserver(applyScale).observe(dialog);
     window.addEventListener('resize',()=>{if(dialog.open){placeDialog();applyScale();}});
+    narrowMQ?.addEventListener?.('change',()=>{if(dialog.open){placeDialog();applyScale();}});
   }
 
   function open(which){

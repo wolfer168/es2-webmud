@@ -16,7 +16,9 @@ export function makeResizable(root,{onEnd}={}){
     grip.addEventListener('pointerdown',e=>{
       if(e.button!==0)return;
       const r=root.getBoundingClientRect(),cs=getComputedStyle(root);
-      rs={id:e.pointerId,x:e.clientX,y:e.clientY,r,minW:parseFloat(cs.minWidth)||200,minH:parseFloat(cs.minHeight)||120};
+      // 最小尺寸不超過畫面（手機螢幕比電腦版的最小寬度還窄）。
+      rs={id:e.pointerId,x:e.clientX,y:e.clientY,r,
+        minW:Math.min(parseFloat(cs.minWidth)||200,window.innerWidth-8),minH:Math.min(parseFloat(cs.minHeight)||120,window.innerHeight-8)};
       grip.setPointerCapture(e.pointerId);
       root.classList.add('is-resizing');
       bringToFront(root);
@@ -39,7 +41,6 @@ export function makeResizable(root,{onEnd}={}){
       if(dir.includes('n'))top=r.bottom-height;
       root.style.left=Math.max(0,left)+'px';root.style.top=Math.max(0,top)+'px';
       root.style.width=width+'px';root.style.height=height+'px';
-      root.style.maxWidth='none';root.style.maxHeight='none';
     });
     const end=e=>{
       if(!rs||e.pointerId!==rs.id)return;
