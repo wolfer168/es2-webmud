@@ -13,6 +13,7 @@ inherit "/custom/legacy_npc/legacy_npc";
 
 #define FULL_HEAL_MAX   6       // 補滿的次數上限（每次重生重新計算；使用者指示，2026-11-19）
 #define FULL_HEAL_RATIO 20      // 氣或 HP 低於上限的百分之幾時補滿
+#define PERFORM_CHANCE  30      // 打鬥中每個心跳施展絕招的機率（%）
 
 void create()
 {
@@ -51,7 +52,8 @@ void create()
 }
 
 // ------------------------------------------------------------------
-// 戰鬥行為：氣或 HP 低於兩成時噴血補滿，每次重生最多六次（設計與梅影風、柳東蘆相同）。
+// 戰鬥行為：氣或 HP 低於兩成時噴血補滿，每次重生最多六次（設計與梅影風、柳東蘆相同）；
+// 打鬥中每個心跳有 30% 機會施展青邪杖法絕招：50% crazy、30% stun、20% hide（使用者指示，2026-11-19）。
 // ------------------------------------------------------------------
 
 private int low_stat(string what)
@@ -78,6 +80,13 @@ static void heart_beat()
 
     if( query_temp("liuye/full_heal") < FULL_HEAL_MAX && (low_stat("kee") || low_stat("HP")) )
         full_heal();
+
+    if( !is_busy() && random(100) < PERFORM_CHANCE ) {
+        int r = random(100);
+
+        SKILL_D("chin_staff")->perform_action(this_object(),
+            r < 50 ? "crazy" : (r < 80 ? "stun" : "hide"), query_opponent());
+    }
 }
 
 // ------------------------------------------------------------------
