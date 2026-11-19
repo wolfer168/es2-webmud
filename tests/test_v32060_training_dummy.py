@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MUD = ROOT / "source/upstream/mudlib"
@@ -6,6 +7,8 @@ DUMMIES = [
     MUD / "custom/zhenwu/npc/target_stake.c",
     MUD / "d/swaylan/lunmay/npc/stake.c",
     MUD / "d/baihua/npc/stone_lion.c",
+    MUD / "d/qiaoyin_east/npc/stone_stake.c",
+    MUD / "custom/wizroom/w/windstory/obj/stone_stake.c",
 ]
 
 def base(): return BASE.read_text(encoding="utf-8")
@@ -26,7 +29,7 @@ def test_no_other_training_dummy_npc_outside_base():
     # 任何設了 training_dummy 的 NPC 檔，都必須是共用基底或繼承它的檔案。
     for p in MUD.rglob("*.c"):
         s = p.read_text(encoding="utf-8", errors="ignore")
-        if p != BASE and 'set("training_dummy", 1)' in s and "/npc/" in p.as_posix():
+        if p != BASE and re.search(r'^\s*set\("training_dummy", 1\);', s, re.M):
             assert 'inherit "/feature/npc/dummy";' in s, p
 
 def test_never_retaliates():
@@ -54,3 +57,20 @@ def test_dummy_immune_to_conditions():
     s = (MUD / "feature/char/condition.c").read_text(encoding="utf-8")
     b = s.split("set_condition(string cnd, mixed info)", 1)[1].split("conditions[cnd] = info", 1)[0]
     assert 'this_object()->query("training_dummy")' in b and "return;" in b
+
+def test_single_base_only():
+    # 只能有一份假人基底，不再另寫 /inherit/dummy.c。
+    assert not (MUD / "inherit/dummy.c").exists()
+    for p in MUD.rglob("*.c"):
+        assert 'inherit "/inherit/dummy"' not in p.read_text(encoding="utf-8", errors="ignore"), p
+
+def test_backstab_cannot_make_dummy_strike():
+    # 偷襲被察覺時指令會直接叫目標出手，假人的 attack() 必須什麼都不做。
+    assert "varargs int attack(object opponent) { return 0; }" in base()
+
+def test_no_awareness_and_no_hp_report():
+    s = base()
+    for case in ('"awarness"', '"defense"', '"wittiness"'):
+        assert f"case {case}:" in s
+    assert 'if( what == "gin" ) return 0;' in s
+    assert 'if( what == "kee" ) return 0;' in s

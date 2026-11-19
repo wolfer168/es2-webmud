@@ -50,7 +50,9 @@ async function scenarioClientAbruptDisconnect(){
   const mudPort=await freePort();let accepted=0,closed=0;const sockets=new Set();
   const mud=net.createServer(sock=>{accepted++;sockets.add(sock);sock.on('error',()=>{});sock.write('READY\r\n');sock.on('close',()=>{closed++;sockets.delete(sock)})});
   await new Promise((r,j)=>{mud.once('error',j);mud.listen(mudPort,'127.0.0.1',r)});
-  const b=await startBridge({mudPort});let ready=false;
+  // 網頁連線突然中斷時，橋接程式會先保留遊戲連線一段時間讓玩家接回（docs/WEB_RESUME.md）；
+  // 這裡把保留時間設短，確認時間到了遊戲連線一樣會被清掉，不會殘留。
+  const b=await startBridge({mudPort,env:{RESUME_HOLD_MS:'500'}});let ready=false;
   const ws=new WebSocket(`ws://127.0.0.1:${b.webPort}/mud`);ws.on('message',d=>{if(String(d).includes('READY'))ready=true});ws.on('error',()=>{});
   await waitUntil(()=>ready,3000);ws.terminate();
   const cleaned=await waitUntil(async()=>{const h=await health(b.webPort);return h?.sessions?.active===0 && closed>=1},3000);

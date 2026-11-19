@@ -133,6 +133,16 @@ setupFloatWindow({
   defaultGeometry:()=>{const w=Math.min(560,window.innerWidth-32),h=Math.min(560,window.innerHeight-60);return {left:Math.max(16,(window.innerWidth-w)/2),top:Math.max(16,(window.innerHeight-h)/3),width:w,height:h};},
   onShow:()=>board.onOpen(),
 });
+// 計算機（左側選單「計算機」）：夜叉吞魂與屬性成長，內容就是圖鑑的計算機分頁（嵌入模式），
+// 第一次打開才載入，圖鑑沒產生時視窗裡會顯示找不到頁面。
+setupFloatWindow({
+  root:document.getElementById('calcWindow'),
+  openButton:document.querySelector('[data-ui-calc]'),
+  storageKey:'es2-calc-window-v1',resizable:true,rememberOpen:false,
+  defaultGeometry:()=>{const w=Math.min(520,window.innerWidth-32),h=Math.min(680,window.innerHeight-40);return {left:Math.max(16,window.innerWidth-w-24),top:Math.max(12,(window.innerHeight-h)/3),width:w,height:h};},
+  onShow:()=>{const f=document.getElementById('calcFrame');if(f&&!f.getAttribute('src'))f.setAttribute('src','/codex.html?embed=calc');},
+});
+document.getElementById('calcWindow')?.addEventListener('pointerdown',e=>bringToFront(e.currentTarget));
 // 最右欄是空白區域，用來擺地圖、角色狀態等浮動視窗；訊息欄與它之間的分隔線可左右拖曳。
 // 訊息欄最窄 = score 最寬的一行（72 個半形字寬）× 125%，加上左右留白；跟著文字大小設定變動（同 styles.css 的 --console-min）。
 const SCORE_COLUMNS=72;
@@ -152,7 +162,7 @@ setupFloatWindow({
 setupFloatWindow({
   root:document.getElementById('statusWindow'),
   openButton:document.querySelector('[data-ui-status]'),
-  storageKey:'es2-status-window-v1',defaultOpen:true,
+  storageKey:'es2-status-window-v1',resizable:true,defaultOpen:true,
   defaultGeometry:()=>{
     const a=sideArea(),m=document.getElementById('mapWindow');
     const top=m&&!m.hidden?m.getBoundingClientRect().bottom+10:12;
@@ -722,7 +732,15 @@ function releaseHudPoll(){
   if(kept.length)renderVisible(kept.join('\n')+'\n',false,shouldStick());
 }
 // 切回分頁時立刻更新一次狀態。
-document.addEventListener('visibilitychange',()=>{ if(!document.hidden)pollHud(true); });
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden)return;
+  // 手機切回來時連線多半已被系統關掉：不等重連倒數，馬上接回原本的連線。
+  if(started&&!manualDisconnect&&(!ws||ws.readyState===WebSocket.CLOSED||ws.readyState===WebSocket.CLOSING)){
+    if(reconnectTimer){clearBg(reconnectTimer);reconnectTimer=null;}
+    connect();return;
+  }
+  pollHud(true);
+});
 function startHudPolling(){
   if(hudTimer)return;
   hudTimer=setInterval(pollHud,HUD_POLL_MS);
@@ -1162,11 +1180,35 @@ function optimisticMapMove(command){
 
 // #dis 主動斷線時不自動重連，等玩家 #con。
 let manualDisconnect=false,reconnectTimer=null;
+// 斷線保留（docs/WEB_RESUME.md）：橋接程式發給這個分頁一張憑證，網頁連線斷掉（手機切到別的 App）
+// 後 10 分鐘內帶著憑證重連，就接回原本的遊戲連線、補上錯過的訊息，不用重新登入。
+// 憑證放 sessionStorage：只有這個分頁拿得到，關掉分頁就沒了。
+const RESUME_KEY='es2-resume-token';
+const resumeToken={
+  get(){try{return sessionStorage.getItem(RESUME_KEY)||'';}catch(_){return '';}},
+  set(v){try{v?sessionStorage.setItem(RESUME_KEY,v):sessionStorage.removeItem(RESUME_KEY);}catch(_){}},
+};
+// 橋接程式的控制訊息（@@BRIDGE|…）：不顯示在畫面上。回傳 true 表示已處理。
+function handleBridgeMessage(raw){
+  if(!raw.startsWith('@@BRIDGE|'))return false;
+  const a=raw.trim().split('|');
+  if(a[1]==='TOKEN')resumeToken.set(a[2]||'');
+  else if(a[1]==='RESUMED'){
+    const n=Number(a[2])||0;
+    print(`\n[已接回原本的連線${n?`，以下是離開期間的 ${n} 行訊息`:''}]\n`,true);
+    // 接回時已經在遊戲裡：直接查一次狀態，地圖與角色狀態就會跟上。
+    setTimeout(()=>pollHud(true,true),150);
+  }
+  return true;
+}
 function connect(){
   if(ws&&[WebSocket.OPEN,WebSocket.CONNECTING].includes(ws.readyState))return;
   manualDisconnect=false;if(reconnectTimer){clearBg(reconnectTimer);reconnectTimer=null;}
-  conn.textContent='CONNECTING';const proto=location.protocol==='https:'?'wss':'ws';ws=new WebSocket(`${proto}://${location.host}/mud`);ws.binaryType='arraybuffer';
+  const token=resumeToken.get();
+  conn.textContent='CONNECTING';const proto=location.protocol==='https:'?'wss':'ws';const sock=ws=new WebSocket(`${proto}://${location.host}/mud${token?'?resume='+encodeURIComponent(token):''}`);ws.binaryType='arraybuffer';
+  // 每條連線只處理自己的事件：舊連線晚到的「已關閉」不能把新接上的連線狀態清掉。
   ws.onopen=()=>{
+    if(sock!==ws)return;
     // A TCP/WebSocket reconnect starts at the Neolith login object, not inside
     // the previous room. Never let stale room/HUD state emit internal `webhud`
     // commands into the username/password prompts.
@@ -1186,7 +1228,9 @@ function connect(){
     conn.textContent='LIVE';sessionRecorder.markTransportOpen();
   };
   ws.onmessage=e=>{
+    if(sock!==ws)return;
     const raw=e.data instanceof ArrayBuffer?new TextDecoder('utf-8').decode(e.data):e.data;
+    if(handleBridgeMessage(raw))return;
     observeContext(raw);print(raw);
     // A completed movement command must refresh ROOM/NAME/EXITS immediately. The
     // normal 350ms user-input grace remains for all other commands so telemetry
@@ -1197,7 +1241,8 @@ function connect(){
       kickHudAfterServerText(forceMapRefresh);
     }
   };
-  ws.onclose=e=>{stopHudPolling();editorActive=false;serverInputWait=false;if(mapBootstrapRetryTimer){clearTimeout(mapBootstrapRetryTimer);mapBootstrapRetryTimer=null;}pendingUserCommands=[];mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;currentRoomId=null;runtimeSnapshot=null;tail='';sessionRecorder.finishResponse();sessionRecorder.markTransportClose(e?.code??null,e?.reason||'');sessionRecorder.markReconnect();conn.textContent='DISCONNECTED';if(manualDisconnect){print('\n[已中斷連線，輸入 #con 重新連線]\n',true);return;}automation.cancelPending();if(!started)return;clearBg(retryResetTimer);retryResetTimer=null;const wait=reconnectDelay();print(`\n[${Math.round(wait/1000)} 秒後重新連線]\n`,true);reconnectTimer=bgTimeout(()=>{reconnectTimer=null;connect();},wait);};
+  // 關閉代碼 4001：同一條連線在另一個分頁接回了，這個分頁不再自動重連，免得兩邊互搶。
+  ws.onclose=e=>{if(sock!==ws)return;stopHudPolling();editorActive=false;serverInputWait=false;if(e?.code===4001){currentRoomId=null;runtimeSnapshot=null;resumeToken.set('');manualDisconnect=true;conn.textContent='DISCONNECTED';print('\n[這個連線已在另一個分頁接回；輸入 #con 可在這裡重新連線]\n',true);return;}editorActive=false;serverInputWait=false;if(mapBootstrapRetryTimer){clearTimeout(mapBootstrapRetryTimer);mapBootstrapRetryTimer=null;}pendingUserCommands=[];mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;currentRoomId=null;runtimeSnapshot=null;tail='';sessionRecorder.finishResponse();sessionRecorder.markTransportClose(e?.code??null,e?.reason||'');sessionRecorder.markReconnect();conn.textContent='DISCONNECTED';if(manualDisconnect){print('\n[已中斷連線，輸入 #con 重新連線]\n',true);return;}automation.cancelPending();if(!started)return;clearBg(retryResetTimer);retryResetTimer=null;const wait=reconnectDelay();print(`\n[${Math.round(wait/1000)} 秒後重新連線]\n`,true);reconnectTimer=bgTimeout(()=>{reconnectTimer=null;connect();},wait);};
   ws.onerror=()=>conn.textContent='ERROR';
 }
 // Echo the player's own command into the transcript as its own line, the
@@ -1282,7 +1327,8 @@ const automation=new Automation({
   disconnect:()=>{
     if(reconnectTimer){clearBg(reconnectTimer);reconnectTimer=null;manualDisconnect=true;print('\n[已取消自動重連，輸入 #con 重新連線]\n',true);return true;}
     if(!ws||![WebSocket.OPEN,WebSocket.CONNECTING].includes(ws.readyState))return false;
-    manualDisconnect=true;ws.close();return true;
+    // 關閉代碼 4000：告訴橋接程式這是玩家自己要斷線，不要保留連線。
+    manualDisconnect=true;resumeToken.set('');ws.close(4000,'manual');return true;
   },
   connect:()=>{
     if(ws&&[WebSocket.OPEN,WebSocket.CONNECTING].includes(ws.readyState))return false;
@@ -1372,7 +1418,7 @@ document.querySelectorAll('[data-cmd]').forEach(b=>b.addEventListener('click',()
 setupFloatWindow({
   root:document.getElementById('uiSettings'),
   openButton:document.querySelector('[data-ui-settings]'),
-  storageKey:'es2-settings-window-v1',rememberOpen:false,
+  storageKey:'es2-settings-window-v1',resizable:true,rememberOpen:false,
   defaultGeometry:()=>({left:Math.max(16,(window.innerWidth-430)/2),top:Math.max(16,window.innerHeight*.12)}),
 });
 // 地圖視窗大小改變（拉角落、打開視窗）時重畫，讓看得到的範圍跟著視窗大小走。

@@ -18,7 +18,7 @@
 | 9 | 天師道 | 素衣派弟子 | `custom/taoism/npc/freeze_taoist.c` | 道士 | 30 | B |
 | 10 | 天師道 | 玄衣派弟子 | `custom/taoism/npc/storm_taoist.c` | 道士 | 30 | B |
 | 11 | 天師道 | 紫衣派弟子 | `custom/taoism/npc/thunder_taoist.c` | 道士 | 30 | B |
-| 12 | 振武營 | 魯熙年 | `custom/zhenwu/npc/lu_xinien.c` | 軍人 | 25 | B |
+| 12 | 振武營 | 魯熙年 | `custom/zhenwu/npc/lu_xinien.c` | 軍人 | 50 | A |
 | 13 | 振武營 | 米沛 | `custom/zhenwu/npc/mee_pei.c` | 軍人 | 40 | A |
 | 14 | 振武營 | 小兵 | `custom/zhenwu/npc/soldier.c` | 軍人 | 5 | B |
 | 15 | 振武營 | 假人 | `custom/zhenwu/npc/target_stake.c` | — | — | 不動（練功假人） |

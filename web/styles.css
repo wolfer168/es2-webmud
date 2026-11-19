@@ -539,3 +539,43 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .tmr-item .auto-left{text-align:right}
 .tmr-num{width:5em!important;display:inline-block;margin:0 4px;background:#050806;color:#fff;border:1px solid #354d43;border-radius:6px;padding:4px 6px}
 .trg-enabled:disabled{opacity:.5;cursor:default}
+
+/* 2026-11-19：所有視窗可拉上下左右邊線與四個角落調整大小 */
+.float-resize-n{left:14px;right:14px;top:0;width:auto;height:6px;cursor:ns-resize}
+.float-resize-s{left:14px;right:14px;bottom:0;width:auto;height:6px;cursor:ns-resize}
+.float-resize-e{top:14px;bottom:14px;right:0;width:6px;height:auto;cursor:ew-resize}
+.float-resize-w{top:14px;bottom:14px;left:0;width:6px;height:auto;cursor:ew-resize}
+.chat-window{resize:none}
+.chat-window.is-resizing,.automation-dialog.is-resizing,.automation-dialog.is-dragging{user-select:none}
+/* 角色狀態：拉大視窗不放大內容（方格大小固定） */
+.status-window{min-width:300px;min-height:160px}
+.status-window .float-body{overflow:auto}
+#scoreHud .hud-vitals{grid-template-columns:2.4em max-content max-content}
+#scoreHud .hud-cells{grid-template-columns:repeat(15,15px)}
+.ui-settings{min-width:320px;min-height:240px}
+/* 觸發／計時器視窗：可移動、可調大小，內容依視窗大小等比縮放 */
+.automation-dialog{position:fixed;inset:auto;margin:0;overflow:hidden;max-width:none;max-height:none;min-width:420px;min-height:280px;z-index:45}
+.automation-dialog[open]{display:block}
+.automation-dialog .auto-scale{overflow:auto;transform-origin:0 0}
+.automation-dialog .auto-head{cursor:move;touch-action:none}
+.automation-dialog .float-resize{z-index:5}
+
+/* 計算機視窗：內容是圖鑑計算機分頁（嵌入模式） */
+.calc-window{width:520px;height:680px;min-width:320px;min-height:320px;background:#0b1511}
+.calc-window .side-title{display:flex;align-items:baseline;gap:10px;margin:0}
+.calc-window .side-title small{font-family:ui-sans-serif,sans-serif;font-size:11px;color:#789085}
+.calc-window .calc-body{padding:0;overflow:hidden}
+.calc-window iframe{display:block;width:100%;height:100%;border:0;background:#111614}
+.calc-window.is-dragging iframe,.calc-window.is-resizing iframe{pointer-events:none}
+
+/* 手機（窄螢幕或觸控）：視窗不超出畫面，縮放把手放大好用手指拉 */
+.float-resize{touch-action:none}
+@media (max-width:620px), (hover:none) and (pointer:coarse){
+  .automation-dialog,.float-window,.chat-window{min-width:min(260px,calc(100vw - 8px))!important;max-width:calc(100vw - 8px)!important;max-height:calc(100vh - 8px)!important}
+  .automation-dialog{min-height:200px}
+  .float-resize-nw,.float-resize-ne,.float-resize-sw,.float-resize-se{width:28px;height:28px}
+  .float-resize-n,.float-resize-s{height:14px;left:28px;right:28px}
+  .float-resize-e,.float-resize-w{width:14px;top:28px;bottom:28px}
+  .float-resize-se::after{right:5px;bottom:5px;width:10px;height:10px}
+  .automation-dialog .float-resize-se::after{content:"";position:absolute;border-right:2px solid #8a7740;border-bottom:2px solid #8a7740}
+}

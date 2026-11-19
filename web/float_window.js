@@ -1,9 +1,81 @@
 // 浮動視窗（地圖、角色狀態、介面設定）：左側選單按鈕切換開關，拖曳標題列移動位置；
-// 地圖可拉四個角落調整大小，角色狀態大小固定。開關狀態、位置與大小記在瀏覽器。
+// 每個視窗都能拉上下左右邊線與四個角落調整大小。開關狀態、位置與大小記在瀏覽器。
 
 let topZ=40;
 // 按到哪個視窗，那個視窗就疊到最上面（聊天視窗也一起排）。
 export function bringToFront(el){if(el)el.style.zIndex=String(++topZ);}
+
+// 在視窗的上下左右邊線與四個角落加上縮放把手（拉的那一邊動、對邊固定不動）。
+// 最小尺寸照 CSS 的 min-width／min-height；放開時呼叫 onEnd（存位置與大小）。
+export function makeResizable(root,{onEnd}={}){
+  for(const dir of ['n','s','e','w','nw','ne','sw','se']){
+    const grip=document.createElement('div');
+    grip.className=`float-resize float-resize-${dir}`;grip.setAttribute('aria-hidden','true');
+    root.appendChild(grip);
+    let rs=null;
+    grip.addEventListener('pointerdown',e=>{
+      if(e.button!==0)return;
+      const r=root.getBoundingClientRect(),cs=getComputedStyle(root);
+      // 最小尺寸不超過畫面（手機螢幕比電腦版的最小寬度還窄）。
+      rs={id:e.pointerId,x:e.clientX,y:e.clientY,r,
+        minW:Math.min(parseFloat(cs.minWidth)||200,window.innerWidth-8),minH:Math.min(parseFloat(cs.minHeight)||120,window.innerHeight-8)};
+      grip.setPointerCapture(e.pointerId);
+      root.classList.add('is-resizing');
+      bringToFront(root);
+      e.preventDefault();e.stopPropagation();
+    });
+    grip.addEventListener('pointermove',e=>{
+      if(!rs||e.pointerId!==rs.id)return;
+      const dx=e.clientX-rs.x,dy=e.clientY-rs.y,{r}=rs;
+      let {left,top,width,height}=r;
+      if(dir.includes('e'))width=r.width+dx;
+      if(dir.includes('w'))width=r.width-dx;
+      if(dir.includes('s'))height=r.height+dy;
+      if(dir.includes('n'))height=r.height-dy;
+      // 不超出畫面：往右、往下拉最多到畫面邊緣；往左、往上拉最多到 0。
+      const maxW=dir.includes('w')?r.right:window.innerWidth-r.left;
+      const maxH=dir.includes('n')?r.bottom:window.innerHeight-r.top;
+      width=Math.min(Math.max(rs.minW,width),Math.max(rs.minW,maxW));
+      height=Math.min(Math.max(rs.minH,height),Math.max(rs.minH,maxH));
+      if(dir.includes('w'))left=r.right-width;
+      if(dir.includes('n'))top=r.bottom-height;
+      root.style.left=Math.max(0,left)+'px';root.style.top=Math.max(0,top)+'px';
+      root.style.width=width+'px';root.style.height=height+'px';
+    });
+    const end=e=>{
+      if(!rs||e.pointerId!==rs.id)return;
+      rs=null;root.classList.remove('is-resizing');
+      onEnd?.();
+    };
+    grip.addEventListener('pointerup',end);
+    grip.addEventListener('pointercancel',end);
+  }
+}
+
+// 拖曳 handle 移動視窗（按到按鈕、輸入框時不拖）。放開時呼叫 onEnd。
+export function makeDraggable(root,handle,{onEnd}={}){
+  let drag=null;
+  handle.addEventListener('pointerdown',e=>{
+    if(e.button!==0||(e.target instanceof Element&&e.target.closest('button,input,select,textarea,a,label')))return;
+    const r=root.getBoundingClientRect();
+    drag={dx:e.clientX-r.left,dy:e.clientY-r.top,id:e.pointerId};
+    handle.setPointerCapture(e.pointerId);
+    root.classList.add('is-dragging');bringToFront(root);
+    e.preventDefault();
+  });
+  handle.addEventListener('pointermove',e=>{
+    if(!drag||e.pointerId!==drag.id)return;
+    const w=root.offsetWidth;
+    root.style.left=Math.min(Math.max(0,e.clientX-drag.dx),Math.max(0,window.innerWidth-Math.min(w,window.innerWidth)))+'px';
+    root.style.top=Math.min(Math.max(0,e.clientY-drag.dy),Math.max(0,window.innerHeight-48))+'px';
+  });
+  const end=e=>{
+    if(!drag||e.pointerId!==drag.id)return;
+    drag=null;root.classList.remove('is-dragging');onEnd?.();
+  };
+  handle.addEventListener('pointerup',end);
+  handle.addEventListener('pointercancel',end);
+}
 
 export function setupFloatWindow({root,openButton,storageKey,resizable=false,defaultGeometry,defaultOpen=false,rememberOpen=true,onShow}){
   if(!root)return {open(){},close(){},isOpen:()=>false};
@@ -68,45 +140,8 @@ export function setupFloatWindow({root,openButton,storageKey,resizable=false,def
   head?.addEventListener('pointerup',endDrag);
   head?.addEventListener('pointercancel',endDrag);
 
-  // 拖拉四個角落調整大小（對角固定不動），放開後記住。最小尺寸照 CSS 的 min-width／min-height。
-  if(resizable){
-    for(const corner of ['nw','ne','sw','se']){
-      const grip=document.createElement('div');
-      grip.className=`float-resize float-resize-${corner}`;grip.setAttribute('aria-hidden','true');
-      root.appendChild(grip);
-      let rs=null;
-      grip.addEventListener('pointerdown',e=>{
-        if(e.button!==0)return;
-        const r=root.getBoundingClientRect(),cs=getComputedStyle(root);
-        rs={id:e.pointerId,x:e.clientX,y:e.clientY,r,minW:parseFloat(cs.minWidth)||200,minH:parseFloat(cs.minHeight)||150};
-        grip.setPointerCapture(e.pointerId);
-        root.classList.add('is-resizing');
-        e.preventDefault();e.stopPropagation();
-      });
-      grip.addEventListener('pointermove',e=>{
-        if(!rs||e.pointerId!==rs.id)return;
-        const dx=e.clientX-rs.x,dy=e.clientY-rs.y,{r}=rs;
-        let {left,top,width,height}=r;
-        if(corner.includes('e'))width=r.width+dx;
-        if(corner.includes('w'))width=r.width-dx;
-        if(corner.includes('s'))height=r.height+dy;
-        if(corner.includes('n'))height=r.height-dy;
-        width=Math.min(Math.max(rs.minW,width),window.innerWidth);
-        height=Math.min(Math.max(rs.minH,height),window.innerHeight);
-        if(corner.includes('w'))left=r.right-width;
-        if(corner.includes('n'))top=r.bottom-height;
-        root.style.left=Math.max(0,left)+'px';root.style.top=Math.max(0,top)+'px';
-        root.style.width=width+'px';root.style.height=height+'px';
-      });
-      const endResize=e=>{
-        if(!rs||e.pointerId!==rs.id)return;
-        rs=null;root.classList.remove('is-resizing');
-        saveGeometry();
-      };
-      grip.addEventListener('pointerup',endResize);
-      grip.addEventListener('pointercancel',endResize);
-    }
-  }
+  // 拖拉上下左右邊線與四個角落調整大小，放開後記住。
+  if(resizable)makeResizable(root,{onEnd:saveGeometry});
   window.addEventListener('resize',()=>{if(!root.hidden)clampIntoView();});
 
   function setButton(on){
