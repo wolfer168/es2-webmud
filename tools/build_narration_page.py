@@ -555,99 +555,217 @@ def build():
     return data
 
 
-def spell_html():
-    """法術 cast：每道法術一個格子，畫面照遊戲實際顯示的樣子（含前後空行、色碼、斷行）。"""
+# ---------------------------------------------------------------- 職業、門派
+
+CLASS_ORDER = [('fighter', '武者'), ('taoist', '道士'), ('scholar', '書生'), ('alchemist', '方士'),
+               ('soldier', '軍人'), ('thief', '盜賊'), ('monk', '和尚')]
+CLASS_OF_PREFIX = {'fighter': 'fighter', 'taoist': 'taoist', 'mao-shan': 'taoist', 'scholar': 'scholar',
+                   'alchemist': 'alchemist', 'soldier': 'soldier', 'thief': 'thief', 'monk': 'monk'}
+
+
+def norm(x):
+    return re.sub(r'[\s_\-]+', ' ', x.lower()).strip()
+
+
+def load_factions():
+    """依門派武功對照表與 npc_skill.c：傳回 (門派清單[(職業, 門派)], 技能代碼 -> (職業, 門派))。"""
+    doc = (ROOT / 'docs/martial_arts/門派武功對照表.md').read_text(encoding='utf-8')
+    order, code_of = [], {}
+    sect = doc.split('## 武功一覽')[0]
+    for m in re.finditer(r'^\| ([^|]+?) \| `([a-z0-9\-]+)\.[a-z0-9\-]+` \|', sect, re.M):
+        name, pre = m.group(1).strip(), m.group(0)
+        prefix = re.search(r'`([a-z0-9\-]+)\.', pre).group(1)
+        cls = CLASS_OF_PREFIX.get(prefix)
+        if cls:
+            order.append((cls, name)); code_of[name] = cls
+    skill_of = {}
+    for m in re.finditer(r'^\| ([^|]+?) \| ([^|]+?) \| `([^`]+)` \|', doc.split('## 武功一覽')[1], re.M):
+        owner, code = m.group(1).strip(), m.group(3).strip()
+        if owner in code_of:
+            skill_of.setdefault(norm(code), (code_of[owner], owner))
+    # npc_skill.c 的門派表補上對照表沒寫到的
+    src = (MUD / 'daemon/misc/npc_skill.c').read_text(encoding='utf-8')
+    for fm in re.finditer(r'"([a-z\-]+)\.([a-z0-9\-]+)": \(\[(.*?)\n    \]\),', src, re.S):
+        cls = CLASS_OF_PREFIX.get(fm.group(1))
+        nm = re.search(r'"name":\s*"([^"]+)"', fm.group(3))
+        if not cls or not nm:
+            continue
+        key = (cls, nm.group(1))
+        if key not in order:
+            order.append(key)
+        for sk in re.findall(r'"(?:skill|force)":\s*"([^"]+)"', fm.group(3)):
+            skill_of.setdefault(norm(sk), key)
+    # 設計文件指定、但對照表沒列到的門派武功（docs/martial_arts/瑯夷派_蝶影幻步.md、龍圖丹派_竹上經心法.md）
+    for sk, key in (('butterfly steps', ('thief', '瑯夷派')), ('zushang', ('alchemist', '龍圖丹派'))):
+        skill_of.setdefault(sk, key)
+    return order, skill_of
+
+
+def art_ids(a):
+    ids = {norm(a['stem'])}
+    for pat in (r'art_id\s*=\s*"([^"]+)"', r'register_skill_daemon\("([^"]+)"\)'):
+        for x in re.findall(pat, a['src']):
+            ids.add(norm(x))
+    return ids
+
+
+def art_section(a, cat_note=True):
+    extra = [CAT_NAME[e] for e in a['enables'] if e != a['cat'] and e in CAT_NAME]
+    sub = (f'<small>{html.escape(CAT_NAME.get(a["cat"], ""))} · {html.escape(a["stem"])} · {html.escape(a["file"])}'
+           + (f' · 也可 enable：{html.escape("、".join(extra))}' if extra else '') + '</small>')
+    body = [f'<section class="art"><h3>{html.escape(a["name"])}{sub}</h3>']
+    if not a['entries']:
+        body.append('<p class="empty">（沒有可顯示的敘述）</p>')
+    last_label = None
+    for e in a['entries']:
+        if e['label'] != last_label:
+            body.append(f'<h4>{html.escape(e["label"])}</h4>')
+            last_label = e['label']
+        tag = f'<span class="meta">{html.escape(e["channel"])} · {html.escape(a["file"])}:{e["line"]}'
+        if e['colors']:
+            tag += ' · 色碼 ' + ' '.join(html.escape(x) for x in e['colors'])
+        tag += '</span>'
+        nm = f'<span class="mv">{html.escape(e["name"])}</span>' if e['name'] else ''
+        body.append(f'<div class="ent">{nm}<pre class="s">{e["sample"]}</pre><pre class="r">{e["raw"]}</pre>{tag}</div>')
+    body.append('</section>')
+    return ''.join(body)
+
+
+def spell_sections():
+    """法術 cast：技能代碼 -> [(標題, html)]；每道法術一個格子，照遊戲實際顯示（含前後空行、色碼、斷行）。"""
     if not SPELLS_JSON.exists():
-        return '', ''
+        return {}
     items = json.loads(SPELLS_JSON.read_text(encoding='utf-8'))
-    out, schools = [], []
-    cur = None
+    res = {}
     for it in items:
-        if it['school'] != cur:
-            cur = it['school']
-            sid = 'spell-' + re.sub(r'[^a-z]+', '-', cur)
-            schools.append(f'<a href="#{sid}">{html.escape(it["school_cname"])}</a>')
-            out.append(f'<h3 id="{sid}">{html.escape(it["school_cname"])}<small>{html.escape(cur)}</small></h3>')
-        text = it['text'].replace('\x1b[0m', '\x1b[0m')
-        h, names = to_html(text)
+        h, names = to_html(it['text'])
         lines = h.split('\n')
-        # 前後的空行都要保留：每一行都做成一個區塊
         body = ''.join(f'<div class="ln">{ln if ln else "&nbsp;"}</div>' for ln in lines)
-        out.append(f'<div class="ent spell"><span class="mv">{html.escape(it["spell_cname"])}</span>'
-                   f'<div class="cmd">&gt; {html.escape(it["command"])}</div><div class="box">{body}</div>'
-                   f'<span class="meta">{"色碼 " + " ".join(names) if names else "無色碼"} · 畫面共 {len(lines)} 行（含空行）</span></div>')
-    return ''.join(out), ''.join(schools)
+        box = (f'<div class="ent spell"><span class="mv">{html.escape(it["spell_cname"])}</span>'
+               f'<div class="cmd">&gt; {html.escape(it["command"])}</div><div class="box">{body}</div>'
+               f'<span class="meta">{"色碼 " + " ".join(names) if names else "無色碼"} · 畫面共 {len(lines)} 行（含前後空行）</span></div>')
+        res.setdefault((it['school'], it['school_cname']), []).append(box)
+    return res
+
+
+def details(cls_name, title, inner, level, did, count):
+    return (f'<details class="{cls_name}" id="{did}" open><summary><span class="t">{html.escape(title)}</span>'
+            f'<span class="c">{count}</span></summary>{inner}</details>')
 
 
 def page(data):
-    total = sum(len(a['entries']) for v in data.values() for a in v)
-    spells, spell_nav = spell_html()
-    nav = []
-    body = []
-    for cat, cname in CATEGORIES:
-        if cat not in data:
+    order, skill_of = load_factions()
+    arts = [a for v in data.values() for a in v]
+    spells = spell_sections()
+    tree = {}      # (職業, 門派) -> [html...]
+    generic = []   # 通用：(類別, art)
+    counts = {}
+    for a in arts:
+        key = None
+        for i in sorted(art_ids(a)):
+            if i in skill_of:
+                key = skill_of[i]; break
+        if key is None:
+            generic.append(a); continue
+        tree.setdefault(key, []).append(a)
+    spell_tree, spell_generic = {}, []
+    for (sid, scname), boxes in spells.items():
+        key = skill_of.get(norm(sid))
+        (spell_tree.setdefault(key, []) if key else spell_generic).append((scname, sid, boxes))
+    nav, body = [], []
+    total = sum(len(a['entries']) for a in arts)
+
+    def spell_block(lst):
+        out = []
+        for scname, sid, boxes in lst:
+            out.append(f'<section class="art"><h3>{html.escape(scname)}<small>法術 cast · {html.escape(sid)}</small></h3>{"".join(boxes)}</section>')
+        return ''.join(out)
+
+    for cls, cname in CLASS_ORDER:
+        facs = [f for (c, f) in order if c == cls and ((c, f) in tree or (c, f) in spell_tree)]
+        if not facs:
             continue
-        nav.append(f'<a href="#cat-{html.escape(cat)}">{html.escape(cname)}</a>')
-        body.append(f'<h2 id="cat-{html.escape(cat)}">{html.escape(cname)}<small>{html.escape(cat)}</small></h2>')
-        for a in data[cat]:
-            extra = [CAT_NAME[e] for e in a['enables'] if e != cat and e in CAT_NAME]
-            sub = f'<small>{html.escape(a["stem"])} · {html.escape(a["file"])}' + (f' · 也可 enable：{html.escape("、".join(extra))}' if extra else '') + '</small>'
-            body.append(f'<section class="art"><h3>{html.escape(a["name"])}{sub}</h3>')
-            if not a['entries']:
-                body.append('<p class="empty">（沒有可顯示的敘述）</p>')
-            last_label = None
-            for e in a['entries']:
-                if e['label'] != last_label:
-                    body.append(f'<h4>{html.escape(e["label"])}</h4>')
-                    last_label = e['label']
-                tag = f'<span class="meta">{html.escape(e["channel"])} · {html.escape(a["file"])}:{e["line"]}'
-                if e['colors']:
-                    tag += ' · 色碼 ' + ' '.join(html.escape(x) for x in e['colors'])
-                tag += '</span>'
-                nm = f'<span class="mv">{html.escape(e["name"])}</span>' if e['name'] else ''
-                body.append(f'<div class="ent">{nm}<pre class="s">{e["sample"]}</pre><pre class="r">{e["raw"]}</pre>{tag}</div>')
-            body.append('</section>')
-    if spells:
-        nav.append('<a href="#spells">法術 cast</a>')
-        body.append('<h2 id="spells">法術 cast<small>每道法術一個格子，照遊戲實際顯示</small></h2>'
-                    '<p class="n">以下是用巫師角色對石假人實際施展時，遊戲送出的完整畫面（第一人稱），前後的空行也保留。</p>'
-                    + spell_nav.replace('<a ', '<a class="sn" ') + spells)
+        inner, ncls = [], 0
+        for f in facs:
+            fa = tree.get((cls, f), [])
+            fa = sorted(fa, key=lambda a: [c for c, _ in CATEGORIES].index(a['cat']) if a['cat'] in CAT_NAME else 99)
+            html_f = ''.join(art_section(a) for a in fa) + spell_block(spell_tree.get((cls, f), []))
+            n = sum(len(a['entries']) for a in fa) + sum(len(b) for _, _, b in spell_tree.get((cls, f), []))
+            ncls += n
+            inner.append(details('fac', f, html_f, 2, f'fac-{cls}-{facs.index(f)}', f'{len(fa)} 套武功' + (f'、{sum(len(x[2]) for x in spell_tree.get((cls, f), []))} 道法術' if spell_tree.get((cls, f)) else '')))
+        did = f'cls-{cls}'
+        nav.append(f'<a href="#{did}">{html.escape(cname)}</a>')
+        body.append(details('cls', cname, ''.join(inner), 1, did, f'{len(facs)} 個門派'))
+    # 沒有對應到門派的法術也放通用
+    inner = []
+    for cat, cn in CATEGORIES:
+        ga = [a for a in generic if a['cat'] == cat]
+        if ga:
+            inner.append(details('fac', cn, ''.join(art_section(a) for a in ga), 2, f'gen-{re.sub(r"[^a-z]+", "-", cat)}', f'{len(ga)} 套武功'))
+    if spell_generic:
+        inner.append(details('fac', '法術', spell_block(spell_generic), 2, 'gen-spells', f'{len(spell_generic)} 系'))
+    if inner:
+        nav.append('<a href="#cls-generic">通用</a>')
+        body.append(details('cls', '通用', ''.join(inner), 1, 'cls-generic', f'{len(generic)} 套武功'))
     palette = ''.join(
         f'<span class="sw"><i style="background:{(BRIGHT if k.startswith("HI") else PALETTE)[ANSI[k].split("[")[1].rstrip("m").split(";")[-1]]}"></i>{k}</span>'
         for k in ['BLK', 'RED', 'GRN', 'YEL', 'BLU', 'MAG', 'CYN', 'WHT', 'HIK', 'HIR', 'HIG', 'HIY', 'HIB', 'HIM', 'HIC', 'HIW'])
-    return f'''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    return PAGE.format(total=total, palette=palette, nav=''.join(nav), body=''.join(body))
+
+
+PAGE = '''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>武功敘述總表</title>
 <style>
 :root{{color-scheme:dark;--bg:#0d1012;--panel:#15191c;--line:#2a3035;--ink:#d6d9dc;--muted:#8a939b;--term:#000;--t:#c9c9c9}}
 body{{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;padding:16px 16px 60px}}
 .wrap{{max-width:1000px;margin:0 auto}}
 h1{{font-size:1.4rem;margin:0 0 6px}}p.n{{color:var(--muted);font-size:.88rem;margin:4px 0}}
-nav{{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 0 0;padding:6px 0 8px;border-bottom:1px solid var(--line)}}
 .top{{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0 0;margin-top:8px}}
 .pal{{line-height:1.9}}
-h2,h3{{scroll-margin-top:130px}}
+nav{{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 0 0;padding:6px 0 8px;border-bottom:1px solid var(--line)}}
 nav a{{color:#8fb4ff;text-decoration:none;font-size:.9rem}}
-.bar{{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:2px 0 4px;font-size:.88rem}}
+.bar{{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:2px 0 4px;font-size:.88rem}}
+.bar button{{background:#1d2328;color:var(--ink);border:1px solid #38424a;border-radius:4px;padding:3px 10px;font:inherit;cursor:pointer}}
+.bar button:hover{{background:#26303a}}
 .sw{{display:inline-flex;align-items:center;gap:4px;margin-right:10px;font-family:monospace;font-size:.8rem}}.sw i{{width:12px;height:12px;display:inline-block;border:1px solid #444}}
-h2{{font-size:1.15rem;border-bottom:1px solid var(--line);padding-bottom:4px;margin:30px 0 8px}}h2 small,h3 small{{color:var(--muted);font-weight:400;font-size:.75rem;margin-left:10px}}
-h3{{font-size:1.02rem;margin:20px 0 4px}}h4{{font-size:.85rem;color:#c79a5a;margin:12px 0 4px}}
-.art{{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 14px 14px;margin:12px 0}}
+details{{scroll-margin-top:150px}}
+details.cls{{margin:18px 0 8px;border:1px solid var(--line);border-radius:8px;padding:0 10px 8px;background:#10151a}}
+details.cls>summary{{font-size:1.15rem;font-weight:700;padding:8px 2px}}
+details.fac{{margin:10px 0 4px;border-left:3px solid #3a4650;padding:0 0 0 10px}}
+details.fac>summary{{font-size:1.02rem;font-weight:600;padding:5px 2px;color:#c9d6e2}}
+summary{{cursor:pointer;list-style:none}}summary::-webkit-details-marker{{display:none}}
+summary::before{{content:"\\25BE";display:inline-block;width:1.1em;color:#8fb4ff}}details:not([open])>summary::before{{content:"\\25B8"}}
+summary .c{{color:var(--muted);font-weight:400;font-size:.78rem;margin-left:10px}}
+h3{{font-size:1rem;margin:16px 0 4px}}h3 small{{color:var(--muted);font-weight:400;font-size:.75rem;margin-left:10px}}h4{{font-size:.85rem;color:#c79a5a;margin:12px 0 4px}}
+.art{{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 14px 14px;margin:10px 0}}
 .ent{{margin:6px 0}}.meta{{display:block;font-size:.72rem;color:#6d767e;margin:0 0 6px 4px}}.mv{{display:inline-block;font-size:.72rem;color:#c79a5a;margin-left:4px}}
 pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1.5 "Noto Sans Mono","Noto Sans TC","PingFang TC",monospace;white-space:pre;overflow-x:auto;border-radius:3px}}
 .r{{display:none}}body.raw .r{{display:block}}body.raw .s{{display:none}}
-.empty{{color:var(--muted);font-size:.85rem}}
-.spell .box{{background:var(--term);border-radius:3px;padding:6px 10px;border:1px solid #222}}.ln{{white-space:pre;font:14px/1.5 "Noto Sans Mono","Noto Sans TC",monospace;color:var(--t);min-height:1.5em;overflow-x:auto}}.cmd{{font:13px monospace;color:#c79a5a;margin:2px 4px}}.sn{{margin-right:12px;font-size:.85rem}}label{{cursor:pointer}}
+.empty{{color:var(--muted);font-size:.85rem}}label{{cursor:pointer}}
+.spell .box{{background:var(--term);border-radius:3px;padding:6px 10px;border:1px solid #222}}.ln{{white-space:pre;font:14px/1.5 "Noto Sans Mono","Noto Sans TC",monospace;color:var(--t);min-height:1.5em;overflow-x:auto}}.cmd{{font:13px monospace;color:#c79a5a;margin:2px 4px}}
 </style></head><body><div class="wrap">
 <h1>武功敘述總表</h1>
-<p class="n">新版武功（含新寫的閃躲、內功）會出現在遊戲裡的敘述，依基礎技能分類；共 {total} 句。顏色是 include/ansi.h 的色碼，斷行照遊戲的 cjk_wrap（寬度 70，色碼的字元也算寬度）與 message_vision 的 nowrap 設定。</p>
-<p class="n">範例名稱：$N＝無聊的傢伙、$n＝石假人（練武假人）、$l＝右臂、$w＝該類武器；對假人出招時戰鬥系統會拿掉部位，招式敘述也照這樣呈現；程式裡的變數用〔 〕標出。招式與招架、閃避是接在戰鬥敘述裡的片段（命中、傷害的字句由戰鬥系統接在後面）。實際色彩依 zMUD 設定而定，下面色票只是參考。</p>
+<p class="n">新版武功（含新寫的閃躲、內功）與法術 cast 會出現在遊戲裡的敘述；依職業、門派排列，最後是通用；共 {total} 句。顏色是 include/ansi.h 的色碼，斷行照遊戲的 cjk_wrap（寬度 70，色碼的字元也算寬度）與 message_vision 的 nowrap 設定。</p>
+<p class="n">範例名稱：$N＝無聊的傢伙、$n＝石假人（練武假人）、$l＝右臂、$w＝該類武器；對假人出招時戰鬥系統會拿掉部位，招式敘述也照這樣呈現；程式裡的變數用〔 〕標出。招式與招架、閃避是接在戰鬥敘述裡的片段（命中、傷害的字句由戰鬥系統接在後面）。法術 cast 是實際施展時遊戲送出的完整畫面，前後空行也保留。實際色彩依 zMUD 設定而定，下面色票只是參考。</p>
 <div class="top">
-<div class="bar"><label><input type="checkbox" id="raw"> 顯示程式原文（$N、$n、$w 不替換）</label></div>
+<div class="bar"><label><input type="checkbox" id="raw"> 顯示程式原文（$N、$n、$w 不替換）</label>
+<button data-act="open-all">全部展開</button><button data-act="close-fac">收合所有門派</button><button data-act="close-all">收合所有職業</button></div>
 <div class="pal">{palette}</div>
-<nav>{''.join(nav)}</nav>
+<nav>{nav}</nav>
 </div>
-{''.join(body)}
-</div><script>document.getElementById('raw').addEventListener('change',e=>document.body.classList.toggle('raw',e.target.checked));</script></body></html>'''
+{body}
+</div><script>
+document.getElementById('raw').addEventListener('change',e=>document.body.classList.toggle('raw',e.target.checked));
+document.querySelectorAll('.bar button').forEach(b=>b.addEventListener('click',()=>{{
+  const a=b.dataset.act, all=document.querySelectorAll('details');
+  if(a==='open-all') all.forEach(d=>d.open=true);
+  if(a==='close-fac') {{document.querySelectorAll('details.cls').forEach(d=>d.open=true);document.querySelectorAll('details.fac').forEach(d=>d.open=false);}}
+  if(a==='close-all') document.querySelectorAll('details.cls').forEach(d=>d.open=false);
+}}));
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{{
+  const t=document.querySelector(a.getAttribute('href')); if(t) t.open=true;
+}}));
+</script></body></html>'''
 
 
 def main():
