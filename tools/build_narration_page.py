@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MUD = ROOT / 'source/upstream/mudlib'
 SKILL = MUD / 'daemon/skill'
 OUT = ROOT / 'docs/martial_arts/敘述總表.html'
+SPELLS_JSON = ROOT / 'docs/martial_arts/法術敘述擷取.json'   # tools/capture_spell_narration.py 產生
 
 # ---------------------------------------------------------------- 範圍與分類
 
@@ -554,8 +555,33 @@ def build():
     return data
 
 
+def spell_html():
+    """法術 cast：每道法術一個格子，畫面照遊戲實際顯示的樣子（含前後空行、色碼、斷行）。"""
+    if not SPELLS_JSON.exists():
+        return '', ''
+    items = json.loads(SPELLS_JSON.read_text(encoding='utf-8'))
+    out, schools = [], []
+    cur = None
+    for it in items:
+        if it['school'] != cur:
+            cur = it['school']
+            sid = 'spell-' + re.sub(r'[^a-z]+', '-', cur)
+            schools.append(f'<a href="#{sid}">{html.escape(it["school_cname"])}</a>')
+            out.append(f'<h3 id="{sid}">{html.escape(it["school_cname"])}<small>{html.escape(cur)}</small></h3>')
+        text = it['text'].replace('\x1b[0m', '\x1b[0m')
+        h, names = to_html(text)
+        lines = h.split('\n')
+        # 前後的空行都要保留：每一行都做成一個區塊
+        body = ''.join(f'<div class="ln">{ln if ln else "&nbsp;"}</div>' for ln in lines)
+        out.append(f'<div class="ent spell"><span class="mv">{html.escape(it["spell_cname"])}</span>'
+                   f'<div class="cmd">&gt; {html.escape(it["command"])}</div><div class="box">{body}</div>'
+                   f'<span class="meta">{"色碼 " + " ".join(names) if names else "無色碼"} · 畫面共 {len(lines)} 行（含空行）</span></div>')
+    return ''.join(out), ''.join(schools)
+
+
 def page(data):
     total = sum(len(a['entries']) for v in data.values() for a in v)
+    spells, spell_nav = spell_html()
     nav = []
     body = []
     for cat, cname in CATEGORIES:
@@ -581,6 +607,11 @@ def page(data):
                 nm = f'<span class="mv">{html.escape(e["name"])}</span>' if e['name'] else ''
                 body.append(f'<div class="ent">{nm}<pre class="s">{e["sample"]}</pre><pre class="r">{e["raw"]}</pre>{tag}</div>')
             body.append('</section>')
+    if spells:
+        nav.append('<a href="#spells">法術 cast</a>')
+        body.append('<h2 id="spells">法術 cast<small>每道法術一個格子，照遊戲實際顯示</small></h2>'
+                    '<p class="n">以下是用巫師角色對石假人實際施展時，遊戲送出的完整畫面（第一人稱），前後的空行也保留。</p>'
+                    + spell_nav.replace('<a ', '<a class="sn" ') + spells)
     palette = ''.join(
         f'<span class="sw"><i style="background:{(BRIGHT if k.startswith("HI") else PALETTE)[ANSI[k].split("[")[1].rstrip("m").split(";")[-1]]}"></i>{k}</span>'
         for k in ['BLK', 'RED', 'GRN', 'YEL', 'BLU', 'MAG', 'CYN', 'WHT', 'HIK', 'HIR', 'HIG', 'HIY', 'HIB', 'HIM', 'HIC', 'HIW'])
@@ -604,7 +635,8 @@ h3{{font-size:1.02rem;margin:20px 0 4px}}h4{{font-size:.85rem;color:#c79a5a;marg
 .ent{{margin:6px 0}}.meta{{display:block;font-size:.72rem;color:#6d767e;margin:0 0 6px 4px}}.mv{{display:inline-block;font-size:.72rem;color:#c79a5a;margin-left:4px}}
 pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1.5 "Noto Sans Mono","Noto Sans TC","PingFang TC",monospace;white-space:pre;overflow-x:auto;border-radius:3px}}
 .r{{display:none}}body.raw .r{{display:block}}body.raw .s{{display:none}}
-.empty{{color:var(--muted);font-size:.85rem}}label{{cursor:pointer}}
+.empty{{color:var(--muted);font-size:.85rem}}
+.spell .box{{background:var(--term);border-radius:3px;padding:6px 10px;border:1px solid #222}}.ln{{white-space:pre;font:14px/1.5 "Noto Sans Mono","Noto Sans TC",monospace;color:var(--t);min-height:1.5em;overflow-x:auto}}.cmd{{font:13px monospace;color:#c79a5a;margin:2px 4px}}.sn{{margin-right:12px;font-size:.85rem}}label{{cursor:pointer}}
 </style></head><body><div class="wrap">
 <h1>武功敘述總表</h1>
 <p class="n">新版武功（含新寫的閃躲、內功）會出現在遊戲裡的敘述，依基礎技能分類；共 {total} 句。顏色是 include/ansi.h 的色碼，斷行照遊戲的 cjk_wrap（寬度 70，色碼的字元也算寬度）與 message_vision 的 nowrap 設定。</p>
