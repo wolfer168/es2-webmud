@@ -82,7 +82,7 @@ string parry_message(object me, object attacker, int full)
     })[random(5)];
 }
 
-/* 反震（使用者定案，2026-11-17）：青邪杖法 90 級起，內功 enable 大邪心法且大邪心法 100 級起，
+/* 反震（使用者定案，2026-11-17；2026-11-19 補：必須手持用青邪杖法的單手杖或雙手杖）：青邪杖法 90 級起，內功 enable 大邪心法且大邪心法 100 級起，
  * 格擋成功（含完全擋下）有 青邪杖法/400 的機會反震，
  * 對手損失 大邪心法/4 ～ 大邪心法/3 點氣。等對方這一擊的訊息顯示完再反震。 */
 void do_reflect(object me, object attacker)
@@ -99,11 +99,21 @@ void do_reflect(object me, object attacker)
     if( objectp(attacker) ) show_status(attacker, kee_ratio(attacker));
 }
 
+/* 手持的杖正是用青邪杖法（單手杖或雙手杖其一）。反震只有這時候才會發動，空手或拿其他兵器都不行。 */
+private int holding_chin_staff(object me)
+{
+    foreach( string usage in ({ "twohanded staff", "staff" }) )
+        if( objectp(me->query_temp("weapon/" + usage)) && me->skill_mapped(usage) == art_id )
+            return 1;
+    return 0;
+}
+
 void parry_success(object me, object attacker, int full)
 {
     int sk;
 
     if( !objectp(attacker) || !attacker->is_character() ) return;
+    if( !holding_chin_staff(me) ) return;
     sk = me->query_skill(art_id, 1);
     if( sk < REFLECT_ART_LEVEL ) return;
     if( me->skill_mapped("force") != "huge force" ) return;
