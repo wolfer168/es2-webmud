@@ -63,7 +63,9 @@ void skill_advanced(object me, string sk)
         me->set("huge_force/bonus_100", 1);
         me->set_attr("con", me->query_attr("con", 1) + 1);
         me->set_attr("str", me->query_attr("str", 1) + 1);
-        tell_object(me, HIY "你的大邪心法已臻大成﹐根骨與膂力都增長了。\n" NOR);
+        tell_object(me, HIY "你的大邪心法已臻大成。\n"
+            "你的根骨增加了。\n"
+            "你的膂力增加了。\n" NOR);
     }
 }
 
@@ -105,7 +107,7 @@ int do_refresh(object me)
         return notify_fail("你的氣不夠﹐無法運起大邪心法回復精神。\n");
     me->consume_stat("kee", cost);
     me->supplement_stat("gin", me->query_attr("dex") + sk);
-    message_vision(CYN "$N深吸一口氣﹐精神為之一振。\n" NOR, me);
+    message_vision(CYN "$N深吸一口氣﹐精神為之一振。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -123,7 +125,7 @@ int do_recover(object me)
     me->damage_stat("gin", 15);
     me->heal_stat("kee", sk / 6);
     me->supplement_stat("kee", sk / 2);
-    message_vision(HIR "$N「哇」地噴出一大灘鮮血﹐蒼白的臉上恢復了一絲血色。\n" NOR, me);
+    message_vision(HIR "$N「哇」地噴出一大灘鮮血﹐蒼白的臉上恢復了一絲血色。\n" NOR, me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -150,7 +152,7 @@ int do_armor(object me)
     duration = sk * 4 / 3;
     me->add_temp("apply/armor", sk);
     me->set_temp("huge_force/armor", 1);
-    message_vision(HIY "$N氣衝百穴﹐施展「大邪金身」﹐渾身上下鏘鏘作響﹐宛如金鐵交鳴！\n" NOR, me);
+    message_vision(HIY "$N氣衝百穴﹐施展「大邪金身」﹐渾身上下鏘鏘作響﹐宛如金鐵交鳴！\n" NOR, me, 0, 1);
     call_out("remove_armor", duration * 2, me, sk);
     return 1;
 }
@@ -159,7 +161,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "huge force":
-        message_vision(HIY "$N身若凌虛而超華嶽﹐氣如沖宵而撼北辰﹐開始修習大邪心法。\n" NOR, me);
+        message_vision(HIY "$N身若凌虛而超華嶽﹐氣如沖宵而撼北辰﹐開始修習大邪心法。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":

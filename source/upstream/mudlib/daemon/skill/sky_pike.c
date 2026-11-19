@@ -94,7 +94,7 @@ void sky_breaker(object me, object opponent, object weapon)
            "action": "$N雙手握槍一聲暴喝﹐" MOVE("破穹一擊") "直如天柱傾倒﹐挾著撕裂長空的銳嘯﹐迎面貫向$n的$l" ]),
         200, 0, HIT_MUST);
     if( objectp(me) ) {
-        message_vision("$N這一擊用盡了力氣﹐一時收不回槍勢。\n", me);
+        message_vision("$N這一擊用盡了力氣﹐一時收不回槍勢。\n", me, 0, 1);
         me->start_busy(1);
     }
 }

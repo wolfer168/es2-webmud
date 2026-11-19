@@ -50,7 +50,7 @@ private void three_gates(object me, object opponent, object weapon, mapping *lis
     int *ratios = ({}), max, r;
 
     message_vision(HIY "$N三刀接連得手﹐刀勢不停﹐將方才三招一氣呵成﹐再使一遍﹗\n" NOR,
-        me, opponent);
+        me, opponent, 1);
 
     foreach(m in list) {
         if( !objectp(opponent) || environment(opponent) != environment(me) ) break;
@@ -64,7 +64,7 @@ private void three_gates(object me, object opponent, object weapon, mapping *lis
     }
 
     if( objectp(opponent) )
-        foreach(r in ratios) message_vision(COMBAT_D->status_msg(r), opponent);
+        foreach(r in ratios) message_vision(COMBAT_D->status_msg(r), opponent, 0, 1);
 }
 
 /* 連中紀錄：最近三招都造成傷害時判定一次（往後滑）；沒中就歸零。

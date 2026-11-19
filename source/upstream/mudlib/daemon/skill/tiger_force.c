@@ -63,7 +63,8 @@ void skill_advanced(object me, string sk)
             me->set_attr("str", me->query_attr("str", 1) + 2);
             me->set_attr("con", me->query_attr("con", 1) + 1);
             tell_object(me, HIR "你身經百戰﹐瘋虎功在生死搏殺間豁然貫通﹐一舉衝破了重重關隘﹗\n"
-                "你的膂力大增﹐根骨也更加堅實了。\n" NOR);
+                "你的膂力大增。\n"
+                "你的根骨也更加堅實了。\n" NOR);
             me->advance_skill("tiger force", 9);   // 91 -> 100，會再呼叫一次本函式
             return;
         }
@@ -78,7 +79,8 @@ int query_entry_threshold() { return 10000; }
 
 void skill_completed(object me, string sk)
 {
-    tell_object(me, HIY "你依法運轉數周天後豁然貫通，終於練成了瘋虎功！根骨也隨之增長一點。\n" NOR);
+    tell_object(me, HIY "你依法運轉數周天後豁然貫通，終於練成了瘋虎功！\n"
+        "你的根骨也隨之增長了一點。\n" NOR);
     if( !me->query("tiger_force/initial_con_bonus") ) {
         me->set_attr("con", me->query_attr("con", 1) + 1);
         me->set("tiger_force/initial_con_bonus", 1);
@@ -144,7 +146,7 @@ int do_powerup(object me)
     me->add_temp("apply/attack", attack_bonus);
     me->set_temp("tiger_force/powerup", 1);
 
-    message_vision(HIR "$N突然發出幾聲虎吼，雙眼紅絲滿佈，逐漸進入「瘋 虎 強 盛 勢」了！\n" NOR, me);
+    message_vision(HIR "$N突然發出幾聲虎吼，雙眼紅絲滿佈，逐漸進入「瘋 虎 強 盛 勢」了！\n" NOR, me, 0, 1);
     call_out("remove_powerup", duration, me, damage_bonus, attack_bonus);
     return 1;
 }
@@ -162,7 +164,7 @@ int do_refresh(object me)
         return notify_fail("你的氣不夠，無法運起瘋虎功回復精神。\n");
     me->consume_stat("kee", cost);
     me->supplement_stat("gin", me->query_attr("dex") + sk);
-    message_vision("$N深吸一口氣，精神為之一振。\n", me);
+    message_vision("$N深吸一口氣，精神為之一振。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -173,7 +175,7 @@ varargs int exert_function(object me, string func, object target)
     case "tiger force":
     case "tiger-force":     // 舊寫法，仍可使用
         message_vision(HIY "$N盤膝坐定，調勻呼吸，開始依照瘋虎功口訣運轉內息。\n" NOR,
-            me);
+            me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "powerup":

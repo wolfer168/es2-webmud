@@ -115,7 +115,7 @@ int do_heal(object me)
 
     me->consume_stat("gin", cost);
     me->supplement_stat("kee", sk / 2);
-    message_vision("$N吸入一口寒氣﹐化作清涼之意流遍四肢﹐胸口的鬱悶漸漸散去。\n", me);
+    message_vision("$N吸入一口寒氣﹐化作清涼之意流遍四肢﹐胸口的鬱悶漸漸散去。\n", me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -132,7 +132,7 @@ int do_regenerate(object me)
 
     me->consume_stat("gin", cost);
     me->supplement_stat("sen", 5 + sk / 3);
-    message_vision("$N閉目凝神﹐一縷冰涼的氣息直透眉心﹐紛亂的心神漸漸澄澈。\n", me);
+    message_vision("$N閉目凝神﹐一縷冰涼的氣息直透眉心﹐紛亂的心神漸漸澄澈。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -183,7 +183,7 @@ int do_vapour(object me)
     foreach(string key, int val in bonus) me->add_temp("apply/" + key, val);
     me->set_temp("polar_silkworm/vapour", bonus);
     me->set_temp("polar_silkworm/vapour_id", ++vapour_serial);
-    message_vision(HIC "$N運起冰蠶真氣﹐腹中飲水化作團團白霧繞身而起﹐四周寒意逼人。\n" NOR, me);
+    message_vision(HIC "$N運起冰蠶真氣﹐腹中飲水化作團團白霧繞身而起﹐四周寒意逼人。\n" NOR, me, 0, 1);
     call_out("remove_vapour", sk * 2, me, vapour_serial);
     me->start_busy(1);
     return 1;
@@ -215,7 +215,7 @@ int do_ice_shield(object me)
     } else
         return notify_fail("你既沒有飲水﹐身旁也沒有寒霧可借﹐凝不起冰幕。\n");
 
-    message_vision(HIW "$N周身寒霧驟起﹐凝成一層晶瑩冰幕﹐轉眼間人影已隱沒其中。\n" NOR, me);
+    message_vision(HIW "$N周身寒霧驟起﹐凝成一層晶瑩冰幕﹐轉眼間人影已隱沒其中。\n" NOR, me, 0, 1);
 
     foreach(string stat in ({ "gin", "kee", "sen" })) {
         me->heal_stat(stat, (me->query_stat_maximum(stat) - me->query_stat_effective(stat)) / 2);
@@ -235,7 +235,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "polar-silkworm force":
-        message_vision(HIC "$N盤膝坐下﹐五心向天﹐引一縷冰蠶寒氣在經脈中緩緩運轉。\n" NOR, me);
+        message_vision(HIC "$N盤膝坐下﹐五心向天﹐引一縷冰蠶寒氣在經脈中緩緩運轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "heal":

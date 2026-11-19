@@ -74,7 +74,9 @@ private void give_milestones(object me, int lv)
     me->advance_stat("sen", MILESTONE_STAT * steps);
     tell_object(me, HIY "你的玄天心法又進一層﹐心神益發澄明。\n"
         "你的悟性增加了。\n"
-        "你的精、氣、神因為修煉玄天心法增進不少。\n" NOR);
+        "你的精因為修煉玄天心法增進不少。\n"
+        "你的氣因為修煉玄天心法增進不少。\n"
+        "你的神因為修煉玄天心法增進不少。\n" NOR);
 }
 
 /* 每級獎勵（引擎）；超過學成等級後每升一級：精上限 +2～3、氣上限 +2～3、神上限 +1～2；
@@ -136,7 +138,7 @@ int do_refresh(object me)
 
     if( cost > 0 ) me->consume_stat("kee", cost);
     me->supplement_stat("gin", sk);
-    message_vision("$N運起玄天心法﹐一縷沉靜的真氣直透靈台﹐精神為之一振。\n", me);
+    message_vision("$N運起玄天心法﹐一縷沉靜的真氣直透靈台﹐精神為之一振。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -156,7 +158,7 @@ int do_heal(object me)
 
     if( cost > 0 ) me->consume_stat("gin", cost);
     me->supplement_stat("kee", 5 + sk / 2);
-    message_vision("$N運起玄天心法﹐一縷沉靜的真氣緩緩流過經脈﹐傷勢漸漸平復。\n", me);
+    message_vision("$N運起玄天心法﹐一縷沉靜的真氣緩緩流過經脈﹐傷勢漸漸平復。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -165,7 +167,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "sky force":
-        message_vision(HIY "$N盤膝坐定﹐默運玄天心法﹐一縷沉靜的真氣在週身經脈緩緩流轉。\n" NOR, me);
+        message_vision(HIY "$N盤膝坐定﹐默運玄天心法﹐一縷沉靜的真氣在週身經脈緩緩流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":

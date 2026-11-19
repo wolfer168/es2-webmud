@@ -81,7 +81,8 @@ private void give_milestones(object me, int lv)
         tell_object(me, HIY + m[3] + "\n"
             "你的膽識增加了。\n"
             "你的根骨增加了。\n"
-            "你的精、氣因為修煉天邪神功增進不少。\n" NOR);
+            "你的精因為修煉天邪神功增進不少。\n"
+            "你的氣因為修煉天邪神功增進不少。\n" NOR);
     }
 }
 
@@ -140,7 +141,7 @@ int do_heal(object me)
     me->consume_stat("sen", cost);
     me->heal_stat("kee", n);
     me->supplement_stat("kee", n);
-    message_vision("$N運起天邪神功﹐一股熾熱的真氣在週身遊走﹐傷勢漸漸好轉。\n", me);
+    message_vision("$N運起天邪神功﹐一股熾熱的真氣在週身遊走﹐傷勢漸漸好轉。\n", me, 0, 1);
     return 1;
 }
 
@@ -214,7 +215,7 @@ int do_ghost(object me)
     me->add_temp("apply/intimidate", intimidate);
     me->add_temp("apply/vision_of_ghost", 1);
     me->set_temp("celestial/ghost", 1);
-    message_vision(HIB "$N運起天邪神功凝聚雙目﹐眼中泛起一層幽幽的青光。\n" NOR, me);
+    message_vision(HIB "$N運起天邪神功凝聚雙目﹐眼中泛起一層幽幽的青光。\n" NOR, me, 0, 1);
     call_out("remove_ghost", duration * 2, me, aware, intimidate);
     return 1;
 }
@@ -223,7 +224,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "celestial force":
-        message_vision(HIY "$N盤膝坐定﹐默運天邪神功﹐丹田中一股霸道的真氣緩緩流轉。\n" NOR, me);
+        message_vision(HIY "$N盤膝坐定﹐默運天邪神功﹐丹田中一股霸道的真氣緩緩流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "heal":

@@ -61,7 +61,7 @@ int valid_learn(object me)
 /* 絕招的敘述：整段亮黃色、一行不斷行，前後各空一行；失敗（氣力不繼）一樣用黃色。 */
 private void say_yellow(string msg, object me, object victim)
 {
-    message_vision("\n" + HIY + msg + NOR + "\n\n", me, victim);
+    message_vision("\n" + HIY + msg + NOR + "\n\n", me, victim, 1);
 }
 
 /* 『五 虎 斷 門』：必中、不能閃躲格擋，成功時對手 delay 3 tick；消耗氣最大值的 1/10，自身停頓 1 tick，冷卻 6 tick。 */

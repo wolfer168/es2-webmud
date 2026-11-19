@@ -101,8 +101,8 @@ void seven_shadows(object me, object attacker)
     n = (dex > 0 ? random(dex) : 0) + 1 + sk / 5;
 
     message_vision(CYN "\n$N清嘯一聲﹐提氣疾轉﹐竟化為七道殘影在$n面前按七星方位狂旋起來！！\n\n" NOR,
-        me, attacker);
+        me, attacker, 1);
     attacker->consume_stat("gin", n, me);
     me->supplement_stat("gin", n / 3);
-    message_vision("$N被七道殘影繞得頭暈眼花﹐精神一陣恍惚。\n", attacker);
+    message_vision("$N被七道殘影繞得頭暈眼花﹐精神一陣恍惚。\n", attacker, 0, 1);
 }

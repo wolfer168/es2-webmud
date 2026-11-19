@@ -117,7 +117,7 @@ int do_regenerate(object me)
     me->consume_stat("kee", cost);
     me->heal_stat("sen", heal);
     me->supplement_stat("sen", sen);
-    message_vision("$N運起竹上經心法，臉色微微一白，隨即眼神清明，精神為之一振。\n", me);
+    message_vision("$N運起竹上經心法，臉色微微一白，隨即眼神清明，精神為之一振。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -126,7 +126,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "zushang":
-        message_vision(HIY "$N盤膝而坐，默誦竹上經心法，開始調息運功。\n" NOR, me);
+        message_vision(HIY "$N盤膝而坐，默誦竹上經心法，開始調息運功。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "regenerate":

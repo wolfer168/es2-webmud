@@ -89,9 +89,9 @@ private void freeze(object me, object victim, object weapon)
 {
     // 練武假人是死物：換成死物的敘述，也不停頓（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
     if( victim->query("training_dummy") )
-        message_vision("$N招式之間寒冷的傲梅劍氣掠過$n﹐在$n身上凝起一層白霜 ...\n", me, victim);
+        message_vision("$N招式之間寒冷的傲梅劍氣掠過$n﹐在$n身上凝起一層白霜 ...\n", me, victim, 1);
     else {
-        message_vision("$N招式之間寒冷的傲梅劍氣將$n凍得面起白霜﹐渾身發抖 ...\n", me, victim);
+        message_vision("$N招式之間寒冷的傲梅劍氣將$n凍得面起白霜﹐渾身發抖 ...\n", me, victim, 1);
         victim->start_busy(1);
     }
     silent_hits(me, victim, weapon, 1, 30, 110, HIT_MUST);
@@ -102,7 +102,7 @@ private void freeze(object me, object victim, object weapon)
 private void two_way(object me, object victim, object weapon)
 {
     message_vision(HIW "$N施展傲梅暗劍訣中的殺招【梅二方劍】！" NOR "\n"
-        "$N全力施展快劍﹐幻化出了二道劍氣將$n團團圍住！\n", me, victim);
+        "$N全力施展快劍﹐幻化出了二道劍氣將$n團團圍住！\n", me, victim, 1);
     me->add_temp("advance_lunmay/points", 2);
     silent_hits(me, victim, weapon, 2, 115, 120, HIT_MUST);
 }
@@ -114,7 +114,7 @@ private void four_way(object me, object victim, object weapon)
     int i, result;
 
     message_vision(HIW "$N施展傲梅暗劍訣中的殺招【梅四方劍】！" NOR "\n"
-        "$N全力施展快劍﹐幻化出了四道劍氣將$n團團圍住！\n", me, victim);
+        "$N全力施展快劍﹐幻化出了四道劍氣將$n團團圍住！\n", me, victim, 1);
     me->add_temp("advance_lunmay/points", 4);
     for( i = 0; i < 4; i++ ) {
         if( !objectp(victim) || environment(victim) != environment(me) ) break;

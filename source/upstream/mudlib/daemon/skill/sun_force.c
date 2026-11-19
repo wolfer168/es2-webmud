@@ -106,7 +106,7 @@ int do_remedy(object me)
     me->supplement_stat("gin", sk / 2);
     me->supplement_stat("kee", sk / 2);
     me->supplement_stat("sen", sk / 2);
-    message_vision("$N深吸一口氣﹐丹田純陽之氣上湧﹐蒼白的臉色漸漸泛起紅潤。\n", me);
+    message_vision("$N深吸一口氣﹐丹田純陽之氣上湧﹐蒼白的臉色漸漸泛起紅潤。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -125,7 +125,7 @@ int do_recover(object me)
     me->heal_stat("gin", sk / 4);
     me->heal_stat("kee", sk / 4);
     me->heal_stat("sen", sk / 4);
-    message_vision("$N雙掌合於胸前﹐一股溫熱的純陽之氣在體內往復流轉﹐受損的經脈漸漸舒展開來。\n", me);
+    message_vision("$N雙掌合於胸前﹐一股溫熱的純陽之氣在體內往復流轉﹐受損的經脈漸漸舒展開來。\n", me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -187,7 +187,7 @@ int do_sun_fire(object me)
     me->add_temp("apply/cps", cps);
     me->add_temp("apply/spell", spell);
     me->set_temp("sun_force/sun_fire", 1);
-    message_vision(HIR "$N仰首向日﹐雙掌虛托﹐點點純陽之氣如金屑般匯入掌心﹐周身隱隱泛起一層赤紅光暈。\n" NOR, me);
+    message_vision(HIR "$N仰首向日﹐雙掌虛托﹐點點純陽之氣如金屑般匯入掌心﹐周身隱隱泛起一層赤紅光暈。\n" NOR, me, 0, 1);
     call_out("remove_sun_fire", sk * 2, me, wis, cps, spell);
     return 1;
 }
@@ -196,7 +196,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "sun force":
-        message_vision(HIY "$N盤膝坐下﹐五心向天﹐引丹田一點純陽之氣緩緩運轉周天。\n" NOR, me);
+        message_vision(HIY "$N盤膝坐下﹐五心向天﹐引丹田一點純陽之氣緩緩運轉周天。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "remedy":

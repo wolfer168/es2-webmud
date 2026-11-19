@@ -77,11 +77,11 @@ void attack_using(object me, object opponent, object weapon)
     if( me->query_skill("tiger-blade", 1) < 90 || ratio < 100 ) return;
     if( !objectp(opponent) || !living(opponent) || environment(me) != environment(opponent) ) return;
 
-    message_vision(HIR "$N一聲怒吼﹐勢如瘋虎般揮刀進擊！\n" NOR, me, opponent);
+    message_vision(HIR "$N一聲怒吼﹐勢如瘋虎般揮刀進擊！\n" NOR, me, opponent, 1);
     first_follow = strike(me, opponent, weapon);
 
     if( first_follow <= 0 || !objectp(opponent) || !living(opponent)
     ||  environment(me) != environment(opponent) ) return;
-    message_vision(HIR "$N一擊得手威勢更不可當﹐雙眼血紅﹐瘋狂追擊！\n" NOR, me, opponent);
+    message_vision(HIR "$N一擊得手威勢更不可當﹐雙眼血紅﹐瘋狂追擊！\n" NOR, me, opponent, 1);
     strike(me, opponent, weapon);
 }

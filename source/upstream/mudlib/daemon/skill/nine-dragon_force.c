@@ -113,7 +113,7 @@ int do_heal(object me)
 
     me->consume_stat("gin", cost);
     me->supplement_stat("kee", 10 + sk / 2);
-    message_vision("$N閉目調息﹐一縷真氣自精化入氣海﹐蒼白的臉色漸漸泛起血色。\n", me);
+    message_vision("$N閉目調息﹐一縷真氣自精化入氣海﹐蒼白的臉色漸漸泛起血色。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -130,7 +130,7 @@ int do_regenerate(object me)
 
     me->consume_stat("gin", cost);
     me->supplement_stat("sen", 10 + sk / 2);
-    message_vision("$N引一縷真氣上行﹐灌入靈台﹐眼中的倦意一掃而空。\n", me);
+    message_vision("$N引一縷真氣上行﹐灌入靈台﹐眼中的倦意一掃而空。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -146,7 +146,7 @@ int do_overload(object me)
 
     me->consume_stat("sen", 75);
     me->set_temp("taoism/overload", 1);
-    message_vision(HIY "$N施咒喚來九道雷光如白鏈般環繞週身﹐不停的「嘶嘶」做響！\n" NOR, me);
+    message_vision(HIY "$N施咒喚來九道雷光如白鏈般環繞週身﹐不停的「嘶嘶」做響！\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -155,7 +155,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "nine-dragon force":
-        message_vision(HIY "$N盤膝坐下﹐五心向天﹐引九道真氣在體內緩緩運轉周天。\n" NOR, me);
+        message_vision(HIY "$N盤膝坐下﹐五心向天﹐引九道真氣在體內緩緩運轉周天。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "heal":
