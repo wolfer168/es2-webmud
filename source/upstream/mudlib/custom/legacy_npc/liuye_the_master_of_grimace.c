@@ -52,7 +52,8 @@ void create()
 }
 
 // ------------------------------------------------------------------
-// 戰鬥行為：氣或 HP 低於兩成時噴血補滿，每次重生最多六次（設計與梅影風、柳東蘆相同）；
+// 戰鬥行為：氣或 HP 低於兩成時噴血補滿，每次重生最多六次（設計與梅影風、柳東蘆相同；
+// 另外在受傷的當下就檢查，避免兩次心跳之間連吃重擊直接倒下，2026-11-19）；
 // 打鬥中每個心跳有 30% 機會施展青邪杖法絕招：50% crazy、30% stun、20% hide（使用者指示，2026-11-19）。
 // ------------------------------------------------------------------
 
@@ -71,6 +72,17 @@ private void full_heal()
     }
     add_temp("liuye/full_heal", 1);
     message_vision(HIR "$N怪叫一聲﹐「哇」地噴出一大灘鮮血﹐雙眼卻突然精光大盛！！\n" NOR, this_object());
+}
+
+/* 受傷時先檢查：這一下會讓氣掉到兩成以下（或打死）就先補滿再吃傷害。
+ * 只在 heart_beat 檢查的話，兩次心跳之間連吃幾下重擊就會直接倒下，來不及補。 */
+varargs int receive_damage(int damage, object from, object attacker)
+{
+    if( damage > 0 && living(this_object())
+    &&  query_temp("liuye/full_heal") < FULL_HEAL_MAX
+    &&  (query_stat("kee") - damage) * 100 < query_stat_maximum("kee") * FULL_HEAL_RATIO )
+        full_heal();
+    return ::receive_damage(damage, from, attacker);
 }
 
 static void heart_beat()
