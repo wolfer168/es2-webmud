@@ -241,7 +241,88 @@ function bridgeTrace(line){
   console.log('[bridge]',line);
 }
 const wss=new WebSocketServer({server,path:'/mud',maxPayload:WS_MAX_PAYLOAD_BYTES});
+
+// 斷線保留（docs/WEB_RESUME.md）：網頁連線斷掉時（例如手機切到別的 App），遊戲連線先不關，
+// 替玩家保留 RESUME_HOLD_MS，期間的遊戲訊息存最多 RESUME_MAX_LINES 行；網頁帶著憑證回來就接回原本的連線。
+// 憑證每次接回都換新的，只發給原本那個瀏覽器分頁。玩家用 #dis 主動斷線（關閉代碼 4000）就直接關掉。
+const RESUME_HOLD_MS=Math.max(0,Number(process.env.RESUME_HOLD_MS??600000));
+const RESUME_MAX_LINES=Math.max(0,Number(process.env.RESUME_MAX_LINES??500));
+const RESUME_MAX_BYTES=262144;
+const CLOSE_MANUAL=4000,CLOSE_REPLACED=4001;
+const live=new Map();      // 工作階段編號 -> {row,tcp,ws,token,holdTimer,buffer}
+const byToken=new Map();   // 憑證 -> 工作階段編號
+const newToken=()=>crypto.randomBytes(18).toString('base64url');
+function issueToken(s){
+  if(s.token)byToken.delete(s.token);
+  s.token=newToken();byToken.set(s.token,s.row.id);
+  if(s.ws?.readyState===1)s.ws.send('@@BRIDGE|TOKEN|'+s.token);
+}
+// 保留期間的訊息只留最後 RESUME_MAX_LINES 行（也不超過 RESUME_MAX_BYTES）。
+function keepTail(buf){
+  if(buf.length>RESUME_MAX_BYTES)buf=buf.subarray(buf.length-RESUME_MAX_BYTES);
+  let n=0;
+  for(let i=buf.length-1;i>=0;i--){
+    if(buf[i]===10&&++n>RESUME_MAX_LINES)return buf.subarray(i+1);
+  }
+  return buf;
+}
+function closeSession(s,why){
+  if(s.closed)return;s.closed=true;
+  clearTimeout(s.holdTimer);
+  if(s.token)byToken.delete(s.token);
+  live.delete(s.row.id);sessions.delete(s.row.id);
+  if(!s.tcp.destroyed)s.tcp.destroy();
+  if(s.ws&&s.ws.readyState<=1){try{s.ws.close(1011,why||'MUD TCP closed')}catch{}}
+}
+function holdSession(s){
+  s.ws=null;s.row.parked=true;
+  if(!s.row.tcpConnected||RESUME_HOLD_MS<=0||s.tcp.destroyed){closeSession(s,'closed');return;}
+  bridgeTrace(`session ${s.row.id} held for resume (${Math.round(RESUME_HOLD_MS/1000)}s)`);
+  clearTimeout(s.holdTimer);
+  s.holdTimer=setTimeout(()=>{bridgeTrace(`session ${s.row.id} resume window expired`);closeSession(s,'expired');},RESUME_HOLD_MS);
+}
+// 把網頁連線接到工作階段上（新開或接回）。
+function attach(s,ws){
+  s.ws=ws;s.row.parked=false;clearTimeout(s.holdTimer);
+  ws.isAlive=true;
+  ws.on('pong',()=>{ws.isAlive=true});
+  ws.on('message',m=>{
+    if(s.ws!==ws)return;
+    const b=scrubRealIp(Buffer.from(m));s.row.bytesIn+=b.length;s.row.lastActivity=Date.now();
+    // Length/timing only: useful for diagnosing pre-login automation without
+    // ever recording usernames, passwords or command contents.
+    if(TRACE_PACKETS)bridgeTrace(`session ${s.row.id} WS->MUD packet bytes=${b.length} total=${s.row.bytesIn}`);
+    if(!s.tcp.destroyed)s.tcp.write(b);
+  });
+  // 通訊協定錯誤（例如訊息過大）不是意外斷線，不保留。單純的網路中斷不會走到這裡。
+  let protocolError=false;
+  ws.on('error',()=>{bridgeStats.wsErrors++;protocolError=true});
+  ws.on('close',code=>{
+    if(s.ws!==ws)return;               // 已被新的連線取代
+    // 只有意外斷掉才保留：1006（連線突然中斷，例如手機切到背景、網路斷、心跳逾時）、1001（分頁離開）。
+    // 其他關閉（正常關閉、玩家 #dis 的 4000、橋接程式自己因訊息過大或太慢而關掉）都直接結束。
+    if(!protocolError&&(code===1006||code===1001))holdSession(s);
+    else closeSession(s,'closed');
+  });
+}
 wss.on('connection',(ws,req)=>{
+  const u=new URL(req.url,'http://x');
+  const resumeId=byToken.get(u.searchParams.get('resume')||'');
+  const old=resumeId&&live.get(resumeId);
+  if(old&&!old.closed&&!old.tcp.destroyed){
+    // 接回：舊的網頁連線還沒被發現斷掉時先把它關掉（不關遊戲連線）。
+    const prev=old.ws;old.ws=null;
+    if(prev&&prev.readyState<=1){try{prev.close(CLOSE_REPLACED,'resumed elsewhere')}catch{}}
+    attach(old,ws);
+    const missed=old.buffer.length?old.buffer:null;old.buffer=Buffer.alloc(0);
+    let lines=0;if(missed)for(const c of missed)if(c===10)lines++;
+    old.row.resumes=(old.row.resumes||0)+1;
+    bridgeTrace(`session ${old.row.id} resumed (${lines} lines replayed)`);
+    ws.send(`@@BRIDGE|RESUMED|${lines}`);
+    if(missed)ws.send(missed);
+    issueToken(old);
+    return;
+  }
   if(sessions.size>=MAX_SESSIONS){
     bridgeStats.rejectedCapacity++;
     try{ws.send('\r\n[bridge] server at capacity, please retry later\r\n')}catch{}
@@ -249,42 +330,39 @@ wss.on('connection',(ws,req)=>{
   }
   const id=++sessionSeq, started=Date.now();
   bridgeStats.accepted++;
-  ws.isAlive=true;
   const tcp=net.createConnection({host:MUD_HOST,port:MUD_PORT});
   tcp.setNoDelay(true);
   // 第一行先告訴遊戲玩家的真實 IP（排在玩家任何輸入之前）。
   const realIp=realIpLine(req,BRIDGE_SECRET);
   if(realIp)tcp.write(realIp);
   const codec=new TelnetCodec(b=>{if(!tcp.destroyed)tcp.write(b)});
-  const row={id,started,remote:req.socket.remoteAddress||'',bytesIn:0,bytesOut:0,lastActivity:started,tcpConnected:false,closing:false};
-  sessions.set(id,row);
+  const row={id,started,remote:req.socket.remoteAddress||'',bytesIn:0,bytesOut:0,lastActivity:started,tcpConnected:false,closing:false,parked:false};
+  const s={row,tcp,ws:null,token:null,holdTimer:null,buffer:Buffer.alloc(0),closed:false};
+  sessions.set(id,row);live.set(id,s);
   bridgeStats.peakSessions=Math.max(bridgeStats.peakSessions,sessions.size);
-  const cleanup=()=>{if(row.closing)return;row.closing=true;sessions.delete(id);};
+  attach(s,ws);
+  issueToken(s);
   const connectTimer=setTimeout(()=>{if(!row.tcpConnected&&!tcp.destroyed)tcp.destroy(new Error('MUD connect timeout'))},TCP_CONNECT_TIMEOUT_MS);
-  tcp.on('connect',()=>{row.tcpConnected=true;row.lastActivity=Date.now();clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP connected to ${MUD_HOST}:${MUD_PORT}`);if(ws.readyState===1)ws.send('\r\n[ES2 connected]\r\n')});
+  tcp.on('connect',()=>{row.tcpConnected=true;row.lastActivity=Date.now();clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP connected to ${MUD_HOST}:${MUD_PORT}`);if(s.ws?.readyState===1)s.ws.send('\r\n[ES2 connected]\r\n')});
   tcp.on('data',d=>{
     row.bytesOut+=d.length;row.lastActivity=Date.now();
     const clean=codec.feed(d);
-    if(!clean.length||ws.readyState!==1)return;
-    if(ws.bufferedAmount>WS_MAX_BUFFERED_BYTES){
-      try{ws.close(1013,'client too slow')}catch{}
-      if(!tcp.destroyed)tcp.destroy();
+    if(!clean.length)return;
+    const w=s.ws;
+    if(!w||w.readyState!==1){
+      // 網頁不在：先存起來，接回時補送。
+      if(RESUME_MAX_LINES>0)s.buffer=keepTail(Buffer.concat([s.buffer,Buffer.from(clean)]));
       return;
     }
-    ws.send(clean);
+    if(w.bufferedAmount>WS_MAX_BUFFERED_BYTES){
+      try{w.close(1013,'client too slow')}catch{}
+      closeSession(s,'client too slow');
+      return;
+    }
+    w.send(clean);
   });
-  tcp.on('error',e=>{bridgeStats.tcpErrors++;clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP error: ${e.message}`);if(ws.readyState===1)ws.send(`\r\n[bridge] ${e.message}\r\n`)});
-  tcp.on('close',hadError=>{clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP closed hadError=${hadError} bytesOut=${row.bytesOut} bytesIn=${row.bytesIn}`);cleanup();if(ws.readyState===1)ws.close(1011,'MUD TCP closed')});
-  ws.on('pong',()=>{ws.isAlive=true});
-  ws.on('message',m=>{
-    const b=scrubRealIp(Buffer.from(m));row.bytesIn+=b.length;row.lastActivity=Date.now();
-    // Length/timing only: useful for diagnosing pre-login automation without
-    // ever recording usernames, passwords or command contents.
-    if(TRACE_PACKETS)bridgeTrace(`session ${id} WS->MUD packet bytes=${b.length} total=${row.bytesIn}`);
-    if(!tcp.destroyed)tcp.write(b);
-  });
-  ws.on('error',()=>{bridgeStats.wsErrors++});
-  ws.on('close',()=>{clearTimeout(connectTimer);cleanup();if(!tcp.destroyed)tcp.destroy()});
+  tcp.on('error',e=>{bridgeStats.tcpErrors++;clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP error: ${e.message}`);if(s.ws?.readyState===1)s.ws.send(`\r\n[bridge] ${e.message}\r\n`)});
+  tcp.on('close',hadError=>{clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP closed hadError=${hadError} bytesOut=${row.bytesOut} bytesIn=${row.bytesIn}`);sessions.delete(id);closeSession(s,'MUD TCP closed')});
 });
 const ping=setInterval(()=>{
   for(const ws of wss.clients){
@@ -296,6 +374,7 @@ server.on('close',()=>clearInterval(ping));
 const shutdown=()=>{
   clearInterval(ping);
   for(const ws of wss.clients){try{ws.close(1001,'server shutdown')}catch{}}
+  for(const x of live.values())closeSession(x,'server shutdown');
   for(const d of directServers){for(const c of d.sessions)c.destroy();d.close()}
   server.close(()=>process.exit(0));
   setTimeout(()=>process.exit(0),3000).unref();
