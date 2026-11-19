@@ -42,16 +42,17 @@ OTHERS = [
      [('conjure blank', '空白符'), ('conjure yin', '少陰符'), ('conjure yang', '太陽符'), ('conjure nature', '先天符'),
       ('conjure remedy', '療傷'), ('conjure vision', '陰陽眼')], []),
     ('mao-shan mysticism', 'magic', '茅山道法【奇門術】', ['clone 40 /custom/item/scroll/yin'],
-     [('conjure memory', '記憶'), ('conjure recall', '招魂'), ('conjure collect on stake', '收魂'),
-      ('conjure slave on stake', '役使'), ('conjure devour', '吞噬')], ['taoism of darkness']),
-    ('taoism of dunja', 'magic', '茅山奇術【遁甲書】', [],
+     [('conjure memory', '記憶'), ('north', ''), ('conjure recall', '招魂'), ('clone /d/graveyard/npc/barbarian', ''),
+      ('call barbarian->die()', ''), ('conjure collect on corpse', '收魂'), ('conjure slave on corpse', '役使'),
+      ('conjure devour', '吞噬')], ['taoism of darkness']),
+    ('taoism of dunja', 'magic', '茅山奇術【遁甲書】', ['clone /custom/legacy_npc/barbarian_chief'],
      [('conjure fate', '天命'), ('conjure experience on chief', '經驗')], []),
     ('chivi sutra', 'magic', '天師道法【紫薇心經】', [],
      [('conjure fire_defence', '火防'), ('conjure storm_defence', '風防'), ('conjure freeze_defence', '冰防'),
       ('conjure thunder_defence', '雷防'), ('conjure dispel', '解除')], []),
-    ('enchance', 'magic', '強化之術', ['clone /custom/weapon/sword/black_shortsword', 'wield sword'],
+    ('enchance', 'magic', '強化之術', ['clone /custom/weapon/sword/black_shortsword', 'wield sword', 'clone 20 /obj/money/gold'],
      [('conjure silver_mark on sword', '銀咒'), ('conjure gold_mark on sword', '金咒')], []),
-    ('alchemy-wealth', 'magic', '丹道【黃白之術】', [],
+    ('alchemy-wealth', 'magic', '丹道【黃白之術】', ['clone /custom/weapon/sword/black_shortsword'],
      [('conjure silver_seal on sword', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
     ('alchemy-medication', 'magic', '丹道【神農之術】', ['clone /obj/alchemist/heat_reactor'],
      [('conjure red_seal on reactor', '赤印封'), ('conjure red_dispel on reactor', '赤印解')], []),
@@ -72,13 +73,22 @@ OTHERS = [
 def clean(raw):
     t = c.TELNET.sub(b'', raw).decode('utf-8', 'replace').replace('\r', '')
     t = re.sub(r'(?m)^(?:\x1b\[[0-9;]*m)*> ?', '', t)       # 提示符號
+    # 路過的 NPC 與先前法術的延遲訊息不是這個指令的畫面
+    t = re.sub(r'(?m)^(?:劉乙忘玄|老和尚|小和尚)(?:走了過來|往.{1,2}離開)。\n', '', t)
+    t = re.sub(r'(?m)^你眼前那層幽光漸漸淡去。\n', '', t)
     return t
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--neolith', default=str(DEFAULT_NEOLITH))
+    ap.add_argument('--only', default='', help='只擷取技能代碼或中文名含這段文字的學派，結果合併進既有的 json')
     a = ap.parse_args()
+    keys = [k for k in a.only.split(',') if k]
+
+    def want(skill, cname):
+        return not keys or any(k in skill or k in cname for k in keys)
+
     WIZLIST.write_text('citest (admin)\n', encoding='utf-8')
     c.prepare_dirs()
     proc = subprocess.Popen([a.neolith, '-f', 'neolith.conf'], cwd=c.UPSTREAM, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -123,6 +133,8 @@ def main():
         run('clone /custom/legacy_npc/barbarian_chief', 1.5)
 
         for skill, cname, cmd, spells, scroll, target in SCHOOLS:
+            if not want(skill, cname):
+                continue
             run('call me->set_skill("%s",200)' % skill, 0.4)
             run('enable spells with %s' % skill, 0.6)
             if scroll:
@@ -136,6 +148,8 @@ def main():
                     run('call me->start_busy(0)', 0.3)
                     run('call me->remove_all_enemy()', 0.3)
                     run('call stake->remove_all_enemy()', 0.3)
+                    if sid == 'smoke':
+                        run('kill stake', 1.0)      # 鬼煙術要在戰鬥中才能遁走
                 # 只取施法當下的畫面（約 1.4 秒）：之後自動開打的戰鬥訊息不是法術的敘述
                 text = run('%s %s on %s' % (cmd, sid, tgt), 1.4)
                 time.sleep(2.0)
@@ -145,13 +159,19 @@ def main():
                 if sid == 'hydra':
                     run('call chief->heal_up()', 0.3)
         for skill, usage, cname, pre, cmds, deps in OTHERS:
+            if not want(skill, cname):
+                continue
             run('call me->set_skill("%s",200)' % skill, 0.4)
             for d in deps:
                 run('call me->set_skill("%s",200)' % d, 0.4)
             run('enable %s with %s' % (usage, skill), 0.6)
             for pc in pre:
-                run(pc, 1.2)
+                out = run(pc, 1.2)
+                print('  準備', pc, '->', out.strip().replace(chr(10), ' / ')[:80])
             for cmd, scname in cmds:
+                if not scname:
+                    run(cmd, 1.2)
+                    continue
                 run('call me->start_busy(0)', 0.3)
                 run('call me->remove_all_enemy()', 0.3)
                 run('call stake->remove_all_enemy()', 0.3)
@@ -166,6 +186,13 @@ def main():
         try: proc.communicate(timeout=10)
         except Exception: proc.kill()
         if WIZLIST.exists(): WIZLIST.unlink()
+    if a.only and OUT.exists():
+        old = json.loads(OUT.read_text(encoding='utf-8'))
+        new = {(r['school'], r['command']) for r in results}
+        results = [r for r in old if (r['school'], r['command']) not in new] + results
+        # 依原本的學派順序排列
+        order = [x[0] for x in SCHOOLS] + [x[0] for x in OTHERS]
+        results.sort(key=lambda r: order.index(r['school']) if r['school'] in order else 99)
     OUT.write_text(json.dumps(results, ensure_ascii=False, indent=1), encoding='utf-8')
     print(f'已寫入 {OUT.relative_to(ROOT)}：{len(results)} 道法術')
 
