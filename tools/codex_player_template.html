@@ -656,7 +656,7 @@ svg.map .nm-long { font-size: 10px; }
       <p class="calc-intro">輸入你和目標的精、氣、神，估算吞下這縷魂魄後可能增加的數值。只計算吞食玩家的魂魄；吞鬼魂 NPC 只會回復精、神，不會永久增加。</p>
       ${form}
       <div class="panel calc-out" id="calc-out" aria-live="polite">${devourResult(calcVals)}</div>
-      <p class="calc-note">此數據為估算數值，每次吞魂皆有隨機性。</p>
+      <div class="calc-note"><p style="margin:0">備註：</p><ol style="margin:0;padding-left:1.4em"><li>此數據為估算數值，每次吞魂皆有隨機性。</li><li>吞食魂魄自第 11 隻起，不再保證大幅增加。</li></ol></div>
     </div>`;
   }
   function onCalc(e) {

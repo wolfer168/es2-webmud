@@ -11,7 +11,8 @@ def test_calc_tab_and_note():
     assert "{ key: 'calc', label: '計算機' }" in s
     assert "const CALCS = [{ key: 'devour', label: '夜叉吞魂' }];" in s
     assert 'calc: renderCalc' in s
-    assert '此數據為估算數值，每次吞魂皆有隨機性。' in s
+    assert '<li>此數據為估算數值，每次吞魂皆有隨機性。</li>' in s
+    assert '<li>吞食魂魄自第 11 隻起，不再保證大幅增加。</li>' in s
 
 
 def test_calc_rules_match_devour():
