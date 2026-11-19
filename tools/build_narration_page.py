@@ -33,7 +33,7 @@ WEAPON = {   # 範例武器名（取代 $w）
     'secondhand dagger': '短匕', 'unarmed': '', 'parry': '兵刃', 'dodge': '', 'force': '',
 }
 GENERIC = {'axe', 'blade', 'blunt', 'dagger', 'needle', 'pike', 'staff', 'sword', 'whip', 'unarmed'}
-SAMPLE = {'$N': '劉乙忘玄', '$n': '韓笑', '$P': '他', '$p': '她', '$l': '右臂'}
+SAMPLE = {'$N': '無聊的傢伙', '$n': '石假人', '$P': '他', '$p': '它', '$l': '右臂'}   # 施招的人與被打的練武假人（使用者指示，2026-11-19）
 
 WRAP_WIDTH = 70
 
@@ -404,7 +404,7 @@ def cjk_wrap(s, width):
     return ''.join(out)
 
 
-def render_items(items, weapon, raw):
+def render_items(items, weapon, raw, dummy_hit=False):
     """把敘述項目組成帶真實 ESC 碼的字串；raw 為 True 時保留 $N 等變數。"""
     parts = []
     for k, v in items:
@@ -417,6 +417,9 @@ def render_items(items, weapon, raw):
         else:
             parts.append('〔' + v + '〕')
     s = ''.join(parts)
+    if dummy_hit and not raw:
+        # 對練武假人出招：戰鬥系統拿掉部位（combatd.c 的 training_dummy 處理）
+        s = s.replace('$n的$l', '$n').replace('$n$l', '$n').replace('$l', '$n')
     if not raw:
         for a, b in SAMPLE.items():
             s = s.replace(a, b)
@@ -537,7 +540,7 @@ def build():
             if key in seen:
                 continue
             seen.add(key)
-            sample = render_items(items, weapon, False)
+            sample = render_items(items, weapon, False, label == '招式')
             channel = channel_for(c, label)
             nowrap = channel.startswith(('戰鬥訊息', '一行', '只給', '提示', '不自動'))
             wrapped = sample if nowrap else cjk_wrap(sample, WRAP_WIDTH)
@@ -605,7 +608,7 @@ pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1
 </style></head><body><div class="wrap">
 <h1>武功敘述總表</h1>
 <p class="n">新版武功（含新寫的閃躲、內功）會出現在遊戲裡的敘述，依基礎技能分類；共 {total} 句。顏色是 include/ansi.h 的色碼，斷行照遊戲的 cjk_wrap（寬度 70，色碼的字元也算寬度）與 message_vision 的 nowrap 設定。</p>
-<p class="n">範例名稱：$N＝劉乙忘玄、$n＝韓笑、$l＝右臂、$w＝該類武器；程式裡的變數用〔 〕標出。招式與招架、閃避是接在戰鬥敘述裡的片段（命中、傷害的字句由戰鬥系統接在後面）。實際色彩依 zMUD 設定而定，下面色票只是參考。</p>
+<p class="n">範例名稱：$N＝無聊的傢伙、$n＝石假人（練武假人）、$l＝右臂、$w＝該類武器；對假人出招時戰鬥系統會拿掉部位，招式敘述也照這樣呈現；程式裡的變數用〔 〕標出。招式與招架、閃避是接在戰鬥敘述裡的片段（命中、傷害的字句由戰鬥系統接在後面）。實際色彩依 zMUD 設定而定，下面色票只是參考。</p>
 <div class="top">
 <div class="bar"><label><input type="checkbox" id="raw"> 顯示程式原文（$N、$n、$w 不替換）</label></div>
 <div class="pal">{palette}</div>
