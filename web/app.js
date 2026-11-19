@@ -133,6 +133,16 @@ setupFloatWindow({
   defaultGeometry:()=>{const w=Math.min(560,window.innerWidth-32),h=Math.min(560,window.innerHeight-60);return {left:Math.max(16,(window.innerWidth-w)/2),top:Math.max(16,(window.innerHeight-h)/3),width:w,height:h};},
   onShow:()=>board.onOpen(),
 });
+// 計算機（左側選單「計算機」）：夜叉吞魂與屬性成長，內容就是圖鑑的計算機分頁（嵌入模式），
+// 第一次打開才載入，圖鑑沒產生時視窗裡會顯示找不到頁面。
+setupFloatWindow({
+  root:document.getElementById('calcWindow'),
+  openButton:document.querySelector('[data-ui-calc]'),
+  storageKey:'es2-calc-window-v1',resizable:true,rememberOpen:false,
+  defaultGeometry:()=>{const w=Math.min(520,window.innerWidth-32),h=Math.min(680,window.innerHeight-40);return {left:Math.max(16,window.innerWidth-w-24),top:Math.max(12,(window.innerHeight-h)/3),width:w,height:h};},
+  onShow:()=>{const f=document.getElementById('calcFrame');if(f&&!f.getAttribute('src'))f.setAttribute('src','/codex.html?embed=calc');},
+});
+document.getElementById('calcWindow')?.addEventListener('pointerdown',e=>bringToFront(e.currentTarget));
 // 最右欄是空白區域，用來擺地圖、角色狀態等浮動視窗；訊息欄與它之間的分隔線可左右拖曳。
 // 訊息欄最窄 = score 最寬的一行（72 個半形字寬）× 125%，加上左右留白；跟著文字大小設定變動（同 styles.css 的 --console-min）。
 const SCORE_COLUMNS=72;

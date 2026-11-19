@@ -559,3 +559,11 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .automation-dialog .auto-scale{overflow:auto;transform-origin:0 0}
 .automation-dialog .auto-head{cursor:move;touch-action:none}
 .automation-dialog .float-resize{z-index:5}
+
+/* 計算機視窗：內容是圖鑑計算機分頁（嵌入模式） */
+.calc-window{width:520px;height:680px;min-width:320px;min-height:320px;background:#0b1511}
+.calc-window .side-title{display:flex;align-items:baseline;gap:10px;margin:0}
+.calc-window .side-title small{font-family:ui-sans-serif,sans-serif;font-size:11px;color:#789085}
+.calc-window .calc-body{padding:0;overflow:hidden}
+.calc-window iframe{display:block;width:100%;height:100%;border:0;background:#111614}
+.calc-window.is-dragging iframe,.calc-window.is-resizing iframe{pointer-events:none}
