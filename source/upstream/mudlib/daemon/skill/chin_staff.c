@@ -48,7 +48,7 @@ private void create()
 #define REFLECT_ART_LEVEL 90    // 反震：青邪杖法幾級起
 #define REFLECT_FORCE_LEVEL 100 // 反震：大邪心法幾級起
 #define TICK_SECS 2             // 1 tick = 2 秒
-#define PERFORM_MIN_KEE 200     // perform 需要的氣（目前值）
+#define PERFORM_MIN 200         // perform 需要的精或氣（目前值）
 /* 單手杖、雙手杖、招架。 */
 int valid_enable(string usage)
 {
@@ -114,12 +114,14 @@ void parry_success(object me, object attacker, int full)
 
 /* ------------------------------------------------------------------
  * perform（使用者定案，2026-11-19）：perform staff:<招> [on 目標]，雙手杖用 perform twohanded staff:<招>。
- *   crazy  殘蟻瘋魔杖：對目標連攻 1 + 青邪杖法/50 次；消耗目前氣的 1/10；冷卻 2 tick。
+ *   crazy  殘蟻瘋魔杖：連出 1 + 青邪杖法/50 招，每招都是一般出手（由戰鬥系統判定閃躲格擋，照常耗精）；
+ *          發動時消耗目前精的 1/10；冷卻 2 tick。
  *   stun   哭笑不得也：必中，對手停頓 2 tick；消耗氣上限的 1/20；冷卻 1 tick。
- *   hide   殘蟻逐食杖：當下 青邪杖法/2 的傷害（可被閃躲），2～4 tick 後依雙方膂力決定是否爆發
- *          青邪杖法 ～ 青邪杖法×1.5 ＋ 自己膂力 的傷害（不可閃躲、格擋，可被護甲值抵抗）；
- *          消耗氣上限的 1/20；冷卻 1 tick。
- * 三招都要氣（目前值）至少 200、手持杖、正在戰鬥。
+ *   hide   殘蟻逐食杖：必中，當下 青邪杖法/2 的傷害；2～4 tick 後依雙方膂力決定是否爆發
+ *          青邪杖法 ～ 青邪杖法×1.5 ＋ 自己膂力 的傷害（不可閃躲、格擋，可被護甲值抵抗，
+ *          護甲值只算天生與法術等附加的、不含裝備）；消耗氣上限的 1/20；冷卻 1 tick。
+ * crazy 要精（目前值）至少 200，stun、hide 要氣（目前值）至少 200；都要手持杖、正在戰鬥。
+ * 指令：perform chin_staff:crazy（單手杖、雙手杖都適用；cmds/std/perform.c 使用者同意，2026-11-19）。
  * ------------------------------------------------------------------ */
 
 private object pick_target(object me, object target)
@@ -148,6 +150,26 @@ private int can_follow(object me, object victim)
         && environment(me) == environment(victim);
 }
 
+/* 天生與法術等附加的護甲值：目前的護甲值扣掉穿戴的防具、手持武器提供的部分。 */
+private int natural_armor(object ob)
+{
+    int a, part_armor;
+    mapping eq, prop;
+    string key;
+    object item;
+
+    a = ob->query_temp("apply/armor");
+    if( mapp(eq = ob->query_temp("armor")) )
+        foreach( key, item in eq )
+            if( objectp(item) && mapp(prop = item->query("apply_armor/" + key)) )
+                a -= prop["armor"];
+    if( mapp(eq = ob->query_temp("weapon")) )
+        foreach( key, item in eq )
+            if( objectp(item) && mapp(prop = item->query("apply_weapon/" + key)) )
+                a -= prop["armor"];
+    return a > 0 ? a : 0;
+}
+
 /* crazy：殘蟻瘋魔杖。 */
 private int do_crazy(object me, object victim, object weapon)
 {
@@ -157,7 +179,7 @@ private int do_crazy(object me, object victim, object weapon)
     n = 1 + me->query_skill(art_id, 1) / 50;
     for( i = 0; i < n; i++ ) {
         if( !can_follow(me, victim) ) break;
-        special_hit(me, victim, weapon, 0, 100, 0, 0);   // 沒指定招式就隨機一招；不另外耗精
+        special_hit(me, victim, weapon, pick_move(me), 100, 100, 0);   // 隨機一招，照一般出手耗精
     }
     return 1;
 }
@@ -177,11 +199,14 @@ void hide_burst(object me, object victim)
     int sk, dmg, armor;
 
     if( !can_follow(me, victim) ) return;
-    if( random(me->query_attr("str")) <= random(victim->query_attr("str")) ) return;
+    if( random(me->query_attr("str")) <= random(victim->query_attr("str")) ) {
+        tell_object(victim, BLU "你壓制了體內的大邪氣勁。\n" NOR);   // 只有目標看得到
+        return;
+    }
 
     sk = me->query_skill(art_id, 1);
     dmg = sk + random(sk / 2 + 1) + me->query_attr("str");
-    armor = victim->query_temp("apply/armor");
+    armor = natural_armor(victim);
     dmg -= armor;
     message_vision(BLU "$N先前打入$n體內的大邪真氣忽然爆發開來﹐$n只覺周身氣血翻騰！\n" NOR, me, victim);
     if( dmg > 0 ) victim->receive_damage(dmg, me, me);
@@ -195,13 +220,8 @@ private int do_hide(object me, object victim, object weapon)
 
     sk = me->query_skill(art_id, 1);
     message_vision(BLU "$N擬聚大邪真氣使出" HIW "【殘蟻逐食杖】" NOR BLU "﹐連擊$n周身大穴！\n" NOR, me, victim);
-    if( victim->defend(me->query_ability("attack"), me->query_strength("attack"), weapon) ) {
-        message_vision(BLU "$n身形急閃﹐躲開了這幾下點擊。\n" NOR, me, victim);
-    }
-    else {
-        victim->receive_damage(sk / 2, me, me);
-        if( objectp(victim) ) show_status(victim, kee_ratio(victim));
-    }
+    victim->receive_damage(sk / 2, me, me);   // 必中
+    if( objectp(victim) ) show_status(victim, kee_ratio(victim));
     if( can_follow(me, victim) )
         call_out("hide_burst", (2 + random(3)) * TICK_SECS, me, victim);
     return 1;
@@ -211,7 +231,7 @@ int perform_action(object me, string act, object target)
 {
     object victim, weapon;
     int cost, cd;
-    string name;
+    string name, res, label;
 
     switch( act ) {
     case "crazy": name = "殘蟻瘋魔杖"; break;
@@ -229,15 +249,18 @@ int perform_action(object me, string act, object target)
 
     if( me->query_temp("chin_staff/cd/" + act) > time() )
         return notify_fail("你的氣勁尚未平復﹐還施展不出" + name + "。\n");
-    if( me->query_stat("kee") < PERFORM_MIN_KEE )
-        return notify_fail("你的氣不足﹐施展不出" + name + "。\n");
+    if( act == "crazy" ) {
+        res = "gin"; label = "精";
+        cost = me->query_stat("gin") / 10; cd = 2;
+    }
+    else {
+        res = "kee"; label = "氣";
+        cost = me->query_stat_maximum("kee") / 20; cd = 1;
+    }
+    if( me->query_stat(res) < PERFORM_MIN || me->query_stat(res) <= cost )
+        return notify_fail("你的" + label + "不足﹐施展不出" + name + "。\n");
 
-    if( act == "crazy" ) { cost = me->query_stat("kee") / 10; cd = 2; }
-    else { cost = me->query_stat_maximum("kee") / 20; cd = 1; }
-    if( me->query_stat("kee") <= cost )
-        return notify_fail("你的氣不足﹐施展不出" + name + "。\n");
-
-    me->consume_stat("kee", cost);
+    me->consume_stat(res, cost);
     me->set_temp("chin_staff/cd/" + act, time() + cd * TICK_SECS);
 
     switch( act ) {
