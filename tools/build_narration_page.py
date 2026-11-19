@@ -745,6 +745,7 @@ details{{scroll-margin-top:150px}}
 details.cls{{margin:18px 0 8px;border:1px solid var(--line);border-radius:8px;padding:0 10px 8px;background:#10151a}}
 details.cls>summary{{font-size:1.15rem;font-weight:700;padding:8px 2px}}
 details.art{{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:0 14px 12px;margin:10px 0}}
+details.art:not([open]){{padding-bottom:0}}
 details.art>summary{{font-size:1rem;font-weight:600;padding:8px 0}}
 details.art>summary small{{color:var(--muted);font-weight:400;font-size:.75rem;margin-left:10px}}
 details.fac{{margin:10px 0 4px;border-left:3px solid #3a4650;padding:0 0 0 10px}}

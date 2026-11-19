@@ -348,8 +348,8 @@
   "school_cname": "丹道【黃白之術】",
   "spell": "silver_seal",
   "spell_cname": "銀咒",
-  "command": "conjure silver_seal on needle",
-  "text": "你所施展的銀咒，不足以轉化這把透骨釘。\n"
+  "command": "conjure silver_seal on scroll",
+  "text": "你手捏法訣，對著少陰符唸動「銀咒」。\n少陰符化作一道銀光，消失無蹤。\n"
  },
  {
   "school": "alchemy-wealth",
