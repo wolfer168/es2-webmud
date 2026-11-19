@@ -7,6 +7,8 @@
 　技能種類：斧術、左手斧術
 　學習條件：種族、職業、性別不限，無其他條件
 　任務起始：水嵐縣密林 地下密道 大統領
+　安裝：enable axe with soonlight axe
+　　　　enable secondhand axe with soonlight axe
 　特殊能力：
 　　‧雙斧連擊：迅雷斧法 90，右手單手斧、左手左手斧都 enable 迅雷斧法
 　　　　　　　時，每回合兩手各砍一斧後，有機會再連砍數斧，右手、左手
