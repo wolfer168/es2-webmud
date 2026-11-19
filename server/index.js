@@ -267,12 +267,12 @@ function keepTail(buf){
   return buf;
 }
 function closeSession(s,why){
-  if(s.closed)return;s.closed=true;
+  if(s.closed||s.row.closing)return;s.closed=true;s.row.closing=true;
   clearTimeout(s.holdTimer);
   if(s.token)byToken.delete(s.token);
   live.delete(s.row.id);sessions.delete(s.row.id);
   if(!s.tcp.destroyed)s.tcp.destroy();
-  if(s.ws&&s.ws.readyState<=1){try{s.ws.close(1011,why||'MUD TCP closed')}catch{}}
+  if(s.ws&&s.ws.readyState<=1){try{s.ws.close(1011,'MUD TCP closed')}catch{}}
 }
 function holdSession(s){
   s.ws=null;s.row.parked=true;
@@ -286,12 +286,13 @@ function attach(s,ws){
   s.ws=ws;s.row.parked=false;clearTimeout(s.holdTimer);
   ws.isAlive=true;
   ws.on('pong',()=>{ws.isAlive=true});
+  const row=s.row;
   ws.on('message',m=>{
     if(s.ws!==ws)return;
-    const b=scrubRealIp(Buffer.from(m));s.row.bytesIn+=b.length;s.row.lastActivity=Date.now();
+    const b=scrubRealIp(Buffer.from(m));row.bytesIn+=b.length;row.lastActivity=Date.now();
     // Length/timing only: useful for diagnosing pre-login automation without
     // ever recording usernames, passwords or command contents.
-    if(TRACE_PACKETS)bridgeTrace(`session ${s.row.id} WS->MUD packet bytes=${b.length} total=${s.row.bytesIn}`);
+    if(TRACE_PACKETS)bridgeTrace(`session ${row.id} WS->MUD packet bytes=${b.length} total=${row.bytesIn}`);
     if(!s.tcp.destroyed)s.tcp.write(b);
   });
   // 通訊協定錯誤（例如訊息過大）不是意外斷線，不保留。單純的網路中斷不會走到這裡。
@@ -340,6 +341,8 @@ wss.on('connection',(ws,req)=>{
   const s={row,tcp,ws:null,token:null,holdTimer:null,buffer:Buffer.alloc(0),closed:false};
   sessions.set(id,row);live.set(id,s);
   bridgeStats.peakSessions=Math.max(bridgeStats.peakSessions,sessions.size);
+  // 結束這個工作階段（只做一次）：關遊戲連線、作廢憑證、從清單移除。
+  const cleanup=()=>{sessions.delete(id);closeSession(s,'closed');};
   attach(s,ws);
   issueToken(s);
   const connectTimer=setTimeout(()=>{if(!row.tcpConnected&&!tcp.destroyed)tcp.destroy(new Error('MUD connect timeout'))},TCP_CONNECT_TIMEOUT_MS);
@@ -348,21 +351,21 @@ wss.on('connection',(ws,req)=>{
     row.bytesOut+=d.length;row.lastActivity=Date.now();
     const clean=codec.feed(d);
     if(!clean.length)return;
-    const w=s.ws;
-    if(!w||w.readyState!==1){
+    const ws=s.ws;
+    if(!ws||ws.readyState!==1){
       // 網頁不在：先存起來，接回時補送。
       if(RESUME_MAX_LINES>0)s.buffer=keepTail(Buffer.concat([s.buffer,Buffer.from(clean)]));
       return;
     }
-    if(w.bufferedAmount>WS_MAX_BUFFERED_BYTES){
-      try{w.close(1013,'client too slow')}catch{}
-      closeSession(s,'client too slow');
+    if(ws.bufferedAmount>WS_MAX_BUFFERED_BYTES){
+      try{ws.close(1013,'client too slow')}catch{}
+      cleanup();
       return;
     }
-    w.send(clean);
+    ws.send(clean);
   });
   tcp.on('error',e=>{bridgeStats.tcpErrors++;clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP error: ${e.message}`);if(s.ws?.readyState===1)s.ws.send(`\r\n[bridge] ${e.message}\r\n`)});
-  tcp.on('close',hadError=>{clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP closed hadError=${hadError} bytesOut=${row.bytesOut} bytesIn=${row.bytesIn}`);sessions.delete(id);closeSession(s,'MUD TCP closed')});
+  tcp.on('close',hadError=>{clearTimeout(connectTimer);bridgeTrace(`session ${id} TCP closed hadError=${hadError} bytesOut=${row.bytesOut} bytesIn=${row.bytesIn}`);cleanup()});
 });
 const ping=setInterval(()=>{
   for(const ws of wss.clients){

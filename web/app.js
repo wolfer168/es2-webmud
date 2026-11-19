@@ -1241,10 +1241,8 @@ function connect(){
       kickHudAfterServerText(forceMapRefresh);
     }
   };
-  ws.onclose=e=>{if(sock!==ws)return;
-    // 同一條連線在另一個分頁接回了：這個分頁不再自動重連，免得兩邊互搶。
-    if(e?.code===4001){stopHudPolling();resumeToken.set('');manualDisconnect=true;conn.textContent='DISCONNECTED';print('\n[這個連線已在另一個分頁接回；輸入 #con 可在這裡重新連線]\n',true);return;}
-    stopHudPolling();editorActive=false;serverInputWait=false;if(mapBootstrapRetryTimer){clearTimeout(mapBootstrapRetryTimer);mapBootstrapRetryTimer=null;}pendingUserCommands=[];mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;currentRoomId=null;runtimeSnapshot=null;tail='';sessionRecorder.finishResponse();sessionRecorder.markTransportClose(e?.code??null,e?.reason||'');sessionRecorder.markReconnect();conn.textContent='DISCONNECTED';if(manualDisconnect){print('\n[已中斷連線，輸入 #con 重新連線]\n',true);return;}automation.cancelPending();if(!started)return;clearBg(retryResetTimer);retryResetTimer=null;const wait=reconnectDelay();print(`\n[${Math.round(wait/1000)} 秒後重新連線]\n`,true);reconnectTimer=bgTimeout(()=>{reconnectTimer=null;connect();},wait);};
+  // 關閉代碼 4001：同一條連線在另一個分頁接回了，這個分頁不再自動重連，免得兩邊互搶。
+  ws.onclose=e=>{if(sock!==ws)return;stopHudPolling();editorActive=false;serverInputWait=false;if(e?.code===4001){currentRoomId=null;runtimeSnapshot=null;resumeToken.set('');manualDisconnect=true;conn.textContent='DISCONNECTED';print('\n[這個連線已在另一個分頁接回；輸入 #con 可在這裡重新連線]\n',true);return;}editorActive=false;serverInputWait=false;if(mapBootstrapRetryTimer){clearTimeout(mapBootstrapRetryTimer);mapBootstrapRetryTimer=null;}pendingUserCommands=[];mapRefreshPending=false;hudBootstrapInFlight=false;hudBootstrapAttempts=0;currentRoomId=null;runtimeSnapshot=null;tail='';sessionRecorder.finishResponse();sessionRecorder.markTransportClose(e?.code??null,e?.reason||'');sessionRecorder.markReconnect();conn.textContent='DISCONNECTED';if(manualDisconnect){print('\n[已中斷連線，輸入 #con 重新連線]\n',true);return;}automation.cancelPending();if(!started)return;clearBg(retryResetTimer);retryResetTimer=null;const wait=reconnectDelay();print(`\n[${Math.round(wait/1000)} 秒後重新連線]\n`,true);reconnectTimer=bgTimeout(()=>{reconnectTimer=null;connect();},wait);};
   ws.onerror=()=>conn.textContent='ERROR';
 }
 // Echo the player's own command into the transcript as its own line, the
