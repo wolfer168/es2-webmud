@@ -32,7 +32,7 @@ SCHOOLS = [
     ('taoism-storm', '天師道法【風符】', 'cast', [('quick_storm', '疾風'), ('crazy_storm', '暴風'), ('killer_storm', '飛戮風'), ('whirl_storm', '轉輪大風')], None, 'stake'),
     ('taoism-thunder', '天師道法【雷法】', 'cast', [('swamp_thunder', '澤雷'), ('blaster_thunder', '爆雷'), ('divine_thunder', '神光雷'), ('hexagram_thunder', '六卦熒雷')], None, 'stake'),
     ('taoism of darkness', '茅山奇術', 'cast', [('ghost_fire', '鬼火術'), ('smoke', '鬼煙術'), ('hell_fire', '幽冥之火')], '/custom/item/scroll/yin', 'stake'),
-    ('taoism of nature', '茅山幻術', 'cast', [('dog', '狗'), ('monkey', '猴'), ('hydra', '巨蟒'), ('rain', '祈雨')], '/custom/item/scroll/nature', 'stake'),
+    ('taoism of nature', '茅山幻術', 'cast', [('monkey', '猴'), ('hydra', '巨蟒'), ('rain', '祈雨'), ('dog', '狗')], '/custom/item/scroll/nature', 'stake'),
 ]
 
 
@@ -101,7 +101,11 @@ def main():
                     run('kill chief', 1.5)
                 else:
                     run('call me->start_busy(0)', 0.3)
-                text = run('%s %s on %s' % (cmd, sid, tgt), 9.0)
+                    run('call me->remove_all_enemy()', 0.3)
+                    run('call stake->remove_all_enemy()', 0.3)
+                # 只取施法當下的畫面（約 1.4 秒）：之後自動開打的戰鬥訊息不是法術的敘述
+                text = run('%s %s on %s' % (cmd, sid, tgt), 1.4)
+                time.sleep(2.0)
                 results.append(dict(school=skill, school_cname=cname, spell=sid, spell_cname=scname,
                                     command='%s %s on %s' % (cmd, sid, tgt), text=text))
                 print(f'{cname} {sid}: {len(text)} 字元')
