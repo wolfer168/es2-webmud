@@ -7,10 +7,10 @@ DEVOUR = ROOT / 'source/upstream/mudlib/daemon/race/yaksa/devour.c'
 
 
 def test_calc_tab_and_note():
-    # 圖鑑的計算機分頁，第一個計算機是吞魂（使用者指示，2026-11-19）。
+    # 圖鑑的計算機分頁，第一個計算機是吞魂，第二個是屬性成長（使用者指示，2026-11-19）。
     s = TPL.read_text(encoding='utf-8')
     assert "{ key: 'calc', label: '計算機' }" in s
-    assert "const CALCS = [{ key: 'devour', label: '夜叉吞魂' }];" in s
+    assert "const CALCS = [{ key: 'devour', label: '夜叉吞魂' }, { key: 'attr', label: '屬性成長' }];" in s
     assert 'calc: renderCalc' in s
     assert '<li>此數據為估算數值，每次吞魂皆有隨機性。</li>' in s
     assert '<li>吞食魂魄自第 11 隻起，不再保證大幅增加。</li>' in s
