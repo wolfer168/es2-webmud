@@ -50,6 +50,8 @@ private void grow(object me, string stat, int n) {
 // 有效吞魂次數（使用者指示，2026-11-04 歸零）：只有達到門檻的吞魂才計數。
 // 舊規則的次數 yaksa/devoured_players 不再使用。
 #define COUNT_KEY "yaksa/devour_count"
+// 大幅增加的次數（使用者指示，2026-11-19）：不加目標下指令時給夜叉自己看。
+#define BIG_KEY "yaksa/devour_big"
 
 // 吞魂紀錄（使用者指示，2026-11-04；2026-11-15 擴充）。本檔的身分（Mudlib）不能寫 /log，
 // 系統權限只開放 /data/daemon 給 Mudlib，所以紀錄放在這裡。只記玩家，不記鬼魂 NPC。
@@ -203,6 +205,7 @@ private void reward_player(object me, object victim, int ghost_gin) {
         // 前 10 次必定大幅增加；之後機率 = 10 / (10 + random(吞食次數))。
         big = count < 10 || random(10 + rnd(count)) < 10;
         if (big) {
+            me->add(BIG_KEY, 1);
             gin = 1 + ghost_gin / 40;
             kee = 1 + rnd(ghost_gin / 40);
             sen = 1 + rnd(ghost_gin / 80);
@@ -319,11 +322,38 @@ void devour_tick(object me, object victim, int serial) {
     call_out("devour_tick", TICK_SECONDS, me, victim, serial);
 }
 
+// 大幅增加的次數。這項計數是 2026-11-19 才加的：之前吞的，前 10 次有效吞魂一定是大幅，
+// 照有效次數補上（最多 10）；第 11 次以後只能從身上的吞魂紀錄（2026-11-15 起）補。
+int query_big_count(object me) {
+    int n, count;
+    mixed recs;
+
+    if (!undefinedp(me->query(BIG_KEY))) return me->query(BIG_KEY);
+    count = me->query(COUNT_KEY);
+    n = count < 10 ? count : 10;
+    recs = me->query(RECORD_KEY);
+    if (arrayp(recs))
+        foreach (mixed rec in recs)
+            if (mapp(rec) && rec["big"] && rec["valid_no"] > 10) n++;
+    me->set(BIG_KEY, n);
+    return n;
+}
+
+// 不加目標：查看自己吞下的魂魄中，有幾縷令自己功力大進（只算玩家的魂魄）。
+private int show_count(object me) {
+    int n = query_big_count(me);
+
+    if (!n) write("你至今還不曾吞下足以令你功力大進的魂魄。\n");
+    else write("你至今吞噬的魂魄之中，共有" + chinese_number(n) + "縷令你功力大進。\n");
+    return 1;
+}
+
 int main(object me, string arg) {
     object victim;
     int serial;
 
     if (me->query_race() != "yaksa") return notify_fail("你不是夜叉，無法吞食鬼魂。\n");
+    if (!arg || arg == "") return show_count(me);
     if (DEVOUR_SEALED)
         return notify_fail("你體內的噬魂凶性已被封住，再也吞不下任何魂魄。\n");
     if (me->query("life_form") == "ghost") return notify_fail("你自己已經是鬼魂了。\n");
@@ -358,6 +388,7 @@ int help(object me) {
     // 完整規則見 docs/CUSTOM_RACE_A_H.md（@HELP 區塊不可超過 1024 位元組）。
     write(@HELP
 指令格式：devour <鬼魂>
+          devour          查看吞下的魂魄中有幾縷令你功力大進
 
 夜叉可以吞食鬼魂 NPC 或死去玩家的鬼魂：
 - 抓住鬼魂後要稍待片刻才開始吞食，鬼魂可以趁機逃走。
