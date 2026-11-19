@@ -47,7 +47,8 @@ private void create()
 
 #define REFLECT_ART_LEVEL 90    // 反震：青邪杖法幾級起
 #define REFLECT_FORCE_LEVEL 100 // 反震：大邪心法幾級起
-
+#define TICK_SECS 2             // 1 tick = 2 秒
+#define PERFORM_MIN_KEE 200     // perform 需要的氣（目前值）
 /* 單手杖、雙手杖、招架。 */
 int valid_enable(string usage)
 {
@@ -109,4 +110,139 @@ void parry_success(object me, object attacker, int full)
     if( me->query_skill("huge force", 1) < REFLECT_FORCE_LEVEL ) return;
     if( random(400) >= sk ) return;
     call_out("do_reflect", 0, me, attacker);
+}
+
+/* ------------------------------------------------------------------
+ * perform（使用者定案，2026-11-19）：perform staff:<招> [on 目標]，雙手杖用 perform twohanded staff:<招>。
+ *   crazy  殘蟻瘋魔杖：對目標連攻 1 + 青邪杖法/50 次；消耗目前氣的 1/10；冷卻 2 tick。
+ *   stun   哭笑不得也：必中，對手停頓 2 tick；消耗氣上限的 1/20；冷卻 1 tick。
+ *   hide   殘蟻逐食杖：當下 青邪杖法/2 的傷害（可被閃躲），2～4 tick 後依雙方膂力決定是否爆發
+ *          青邪杖法 ～ 青邪杖法×1.5 ＋ 自己膂力 的傷害（不可閃躲、格擋，可被護甲值抵抗）；
+ *          消耗氣上限的 1/20；冷卻 1 tick。
+ * 三招都要氣（目前值）至少 200、手持杖、正在戰鬥。
+ * ------------------------------------------------------------------ */
+
+private object pick_target(object me, object target)
+{
+    object ob, *enemies;
+
+    enemies = filter(me->query_enemy(), (: objectp($1) :));
+    if( !sizeof(enemies) ) return 0;
+    if( !objectp(target) ) return enemies[0];
+    foreach(ob in enemies)
+        if( ob == target ) return target;
+    return 0;
+}
+
+private object staff_in_hand(object me)
+{
+    object w;
+
+    if( objectp(w = me->query_temp("weapon/twohanded staff")) ) return w;
+    return me->query_temp("weapon/staff");
+}
+
+private int can_follow(object me, object victim)
+{
+    return objectp(me) && objectp(victim) && living(me) && living(victim)
+        && environment(me) == environment(victim);
+}
+
+/* crazy：殘蟻瘋魔杖。 */
+private int do_crazy(object me, object victim, object weapon)
+{
+    int i, n;
+
+    message_vision(BLU "$N一式" HIR "【殘蟻瘋魔杖】" NOR BLU "﹐雙臂肌肉暴起﹐向$n發起瘋狂的攻擊！\n" NOR, me, victim);
+    n = 1 + me->query_skill(art_id, 1) / 50;
+    for( i = 0; i < n; i++ ) {
+        if( !can_follow(me, victim) ) break;
+        special_hit(me, victim, weapon, 0, 100, 0, 0);   // 沒指定招式就隨機一招；不另外耗精
+    }
+    return 1;
+}
+
+/* stun：哭笑不得也。 */
+private int do_stun(object me, object victim, object weapon)
+{
+    message_vision("$N怪叫一聲豎起手中杖使出" HIY "【哭笑不得也】" NOR "﹐凝聚週身氣力向地面狠狠一砸！\n", me, victim);
+    message_vision(CYN "$n下盤不穩﹐被震了個正著﹐一屁股坐倒在地上。\n" NOR, me, victim);
+    victim->start_busy(2);
+    return 1;
+}
+
+/* hide 的爆發：2～4 tick 後依雙方膂力決定。 */
+void hide_burst(object me, object victim)
+{
+    int sk, dmg, armor;
+
+    if( !can_follow(me, victim) ) return;
+    if( random(me->query_attr("str")) <= random(victim->query_attr("str")) ) return;
+
+    sk = me->query_skill(art_id, 1);
+    dmg = sk + random(sk / 2 + 1) + me->query_attr("str");
+    armor = victim->query_temp("apply/armor");
+    dmg -= armor;
+    message_vision(BLU "$N先前打入$n體內的大邪真氣忽然爆發開來﹐$n只覺周身氣血翻騰！\n" NOR, me, victim);
+    if( dmg > 0 ) victim->receive_damage(dmg, me, me);
+    if( objectp(victim) ) show_status(victim, kee_ratio(victim));
+}
+
+/* hide：殘蟻逐食杖。 */
+private int do_hide(object me, object victim, object weapon)
+{
+    int sk;
+
+    sk = me->query_skill(art_id, 1);
+    message_vision(BLU "$N擬聚大邪真氣使出" HIW "【殘蟻逐食杖】" NOR BLU "﹐連擊$n周身大穴！\n" NOR, me, victim);
+    if( victim->defend(me->query_ability("attack"), me->query_strength("attack"), weapon) ) {
+        message_vision(BLU "$n身形急閃﹐躲開了這幾下點擊。\n" NOR, me, victim);
+    }
+    else {
+        victim->receive_damage(sk / 2, me, me);
+        if( objectp(victim) ) show_status(victim, kee_ratio(victim));
+    }
+    if( can_follow(me, victim) )
+        call_out("hide_burst", (2 + random(3)) * TICK_SECS, me, victim);
+    return 1;
+}
+
+int perform_action(object me, string act, object target)
+{
+    object victim, weapon;
+    int cost, cd;
+    string name;
+
+    switch( act ) {
+    case "crazy": name = "殘蟻瘋魔杖"; break;
+    case "stun":  name = "哭笑不得也"; break;
+    case "hide":  name = "殘蟻逐食杖"; break;
+    default:
+        return notify_fail("青邪杖法沒有這種絕招。\n");
+    }
+
+    if( !objectp(weapon = staff_in_hand(me)) )
+        return notify_fail("你必須手持杖才能施展" + name + "。\n");
+    victim = pick_target(me, target);
+    if( !objectp(victim) )
+        return notify_fail("你並未與這個人交手。\n");
+
+    if( me->query_temp("chin_staff/cd/" + act) > time() )
+        return notify_fail("你的氣勁尚未平復﹐還施展不出" + name + "。\n");
+    if( me->query_stat("kee") < PERFORM_MIN_KEE )
+        return notify_fail("你的氣不足﹐施展不出" + name + "。\n");
+
+    if( act == "crazy" ) { cost = me->query_stat("kee") / 10; cd = 2; }
+    else { cost = me->query_stat_maximum("kee") / 20; cd = 1; }
+    if( me->query_stat("kee") <= cost )
+        return notify_fail("你的氣不足﹐施展不出" + name + "。\n");
+
+    me->consume_stat("kee", cost);
+    me->set_temp("chin_staff/cd/" + act, time() + cd * TICK_SECS);
+
+    switch( act ) {
+    case "crazy": return do_crazy(me, victim, weapon);
+    case "stun":  return do_stun(me, victim, weapon);
+    default:      return do_hide(me, victim, weapon);
+    }
 }
