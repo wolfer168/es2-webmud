@@ -588,9 +588,12 @@ def page(data):
 body{{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;padding:16px 16px 60px}}
 .wrap{{max-width:1000px;margin:0 auto}}
 h1{{font-size:1.4rem;margin:0 0 6px}}p.n{{color:var(--muted);font-size:.88rem;margin:4px 0}}
-nav{{display:flex;flex-wrap:wrap;gap:6px 14px;margin:14px 0;position:sticky;top:0;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line);z-index:5}}
+nav{{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 0 0;padding:6px 0 8px;border-bottom:1px solid var(--line)}}
+.top{{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0 0;margin-top:8px}}
+.pal{{line-height:1.9}}
+h2,h3{{scroll-margin-top:130px}}
 nav a{{color:#8fb4ff;text-decoration:none;font-size:.9rem}}
-.bar{{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:8px 0;font-size:.88rem}}
+.bar{{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin:2px 0 4px;font-size:.88rem}}
 .sw{{display:inline-flex;align-items:center;gap:4px;margin-right:10px;font-family:monospace;font-size:.8rem}}.sw i{{width:12px;height:12px;display:inline-block;border:1px solid #444}}
 h2{{font-size:1.15rem;border-bottom:1px solid var(--line);padding-bottom:4px;margin:30px 0 8px}}h2 small,h3 small{{color:var(--muted);font-weight:400;font-size:.75rem;margin-left:10px}}
 h3{{font-size:1.02rem;margin:20px 0 4px}}h4{{font-size:.85rem;color:#c79a5a;margin:12px 0 4px}}
@@ -603,9 +606,11 @@ pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1
 <h1>武功敘述總表</h1>
 <p class="n">新版武功（含新寫的閃躲、內功）會出現在遊戲裡的敘述，依基礎技能分類；共 {total} 句。顏色是 include/ansi.h 的色碼，斷行照遊戲的 cjk_wrap（寬度 70，色碼的字元也算寬度）與 message_vision 的 nowrap 設定。</p>
 <p class="n">範例名稱：$N＝劉乙忘玄、$n＝韓笑、$l＝右臂、$w＝該類武器；程式裡的變數用〔 〕標出。招式與招架、閃避是接在戰鬥敘述裡的片段（命中、傷害的字句由戰鬥系統接在後面）。實際色彩依 zMUD 設定而定，下面色票只是參考。</p>
+<div class="top">
 <div class="bar"><label><input type="checkbox" id="raw"> 顯示程式原文（$N、$n、$w 不替換）</label></div>
-<div>{palette}</div>
+<div class="pal">{palette}</div>
 <nav>{''.join(nav)}</nav>
+</div>
 {''.join(body)}
 </div><script>document.getElementById('raw').addEventListener('change',e=>document.body.classList.toggle('raw',e.target.checked));</script></body></html>'''
 
