@@ -42,8 +42,16 @@ void create()
     // 技能等級與杖法對應由門派表（daemon/misc/npc_skill.c）自動套用，這裡只補招架。
     map_skill("parry", "chin_staff");
     set("legacy_patrol", 1);   // 巡邏範圍見下面的 patrol()（使用者指示，2026-11-17）
+    // 精、氣、神固定為 2000／3000／1200（使用者指示，2026-11-19），不隨強度自動計算（作法同梅影風）。
+    set_stat_maximum("gin", 2000);
+    set_stat_maximum("kee", 3000);
+    set_stat_maximum("sen", 1200);
     set_power("S");
     setup();
+    foreach( string st, int v in ([ "gin": 2000, "kee": 3000, "sen": 1200 ]) ) {
+        set_stat_effective(st, v);
+        set_stat_current(st, v);
+    }
     carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴
     carry_object("/custom/armor/waist/ghosts_girdle")->wear();   // 百鬼腰束
     carry_object("/custom/weapon/staff/god_cane")->wield();   // 九曲十彎
