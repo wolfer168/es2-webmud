@@ -131,6 +131,18 @@ def test_devourlog_command():
     assert len(block.encode('utf-8')) < 1000
 
 
+def test_devour_without_target_shows_big_count():
+    # 不加目標時顯示大幅增加的次數（使用者指示，2026-11-19），只在大幅時累加。
+    s = (MUD / 'daemon/race/yaksa/devour.c').read_text(encoding='utf-8')
+    main = s[s.index('int main(object me, string arg)'):]
+    assert main.index('if (!arg || arg == "") return show_count(me);') < main.index('if (DEVOUR_SEALED)')
+    body = s[s.index('private void reward_player'):s.index('private void finish')]
+    big = body[body.index('if (big) {'):body.index('} else {', body.index('if (big) {'))]
+    assert 'me->add(BIG_KEY, 1);' in big
+    show = s[s.index('private int show_count'):s.index('int main(object me, string arg)')]
+    assert 'devour' not in show.split('{', 1)[1]   # 給玩家看的話不提指令
+
+
 if __name__ == '__main__':
     test_devoured_player_reincarnates_in_own_context()
     test_devour_is_sealed()
@@ -143,4 +155,5 @@ if __name__ == '__main__':
     test_one_yaksa_at_a_time()
     test_devour_record_fields()
     test_devourlog_command()
+    test_devour_without_target_shows_big_count()
     print('ok')
