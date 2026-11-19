@@ -110,7 +110,15 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 
     **The yaksa's own maximum gin must also reach the same threshold (2026-11-04)**, e.g. a yaksa with max gin 450 gets nothing from a 600-gin human ghost, but does from a 300-gin yaksa ghost (threshold 250). Exactly equal counts.
     Below either threshold: no stat gain and not counted. Ghost too weak → "這縷魂魄太過稀薄，沒能為你增添半分力量。"; yaksa too weak → "你的根基尚淺，化不開這縷魂魄的力量，沒能增添半分。"
-  - Reward when the threshold is met (formula unchanged, no backlash): for a yaksa ghost G is doubled after the threshold check. The yaksa permanently gains maximum gin 1 + G/40, kee 1 + random(G/40), sen 1 + random(G/80). The first 10 valid devours always give this large gain. After that the chance is 10 / (10 + random(n)); otherwise the gain is gin 1~2, kee 0~1.
+  - Reward when the threshold is met (formula unchanged, no backlash): for a yaksa ghost G is doubled after the threshold check. The yaksa permanently gains maximum gin 1 + G/40, kee 1 + random(G/40), sen 1 + random(G/80). The chance of this large gain depends on which valid devour this is (`big_chance()`, per mille; user decision 2026-11-19, replacing the old 10 / (10 + random(n))): the 1st-10th are always large; from the 11th it falls by a fixed ratio to 20% at the 20th (1000 x 0.2^((k-10)/10)), then by another fixed ratio to 5% at the 30th (200 x 0.25^((k-20)/10)); from the 31st it stays 5%. Otherwise the gain is gin 1~2, kee 0~1.
+
+    | Valid devour | 1-10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 |
+    |---|---|---|---|---|---|---|---|---|---|---|---|
+    | Large gain % | 100 | 85.1 | 72.5 | 61.7 | 52.5 | 44.7 | 38.1 | 32.4 | 27.6 | 23.5 | 20.0 |
+
+    | Valid devour | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31+ |
+    |---|---|---|---|---|---|---|---|---|---|---|---|
+    | Large gain % | 17.4 | 15.2 | 13.2 | 11.5 | 10.0 | 8.7 | 7.6 | 6.6 | 5.7 | 5.0 | 5.0 |
   - **Log (2026-11-04, expanded 2026-11-15):** every finished player devour is recorded (ghost NPCs are not). Interrupted devours and escapes are not recorded. Each record has:
     1. time, and a record number (`#n`);
     2. which soul this is for the yaksa: the n-th player soul overall (`yaksa/devour_souls`, counted whether or not the threshold was met, starting from 2026-11-15) and the valid-devour number, or "不計數";
@@ -126,7 +134,7 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 
     Storage: `data/daemon/yaksa_devour.log` (readable text, one block per record), `data/daemon/yaksa_devour.dat` (one `save_variable()` mapping per line, read by `devourlog`), `data/daemon/yaksa_devour.serial` (the last record number). The latest 200 records are also kept on the yaksa (`yaksa/devour_records`), so they survive if the files are removed. All under `/data/daemon` because the command runs as `Mudlib`, which the security daemon only lets write there.
   - **Command `devourlog` (2026-11-15, `cmds/arch/devourlog.c`, arch and above only because records contain player IPs):** `devourlog` lists all records (latest 100 shown), `devourlog <yaksa id>` one yaksa, `devourlog -v <id>` one victim account, `devourlog -d <n>` the full record, `devourlog -p <yaksa id>` the records stored on an online yaksa.
-- **Player codex calculator (2026-11-19):** the player codex (`tools/codex_player_template.html`, built into `web/codex.html`) has a 「計算機」 tab; its first calculator is 「夜叉吞魂」. Players enter their own gin / kee / sen maximum and their large-gain count (`devour` with no target), and the target's gin / kee / sen maximum and race. It shows the threshold, whether both sides reach it, the large-gain chance (average of 10 / (10 + r) for r = 0 .. n-1 once n ≥ 10), the gain ranges and the resulting maximums, with the notes 「1. 此數據為估算數值，每次吞魂皆有隨機性。2. 吞食魂魄自第 11 隻起，不再保證大幅增加。」. The large-gain count is used as the valid-devour count, which is exact below 10. The JavaScript copies the rules in `devour.c`; update both together.
+- **Player codex calculator (2026-11-19):** the player codex (`tools/codex_player_template.html`, built into `web/codex.html`) has a 「計算機」 tab; its first calculator is 「夜叉吞魂」. Players enter their own gin / kee / sen maximum and their large-gain count (`devour` with no target), and the target's gin / kee / sen maximum and race. It shows the threshold, whether both sides reach it, the large-gain chance (the same `big_chance()` table), the gain ranges and the resulting maximums, with the notes 「1. 此數據為估算數值，每次吞魂皆有隨機性。2. 吞食魂魄自第 11 隻起，不再保證大幅增加。」. The large-gain count is used as the valid-devour count, which is exact below 10. The JavaScript copies the rules in `devour.c`; update both together.
 - 雪亭鎮土地公廟 (`d/snow/small_temple.c`, where ghosts revive) is a no_fight room (2026-11-04), so nobody can wait there to kill or devour reviving ghosts.
 
 ## 阿修羅 (ashura)

@@ -170,6 +170,19 @@ int devour_threshold(int count, int yaksa_ghost) {
     return yaksa_ghost ? 250 + 25 * extra : 500 + 50 * extra;
 }
 
+// 大幅增加的機率（千分比，使用者指示，2026-11-19）：依「這是第幾次有效吞魂」決定。
+// 第 1～10 次必定大幅；第 11～20 次每次乘以固定比例，第 20 次降到 20%；
+// 第 21～30 次再以固定比例降到第 30 次的 5%；第 31 次起維持 5%。
+// 第 11～20 次 = 1000 × 0.2^((第幾次-10)/10)，第 21～30 次 = 200 × 0.25^((第幾次-20)/10)，四捨五入。
+#define BIG_CHANCE ({ 851, 725, 617, 525, 447, 381, 324, 276, 235, 200, \
+                      174, 152, 132, 115, 100, 87, 76, 66, 57, 50 })
+
+int big_chance(int nth) {
+    if (nth <= 10) return 1000;
+    if (nth > 30) return 50;
+    return BIG_CHANCE[nth - 11];
+}
+
 private string who(object ob) {
     return sprintf("%s(%s)", ob->name(1), ob->query("id"));
 }
@@ -202,8 +215,8 @@ private void reward_player(object me, object victim, int ghost_gin) {
         me->add(COUNT_KEY, 1);
         // 夜叉族的鬼魂，精以兩倍計算（門檻比的是加倍前的精）。
         if (yaksa_ghost) ghost_gin *= 2;
-        // 前 10 次必定大幅增加；之後機率 = 10 / (10 + random(吞食次數))。
-        big = count < 10 || random(10 + rnd(count)) < 10;
+        // 大幅增加的機率依這是第幾次有效吞魂而定（big_chance()，千分比）。
+        big = random(1000) < big_chance(count + 1);
         if (big) {
             me->add(BIG_KEY, 1);
             gin = 1 + ghost_gin / 40;
