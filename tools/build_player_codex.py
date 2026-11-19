@@ -275,6 +275,28 @@ def attr_growth_table():
     return dict(re.findall(r'"([^"]+)"\s*:\s*"(\w+)"', m.group(1))) if m else {}
 
 
+def attr_calc_data(skill_by_code):
+    """屬性成長計算機用的規則：全部從 feature/char/skill.c 讀出，遊戲規則改了重新產生圖鑑就會跟著更新。"""
+    src = bc.read(MUD / 'feature' / 'char' / 'skill.c')
+    table = attr_growth_table()
+    m = re.search(r'int attr_growth_base\(int value\)\s*\{(.*?)\n\}', src, re.S)
+    base = [[int(a), int(b)] for a, b in re.findall(r'value\s*<=\s*(\d+)\s*\)\s*return\s*(\d+)', m.group(1))] if m else []
+    tail = re.findall(r'return\s*(\d+);', m.group(1)) if m else []
+    mm = re.search(r'chance\s*=\s*attr_growth_base\(value\)\s*\*\s*\(100\s*\+\s*lv\)\s*\*\s*(\d+)\s*/\s*(\d+)', src)
+    ms = re.search(r'step\s*=\s*\(\((.*?)\)\s*&&\s*this_object\(\)->query_class\(\)\s*!=\s*"thief"\)\s*\?\s*(\d+)\s*:\s*(\d+)', src)
+    if not (base and tail and mm and ms):
+        raise SystemExit('屬性成長計算機：skill.c 的成長規則格式變了，請更新 attr_calc_data()')
+    slow = re.findall(r'skill\s*==\s*"([^"]+)"', ms.group(1))
+    fixed = {k: int(v) for k, v in re.findall(r'skill\s*==\s*"([^"]+)"\s*&&\s*lv\s*==\s*(\d+)\s*\)\s*continue', src)}
+    skills = []
+    for code, attr in table.items():
+        s = skill_by_code.get(code) or skill_by_code.get(code.replace(' ', '_')) or {}
+        skills.append({'code': code, 'name': s.get('name') or bc.zh(code), 'attr': ATTR_ZH.get(attr, attr),
+                       'step': int(ms.group(3)), 'slowStep': int(ms.group(2)) if code in slow else 0,
+                       'fixed': fixed.get(code, 0)})
+    return {'skills': skills, 'base': base, 'baseMax': int(tail[-1]), 'mulNum': int(mm.group(1)), 'mulDen': int(mm.group(2))}
+
+
 def skill_effects(path):
     """技能檔：練成或升級時增長的屬性、精氣神上限（只取名稱，不取數字）。"""
     if not path:
@@ -563,7 +585,7 @@ def main(out):
                 facs = [fid]
             else:
                 facs, excl = [], owner + '專屬'
-        attr_text = gd.get('attrs') or (f'每練到 5 的倍數有機會提升{ATTR_ZH[growth[c]]} 1 點（屬性最高 50）。'
+        attr_text = gd.get('attrs') or (f'每練到 5 的倍數有機會提升{ATTR_ZH[growth[c]]} 1 點。'
                                         if growth.get(c) in ATTR_ZH else '')
         out_skills.append({
             'entry': entry, 'poolText': gd.get('pools', ''), 'attrText': attr_text,
@@ -593,7 +615,7 @@ def main(out):
     pdata = {
         'areas': areas, 'rooms': out_rooms, 'npcs': out_npcs, 'factions': out_factions, 'skills': out_skills,
         'weapons': out_items['weapons'], 'armors': out_items['armors'], 'items': out_items['items'],
-        'weaponKinds': bc.WEAPON_KIND, 'slots': bc.SLOT, 'affixes': load_affixes(),
+        'attrCalc': attr_calc_data(skill_by_code), 'weaponKinds': bc.WEAPON_KIND, 'slots': bc.SLOT, 'affixes': load_affixes(),
         'counts': {'rooms': len(out_rooms), 'areas': len(areas), 'npcs': len(out_npcs), 'factions': len(out_factions),
                    'skills': len(out_skills), 'weapons': len(out_items['weapons']), 'armors': len(out_items['armors']),
                    'items': len(out_items['items'])},
