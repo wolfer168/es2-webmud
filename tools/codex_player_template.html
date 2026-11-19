@@ -161,12 +161,19 @@ svg.map .nm-long { font-size: 10px; }
 .calc-field input, .calc-field select { width: 100%; min-width: 0; font: 0.95rem var(--sans); font-variant-numeric: tabular-nums; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
 .calc-field input:focus, .calc-field select:focus { outline: 2px solid var(--accent); outline-offset: 0; }
 .calc-out { display: grid; gap: 10px; }
-.calc-verdict { font: 700 1.1rem var(--serif); margin: 0; }
+.calc-out h3 { margin: 0; }
+.calc-verdict { font: 700 1rem var(--sans); margin: 0; }
 .calc-verdict.ok { color: var(--accent); }
 .calc-verdict.no { color: var(--seal); }
-.calc-out table { width: 100%; }
-.calc-out th, .calc-out td { white-space: nowrap; }
-.calc-out td.v { padding-right: 10px; }
+.calc-out table { width: 100%; table-layout: fixed; min-width: 30em; }
+.calc-out th, .calc-out td { white-space: nowrap; padding: 6px 12px 6px 0; }
+.calc-out th:first-child, .calc-out td:first-child { width: 7em; text-align: left; }
+.calc-out th:not(:first-child), .calc-out td:not(:first-child) { text-align: right; }
+@media (max-width: 560px) {
+  .calc-out table { min-width: 0; font-size: 0.8rem; }
+  .calc-out th, .calc-out td { padding-right: 6px; }
+  .calc-out th:first-child, .calc-out td:first-child { width: 5.6em; }
+}
 .calc-note { margin: 0; padding: 10px 14px; border-radius: 6px; background: var(--seal-soft); color: var(--fg); font-size: 0.9rem; }
 /* 遊戲裡的 ANSI 顏色 */
 .a1 { font-weight: 700; }
@@ -621,7 +628,7 @@ svg.map .nm-long { font-size: 10px; }
       const why = [];
       if (!r.ghostOk) why.push(`目標的精最大值 ${v.tg} 未達門檻`);
       if (!r.selfOk) why.push(`你的精最大值 ${v.sg} 未達門檻`);
-      return `<p class="calc-verdict no">不會增加精氣神</p>${lines.join('')}<p style="margin:0">${why.join('；')}。這次吞魂不加成、不計數，但對方照樣魂飛魄散。</p>`;
+      return `<h3>結果</h3><p class="calc-verdict no">不會增加精氣神</p>${lines.join('')}<p style="margin:0">${why.join('；')}。這次吞魂不加成、不計數，但對方照樣魂飛魄散。</p>`;
     }
     const pct = Math.round(r.p * 1000) / 10;
     const row = (label, g, chance) => `<tr><td>${label}</td><td class="v">${chance}</td><td class="v">${rng(g.gin)}</td><td class="v">${rng(g.kee)}</td><td class="v">${rng(g.sen)}</td></tr>`;
@@ -633,7 +640,7 @@ svg.map .nm-long { font-size: 10px; }
     const afterRow = r.p < 1
       ? `<tr><td>吞後最大值</td><td class="v"></td><td class="v">${after('gin', v.sg)}</td><td class="v">${after('kee', v.sk)}</td><td class="v">${after('sen', v.ss)}</td></tr>`
       : `<tr><td>吞後最大值</td><td class="v"></td><td class="v">${rng(r.bigGain.gin.map(x => x + v.sg))}</td><td class="v">${rng(r.bigGain.kee.map(x => x + v.sk))}</td><td class="v">${rng(r.bigGain.sen.map(x => x + v.ss))}</td></tr>`;
-    return `<p class="calc-verdict ok">會增加精氣神</p>${lines.join('')}` +
+    return `<h3>結果</h3><p class="calc-verdict ok">會增加精氣神</p>${lines.join('')}` +
       `<div class="tbl-wrap"><table><thead><tr><th></th><th>機率</th><th>精</th><th>氣</th><th>神</th></tr></thead><tbody>` +
       row('大幅增加', r.bigGain, `${pct}%`) + small + afterRow + `</tbody></table></div>` +
       (r.yaksa ? '<p class="hint" style="margin:0">吞夜叉族的魂魄，增加的量以兩倍的精計算。</p>' : '');
