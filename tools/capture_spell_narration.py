@@ -44,7 +44,7 @@ OTHERS = [
     ('mao-shan mysticism', 'magic', '茅山道法【奇門術】', ['clone 40 /custom/item/scroll/yin'],
      [('conjure memory', '記憶'), ('north', ''), ('conjure recall', '招魂'), ('clone /d/graveyard/npc/barbarian', ''),
       ('call barbarian->die()', ''), ('conjure collect on corpse', '收魂'), ('clone /d/graveyard/npc/barbarian', ''),
-      ('call barbarian->die()', ''), ('conjure slave on corpse', '役使'), ('conjure devour', '吞噬')], ['taoism of darkness']),
+      ('clone /d/graveyard/npc/barbarian', ''), ('conjure slave on barbarian', '役使'), ('conjure devour', '吞噬')], ['taoism of darkness']),
     ('taoism of dunja', 'magic', '茅山奇術【遁甲書】', ['clone /custom/legacy_npc/barbarian_chief'],
      [('conjure fate', '天命'), ('conjure experience on chief', '經驗'), ('call chief->die()', '')], []),
     ('chivi sutra', 'magic', '天師道法【紫薇心經】', [],
@@ -52,8 +52,8 @@ OTHERS = [
       ('conjure thunder_defence', '雷防'), ('conjure dispel', '解除')], []),
     ('enchance', 'magic', '強化之術', ['clone /custom/weapon/sword/black_shortsword', 'wield sword', 'clone 20 /obj/money/gold'],
      [('conjure silver_mark on sword', '銀咒'), ('conjure gold_mark on sword', '金咒')], []),
-    ('alchemy-wealth', 'magic', '丹道【黃白之術】', ['unwield sword', 'clone /custom/weapon/staff/god_cane', 'clone /custom/weapon/sword/black_shortsword'],
-     [('conjure silver_seal on staff', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
+    ('alchemy-wealth', 'magic', '丹道【黃白之術】', ['unwield sword', 'clone /custom/weapon/needle/iron_needle', 'clone /custom/weapon/sword/black_shortsword'],
+     [('conjure silver_seal on needle', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
     ('alchemy-medication', 'magic', '丹道【神農之術】', ['clone /obj/alchemist/heat_reactor'],
      [('conjure red_seal on reactor', '赤印封'), ('conjure red_dispel on reactor', '赤印解')], []),
     ('amazing-needle', 'cauterization', '武陀灸術【驚異二針】', ['unwield sword', 'clone /custom/weapon/needle/iron_needle', 'wield needle'],
@@ -146,6 +146,7 @@ def main():
                 tgt = target
                 if sid == 'hydra':
                     tgt = 'chief'
+                    run('clone /custom/legacy_npc/barbarian_chief', 1.5)
                     run('kill chief', 1.5)
                 else:
                     run('call me->start_busy(0)', 0.3)
@@ -179,6 +180,13 @@ def main():
                 run('call me->remove_all_enemy()', 0.3)
                 run('call stake->remove_all_enemy()', 0.3)
                 text = run(cmd, 1.4)
+                if 'conjure slave' in cmd:          # 役使有機率被對方逼出，重試到成功為止（最多 8 次）
+                    for _ in range(8):
+                        if '默默走到' in text:
+                            break
+                        time.sleep(2.0)
+                        run('call me->start_busy(0)', 0.3)
+                        text = run(cmd, 1.4)
                 time.sleep(1.5)
                 results.append(dict(school=skill, school_cname=cname, spell=cmd.split()[1] if len(cmd.split()) > 1 else cmd,
                                     spell_cname=scname, command=cmd, text=text))

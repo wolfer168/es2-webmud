@@ -157,7 +157,7 @@
   "spell": "monkey",
   "spell_cname": "猴",
   "command": "cast monkey on stake",
-  "text": "你將先天符往空中一拋﹐符紙翻了幾個筋斗化成一隻靈猿﹐吱吱怪叫著撲到石假人面前抓耳撓腮。\n石假人被攪得眼花撩亂﹐一時竟忘了出手。\n靈猿一個翻身鑽進煙裡不見了。\n"
+  "text": "你將先天符往空中一拋﹐符紙翻了幾個筋斗化成一隻靈猿﹐吱吱怪叫著撲到石假人面前抓耳撓腮。\n石假人揮手將靈猿趕開﹐靈猿吱的一聲鑽進煙裡不見了。\n"
  },
  {
   "school": "taoism of nature",
@@ -165,7 +165,7 @@
   "spell": "hydra",
   "spell_cname": "巨蟒",
   "command": "cast hydra on chief",
-  "text": "你雙手結印將先天符按在地上﹐地面倏地裂開一道縫隙。\n\u001b[1;32m一條巨蟒自地底竄出﹐張開血盆大口將野人酋長一口吞了下去﹗\n"
+  "text": "這裡沒有 chief。\n你做了個閃避假動作﹐冷不防一拳往石假人揮去﹐結果不偏不倚地擊中石假人。\n"
  },
  {
   "school": "taoism of nature",
@@ -245,7 +245,7 @@
   "spell": "recall",
   "spell_cname": "招魂",
   "command": "conjure recall",
-  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m翔空之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你將少陰符往頭頂一拋﹐身子隨著一陣陰風拔地而起﹐轉眼不見了。\u001b[0m\n\n亂葬崗 - /d/graveyard/grave7\n    坡腳下有一座破敗的石亭，亭頂缺了好幾片瓦，石柱上的漆早已剝落殆盡。\n亭旁幾座新墳的黃土還未長出青草，低低的誦經聲在墳間迴盪，木魚篤篤，一聲\n接著一聲，像是要替這些無主的亡魂求個安穩。\n    太陽剛從東方的地平線升起。\n    這裡明顯的出口有 \u001b[1mwest\u001b[0m 和 \u001b[1mnorth\u001b[0m。\n石假人 (Stone stake)\n老和尚 (Old bonze)\n小和尚 (Young bonze)\n\u001b[1;30m陰風散去﹐你已落在記下的地方。\n\u001b[36m靈獒\u001b[0m一路嗅著氣味追了上來﹐伏在你腳邊。\n\u001b[35m靈獒\u001b[0m一路嗅著氣味追了上來﹐伏在你腳邊。\n\u001b[35m靈獒\u001b[0m一路嗅著氣味追了上來﹐伏在你腳邊。\n"
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m翔空之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你將少陰符往頭頂一拋﹐身子隨著一陣陰風拔地而起﹐轉眼不見了。\u001b[0m\n\n亂葬崗 - /d/graveyard/grave7\n    坡腳下有一座破敗的石亭，亭頂缺了好幾片瓦，石柱上的漆早已剝落殆盡。\n亭旁幾座新墳的黃土還未長出青草，低低的誦經聲在墳間迴盪，木魚篤篤，一聲\n接著一聲，像是要替這些無主的亡魂求個安穩。\n    太陽正高掛在西方的天空中。\n    這裡明顯的出口有 \u001b[1mwest\u001b[0m 和 \u001b[1mnorth\u001b[0m。\n哭笑門門主「哭笑野人」劉乙忘玄 (Liuye the master of grimace)\n野人酋長的屍體(Corpse of Barbarian chief)\n石假人 (Stone stake)\n小和尚 (Young bonze)\n老和尚 (Old bonze)\n\u001b[1;30m陰風散去﹐你已落在記下的地方。\n"
  },
  {
   "school": "mao-shan mysticism",
@@ -253,7 +253,7 @@
   "spell": "collect",
   "spell_cname": "收魂",
   "command": "conjure collect on corpse",
-  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m集靈之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你蹲在野人的屍體旁邊低誦咒文﹐屍身漸漸化作一縷黑煙﹐被你收入袖中。\u001b[0m\n\n\u001b[1;30m你袖中如今鎮著二縷陰魂。\n"
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m集靈之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你蹲在野人的屍體旁邊低誦咒文﹐屍身漸漸化作一縷黑煙﹐被你收入袖中。\u001b[0m\n\n\u001b[1;30m你袖中如今鎮著三縷陰魂。\n"
  },
  {
   "school": "mao-shan mysticism",
@@ -277,7 +277,7 @@
   "spell": "fate",
   "spell_cname": "天命",
   "command": "conjure fate",
-  "text": "你盤膝而坐屈指推算天干地支﹐眼中隱隱透出一點清光。\n\u001b[36m靈獒\u001b[0m齜牙低吼﹐撲上去往野人酋長的左手狠狠咬落﹐野人酋長奮力格擋﹐卸去了\u001b[36m靈獒\u001b[0m這一擊的部分力道﹐結果造成一處咬傷﹗\n\u001b[1;33m( 野人酋長似乎十分疲憊﹐看來體力的消耗相當嚴重。 )\n\u001b[0m\u001b[35m靈獒\u001b[0m繞著野人酋長疾走半圈﹐冷不防竄起來抓向野人酋長的左腳﹐野人酋長招架不及﹐結果造成一處抓傷﹗\n\u001b[1;33m( 野人酋長似乎十分疲憊﹐看來體力的消耗相當嚴重。 )\n\u001b[0m\u001b[35m靈獒\u001b[0m繞著野人酋長疾走半圈﹐冷不防竄起來抓向野人酋長的小腹﹐野人酋長奮力格擋﹐卸去了\u001b[35m靈獒\u001b[0m這一擊的部分力道﹐結果造成一處嚴重抓傷﹗\n\u001b[1;33m( 野人酋長已經一副頭重腳輕的模樣﹐正在勉力支撐著不倒下去。 )\n\u001b[0m野人酋長身子一矮﹐白骨杖貼地掃向\u001b[35m靈獒\u001b[0m的頭部﹐\u001b[35m靈獒\u001b[0m招架不及﹐儘管歪歪地擊中頭部﹐但是似乎傷害不大。\n\u001b[1;32m( \u001b[35m靈獒\u001b[0m似乎有些疲憊﹐但也許是誘敵之計﹐你無法確定。 )\n\u001b[0m"
+  "text": "你盤膝而坐屈指推算天干地支﹐眼中隱隱透出一點清光。\n野人酋長身子一矮﹐白骨杖貼地掃向你的左手﹐但是沒中。\n"
  },
  {
   "school": "taoism of dunja",
@@ -285,7 +285,7 @@
   "spell": "experience",
   "spell_cname": "經驗",
   "command": "conjure experience on chief",
-  "text": "這裡沒有 chief。\n"
+  "text": "你閉目凝神﹐眉心彷彿睜開了第三隻眼﹐周遭一切都看得通透。\n"
  },
  {
   "school": "chivi sutra",
@@ -348,8 +348,8 @@
   "school_cname": "丹道【黃白之術】",
   "spell": "silver_seal",
   "spell_cname": "銀咒",
-  "command": "conjure silver_seal on god",
-  "text": "這裡沒有 god。\n"
+  "command": "conjure silver_seal on staff",
+  "text": "你所施展的銀咒，不足以轉化這把九曲十彎。\n"
  },
  {
   "school": "alchemy-wealth",
