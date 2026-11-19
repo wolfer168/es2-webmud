@@ -277,6 +277,9 @@ varargs void create_door (string dir, mixed data, string other_side_dir, int doo
     } else if (mapp(data)) {
         // create with detailed data.
         d = data;
+        // 整包設定的寫法，對面方向寫在 d["other_side_dir"]；補給下面的同步檢查用，
+        // 否則重新載入的房間不會照對面門的開關、上鎖狀態（2026-11-20）。
+        if (!stringp(other_side_dir)) other_side_dir = d["other_side_dir"];
     } else
         error("create_door: Invalid door data, string or mapping expected.\n");
 
