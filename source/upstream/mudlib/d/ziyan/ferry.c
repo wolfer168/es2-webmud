@@ -14,6 +14,10 @@ LONG
     set("exits", ([
         "south" : __DIR__"dirt_road",
     ]));
+    // 兩岸各自產生一位船夫：小黃在這裡，老駱在對岸的五堂鎮河邊（使用者指示，2026-11-19）。
+    set("objects", ([
+        "/d/wutang/npc/huang" : 1,
+    ]));
     set("no_fight", 1);
     set("map/area", "水嵐縣");
     setup();
