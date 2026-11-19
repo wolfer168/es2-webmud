@@ -42,6 +42,7 @@ void create()
     // 技能等級與杖法對應由門派表（daemon/misc/npc_skill.c）自動套用，這裡只補招架。
     map_skill("parry", "chin_staff");
     set("legacy_patrol", 1);   // 巡邏範圍見下面的 patrol()（使用者指示，2026-11-17）
+    set_attr("con", 60);   // 根骨 60（使用者指示，2026-11-19）
     // 精、氣、神固定為 2000／3000／1200（使用者指示，2026-11-19），不隨強度自動計算（作法同梅影風）。
     set_stat_maximum("gin", 2000);
     set_stat_maximum("kee", 3000);
