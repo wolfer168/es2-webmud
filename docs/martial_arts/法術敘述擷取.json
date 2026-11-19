@@ -157,7 +157,7 @@
   "spell": "monkey",
   "spell_cname": "猴",
   "command": "cast monkey on stake",
-  "text": "你將先天符往空中一拋﹐符紙翻了幾個筋斗化成一隻靈猿﹐吱吱怪叫著撲到石假人面前抓耳撓腮。\n石假人揮手將靈猿趕開﹐靈猿吱的一聲鑽進煙裡不見了。\n"
+  "text": "你將先天符往空中一拋﹐符紙翻了幾個筋斗化成一隻靈猿﹐吱吱怪叫著撲到石假人面前抓耳撓腮。\n石假人被攪得眼花撩亂﹐一時竟忘了出手。\n靈猿一個翻身鑽進煙裡不見了。\n"
  },
  {
   "school": "taoism of nature",
@@ -165,7 +165,7 @@
   "spell": "hydra",
   "spell_cname": "巨蟒",
   "command": "cast hydra on chief",
-  "text": "這裡沒有 chief。\n你做了個閃避假動作﹐冷不防一拳往石假人揮去﹐結果不偏不倚地擊中石假人。\n"
+  "text": "你雙手結印將先天符按在地上﹐地面倏地裂開一道縫隙。\n\u001b[1;32m一條巨蟒自地底竄出﹐張開血盆大口將野人酋長一口吞了下去﹗\n\u001b[0m巨蟒喉頭一陣蠕動﹐吐出一把白骨杖﹐隨即沒入地底。\n"
  },
  {
   "school": "taoism of nature",
@@ -181,7 +181,7 @@
   "spell": "dog",
   "spell_cname": "狗",
   "command": "cast dog on stake",
-  "text": "你捏起一張先天符往地上一擲﹐低喝一聲「敕」﹐符紙化作一團青煙。\n青煙散處竄出三條\u001b[36m靈獒\u001b[0m﹐伏在你腳邊低聲嗚嗚作響。\n"
+  "text": "你捏起一張先天符往地上一擲﹐低喝一聲「敕」﹐符紙化作一團青煙。\n青煙散處竄出三條\u001b[35m靈獒\u001b[0m﹐伏在你腳邊低聲嗚嗚作響。\n"
  },
  {
   "school": "mao-shan magic",
@@ -245,7 +245,7 @@
   "spell": "recall",
   "spell_cname": "招魂",
   "command": "conjure recall",
-  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m翔空之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你將少陰符往頭頂一拋﹐身子隨著一陣陰風拔地而起﹐轉眼不見了。\u001b[0m\n\n亂葬崗 - /d/graveyard/grave7\n    坡腳下有一座破敗的石亭，亭頂缺了好幾片瓦，石柱上的漆早已剝落殆盡。\n亭旁幾座新墳的黃土還未長出青草，低低的誦經聲在墳間迴盪，木魚篤篤，一聲\n接著一聲，像是要替這些無主的亡魂求個安穩。\n    太陽正高掛在西方的天空中。\n    這裡明顯的出口有 \u001b[1mwest\u001b[0m 和 \u001b[1mnorth\u001b[0m。\n哭笑門門主「哭笑野人」劉乙忘玄 (Liuye the master of grimace)\n野人酋長的屍體(Corpse of Barbarian chief)\n石假人 (Stone stake)\n小和尚 (Young bonze)\n老和尚 (Old bonze)\n\u001b[1;30m陰風散去﹐你已落在記下的地方。\n"
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m翔空之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你將少陰符往頭頂一拋﹐身子隨著一陣陰風拔地而起﹐轉眼不見了。\u001b[0m\n\n亂葬崗 - /d/graveyard/grave7\n    坡腳下有一座破敗的石亭，亭頂缺了好幾片瓦，石柱上的漆早已剝落殆盡。\n亭旁幾座新墳的黃土還未長出青草，低低的誦經聲在墳間迴盪，木魚篤篤，一聲\n接著一聲，像是要替這些無主的亡魂求個安穩。\n    夜幕籠罩著大地。\n    這裡明顯的出口有 \u001b[1mnorth\u001b[0m 和 \u001b[1mwest\u001b[0m。\n白骨杖 (Bone staff)\n野人酋長 (Barbarian chief)\u001b[1;31m <昏迷不醒>\u001b[0m\n石假人 (Stone stake)\n老和尚 (Old bonze)\n小和尚 (Young bonze)\n\u001b[1;30m陰風散去﹐你已落在記下的地方。\n"
  },
  {
   "school": "mao-shan mysticism",
@@ -253,15 +253,15 @@
   "spell": "collect",
   "spell_cname": "收魂",
   "command": "conjure collect on corpse",
-  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m集靈之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你蹲在野人的屍體旁邊低誦咒文﹐屍身漸漸化作一縷黑煙﹐被你收入袖中。\u001b[0m\n\n\u001b[1;30m你袖中如今鎮著三縷陰魂。\n"
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m集靈之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你蹲在野人的屍體旁邊低誦咒文﹐屍身漸漸化作一縷黑煙﹐被你收入袖中。\u001b[0m\n\n\u001b[1;30m你袖中如今鎮著四縷陰魂。\n"
  },
  {
   "school": "mao-shan mysticism",
   "school_cname": "茅山道法【奇門術】",
   "spell": "slave",
   "spell_cname": "役使",
-  "command": "conjure slave on corpse",
-  "text": "這裡沒有可施法的對象。\n"
+  "command": "conjure slave on barbarian",
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m通靈之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你咬破指尖在少陰符上一點﹐將符紙往野人額頭一拍﹐一縷黑氣順勢鑽了進去。\u001b[0m\n\n\u001b[1;30m野人渾身一震﹐眼神變得空洞呆滯﹐默默走到你身後站定。\u001b[0m\n野人決定開始跟隨你一起行動。\n\u001b[1;33m野人開始保護你。\n"
  },
  {
   "school": "mao-shan mysticism",
@@ -269,7 +269,7 @@
   "spell": "devour",
   "spell_cname": "吞噬",
   "command": "conjure devour",
-  "text": "你身邊沒有受陰魂驅使的軀殼。\n"
+  "text": "\u001b[1;30m你手捏法訣﹐口中念念有詞﹐開始施展「\u001b[0m\u001b[36m噬魂之術\u001b[0m\u001b[1;30m」 ....\u001b[0m\n\n\u001b[1;30m你朝野人一招手﹐野人的魂魄連同陰魂一起被抽了出來﹐吸入你口中。\u001b[0m\n\n\u001b[1;30m野人的軀殼頹然倒地﹐化成一堆飛灰。你臉上泛起一陣青氣﹐精神為之一振。\u001b[0m\n\u001b[1;33m野人不再保護你了。\n"
  },
  {
   "school": "taoism of dunja",
@@ -348,8 +348,8 @@
   "school_cname": "丹道【黃白之術】",
   "spell": "silver_seal",
   "spell_cname": "銀咒",
-  "command": "conjure silver_seal on staff",
-  "text": "你所施展的銀咒，不足以轉化這把九曲十彎。\n"
+  "command": "conjure silver_seal on needle",
+  "text": "你所施展的銀咒，不足以轉化這把透骨釘。\n"
  },
  {
   "school": "alchemy-wealth",
