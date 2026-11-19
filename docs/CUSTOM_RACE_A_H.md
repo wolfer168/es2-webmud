@@ -94,10 +94,11 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
 - **Seal switch:** sealed 2026-11-03, reopened 2026-11-04 with the revised rules below (`#define DEVOUR_SEALED 0` in `devour.c`; set it to 1 and `update /daemon/race/yaksa/devour` to seal again, which makes a yaksa only get "你體內的噬魂凶性已被封住，再也吞不下任何魂魄。"). Stats gained under the old rules are kept.
 - `devour <ghost>` (`daemon/race/yaksa/devour.c`): targets anything whose `life_form` is `ghost` (ghost NPCs and dead players). Not in combat, not in no_fight rooms, not on wizards.
   - **Delay (2026-11-04):** after the command the yaksa grabs the ghost (the ghost is told to flee) and is busy for 2 ticks (4 seconds); the first bite comes after that. The ghost can leave the room during the delay to escape.
+  - **One yaksa at a time (2026-11-15):** a ghost that another yaksa is devouring cannot be grabbed ("這縷魂魄已被其他夜叉攫住了。"). Once the last bite lands the ghost is marked as devoured; until it actually disperses on its own next heartbeat nobody can devour it again ("這縷魂魄已被吞噬殆盡，正在消散。"), so one victim never rewards two yaksas.
   - One bite per tick (2 seconds). Bite = cor + dex + random(own current gin) / 10, taken from the ghost's current gin. At 0 the ghost is devoured. The yaksa and a ghost NPC are busy while devouring. A player ghost can still move and escapes by leaving the room. It stops if the yaksa enters combat, dies, or either side leaves the room.
   - Ghost NPC: destroyed. The yaksa heals gin and sen (current and damaged maximum) by the total amount devoured.
   - Player ghost: always 魂飛魄散 through the existing `CHAR_D->make_mist()` reincarnation, whether or not the threshold below is met. The account (id, password, total online time `time_aged`) is kept, the character file is deleted, and the player picks a race again.
-  - **Threshold (2026-11-04):** "ghost gin" G = the ghost's current gin when devouring started. Let n = valid devours so far (`yaksa/devour_count`; the old `yaksa/devoured_players` is no longer used, so every yaksa starts from 0).
+  - **Threshold (2026-11-04):** "ghost gin" G = the victim's **maximum** gin (2026-11-15; before that it was the ghost's current gin when devouring started). Earlier bites, interrupted devours and the ghost's slow gin loss no longer lower G. Let n = valid devours so far (`yaksa/devour_count`; the old `yaksa/devoured_players` is no longer used, so every yaksa starts from 0).
 
     | Devour | Human etc. ghost needs G ≥ | Yaksa ghost needs G ≥ |
     |---|---|---|
@@ -109,7 +110,21 @@ Neolith `HEARTBEAT_INTERVAL` is 2,000,000 microseconds, so 1 tick = one 2-second
     **The yaksa's own maximum gin must also reach the same threshold (2026-11-04)**, e.g. a yaksa with max gin 450 gets nothing from a 600-gin human ghost, but does from a 300-gin yaksa ghost (threshold 250). Exactly equal counts.
     Below either threshold: no stat gain and not counted. Ghost too weak → "這縷魂魄太過稀薄，沒能為你增添半分力量。"; yaksa too weak → "你的根基尚淺，化不開這縷魂魄的力量，沒能增添半分。"
   - Reward when the threshold is met (formula unchanged, no backlash): for a yaksa ghost G is doubled after the threshold check. The yaksa permanently gains maximum gin 1 + G/40, kee 1 + random(G/40), sen 1 + random(G/80). The first 10 valid devours always give this large gain. After that the chance is 10 / (10 + random(n)); otherwise the gain is gin 1~2, kee 0~1.
-  - **Log (2026-11-04):** every player devour writes one line to `data/daemon/yaksa_devour.log` (time, yaksa, victim and race, G, the yaksa's max gin, threshold, counted or not, gains). It is not in `log/` because the command runs as `Mudlib`, which the security daemon only lets write under `/data/daemon`.
+  - **Log (2026-11-04, expanded 2026-11-15):** every finished player devour is recorded (ghost NPCs are not). Interrupted devours and escapes are not recorded. Each record has:
+    1. time, and a record number (`#n`);
+    2. which soul this is for the yaksa: the n-th player soul overall (`yaksa/devour_souls`, counted whether or not the threshold was met, starting from 2026-11-15) and the valid-devour number, or "不計數";
+    3. the victim (name, id) and how many times this yaksa has devoured this account (`yaksa/devour_victims/<id>`);
+    4. the gin / kee / sen gained, and whether it was the large or small gain;
+    5. who killed the victim, when and where: `adm/daemons/chard.c` `make_corpse()` stores `last_death` (time, killer, room) on a player at death, because a ghost's own gin loss later makes the ghost its own last damage giver;
+    6. both sides' real IP (from `REALIP_D`, the web bridge) and same-household group;
+    7. the victim's character creation time and the account's total online time (`time_aged`);
+    8. both sides' race, class and level;
+    9. G, the yaksa's maximum gin and the threshold;
+    10. the yaksa's maximum gin / kee / sen after the devour;
+    11. the room where the devour happened.
+
+    Storage: `data/daemon/yaksa_devour.log` (readable text, one block per record), `data/daemon/yaksa_devour.dat` (one `save_variable()` mapping per line, read by `devourlog`), `data/daemon/yaksa_devour.serial` (the last record number). The latest 200 records are also kept on the yaksa (`yaksa/devour_records`), so they survive if the files are removed. All under `/data/daemon` because the command runs as `Mudlib`, which the security daemon only lets write there.
+  - **Command `devourlog` (2026-11-15, `cmds/arch/devourlog.c`, arch and above only because records contain player IPs):** `devourlog` lists all records (latest 100 shown), `devourlog <yaksa id>` one yaksa, `devourlog -v <id>` one victim account, `devourlog -d <n>` the full record, `devourlog -p <yaksa id>` the records stored on an online yaksa.
 - 雪亭鎮土地公廟 (`d/snow/small_temple.c`, where ghosts revive) is a no_fight room (2026-11-04), so nobody can wait there to kill or devour reviving ghosts.
 
 ## 阿修羅 (ashura)
