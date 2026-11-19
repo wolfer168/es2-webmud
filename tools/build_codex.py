@@ -205,8 +205,7 @@ CHINESE = load_chinese()
 
 
 def zh(key):
-    # 對照表有些技能用空白（advance-sky sword），技能檔名用底線（advance-sky_sword）。
-    return NAMED.get(key) or CHINESE.get(key) or CHINESE.get(key.replace('_', ' ')) or key
+    return NAMED.get(key) or CHINESE.get(key) or key
 
 
 # --------------------------------------------------------------------------- LPC 解析小工具
@@ -819,8 +818,13 @@ def parse_skills(used_codes):
                 src += '\nregister_skill_daemon("%s")' % Path(p).stem.replace('_', ' ')
         code = p.stem.replace('_', ' ') if ' ' not in p.stem and p.stem in ('secondhand_axe',) else p.stem
         m = re.search(r'register_skill_daemon\("([^"]+)"\)', src)
+        mm = re.search(r'register_skill_daemon\(\s*(\w+)\s*\)', src)
+        md = mm and re.search(r'#define\s+%s\s+"([^"]+)"' % mm.group(1), src)
         if m:
             code = m.group(1)
+        elif md:
+            # 新版武功用巨集登記代碼（#define SKILL_ID "advance-sky sword"），代碼與對照表一致。
+            code = md.group(1)
         elif '_' in p.stem and p.stem.split('_')[0] in ('secondhand', 'twohanded'):
             code = p.stem.replace('_', ' ')
         desc = re.search(r'description:\s*(.+)', src)
@@ -849,9 +853,8 @@ def parse_skills(used_codes):
         code_src = strip_comments(src)
         gp, ga = skill_growth(code, code_src, grow_doc, attr_map)
         live = code in refs
-        art = re.search(r'art_name\s*=\s*"([^"]+)"', src)  # 新版武功引擎在檔案裡寫了中文名
         skills[code] = {
-            'code': code, 'name': zh(code) if zh(code) != code else (art.group(1) if art else code), 'impl': True,
+            'code': code, 'name': zh(code), 'impl': True,
             'status': 'live' if live else 'written',
             'users': sorted(refs.get(code, []), key=ref_order)[:6],
             'cat': reg.get(code, ('', ''))[0] or ({'spell': '法術', 'martial': '武學'}.get(typ.group(1), typ.group(1)) if typ else ''),
