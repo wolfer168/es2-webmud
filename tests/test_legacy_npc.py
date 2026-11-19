@@ -31,13 +31,14 @@ def test_npc_settings_follow_list():
         assert f'set_power("{tier}");' in s, f
         assert ('set("legacy_aggressive", 1);' in s) == ('主動攻擊' in beh), f
         assert ('set("legacy_patrol", 1);' in s) == ('巡邏' in beh), f
-        assert 'set_skill(' not in s and 'set_attr(' not in s, f
+        assert 'set_skill(' not in s or name.strip() in ('馬鍾聖', '軒轅劍月', '孟驚鴻', '吳長貴', '於蘭兼毅', '程槐'), f   # 這六位另外設了技能（程槐：玄冰烈焰斧，2026-11-18）（各檔案內有註明來源）
+        assert 'set_attr(' not in s, f
 
 
 def test_user_decisions():
-    aggressive = {5, 6, 7, 8, 10, 16, 17, 19, 38, 41, 50, 51, 59, 60, 70, 125, 126}
+    aggressive = {6, 7, 8, 10, 16, 17, 19, 38, 41, 50, 51, 59, 60, 70, 125, 126}
     assert {int(r[0]) for r in ROWS if '主動攻擊' in r[7]} == aggressive
-    assert {int(r[0]) for r in ROWS if '巡邏' in r[7]} == {15, 16, 17, 19, 80}
+    assert {int(r[0]) for r in ROWS if '巡邏' in r[7]} == {15, 16, 17, 19, 21, 39}   # 21 劉乙忘玄 2026-11-17 放在亂葬崗老和尚處巡邏；80 武道通 2026-11-16 搬回武陀灸堂，不再巡邏；39 雷同放白雲觀巡邏
     assert '"si-ma lei"' in read(DIR / 'si_ma_lei.c')
     assert '"madam han"' in read(DIR / 'madam_han.c')
     assert 'set_class("commoner");' in read(DIR / 'yan_she.c')

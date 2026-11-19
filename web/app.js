@@ -152,7 +152,7 @@ setupFloatWindow({
 setupFloatWindow({
   root:document.getElementById('statusWindow'),
   openButton:document.querySelector('[data-ui-status]'),
-  storageKey:'es2-status-window-v1',defaultOpen:true,
+  storageKey:'es2-status-window-v1',resizable:true,defaultOpen:true,
   defaultGeometry:()=>{
     const a=sideArea(),m=document.getElementById('mapWindow');
     const top=m&&!m.hidden?m.getBoundingClientRect().bottom+10:12;
@@ -1372,7 +1372,7 @@ document.querySelectorAll('[data-cmd]').forEach(b=>b.addEventListener('click',()
 setupFloatWindow({
   root:document.getElementById('uiSettings'),
   openButton:document.querySelector('[data-ui-settings]'),
-  storageKey:'es2-settings-window-v1',rememberOpen:false,
+  storageKey:'es2-settings-window-v1',resizable:true,rememberOpen:false,
   defaultGeometry:()=>({left:Math.max(16,(window.innerWidth-430)/2),top:Math.max(16,window.innerHeight*.12)}),
 });
 // 地圖視窗大小改變（拉角落、打開視窗）時重畫，讓看得到的範圍跟著視窗大小走。

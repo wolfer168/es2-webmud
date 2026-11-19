@@ -36,6 +36,15 @@ int main(object me, string arg)
     if( martial_skill != "dodge" && me->skill_mapped("dodge") == martial_skill )
         return SKILL_D(martial_skill)->perform_action(me, act, target);
 
+    // 武功名稱：perform <武功>:<絕招>（使用者同意，2026-11-19，例如 perform chin_staff:crazy）。
+    // 這套武功要 enable 在目前使用的技能上；單手、雙手兵器都適用，要不要拿武器由武功自己判斷。
+    if( member_array(martial_skill, values(me->query_skill_map())) != -1 ) {
+        object art = SKILL_D(martial_skill);
+
+        if( objectp(art) && function_exists("perform_action", art) )
+            return art->perform_action(me, act, target);
+    }
+
     if( !me->query_temp("weapon/" + martial_skill ) 
         && (martial_skill != "unarmed") )
         return notify_fail("你必須裝備適當的武器來使出絕招。\n");

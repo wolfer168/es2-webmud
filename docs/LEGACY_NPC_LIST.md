@@ -1,6 +1,6 @@
 # 舊站 NPC 清單（custom/legacy_npc/）
 
-> 依使用者提供的「舊有 NPC 待製作清單」（2026-10-15）製作，共 126 位，**尚未放入地圖**（武道通例外：2026-10-27 暫放雪亭鎮廣場北邊，在雪亭鎮巡邏）。
+> 依使用者提供的「舊有 NPC 待製作清單」（2026-10-15）製作，共 126 位，**尚未放入地圖**（武道通、雷同例外：已放入喬陰城外東側，見 `AREA_QIAOYIN_EAST.md`）。
 > 名稱、英文 ID、敘述、年紀、性別、種族、裝備取自舊站畫面紀錄（`docs/LEGACY_ROOM_NPC_COMPENDIUM.md`，DOCUMENTED）；
 > 職業、等級、強度、門派、行為由使用者決定。屬性與精氣神由 NPC 強度系統計算（`docs/CUSTOM_NPC_POWER.md`），
 > 技能由 NPC 自動技能系統依職業、等級、門派給（`docs/CUSTOM_NPC_SKILL.md`）。
@@ -26,12 +26,12 @@
 | 2 | 墮落的風神 | Evil spirit of storm | `custom/legacy_npc/evil_spirit_of_storm.c` | 京畿、平陽山、神域／後海湖、s路、迷霧中 | 人類族 | 道士 | 70 | S | 玄衣派（`taoist.storm`） | — |
 | 3 | 考核官 | Checker | `custom/legacy_npc/checker.c` | 京畿／考選室 | 人類 | 軍人 | 20 | B | — | — |
 | 4 | 武官 | Lieutenant | `custom/legacy_npc/lieutenant.c` | 兆隱縣、青邪宮／老王燒烤、上山小路 | 人類 | 軍人 | 25 | B | — | — |
-| 5 | 公孫微 | Gong-sun wei | `custom/legacy_npc/gong_sun_wei.c` | 八寶樓／鬼境 | 焦僥族 | 盜賊 | 30 | B | — | 主動攻擊 |
-| 6 | 司馬雷 | Si-ma lei | `custom/legacy_npc/si_ma_lei.c` | 八寶樓／— | 阿修羅族 | 軍人 | 35 | B | — | 主動攻擊 |
-| 7 | 崇白虎 | Chong bai-hu | `custom/legacy_npc/chong_bai_hu.c` | 八寶樓／鑄刀房 | 夜叉族 | 武者 | 35 | B | 虎刀門（`fighter.tiger`） | 主動攻擊 |
-| 8 | 白魚 | Bai yu | `custom/legacy_npc/bai_yu.c` | 八寶樓／魔境 | 巫首族 | 方士 | 40 | B | — | 主動攻擊 |
-| 9 | 軒轅劍月 | Xun-yuan jian yue | `custom/legacy_npc/xun_yuan_jian_yue.c` | 八寶樓／頂樓 | 人類 | 武者 | 40 | A | 封山派（`fighter.fonxan`） | — |
-| 10 | 馬鍾聖 | Ma zhong shen | `custom/legacy_npc/ma_zhong_shen.c` | 八寶樓／拳屋 | 黑齒族 | 武者 | 30 | B | — | 主動攻擊 |
+| 5 | 公孫微 | Gong-sun wei | `custom/legacy_npc/gong_sun_wei.c` | 八寶樓／鬼境 | 焦僥族 | 盜賊 | 45 | A | 瑯夷派（`thief.longye`） | — |
+| 6 | 司馬雷 | Si-ma lei | `custom/legacy_npc/si_ma_lei.c` | 八寶樓／兵器庫 | 阿修羅族 | 軍人 | 60 | A | — | 主動攻擊 |
+| 7 | 崇白虎 | Chong bai-hu | `custom/legacy_npc/chong_bai_hu.c` | 八寶樓／鑄刀房 | 夜叉族 | 武者 | 50 | A | 虎刀門（`fighter.tiger`） | 主動攻擊 |
+| 8 | 白魚 | Bai yu | `custom/legacy_npc/bai_yu.c` | 八寶樓／魔境 | 巫首族 | 道士 | 50 | A | 玄衣派（`taoist.storm`） | 主動攻擊 |
+| 9 | 軒轅劍月 | Xun-yuan jian yue | `custom/legacy_npc/xun_yuan_jian_yue.c` | 八寶樓／頂樓 | 人類 | 武者 | 65 | S | 雪吟莊（`fighter.snow`） | — |
+| 10 | 馬鍾聖 | Ma zhong shen | `custom/legacy_npc/ma_zhong_shen.c` | 八寶樓／拳屋 | 黑齒族 | 武者 | 30 | B | 風嘯拳法 200 | 主動攻擊 |
 | 11 | 冷吟月 | Leng yin yue | `custom/legacy_npc/leng_yin_yue.c` | 冷府／閨房、密室 | 人類 | 平民 | 1 | C | — | — |
 | 12 | 應曉天 | Ying xiao tian | `custom/legacy_npc/ying_xiao_tian.c` | 冷梅莊／客房 | 人類 | 武者 | 40 | A | 封山派（`fighter.fonxan`） | — |
 | 13 | 梅嵐武 | May lan-wu | `custom/legacy_npc/may_lan_wu.c` | 冷梅莊、文國縣／冷梅莊前院、清水鄉 | 人類 | 武者 | 30 | B | 冷梅莊（`fighter.lunmay`） | — |
@@ -41,8 +41,8 @@
 | 17 | 羅剎王 | Yaksa King | `custom/legacy_npc/yaksa_king.c` | 古墓場／— | 夜叉族 | 武者 | 35 | A | — | 主動攻擊、巡邏 |
 | 18 | 螟蛉子 | Ming ling zi | `custom/legacy_npc/ming_ling_zi.c` | 古墓場／內房 | 巫首族 | 道士 | 20 | A | — | — |
 | 19 | 鬼夜叉 | Ghost yaksa | `custom/legacy_npc/ghost_yaksa.c` | 古墓場／— | 夜叉族 | 武者 | 30 | B | — | 主動攻擊、巡邏 |
-| 20 | 歐陽芝 | O-yan zhi | `custom/legacy_npc/o_yan_zhi.c` | 名山書肆、八寶樓／歐陽書屋 | 人類 | 書生 | 30 | B | 步玄派（未列入對照表） | — |
-| 21 | 劉乙忘玄 | Liuye the Master of Grimace | `custom/legacy_npc/liuye_the_master_of_grimace.c` | 哭笑門、青邪宮／青邪宮哭笑門鎮心 | 厭火族 | 武者 | 70 | S | 哭笑門（`fighter.huge`） | — |
+| 20 | 歐陽芝 | O-yan zhi | `custom/legacy_npc/o_yan_zhi.c` | 名山書肆、八寶樓／歐陽書屋 | 人類 | 書生 | 30 | B | 步玄派（`scholar.myst`） | — |
+| 21 | 劉乙忘玄 | Liuye the Master of Grimace | `custom/legacy_npc/liuye_the_master_of_grimace.c` | 哭笑門、青邪宮／青邪宮哭笑門鎮心 | 厭火族 | 武者 | 70 | S | 哭笑門（`fighter.huge`） | 巡邏 |
 | 22 | 劉可 | Liu ko | `custom/legacy_npc/liu_ko.c` | 哭笑門／— | 厭火族 | 平民 | 1 | C | — | — |
 | 23 | 無慾師太 | Wu-yu nun | `custom/legacy_npc/wu_yu_nun.c` | 哭笑門／— | 人類 | 和尚 | 30 | B | — | — |
 | 24 | 陰雨巖 | Yin euyen | `custom/legacy_npc/yin_euyen.c` | 喬陰縣／— | 人類 | 武者 | 20 | C | — | — |
@@ -53,14 +53,14 @@
 | 29 | 於蘭兼毅 | Yu lan jian yi | `custom/legacy_npc/yu_lan_jian_yi.c` | 天邪國／— | 人類 | 武者 | 70 | S | 天邪派（未列入對照表） | — |
 | 30 | 蕭朗生 | Hsiao lang-sheng | `custom/legacy_npc/hsiao_lang_sheng.c` | 天邪國／— | 人類 | 武者 | 50 | A | 天邪派（未列入對照表） | — |
 | 31 | 白齊 | Taoist leader | `custom/legacy_npc/taoist_leader.c` | 太乙觀／賓客宿房（2026-11-09 起放在新做的太乙觀正殿 `d/taiyi/main_hall`，素衣派掌門，可拜師與傳授） | 人類 | 道士 | 50 | A | 素衣派（`taoist.freeze`） | — |
-| 32 | 孟驚鴻 | Meng jiang-hong | `custom/legacy_npc/meng_jiang_hong.c` | 孟家祖墳／— | 人類 | 武者 | 30 | B | — | — |
+| 32 | 孟驚鴻 | Meng jiang-hong | `custom/legacy_npc/meng_jiang_hong.c` | 孟家祖墳／— | 人類 | 武者 | 35 | A | — | — |
 | 33 | 田由 | Tian yu | `custom/legacy_npc/tian_yu.c` | 孟家祖墳／— | 形天族 | 武者 | 30 | B | — | — |
-| 34 | 花興 | Hua xing | `custom/legacy_npc/hua_xing.c` | 孟家祖墳／暗道 | 人類 | 盜賊 | 25 | B | — | — |
+| 34 | 花興 | Hua xing | `custom/legacy_npc/hua_xing.c` | 孟家祖墳／暗道 | 人類 | 盜賊 | 30 | A | — | — |
 | 35 | 許彥之 | Hsu yen-chih | `custom/legacy_npc/hsu_yen_chih.c` | 季縣／— | 人類 | 武者 | 20 | B | 虎刀門（`fighter.tiger`） | — |
 | 36 | 韓江洪 | Han jiang hong | `custom/legacy_npc/han_jiang_hong.c` | 尚書府／西廂房 | 人類 | 書生 | 20 | B | — | — |
 | 37 | 柳淳風 | Liuh chuen-fon | `custom/legacy_npc/liuh_chuen_fon.c` | 康平村／小客店 | 人類 | 武者 | 30 | A | 封山派（`fighter.fonxan`） | — |
 | 38 | 噬魂 | Ghost lord | `custom/legacy_npc/ghost_lord.c` | 文國縣／清水鄉 | 人類 | 軍人 | 35 | B | — | 主動攻擊 |
-| 39 | 雷同 | Lay ton | `custom/legacy_npc/lay_ton.c` | 斐縣／— | 人類 | 方士 | 20 | B | 武陀灸堂（未列入對照表） | — |
+| 39 | 雷同 | Lay ton | `custom/legacy_npc/lay_ton.c` | 斐縣／— | 人類 | 方士 | 20 | B | 武陀灸堂（未列入對照表） | 白雲觀經堂，在白雲觀內巡邏 |
 | 40 | 任蕭蕭 | Ren xiao-xiao | `custom/legacy_npc/ren_xiao_xiao.c` | 未能判定／廂房 | 人類 | 平民 | 10 | B | — | — |
 | 41 | 八臂石妖 | Stone ghost | `custom/legacy_npc/stone_ghost.c` | 未能判定／雷神宮殿 | 形天族 | 軍人 | 40 | A | — | 主動攻擊 |
 | 42 | 兵部軍官 | Soldier leader | `custom/legacy_npc/soldier_leader.c` | 未能判定／— | 形天族 | 軍人 | 20 | B | — | — |
@@ -101,7 +101,7 @@
 | 77 | 李儒 | Li ru | `custom/legacy_npc/li_ru.c` | 柳家／民宅 | 人類 | 書生 | 20 | B | — | — |
 | 78 | 劉開 | Liu kei | `custom/legacy_npc/liu_kei.c` | 檒城／街道 | 人類 | 軍人 | 30 | B | — | — |
 | 79 | 駱易 | Ro yi | `custom/legacy_npc/ro_yi.c` | 步玄派／沐華居 | 人類 | 書生 | 65 | S | 步玄派（`scholar.myst`） | — |
-| 80 | 武道通 | Wu dauton | `custom/legacy_npc/wu_dauton.c` | 武陀灸堂／武陀灸堂 | 人類 | 方士 | 60 | S | 武陀灸堂（`alchemist.wu`） | 巡邏（暫放雪亭鎮廣場北邊） |
+| 80 | 武道通 | Wu dauton | `custom/legacy_npc/wu_dauton.c` | 武陀灸堂／武陀灸堂 | 人類 | 方士 | 60 | S | 武陀灸堂（`alchemist.wu`） | 住在武陀灸堂（喬陰城外東側），不外出 |
 | 81 | 張小簽 | Zhang xiao qian | `custom/legacy_npc/zhang_xiao_qian.c` | 水嵐縣／街道 | 人類 | 平民 | 1 | C | — | — |
 | 82 | 白劍飛 | Bai jian fei | `custom/legacy_npc/bai_jian_fei.c` | 漕幫／小船 | 夜叉族 | 武者 | 25 | B | 封山派（`fighter.fonxan`） | — |
 | 83 | 蕭尹 | Xiao yin | `custom/legacy_npc/xiao_yin.c` | 漕幫／房間內 | 人類 | 武者 | 45 | A | — | — |
