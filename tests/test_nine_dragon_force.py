@@ -47,7 +47,7 @@ def test_heal_regenerate_overload():
 
 def test_hua_zi_yi_teaches_it():
     h = read(MUD / 'd/fengcheng/npc/hua_zi_yi.c')
-    assert 'file_size("/daemon/skill/nine-dragon_force.c") < 0' in h and 'me->query_level() < 10' in h
+    assert 'file_size' not in h and 'me->query_level() < 10' in h
     assert (MUD / 'daemon/skill/nine-dragon_force.c').exists()
     assert (MUD / 'docs/help/nine-dragon_force.txt').exists()
     assert '（nine-dragon force）' in read(MUD / 'docs/help/taoist.thunder.txt')
