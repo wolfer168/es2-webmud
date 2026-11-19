@@ -2,6 +2,8 @@
 // 「全部」顯示所有頻道；個別頻道可複選，選到的頻道依時間交錯顯示。
 // 訊息只留在記憶體（最近 500 筆，重新整理即清空）；視窗位置、大小與選取的頻道記在瀏覽器。
 
+import {makeResizable} from './float_window.js';
+
 const STORAGE_KEY='es2-chat-window-v1';
 const MAX_MESSAGES=500;
 export const CHAT_CHANNELS=['chat','rumor','tell','say'];
@@ -36,7 +38,6 @@ export function setupChatWindow({root,openButton}){
   function rowHtml(m){
     return `<div class="chat-line chat-${m.channel}" title="${esc(formatChatTime(m.time))}">${esc(m.text)}</div>`;
   }
-  function nearBottom(){return log.scrollHeight-log.scrollTop-log.clientHeight<40;}
   function renderAll(){
     const rows=messages.filter(visible);
     log.innerHTML=rows.length?rows.map(rowHtml).join(''):'<div class="chat-empty">目前沒有訊息。</div>';
@@ -50,18 +51,24 @@ export function setupChatWindow({root,openButton}){
     }
   }
 
+  // 新訊息只接在最後面，不會自動捲到最新；捲軸停在玩家目前看的位置（使用者指示，2026-11-19）。
   function add(channel,text,time=new Date()){
     const m={channel,text:String(text),time};
     messages.push(m);
-    let trimmed=false;
-    if(messages.length>MAX_MESSAGES){messages.splice(0,messages.length-MAX_MESSAGES);trimmed=true;}
+    let dropped=[];
+    if(messages.length>MAX_MESSAGES)dropped=messages.splice(0,messages.length-MAX_MESSAGES);
     if(root.hidden)return;
-    if(trimmed){renderAll();return;}
+    // 超過 500 筆時拿掉最舊的幾行；畫面上的內容往上移了多少，捲軸就跟著補回多少，看的位置不變。
+    for(const old of dropped){
+      if(!visible(old))continue;
+      const first=log.querySelector('.chat-line');if(!first)break;
+      const h=first.offsetHeight;first.remove();log.scrollTop=Math.max(0,log.scrollTop-h);
+    }
     if(!visible(m))return;
-    const stick=nearBottom();
     log.querySelector('.chat-empty')?.remove();
+    const top=log.scrollTop;
     log.insertAdjacentHTML('beforeend',rowHtml(m));
-    if(stick)log.scrollTop=log.scrollHeight;
+    log.scrollTop=top;
   }
 
   // ---------- 頻道選擇 ----------
@@ -149,14 +156,8 @@ export function setupChatWindow({root,openButton}){
   head.addEventListener('pointerup',endDrag);
   head.addEventListener('pointercancel',endDrag);
 
-  // 拖拉右下角調整大小（CSS resize），停下來後記住。
-  let resizeTimer=null;
-  if(typeof ResizeObserver==='function'){
-    new ResizeObserver(()=>{
-      if(root.hidden||drag)return;
-      clearTimeout(resizeTimer);resizeTimer=setTimeout(saveGeometry,300);
-    }).observe(root);
-  }
+  // 拖拉上下左右邊線與四個角落調整大小，放開後記住。
+  makeResizable(root,{onEnd:saveGeometry});
   window.addEventListener('resize',()=>{if(!root.hidden)clampIntoView();});
 
   // ---------- 開關 ----------

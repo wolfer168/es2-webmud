@@ -539,3 +539,23 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .tmr-item .auto-left{text-align:right}
 .tmr-num{width:5em!important;display:inline-block;margin:0 4px;background:#050806;color:#fff;border:1px solid #354d43;border-radius:6px;padding:4px 6px}
 .trg-enabled:disabled{opacity:.5;cursor:default}
+
+/* 2026-11-19：所有視窗可拉上下左右邊線與四個角落調整大小 */
+.float-resize-n{left:14px;right:14px;top:0;width:auto;height:6px;cursor:ns-resize}
+.float-resize-s{left:14px;right:14px;bottom:0;width:auto;height:6px;cursor:ns-resize}
+.float-resize-e{top:14px;bottom:14px;right:0;width:6px;height:auto;cursor:ew-resize}
+.float-resize-w{top:14px;bottom:14px;left:0;width:6px;height:auto;cursor:ew-resize}
+.chat-window{resize:none}
+.chat-window.is-resizing,.automation-dialog.is-resizing,.automation-dialog.is-dragging{user-select:none}
+/* 角色狀態：拉大視窗不放大內容（方格大小固定） */
+.status-window{min-width:300px;min-height:160px}
+.status-window .float-body{overflow:auto}
+#scoreHud .hud-vitals{grid-template-columns:2.4em max-content max-content}
+#scoreHud .hud-cells{grid-template-columns:repeat(15,15px)}
+.ui-settings{min-width:320px;min-height:240px}
+/* 觸發／計時器視窗：可移動、可調大小，內容依視窗大小等比縮放 */
+.automation-dialog{position:fixed;inset:auto;margin:0;overflow:hidden;max-width:none;max-height:none;min-width:420px;min-height:280px;z-index:45}
+.automation-dialog[open]{display:block}
+.automation-dialog .auto-scale{overflow:auto;transform-origin:0 0}
+.automation-dialog .auto-head{cursor:move;touch-action:none}
+.automation-dialog .float-resize{z-index:5}
