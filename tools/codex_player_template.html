@@ -306,10 +306,11 @@ html.embed .tools { padding-top: 10px; }
     return room ? `<button class="linkish" data-room="${esc(r)}">${esc(room.short)}</button><span class="hint">（${esc(areaOfRoom[r] || '')}）</span>` : '';
   }
   function whereHtml(it) {
-    const by = { room: [], npc: [], shop: [] };
+    const by = { room: [], npc: [], shop: [], draw: [] };
     (it.src || []).forEach(([k, ref]) => (by[k] || (by[k] = [])).push(ref));
     const parts = [];
     if (by.shop.length) parts.push('販售：' + by.shop.map(npcLink).join('、'));
+    if (by.draw.length) parts.push('兌換（河魚腹珠抽獎）：' + by.draw.map(npcLink).join('、'));
     if (by.craft && by.craft.length) parts.push('方士煉製');
     if (by.npc.length) parts.push('身上帶著：' + by.npc.map(npcLink).join('、'));
     if (by.room.length) parts.push('擺放在：' + by.room.map(roomLink).join('、'));
@@ -480,6 +481,7 @@ html.embed .tools { padding-top: 10px; }
     const t = [];
     if (n.faction) t.push(facById[n.faction].name);
     if (n.sells.length) t.push('商人');
+    if ((n.draws || []).length) t.push('兌換獎品');
     if (n.teaches.length) t.push('傳授武藝');
     if (n.wander) t.push('四處走動');
     return t;
@@ -504,6 +506,7 @@ html.embed .tools { padding-top: 10px; }
       `<dl class="kv">${n.title ? `<dt>稱號</dt><dd>${ansi(n.title)}</dd>` : ''}<dt>出沒地點</dt><dd>${rooms}${n.wander ? '<span class="hint">（會四處走動）</span>' : ''}</dd>` +
       (n.faction ? `<dt>門派</dt><dd>${facLink(n.faction)}</dd>` : '') +
       (n.sells.length ? `<dt>販賣</dt><dd>${n.sells.map(itemLink).join('、')}</dd>` : '') +
+      ((n.draws || []).length ? `<dt>兌換</dt><dd>拿河魚腹珠給他，一顆抽一次，可能得到：${n.draws.map(([i, c]) => itemLink(i) + (c > 1 ? ` ×${c}` : '')).join('、')}</dd>` : '') +
       (n.teaches.length ? `<dt>傳授</dt><dd>${n.teaches.map(skillLink).join('、')}</dd>` : '') +
       (eq ? `<dt>身上的東西</dt><dd>${eq}</dd>` : '') + `</dl>`;
   }
