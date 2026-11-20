@@ -78,16 +78,13 @@ object find_scroll(object me)
     return 0;
 }
 
-/* 共同的施法前置：消耗先天符與神、停頓，並得法術修為 random(慧根/6) + 1。 */
+/* 共同的施法前置：消耗先天符與神、停頓，並得法術修為 random(靈性/2) + 1（2026-11-20 改）。 */
 void pay_cost(object me, object scroll, string spell)
 {
-    int wis;
-
     scroll->add_amount(-1);
     me->consume_stat("sen", SPELLS[spell][1]);
     me->start_busy(SPELLS[spell][2]);
-    wis = me->query_attr("wis");
-    me->gain_score("magic", (wis >= 6 ? random(wis / 6) : 0) + 1);
+    me->gain_score("magic", random(me->query_attr("spi") / 2) + 1);
 }
 
 // ------------------------------------------------------------------

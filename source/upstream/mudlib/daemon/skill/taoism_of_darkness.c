@@ -240,8 +240,8 @@ varargs int cast_spell(object me, string spell, object target)
         hit = 1;
     }
     scroll->add_amount(-1);
-    // 每次施展得法術修為 random(慧根/6) + 1（比照天師咒術）。
-    me->gain_score("magic", (wis >= 6 ? random(wis / 6) : 0) + 1);
+    // 每次施展得法術修為 random(靈性/2) + 1（比照天師咒術，2026-11-20 改）。
+    me->gain_score("magic", random(me->query_attr("spi") / 2) + 1);
     if( spell != "smoke" ) hit = do_fire(me, target, spell, sen);
 
     spell_gain(me, SPELLS[spell][2], hit);

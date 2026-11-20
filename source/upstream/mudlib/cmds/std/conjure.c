@@ -47,13 +47,13 @@ int main(object me, string arg)
 		if( amount ) me->set_temp("conjure/amount", amount);
 		ok = (int)SKILL_D(magic)->conjure_magic(me, spl, target);
 		me->delete_temp("conjure/amount");
-		// 施法成功：法術修為得 random(靈性/6) + 1（使用者定案，2026-10-16）；
+		// 施法成功：法術修為得 random(靈性/2) + 1（2026-10-16 定案，2026-11-20 由 靈性/6 改）；
 		// 丹道修養只有施展丹道【神農之術】、丹道【黃白之術】時才給
 		// （使用者指示，2026-10-21；黃白之術 2026-10-22 加入）。
 		// 法術失敗時，技能檔會設 conjure/failed，這次不加分（使用者定案，2026-10-22）。
 		if( ok && userp(me) && !me->query_temp("conjure/failed") ) {
 			spi = me->query_attr("spi");
-			me->gain_score("magic", (spi >= 6 ? random(spi / 6) : 0) + 1);
+			me->gain_score("magic", random(spi / 2) + 1);
 			if( magic == "alchemy-medication" || magic == "alchemy-wealth" )
 				me->gain_score("alchemy", (spi >= 6 ? random(spi / 6) : 0) + 1);
 		}
