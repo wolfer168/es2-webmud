@@ -457,8 +457,8 @@ varargs int cast_spell(object me, string spell, object target)
     me->fight_ob(target);
     target->fight_ob(me);
 
-    // 每次施咒得法術修為 random(慧根/6) + 1（使用者定案，2026-10-16）。
-    me->gain_score("magic", (wis >= 6 ? random(wis / 6) : 0) + 1);
+    // 每次施咒得法術修為 random(靈性/2) + 1（2026-10-16 定案，2026-11-20 由 慧根/6 改）。
+    me->gain_score("magic", random(me->query_attr("spi") / 2) + 1);
 
     D = spell_strength(me, sen);
     // 增幅（overload）另外製作；這裡只保留讀取：威力 ×1.5，六卦熒雷不消耗。
