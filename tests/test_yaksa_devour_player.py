@@ -143,6 +143,20 @@ def test_devour_without_target_shows_big_count():
     assert 'devour' not in show.split('{', 1)[1]   # 給玩家看的話不提指令
 
 
+def test_every_player_soul_counts():
+    # 每吞完一隻玩家魂魄都算一隻，門檻與大幅機率都看總隻數（使用者指示，2026-11-20）。
+    s = (MUD / 'daemon/race/yaksa/devour.c').read_text(encoding='utf-8')
+    body = s[s.index('private void reward_player'):s.index('private void finish')]
+    assert 'count = query_total(me);' in body
+    assert body.index('count = query_total(me);') < body.index('need = devour_threshold(count, yaksa_ghost);')
+    # 加一隻在判斷門檻之前、且不在任何分支裡：沒達門檻也算。
+    assert body.index('me->add(TOTAL_KEY, 1);') < body.index('if (ghost_gin < need || own_gin < need) {')
+    assert 'big = random(1000) < big_chance(count + 1);' in body
+    assert '"soul_no":      count + 1,' in body
+    show = s[s.index('private int show_count'):s.index('int main(object me, string arg)')]
+    assert 'query_total(me)' in show and 'devour_big' not in show
+
+
 if __name__ == '__main__':
     test_devoured_player_reincarnates_in_own_context()
     test_devour_is_sealed()
@@ -156,4 +170,5 @@ if __name__ == '__main__':
     test_devour_record_fields()
     test_devourlog_command()
     test_devour_without_target_shows_big_count()
+    test_every_player_soul_counts()
     print('ok')

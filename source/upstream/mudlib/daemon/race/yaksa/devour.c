@@ -47,11 +47,14 @@ private void grow(object me, string stat, int n) {
     me->supplement_stat(stat, n);
 }
 
-// 有效吞魂次數（使用者指示，2026-11-04 歸零）：只有達到門檻的吞魂才計數。
+// 有效吞魂次數（使用者指示，2026-11-04 歸零）：達到門檻、有加成的次數，只記在紀錄裡。
 // 舊規則的次數 yaksa/devoured_players 不再使用。
 #define COUNT_KEY "yaksa/devour_count"
-// 大幅增加的次數（使用者指示，2026-11-19）：不加目標下指令時給夜叉自己看。
+// 大幅增加的次數（2026-11-19），只記在紀錄裡。
 #define BIG_KEY "yaksa/devour_big"
+// 吞過的玩家魂魄總隻數（使用者指示，2026-11-20）：每吞完一隻玩家的魂魄就算一隻，
+// 沒達門檻、小幅增加都算。門檻與大幅機率都看這個數字。
+#define TOTAL_KEY "yaksa/devour_total"
 
 // 吞魂紀錄（使用者指示，2026-11-04；2026-11-15 擴充）。本檔的身分（Mudlib）不能寫 /log，
 // 系統權限只開放 /data/daemon 給 Mudlib，所以紀錄放在這裡。只記玩家，不記鬼魂 NPC。
@@ -65,6 +68,24 @@ private void grow(object me, string stat, int n) {
 // 吞過的玩家魂總數（不論有沒有達門檻，2026-11-15 起算）與每個帳號被這隻夜叉吞過的次數。
 #define SOUL_KEY    "yaksa/devour_souls"
 #define VICTIM_KEY  "yaksa/devour_victims"
+
+// 已吞的玩家魂魄總隻數。這項計數是 2026-11-20 才加的：第一次用到時照現有資料補算一次，
+// = 2026-11-15 以前的有效吞魂次數（有效次數減掉 11/15 起紀錄裡的有效筆數）
+//   + 2026-11-15 起吞的每一隻（SOUL_KEY）。11/15 以前沒達門檻的吞魂沒有紀錄，算不進去。
+int query_total(object me) {
+    int valid_since = 0, pre;
+    mixed recs;
+
+    if (me->query(TOTAL_KEY)) return me->query(TOTAL_KEY);
+    recs = me->query(RECORD_KEY);
+    if (arrayp(recs))
+        foreach (mixed rec in recs)
+            if (mapp(rec) && rec["valid_no"]) valid_since++;
+    pre = me->query(COUNT_KEY) - valid_since;
+    if (pre < 0) pre = 0;
+    me->set(TOTAL_KEY, pre + me->query(SOUL_KEY));
+    return me->query(TOTAL_KEY);
+}
 
 private void devour_log(string text) {
     assure_file(DEVOUR_LOG);
@@ -162,18 +183,19 @@ private void write_record(object me, mapping rec) {
         rec["room"]));
 }
 
-// 門檻（使用者指示，2026-11-04）：鬼魂的精（開始吞時的目前值）與夜叉自己的精
-// （最大值）都要達到門檻，才加精氣神、才計數。第 1～10 隻 500，第 11 隻起每隻多 50（550、600……）。
+// 門檻（使用者指示，2026-11-04）：鬼魂的精（被吞角色的精最大值，2026-11-15）與夜叉自己的精
+// （最大值）都要達到門檻，才加精氣神。count 是已吞的玩家魂魄總隻數（2026-11-20 起不論有沒有
+// 達門檻都算）。第 1～10 隻 500，第 11 隻起每隻多 50（550、600……）。
 // 夜叉族的鬼魂門檻減半：250，第 11 隻起每隻多 25（275、300……）。
 int devour_threshold(int count, int yaksa_ghost) {
     int extra = count >= 10 ? count - 9 : 0;
     return yaksa_ghost ? 250 + 25 * extra : 500 + 50 * extra;
 }
 
-// 大幅增加的機率（千分比，使用者指示，2026-11-19）：依「這是第幾次有效吞魂」決定。
-// 第 1～10 次必定大幅；第 11～20 次每次乘以固定比例，第 20 次降到 20%；
-// 第 21～30 次再以固定比例降到第 30 次的 5%；第 31 次起維持 5%。
-// 第 11～20 次 = 1000 × 0.2^((第幾次-10)/10)，第 21～30 次 = 200 × 0.25^((第幾次-20)/10)，四捨五入。
+// 大幅增加的機率（千分比，使用者指示，2026-11-19）：依「這是第幾隻魂魄」決定（2026-11-20 起每隻都算）。
+// 第 1～10 隻必定大幅；第 11～20 隻每次乘以固定比例，第 20 隻降到 20%；
+// 第 21～30 隻再以固定比例降到第 30 隻的 5%；第 31 隻起維持 5%。
+// 第 11～20 隻 = 1000 × 0.2^((第幾次-10)/10)，第 21～30 隻 = 200 × 0.25^((第幾次-20)/10)，四捨五入。
 #define BIG_CHANCE ({ 851, 725, 617, 525, 447, 381, 324, 276, 235, 200, \
                       174, 152, 132, 115, 100, 87, 76, 66, 57, 50 })
 
@@ -190,7 +212,7 @@ private string who(object ob) {
 // 吞完玩家鬼魂：達到門檻才依原始公式給予永久加成並計數；沒有反噬。
 // 鬼魂的精以被吞角色的精最大值計算（使用者指示，2026-11-15），被咬過、流失多少都不影響。
 private void reward_player(object me, object victim, int ghost_gin) {
-    int count, big, gin, kee, sen, yaksa_ghost, need, raw_gin, own_gin;
+    int count, valid, big, gin, kee, sen, yaksa_ghost, need, raw_gin, own_gin;
     string result;
     mapping death, rec;
 
@@ -198,11 +220,14 @@ private void reward_player(object me, object victim, int ghost_gin) {
     // 夜叉自己的精（最大值）也要達到同一個門檻（使用者指示，2026-11-04）。
     own_gin = me->query_stat_maximum("gin");
 
-    count = me->query(COUNT_KEY);
+    // 門檻與大幅機率看「已吞的玩家魂魄總隻數」（使用者指示，2026-11-20）。
+    count = query_total(me);
+    valid = me->query(COUNT_KEY);
     yaksa_ghost = victim->query_race() == "yaksa";
     need = devour_threshold(count, yaksa_ghost);
 
-    // 第幾個玩家魂（不論有沒有達門檻都算）、吞這個帳號第幾次。
+    // 這一隻不論結果如何都算一隻；另記吞這個帳號第幾次。
+    me->add(TOTAL_KEY, 1);
     me->add(SOUL_KEY, 1);
     me->add(VICTIM_KEY + "/" + victim->query("id"), 1);
 
@@ -215,7 +240,7 @@ private void reward_player(object me, object victim, int ghost_gin) {
         me->add(COUNT_KEY, 1);
         // 夜叉族的鬼魂，精以兩倍計算（門檻比的是加倍前的精）。
         if (yaksa_ghost) ghost_gin *= 2;
-        // 大幅增加的機率依這是第幾次有效吞魂而定（big_chance()，千分比）。
+        // 大幅增加的機率依這是第幾隻魂魄而定（big_chance()，千分比）。
         big = random(1000) < big_chance(count + 1);
         if (big) {
             me->add(BIG_KEY, 1);
@@ -244,8 +269,8 @@ private void reward_player(object me, object victim, int ghost_gin) {
         "yaksa":        who(me),
         "yaksa_class":  class_of(me),
         "yaksa_ip":     ip_of(me),
-        "soul_no":      me->query(SOUL_KEY),
-        "valid_no":     result == "ok" ? count + 1 : 0,
+        "soul_no":      count + 1,
+        "valid_no":     result == "ok" ? valid + 1 : 0,
         "victim_id":    victim->query("id"),
         "victim":       who(victim),
         "victim_class": class_of(victim),
@@ -335,29 +360,12 @@ void devour_tick(object me, object victim, int serial) {
     call_out("devour_tick", TICK_SECONDS, me, victim, serial);
 }
 
-// 大幅增加的次數。這項計數是 2026-11-19 才加的：之前吞的，前 10 次有效吞魂一定是大幅，
-// 照有效次數補上（最多 10）；第 11 次以後只能從身上的吞魂紀錄（2026-11-15 起）補。
-int query_big_count(object me) {
-    int n, count;
-    mixed recs;
-
-    if (!undefinedp(me->query(BIG_KEY))) return me->query(BIG_KEY);
-    count = me->query(COUNT_KEY);
-    n = count < 10 ? count : 10;
-    recs = me->query(RECORD_KEY);
-    if (arrayp(recs))
-        foreach (mixed rec in recs)
-            if (mapp(rec) && rec["big"] && rec["valid_no"] > 10) n++;
-    me->set(BIG_KEY, n);
-    return n;
-}
-
-// 不加目標：查看自己吞下的魂魄中，有幾縷令自己功力大進（只算玩家的魂魄）。
+// 不加目標：查看自己已吞噬幾縷玩家的魂魄（使用者指示，2026-11-20：只顯示隻數）。
 private int show_count(object me) {
-    int n = query_big_count(me);
+    int n = query_total(me);
 
-    if (!n) write("你至今還不曾吞下足以令你功力大進的魂魄。\n");
-    else write("你至今吞噬的魂魄之中，共有" + chinese_number(n) + "縷令你功力大進。\n");
+    if (!n) write("你至今還不曾吞噬過任何人的魂魄。\n");
+    else write("你至今已吞噬" + chinese_number(n) + "縷魂魄。\n");
     return 1;
 }
 
@@ -401,7 +409,7 @@ int help(object me) {
     // 完整規則見 docs/CUSTOM_RACE_A_H.md（@HELP 區塊不可超過 1024 位元組）。
     write(@HELP
 指令格式：devour <鬼魂>
-          devour          查看吞下的魂魄中有幾縷令你功力大進
+          devour          查看自己已吞噬幾縷魂魄
 
 夜叉可以吞食鬼魂 NPC 或死去玩家的鬼魂：
 - 抓住鬼魂後要稍待片刻才開始吞食，鬼魂可以趁機逃走。
