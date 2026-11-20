@@ -448,7 +448,7 @@ receive_damage (int damage, object from, object attacker)
 		max = query_stat_effective("kee");
 		if( random(max/3) < damage ) {
 		    damage_stat("kee", damage, attacker);
-		    gain_score("survive", damage);
+		    // 受傷不再增加江湖歷練（使用者指示，2026-11-20）。
 		}
 
 		/* 如果傷害力和氣越接近，則傷害形體的機會越高 */
