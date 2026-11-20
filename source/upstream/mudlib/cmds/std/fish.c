@@ -52,7 +52,12 @@ int do_fish(object me)
     if( tick >= 10 ) hit = 1;
     else hit = ((tick - 1) * 20 + (s > 0 ? random(s) : 0) > 200);
 
+    intel = me->query_attr("int");
+    if( intel < 1 ) intel = 1;
+
     if( !hit ) {
+        // 沒釣到的 tick 也有收穫：技能點數 random(智力) + 1。
+        me->improve_skill_exact("halieutics", random(intel) + 1);
         if( random(3) == 0 )
             tell_object(me, WAIT_MSG[random(sizeof(WAIT_MSG))]);
         return 1;
@@ -66,8 +71,6 @@ int do_fish(object me)
     }
     // 技能點數用智力公式：(random(智力)+1) × (random(智力)+1) + random(智力)，
     // 每條魚再隨機乘 1～3 倍。
-    intel = me->query_attr("int");
-    if( intel < 1 ) intel = 1;
     me->improve_skill_exact("halieutics",
         ((random(intel) + 1) * (random(intel) + 1) + random(intel)) * (1 + random(3)));
     end_fish(me, 1);
