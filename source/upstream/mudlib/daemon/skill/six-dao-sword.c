@@ -20,7 +20,8 @@ private void create()
     art_usage = "secondhand sword";
     art_desc  = "雪吟莊進階的左手劍法，劍意空靈、不帶殺意；火候到了，"
                 + "出招命中後能施展【天譴劍式】搶攻，落空時能施展【血噬劍式】追擊。";
-    art_bonus = 20;     // 強度為一般武功的 120%
+    art_bonus = 20;
+    art_name_color = HIY;   // 招名輔色（docs/martial_arts/敘述顏色規劃.xlsx，2026-11-20）     // 強度為一般武功的 120%
 
     moves = ({
         ([ "name": "絕仁棄義", "attack": 9, "defense": 2, "force": 1, "bonus": 0, "damage_type": "刺傷",

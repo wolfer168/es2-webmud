@@ -41,10 +41,10 @@ void attack_using(object me, object opponent, object weapon) { }
 /* 練成（10 級）：移除寒梅心法。 */
 void skill_completed(object me, string skill)
 {
-    tell_object(me, HIY "你的迴風拂柳心訣已有小成了。\n" NOR);
+    tell_object(me, HIG "你的迴風拂柳心訣已有小成了。\n" NOR);
     if( me->query_skill("hainmay force", 1) > 0 ) {
         me->delete_skill("hainmay force");
-        tell_object(me, HIR "你體內聚集的寒梅真氣漸漸消散了。\n" NOR);
+        tell_object(me, HIW "你體內聚集的寒梅真氣漸漸消散了。\n" NOR);
     }
 }
 
@@ -79,7 +79,7 @@ void skill_advanced(object me, string skill)
         me->set_attr("str", me->query_attr("str", 1) + 2);
         me->set_attr("cor", me->query_attr("cor", 1) + 2);
         me->advance_stat("gin", 60);
-        tell_object(me, HIY "你打通了體內數道筋脈，體質已近頂峰！\n"
+        tell_object(me, HIG "你打通了體內數道筋脈，體質已近頂峰！\n"
             "你的精有所提高。\n"
             "你的膂力有所提高。\n"
             "你的膽識有所提高。\n" NOR);
@@ -89,7 +89,7 @@ void skill_advanced(object me, string skill)
         me->set_attr("str", me->query_attr("str", 1) + 3);
         me->set_attr("cor", me->query_attr("cor", 1) + 3);
         me->advance_stat("kee", 90);
-        tell_object(me, HIY "你週身經脈穴位渾然一體，體質已是無人能比！\n"
+        tell_object(me, HIG "你週身經脈穴位渾然一體，體質已是無人能比！\n"
             "你的氣有所提高。\n"
             "你的膂力有所提高。\n"
             "你的膽識有所提高。\n" NOR);
@@ -135,7 +135,7 @@ int do_refresh(object me)
         return notify_fail("你的氣不夠﹐無法運起迴風拂柳心訣回復精神。\n");
     me->consume_stat("kee", cost);
     me->supplement_stat("gin", sk);
-    message_vision("$N運起迴風拂柳心訣﹐真氣如風拂過靈台﹐精神為之一振。\n", me, 0, 1);
+    message_vision(HIC "$N運起迴風拂柳心訣﹐真氣如風拂過靈台﹐精神為之一振。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -152,7 +152,7 @@ int do_heal(object me)
     me->consume_stat("gin", cost);
     me->heal_stat("kee", sk / 4);
     me->supplement_stat("kee", sk / 2);
-    message_vision("$N運起迴風拂柳心訣調息療傷﹐臉色漸漸好轉。\n", me, 0, 1);
+    message_vision(HIG "$N運起迴風拂柳心訣調息療傷﹐臉色漸漸好轉。\n" NOR, me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -161,7 +161,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "flurry force":
-        message_vision(HIY "$N盤膝坐定﹐默運迴風拂柳心訣﹐真氣如風拂柳在週身經脈流轉。\n" NOR, me, 0, 1);
+        message_vision(HIG "$N盤膝坐定﹐默運迴風拂柳心訣﹐真氣如風拂柳在週身經脈流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":

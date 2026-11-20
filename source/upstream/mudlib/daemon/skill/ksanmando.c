@@ -35,8 +35,8 @@ private void create()
     mm_start = 30;
     mm_minus = 29;
     mm_coef  = 10;
-    mm_first_msg = "你將三門刀法反覆演練﹐漸漸體會到「攻守之間﹐門戶自分」的道理﹐\n"
-                   + "對武學之道有了初步的領悟﹗\n";
+    /* 練成訊息（使用者指示，2026-11-20）；原本首次獲得武學之道的訊息拿掉了。 */
+    level_msgs = ([ 1: HIW "你對三門刀法已經有所領悟。" NOR "\n" ]);
 
     DAEMON_D->register_skill_daemon("ksanmando");
     setup();

@@ -58,9 +58,9 @@ void skill_completed(object me, string skill)
  *   ({ 等級門檻, 精氣上限各加多少, 膽識與根骨各加多少, 敘述第一句, 舊版（120／140／160）的領取記號 })
  * 領過的境界記在 celestial_force/tier_<第幾境>；舊版已領的照舊算已領，不會重複給。 */
 private mixed *MILESTONE = ({
-    ({ 140, 20, 1, "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。", "bonus_120" }),
-    ({ 160, 40, 2, "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。", "bonus_140" }),
-    ({ 190, 60, 4, "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。", "bonus_160" }),
+    ({ 140, 20, 1, HIY "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。" NOR, "bonus_120" }),
+    ({ 160, 40, 2, HIY "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。" NOR, "bonus_140" }),
+    ({ 190, 60, 4, HIY "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。" NOR, "bonus_160" }),
 });
 
 private void give_milestones(object me, int lv)
@@ -141,7 +141,7 @@ int do_heal(object me)
     me->consume_stat("sen", cost);
     me->heal_stat("kee", n);
     me->supplement_stat("kee", n);
-    message_vision("$N運起天邪神功﹐一股熾熱的真氣在週身遊走﹐傷勢漸漸好轉。\n", me, 0, 1);
+    message_vision(HIY "$N運起天邪神功﹐一股熾熱的真氣在週身遊走﹐傷勢漸漸好轉。\n" NOR, me, 0, 1);
     return 1;
 }
 

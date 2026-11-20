@@ -60,7 +60,7 @@ int query_entry_level() { return 10; }
 
 void skill_completed(object me, string sk)
 {
-    tell_object(me, HIY + gender_self(me) + "覺得一股清涼之氣自丹田緩緩升起，直透靈台，看來"
+    tell_object(me, HIG + gender_self(me) + "覺得一股清涼之氣自丹田緩緩升起，直透靈台，看來"
         + gender_self(me) + "的竹上經心法已經練成了！\n" NOR);
 }
 
@@ -117,7 +117,7 @@ int do_regenerate(object me)
     me->consume_stat("kee", cost);
     me->heal_stat("sen", heal);
     me->supplement_stat("sen", sen);
-    message_vision("$N運起竹上經心法，臉色微微一白，隨即眼神清明，精神為之一振。\n", me, 0, 1);
+    message_vision(HIG "$N運起竹上經心法，臉色微微一白，隨即眼神清明，精神為之一振。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -126,7 +126,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "zushang":
-        message_vision(HIY "$N盤膝而坐，默誦竹上經心法，開始調息運功。\n" NOR, me, 0, 1);
+        message_vision(HIG "$N盤膝而坐，默誦竹上經心法，開始調息運功。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "regenerate":

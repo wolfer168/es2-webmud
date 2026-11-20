@@ -138,7 +138,7 @@ int do_refresh(object me)
 
     if( cost > 0 ) me->consume_stat("kee", cost);
     me->supplement_stat("gin", sk);
-    message_vision("$N運起玄天心法﹐一縷沉靜的真氣直透靈台﹐精神為之一振。\n", me, 0, 1);
+    message_vision(HIY "$N運起玄天心法﹐一縷沉靜的真氣直透靈台﹐精神為之一振。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -158,7 +158,7 @@ int do_heal(object me)
 
     if( cost > 0 ) me->consume_stat("gin", cost);
     me->supplement_stat("kee", 5 + sk / 2);
-    message_vision("$N運起玄天心法﹐一縷沉靜的真氣緩緩流過經脈﹐傷勢漸漸平復。\n", me, 0, 1);
+    message_vision(HIY "$N運起玄天心法﹐一縷沉靜的真氣緩緩流過經脈﹐傷勢漸漸平復。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }

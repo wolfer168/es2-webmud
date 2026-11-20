@@ -24,6 +24,7 @@ private void create()
     art_desc  = "孟家祖傳的刀法，由開國將軍孟翔溪所創，刀勢兇悍霸道，招招只攻不守；"
                 + "催到極處更能使出絕學『五 虎 斷 門』，封死對手的退路。";
     art_bonus = 0;
+    art_name_color = HIY;   // 招名輔色（docs/martial_arts/敘述顏色規劃.xlsx，2026-11-20）
 
     moves = ({
         ([ "name": "惡虎剜心", "attack": 8, "defense": 1, "force": 1, "bonus": 12, "damage_type": "割傷",
@@ -58,10 +59,11 @@ int valid_learn(object me)
     return notify_fail("這是孟家的祖傳刀法﹐外人學不得。\n");
 }
 
-/* 絕招的敘述：整段亮黃色、一行不斷行，前後各空一行；失敗（氣力不繼）一樣用黃色。 */
+/* 絕招的敘述：一行不斷行，前後各空一行；『五 虎 斷 門』用亮黃色（敘述顏色規劃，2026-11-20）。 */
 private void say_yellow(string msg, object me, object victim)
 {
-    message_vision("\n" + HIY + msg + NOR + "\n\n", me, victim, 1);
+    msg = replace_string(msg, "『五 虎 斷 門』", HIY "『五 虎 斷 門』" NOR);
+    message_vision("\n" + msg + "\n\n", me, victim, 1);
 }
 
 /* 『五 虎 斷 門』：必中、不能閃躲格擋，成功時對手 delay 3 tick；消耗氣最大值的 1/10，自身停頓 1 tick，冷卻 6 tick。 */

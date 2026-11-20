@@ -109,5 +109,5 @@ void xiaoyao(object me)
     me->set_temp("myst/xiaoyao_next", time() + XIAOYAO_CD);
     me->supplement_stat("gin", sk / 2);
     me->supplement_stat("kee", sk / 3);
-    message_vision(HIY "$N步履一鬆﹐身形似風中新枝般舒展開來﹐精神氣力為之一振。\n" NOR, me, 0, 1);
+    message_vision(HIC "$N步履一鬆﹐身形似風中新枝般舒展開來﹐精神氣力為之一振。\n" NOR, me, 0, 1);
 }

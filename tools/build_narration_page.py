@@ -73,12 +73,14 @@ def strip_comments(src):
             out.append(src[i:j + 1]); i = j + 1
         elif src.startswith('//', i):
             j = src.find('\n', i)
-            i = n if j < 0 else j
+            j = n if j < 0 else j
+            out.append(' ' * (j - i))        # 用空白補滿，保持字元位置不變
+            i = j
         elif src.startswith('/*', i):
             j = src.find('*/', i + 2)
-            seg = src[i:(n if j < 0 else j + 2)]
-            out.append('\n' * seg.count('\n'))
-            i = n if j < 0 else j + 2
+            j = n if j < 0 else j + 2
+            out.append(''.join('\n' if ch == '\n' else ' ' for ch in src[i:j]))
+            i = j
         elif src.startswith('@LONG', i) or src.startswith('@HELP', i):
             end = 'LONG' if src.startswith('@LONG', i) else 'HELP'
             j = src.find('\n' + end, i)
@@ -96,10 +98,10 @@ def unescape(lit):
 
 
 class Tok:
-    __slots__ = ('kind', 'val', 'line')
+    __slots__ = ('kind', 'val', 'line', 'pos', 'end')
 
-    def __init__(self, kind, val, line):
-        self.kind, self.val, self.line = kind, val, line
+    def __init__(self, kind, val, line, pos=-1, end=-1):
+        self.kind, self.val, self.line, self.pos, self.end = kind, val, line, pos, end
 
     def __repr__(self):
         return f'{self.kind}:{self.val!r}'
@@ -114,6 +116,7 @@ def tokenize(src):
     i = 0
     while i < len(lines):
         ln = lines[i]
+        i0 = i
         m = re.match(r'\s*#\s*define\s+([A-Za-z_]\w*)(\(([^)]*)\))?\s*(.*)$', ln)
         if m:
             text = m.group(4)
@@ -122,17 +125,21 @@ def tokenize(src):
                 text = text[:-1] + ' ' + lines[i]
             params = [p.strip() for p in m.group(3).split(',')] if m.group(2) else None
             defines[m.group(1)] = (params, text)
-            body.append('')
+            body.append(' ' * len(lines[i0]))
+            for k in range(i0 + 1, i + 1):
+                body.append(' ' * len(lines[k]))
         elif re.match(r'\s*#', ln):
-            body.append('')
+            body.append(' ' * len(ln))
         else:
             body.append(ln)
         i += 1
     toks = []
+    off = 0
     for ln_no, ln in enumerate(body, 1):
         for m in TOKEN.finditer(ln):
             k = m.lastgroup
-            toks.append(Tok(k, m.group(k), ln_no))
+            toks.append(Tok(k, m.group(k), ln_no, off + m.start(), off + m.end()))
+        off += len(ln) + 1
     return toks, defines
 
 
@@ -145,7 +152,7 @@ def expand(toks, defines, depth=0):
     while i < len(toks):
         t = toks[i]
         if t.kind == 'id' and t.val in ANSI and t.val not in defines:
-            out.append(Tok('color', t.val, t.line)); i += 1; continue
+            out.append(Tok('color', t.val, t.line, t.pos, t.end)); i += 1; continue
         if t.kind == 'id' and t.val in defines and depth < 8:
             params, text = defines[t.val]
             if params is None:
@@ -208,6 +215,9 @@ def extract(toks):
     while i < n:
         t = toks[i]
         v = t.val
+        # 招式表裡的 "name": "招名"：記下招名（招式敘述跟著它）
+        if t.kind == 'str' and unescape(t.val) == 'name' and i + 2 < n and toks[i + 1].val == ':' and toks[i + 2].kind == 'str':
+            last_name = unescape(toks[i + 2].val)
         if t.kind in ('str', 'color') or (t.kind == 'id' and t.val not in KEYWORDS and run_can_start(toks, i)):
             # 從 i 開始收一串連續敘述
             run = Run(); run.line = t.line; run.start = i
@@ -266,7 +276,7 @@ def extract(toks):
             if run.has_cjk():
                 ctx = dict(
                     items=run.items, line=run.line, func=func, assign=assign, last_name=last_name,
-                    call='', nowrap=False, prev=[x.val for x in toks[max(0, i - 3):i]],
+                    call='', nowrap=False, prev=[x.val for x in toks[max(0, i - 3):i]], rs=run.start, re=run.end,
                 )
                 # 最近的呼叫
                 for ident, pos in reversed(pstack):
@@ -536,6 +546,26 @@ def channel_for(c, label):
 
 # ---------------------------------------------------------------- 主程式
 
+def engine_colorize(a, name, text, raw=False):
+    """照 std/martial_art.c 的 colorize_action()：整句主色、招名輔色（緊貼的括號一起上色），句尾補 NOR。"""
+    m_main = re.search(r'art_main_color\s*=\s*([A-Z]+)\s*;', a['src'])
+    m_name = re.search(r'art_name_color\s*=\s*([A-Z]+)\s*;', a['src'])
+    if not (m_main or m_name):
+        return text
+    main = ANSI[m_main.group(1)] if m_main else ''
+    restore = ANSI['NOR'] + main
+    if m_name and name:
+        target = None
+        for l, r in (('「', '」'), ('『', '』'), ('【', '】')):
+            if l + name + r in text:
+                target = l + name + r; break
+        if target is None and name in text:
+            target = name
+        if target:
+            text = text.replace(target, ANSI[m_name.group(1)] + target + restore)
+    return main + text + ANSI['NOR']
+
+
 def build():
     arts = pick_arts()
     data = {}   # cat -> list of arts
@@ -564,15 +594,19 @@ def build():
                 continue
             seen.add(key)
             sample = render_items(items, weapon, False, label == '招式')
+            raw_s = raw
+            if label == '招式':
+                sample = engine_colorize(a, c['last_name'], sample)
+                raw_s = engine_colorize(a, c['last_name'], raw, raw=True)
             channel = channel_for(c, label)
             nowrap = channel.startswith(('戰鬥訊息', '一行', '只給', '提示', '不自動'))
             wrapped = sample if nowrap else cjk_wrap(sample, WRAP_WIDTH)
-            raw_wrapped = raw if nowrap else cjk_wrap(raw, WRAP_WIDTH)
+            raw_wrapped = raw_s if nowrap else cjk_wrap(raw_s, WRAP_WIDTH)
             h_sample, names = to_html(wrapped)
             h_raw, _ = to_html(raw_wrapped)
             entries.append(dict(label=label, name=c['last_name'] if label == '招式' else '', line=c['line'],
                                 sample=h_sample, raw=h_raw, colors=names, channel=channel,
-                                copy_s=plain_text(sample), copy_r=plain_text(raw)))
+                                copy_s=plain_text(sample), copy_r=plain_text(raw_s)))
         a['entries'] = entries
         data.setdefault(a['cat'], []).append(a)
     return data

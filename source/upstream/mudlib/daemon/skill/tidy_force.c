@@ -45,7 +45,7 @@ void attack_using(object me, object opponent, object weapon) { }
 /* 學成：累積到 5 級門檻，gain 時直接練成 5 級。 */
 void skill_completed(object me, string skill)
 {
-    tell_object(me, HIC "你練成了凌潮心法﹐丹田真氣一起一落﹐如潮汐般綿綿不絕。\n" NOR);
+    tell_object(me, HIG "你練成了凌潮心法﹐丹田真氣一起一落﹐如潮汐般綿綿不絕。\n" NOR);
 }
 
 /* 每級獎勵（引擎）；練成之後每升一級：精上限 +2、氣上限 +0～1。 */
@@ -96,7 +96,7 @@ int do_refresh(object me)
         return notify_fail("你的氣不夠﹐無法運起凌潮心法回復精神。\n");
     me->consume_stat("kee", cost);
     me->supplement_stat("gin", sk * 3 / 2);
-    message_vision("$N運起凌潮心法﹐真氣如潮水般一波波湧上靈台﹐精神為之一振。\n", me, 0, 1);
+    message_vision(HIC "$N運起凌潮心法﹐真氣如潮水般一波波湧上靈台﹐精神為之一振。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -105,7 +105,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "tidy force":
-        message_vision(HIC "$N盤膝坐定﹐默運凌潮心法﹐丹田真氣一起一落﹐有如潮汐往復。\n" NOR, me, 0, 1);
+        message_vision(HIG "$N盤膝坐定﹐默運凌潮心法﹐丹田真氣一起一落﹐有如潮汐往復。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":

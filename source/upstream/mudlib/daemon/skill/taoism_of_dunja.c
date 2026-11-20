@@ -77,7 +77,7 @@ int do_fate(object me)
     if( !spend_sen(me, 20) ) return 0;
     me->delete_temp("dunja/experience");
     me->set_temp("dunja/fate", 1);
-    message_vision("$N盤膝而坐屈指推算天干地支﹐眼中隱隱透出一點清光。\n", me, 0, 1);
+    message_vision(HIC "$N盤膝而坐屈指推算天干地支﹐眼中隱隱透出一點清光。\n" NOR, me, 0, 1);
     me->start_busy(1);
     magic_gain(me, 1);
     return 1;
@@ -89,7 +89,7 @@ int do_experience(object me)
     if( !spend_sen(me, 30) ) return 0;
     me->delete_temp("dunja/fate");
     me->set_temp("dunja/experience", 1);
-    message_vision("$N閉目凝神﹐眉心彷彿睜開了第三隻眼﹐周遭一切都看得通透。\n", me, 0, 1);
+    message_vision(HIW "$N閉目凝神﹐眉心彷彿睜開了第三隻眼﹐周遭一切都看得通透。\n" NOR, me, 0, 1);
     me->start_busy(1);
     magic_gain(me, 2);
     return 1;
@@ -158,7 +158,7 @@ int give_experience(object me, object target, string skill)
         message_vision("$N伸指點向$n眉心﹐那縷清氣卻在半途散了。\n", me, target, 1);
         return 1;
     }
-    message_vision("$N伸指點在$n眉心﹐一縷清氣緩緩渡了過去。\n", me, target, 1);
+    message_vision(HIC "$N伸指點在$n眉心﹐一縷清氣緩緩渡了過去。\n" NOR, me, target, 1);
     target->improve_skill_exact(skill, gain);
     me->gain_score("magic", -(gain / 10));
     tell_object(target, HIG "你只覺腦中豁然開朗﹐對" + to_chinese(skill) + "的領悟又深了一層。\n" NOR);

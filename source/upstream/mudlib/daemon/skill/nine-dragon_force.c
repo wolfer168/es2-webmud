@@ -113,7 +113,7 @@ int do_heal(object me)
 
     me->consume_stat("gin", cost);
     me->supplement_stat("kee", 10 + sk / 2);
-    message_vision("$N閉目調息﹐一縷真氣自精化入氣海﹐蒼白的臉色漸漸泛起血色。\n", me, 0, 1);
+    message_vision(HIY "$N閉目調息﹐一縷真氣自精化入氣海﹐蒼白的臉色漸漸泛起血色。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -130,7 +130,7 @@ int do_regenerate(object me)
 
     me->consume_stat("gin", cost);
     me->supplement_stat("sen", 10 + sk / 2);
-    message_vision("$N引一縷真氣上行﹐灌入靈台﹐眼中的倦意一掃而空。\n", me, 0, 1);
+    message_vision(HIY "$N引一縷真氣上行﹐灌入靈台﹐眼中的倦意一掃而空。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }

@@ -135,7 +135,7 @@ int do_recover(object me)
     me->consume_stat("gin", cost);
     me->heal_stat("kee", 10 + sk / 8);
     me->supplement_stat("kee", 10 + sk / 5);
-    message_vision("$N運起寒梅心法調息療傷﹐臉色漸漸好轉。\n", me, 0, 1);
+    message_vision(HIW "$N運起寒梅心法調息療傷﹐臉色漸漸好轉。\n" NOR, me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -181,7 +181,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "hainmay force":
-        message_vision(HIY "$N盤膝坐定﹐默運寒梅心法﹐一股清冷之氣在週身經脈流轉。\n" NOR, me, 0, 1);
+        message_vision(HIW "$N盤膝坐定﹐默運寒梅心法﹐一股清冷之氣在週身經脈流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":

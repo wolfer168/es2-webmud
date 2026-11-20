@@ -55,7 +55,7 @@ int query_entry_level() { return 20; }
 
 void skill_completed(object me, string skill)
 {
-    tell_object(me, HIK "你將奇門遁法的口訣默誦再三﹐隱隱覺得天地間的陰氣都在指尖流轉。\n" NOR);
+    tell_object(me, HIC "你將奇門遁法的口訣默誦再三﹐隱隱覺得天地間的陰氣都在指尖流轉。\n" NOR);
 }
 
 // ------------------------------------------------------------------
@@ -127,12 +127,12 @@ int do_memory(object me)
     object env = environment(me);
 
     if( clonep(env) )
-        return notify_fail("此地方位變幻不定﹐記不下來。\n");
+        return notify_fail(CYN "此地方位變幻不定﹐記不下來。\n" NOR);
     me->set("mysticism/memory", base_name(env));
     start_line(me, 0, "memory");
-    say_line(me, 0, "$N屈指在地上畫了一道符紋﹐那符紋閃了一閃便隱入土中。");
+    say_line(me, 0, CYN "$N屈指在地上畫了一道符紋﹐那符紋閃了一閃便隱入土中。" NOR);
     blank(me);
-    tell_object(me, HIK "你將此地的方位牢牢記在心裡。\n" NOR);
+    tell_object(me, HIW "你將此地的方位牢牢記在心裡。\n" NOR);
     return 1;
 }
 
@@ -170,7 +170,7 @@ int do_recall(object me)
     object room = recall_room(me);
 
     start_line(me, 0, "recall");
-    say_line(me, 0, "$N將少陰符往頭頂一拋﹐身子隨著一陣陰風拔地而起﹐轉眼不見了。");
+    say_line(me, 0, CYN "$N將少陰符往頭頂一拋﹐身子隨著一陣陰風拔地而起﹐轉眼不見了。" NOR);
     blank(me);
     if( !me->move(room) ) {
         tell_object(me, HIK "陰風打了個旋又將你放了下來﹐終究沒能飛走。\n" NOR);
@@ -178,7 +178,7 @@ int do_recall(object me)
     }
     message("vision", HIK "一陣陰風捲過﹐" + me->name() + "的身影從風中落了下來。\n" NOR,
         environment(me), ({ me }));
-    tell_object(me, HIK "陰風散去﹐你已落在記下的地方。\n" NOR);
+    tell_object(me, HIW "陰風散去﹐你已落在記下的地方。\n" NOR);
     return 1;
 }
 
@@ -214,7 +214,7 @@ int do_collect(object me, object corpse)
         ob->move(environment(me));
     destruct(corpse);
     me->add("mysticism/ghosts", 1);
-    tell_object(me, HIK "你袖中如今鎮著" + chinese_number(me->query("mysticism/ghosts"))
+    tell_object(me, HIW "你袖中如今鎮著" + chinese_number(me->query("mysticism/ghosts"))
         + "縷陰魂。\n" NOR);
     return 1;
 }
@@ -370,7 +370,7 @@ int do_slave(object me, object target)
     say_line(me, target, "$N咬破指尖在少陰符上一點﹐將符紙往$n額頭一拍﹐一縷黑氣順勢鑽了進去。");
     blank(me);
     if( random(sk / 3 + 1) <= target->query_level() ) {
-        say_line(me, target, "$n猛地甩了甩頭﹐將那縷黑氣逼了出來。");
+        say_line(me, target, HIW "$n猛地甩了甩頭﹐將那縷黑氣逼了出來。" NOR);
         return 0;
     }
 
@@ -379,7 +379,7 @@ int do_slave(object me, object target)
     me->remove_killer(target);
     target->set_temp("mysticism/master_id", me->query("id"));
     puppets = filter(puppets, (: objectp($1) :)) + ({ target });
-    say_line(me, target, "$n渾身一震﹐眼神變得空洞呆滯﹐默默走到$N身後站定。");
+    say_line(me, target, CYN "$n渾身一震﹐眼神變得空洞呆滯﹐默默走到$N身後站定。" NOR);
     start_serving(target, me);
     remove_call_out("guard_puppets");
     call_out("guard_puppets", 2);
@@ -405,9 +405,9 @@ int do_devour(object me, object target)
 
     n = target->query_stat("kee") * me->query_skill("mao-shan mysticism", 1) / 200;
     start_line(me, target, "devour");
-    say_line(me, target, "$N朝$n一招手﹐$n的魂魄連同陰魂一起被抽了出來﹐吸入$N口中。");
+    say_line(me, target, HIY "$N朝$n一招手﹐$n的魂魄連同陰魂一起被抽了出來﹐吸入$N口中。" NOR);
     blank(me);
-    say_line(me, target, "$n的軀殼頹然倒地﹐化成一堆飛灰。$N臉上泛起一陣青氣﹐精神為之一振。");
+    say_line(me, target, HIC "$n的軀殼頹然倒地﹐化成一堆飛灰。$N臉上泛起一陣青氣﹐精神為之一振。" NOR);
     if( n > 0 ) {
         me->supplement_stat("kee", n);
         me->supplement_stat("sen", n);

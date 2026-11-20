@@ -106,7 +106,7 @@ int do_remedy(object me)
     me->supplement_stat("gin", sk / 2);
     me->supplement_stat("kee", sk / 2);
     me->supplement_stat("sen", sk / 2);
-    message_vision("$N深吸一口氣﹐丹田純陽之氣上湧﹐蒼白的臉色漸漸泛起紅潤。\n", me, 0, 1);
+    message_vision(HIY "$N深吸一口氣﹐丹田純陽之氣上湧﹐蒼白的臉色漸漸泛起紅潤。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -125,7 +125,7 @@ int do_recover(object me)
     me->heal_stat("gin", sk / 4);
     me->heal_stat("kee", sk / 4);
     me->heal_stat("sen", sk / 4);
-    message_vision("$N雙掌合於胸前﹐一股溫熱的純陽之氣在體內往復流轉﹐受損的經脈漸漸舒展開來。\n", me, 0, 1);
+    message_vision(HIY "$N雙掌合於胸前﹐一股溫熱的純陽之氣在體內往復流轉﹐受損的經脈漸漸舒展開來。\n" NOR, me, 0, 1);
     me->start_busy(2);
     return 1;
 }

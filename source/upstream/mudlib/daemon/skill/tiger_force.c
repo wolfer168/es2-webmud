@@ -164,7 +164,7 @@ int do_refresh(object me)
         return notify_fail("你的氣不夠，無法運起瘋虎功回復精神。\n");
     me->consume_stat("kee", cost);
     me->supplement_stat("gin", me->query_attr("dex") + sk);
-    message_vision("$N深吸一口氣，精神為之一振。\n", me, 0, 1);
+    message_vision(HIC "$N深吸一口氣，精神為之一振。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }

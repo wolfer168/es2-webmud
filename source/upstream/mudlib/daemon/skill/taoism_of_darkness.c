@@ -36,7 +36,7 @@ int query_entry_threshold() { return 30000; }
 
 void skill_completed(object me, string skill)
 {
-    tell_object(me, HIK "你對著少陰符低誦咒文﹐指間忽地竄起一點幽綠的火光﹐茅山奇術總算入了門。\n" NOR);
+    tell_object(me, GRN "你對著少陰符低誦咒文﹐指間忽地竄起一點幽綠的火光﹐茅山奇術總算入了門。\n" NOR);
 }
 
 // ------------------------------------------------------------------

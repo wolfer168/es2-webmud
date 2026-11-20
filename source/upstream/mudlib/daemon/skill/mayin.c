@@ -42,7 +42,7 @@ int query_entry_threshold() { return 500; }
 
 void skill_completed(object me, string sk)
 {
-    tell_object(me, HIY "你的梅影身法已經初有小成。\n" NOR);
+    tell_object(me, HIW "你的梅影身法已經初有小成。\n" NOR);
 }
 
 /* 每級獎勵（學成那一級起）：武術造詣 等級 × 10；
