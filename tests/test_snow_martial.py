@@ -35,6 +35,11 @@ def test_celestial_force():
     assert 'foreach( ob in me->query_enemy() )' in s and 'ob->start_busy(2);' in s
     assert 'dmg = sk / 5 + me->query_attr("con");' in s and 'me->supplement_stat("kee", sk / 2);' in s
     assert 'me->start_busy(1);' in s and 'me->start_busy(2);' not in s
+    # 內息不順（2026-11-20）
+    assert '#define ROAR_LEVEL      140' in s and 'if( sk < ROAR_LEVEL )' in s
+    assert 'return 75 - (sk - ROAR_LEVEL) * 55 / 60;' in s and 'c = 25 + (sk - ROAR_LEVEL) * 25 / 60;' in s
+    assert 'if( !fighting ) c *= 2;' in s and 'if( userp(me) && random(100) < roar_block_chance(sk) )' in s
+    assert 'me->set_temp(ROAR_BLOCK, 1);' in s and 'me->delete_temp(ROAR_BLOCK);' in s
     # ghost：警覺 sk/2、攻勢 sk/4、陰陽眼、sk/5 回合
     assert 'aware = sk / 2;' in s and 'intimidate = sk / 4;' in s and 'duration = sk / 5;' in s
     assert 'me->add_temp("apply/vision_of_ghost", 1);' in s
