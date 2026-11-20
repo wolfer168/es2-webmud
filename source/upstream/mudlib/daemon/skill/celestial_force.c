@@ -78,11 +78,12 @@ private void give_milestones(object me, int lv)
         me->advance_stat("kee", m[1]);
         me->set_attr("cor", me->query_attr("cor", 1) + m[2]);
         me->set_attr("con", me->query_attr("con", 1) + m[2]);
-        tell_object(me, HIY + m[3] + "\n"
-            "你的膽識增加了。\n"
-            "你的根骨增加了。\n"
+        // 境界敘述與膽識、根骨黃色；精、氣增加用預設色（使用者指示，2026-11-20）。
+        tell_object(me, m[3] + "\n"
+            HIY "你的膽識增加了。\n"
+            "你的根骨增加了。\n" NOR
             "你的精因為修煉天邪神功增進不少。\n"
-            "你的氣因為修煉天邪神功增進不少。\n" NOR);
+            "你的氣因為修煉天邪神功增進不少。\n");
     }
 }
 
