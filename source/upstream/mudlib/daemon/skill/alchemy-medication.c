@@ -152,7 +152,7 @@ int conjure_magic(object me, string spell, object target)
     if( ok && random(100) >= success_chance(me) ) ok = 0;
 
     if( !ok ) {
-        tell_object(me, gender_self(me) + "的法術失敗了。\n");
+        tell_object(me, gender_self(me) + HIK "的法術失敗了。\n" NOR);
         reward_failure(me);
         me->set_temp("conjure/failed", 1);
         return 1;

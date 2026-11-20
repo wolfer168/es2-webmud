@@ -79,7 +79,7 @@ void show_needle(object me, object target, string kind)
         res = replace_string(res, "$n", "$N");
     }
     // 練武假人是死物：四種效果都換成同一句（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
-    if( target->query("training_dummy") ) res = "針尾在$n身上輕輕晃了晃，$n毫無反應。";
+    if( target->query("training_dummy") ) res = HIK "針尾在$n身上輕輕晃了晃，$n毫無反應。" NOR;
     needle_line(me, target, act);
     needle_blank(me);
     needle_line(me, target, res);

@@ -15,7 +15,7 @@ import openpyxl
 
 ROOT = b.ROOT
 PLAN = ROOT / 'docs/martial_arts/敘述顏色規劃.xlsx'
-HOLD = {'HIK'}       # 使用者要先看模擬再決定的色碼：含這些色碼的列先不動
+HOLD = set()         # 先前保留 HIK；使用者看過模擬後決定用 HIK（淺灰），不再保留
 SKIP_ROWS = {119}    # 茅山法術的符紙：第二組（158-160 列，含輔色）取代第一組的整句 CYN
 
 
@@ -83,6 +83,7 @@ def main():
     for c in cand:
         by_text.setdefault(c['text'], []).append(c)
     todo, skipped, missing = {}, [], []
+    claimed = set()
     # 先讓「武功名稱對得上」的列認領敘述；名稱對不上的列只能撿剩下的（例如遁甲書那一段裡其實有幻術的句子）
     used_by_art = set()
     for p in plan:
@@ -99,6 +100,9 @@ def main():
             hits = [c for c in by_text.get(p['text'], []) if id(c['ctx']) not in used_by_art]
         if len(hits) != 1:
             missing.append((p['row'], p['art'], p['main'], p['text'][:30], len(hits))); continue
+        if id(hits[0]['ctx']) in claimed:       # 兩列文字相同（例如茅山奇術的重複列）只改一次，否則位置會跑掉
+            continue
+        claimed.add(id(hits[0]['ctx']))
         todo.setdefault(hits[0]['file'], []).append((p, hits[0]))
     print('可自動套用的列：', sum(len(v) for v in todo.values()), '（檔案', len(todo), '）')
     print('先不動（HIK）：', len(skipped), '；找不到或對不唯一：', len(missing))

@@ -155,7 +155,7 @@ int give_experience(object me, object target, string skill)
     me->start_busy(1);
 
     if( gain <= 0 ) {
-        message_vision("$N伸指點向$n眉心﹐那縷清氣卻在半途散了。\n", me, target, 1);
+        message_vision(HIK "$N伸指點向$n眉心﹐那縷清氣卻在半途散了。\n" NOR, me, target, 1);
         return 1;
     }
     message_vision(HIC "$N伸指點在$n眉心﹐一縷清氣緩緩渡了過去。\n" NOR, me, target, 1);

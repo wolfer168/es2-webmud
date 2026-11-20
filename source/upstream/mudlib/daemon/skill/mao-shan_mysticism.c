@@ -113,8 +113,7 @@ void blank(object me)
 
 void start_line(object me, object target, string spell)
 {
-    say_line(me, target, "$N手捏法訣﹐口中念念有詞﹐開始施展「" NOR CYN + SPELLS[spell][5]
-        + NOR HIK "」 ....");
+    message_vision(CYN "$N手捏法訣﹐口中念念有詞﹐開始施展「" + SPELLS[spell][5] + "」 ...." NOR "\n", me, target, 1);
     blank(me);
 }
 
@@ -208,7 +207,7 @@ int check_collect(object me, object corpse)
 int do_collect(object me, object corpse)
 {
     start_line(me, corpse, "collect");
-    say_line(me, corpse, "$N蹲在$n旁邊低誦咒文﹐屍身漸漸化作一縷黑煙﹐被$N收入袖中。");
+    say_line(me, corpse, HIK "$N蹲在$n旁邊低誦咒文﹐屍身漸漸化作一縷黑煙﹐被$N收入袖中。" NOR);
     blank(me);
     foreach(object ob in all_inventory(corpse))
         ob->move(environment(me));
@@ -367,7 +366,7 @@ int do_slave(object me, object target)
     int sk = me->query_skill("mao-shan mysticism", 1);
 
     start_line(me, target, "slave");
-    say_line(me, target, "$N咬破指尖在少陰符上一點﹐將符紙往$n額頭一拍﹐一縷黑氣順勢鑽了進去。");
+    say_line(me, target, HIK "$N咬破指尖在少陰符上一點﹐將符紙往$n額頭一拍﹐一縷黑氣順勢鑽了進去。" NOR);
     blank(me);
     if( random(sk / 3 + 1) <= target->query_level() ) {
         say_line(me, target, HIW "$n猛地甩了甩頭﹐將那縷黑氣逼了出來。" NOR);

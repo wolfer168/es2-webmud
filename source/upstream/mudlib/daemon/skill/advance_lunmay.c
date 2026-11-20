@@ -101,7 +101,7 @@ private void freeze(object me, object victim, object weapon)
  * 防具照樣減傷；耗精 120%；累積 2 點。 */
 private void two_way(object me, object victim, object weapon)
 {
-    message_vision(HIW "$N施展傲梅暗劍訣中的殺招" RED "【梅二方劍】" HIW "！" NOR "\n"
+    message_vision(HIW "$N施展傲梅暗劍訣中的殺招" RED "【" HIW "梅二方劍" RED "】" HIW "！" NOR "\n"
         HIW "$N全力施展快劍﹐幻化出了" HIY "二" HIW "道劍氣將$n團團圍住！" NOR "\n", me, victim, 1);
     me->add_temp("advance_lunmay/points", 2);
     silent_hits(me, victim, weapon, 2, 115, 120, HIT_MUST);
@@ -113,7 +113,7 @@ private void four_way(object me, object victim, object weapon)
 {
     int i, result;
 
-    message_vision(HIW "$N施展傲梅暗劍訣中的殺招" RED "【梅四方劍】" HIW "！" NOR "\n"
+    message_vision(HIW "$N施展傲梅暗劍訣中的殺招" RED "【" HIW "梅四方劍" RED "】" HIW "！" NOR "\n"
         HIW "$N全力施展快劍﹐幻化出了" HIY "四" HIW "道劍氣將$n團團圍住！" NOR "\n", me, victim, 1);
     me->add_temp("advance_lunmay/points", 4);
     for( i = 0; i < 4; i++ ) {

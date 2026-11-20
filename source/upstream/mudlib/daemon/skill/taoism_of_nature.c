@@ -157,10 +157,10 @@ int do_monkey(object me, object target)
     if( random(100) < 75 ) {
         message_vision(HIC "$n被攪得眼花撩亂﹐一時竟忘了出手。\n" NOR, me, target, 1);
         target->start_busy(2);
-        message_vision("靈猿一個翻身鑽進煙裡不見了。\n", me, target, 1);
+        message_vision(HIK "靈猿一個翻身鑽進煙裡不見了。\n" NOR, me, target, 1);
         return 1;
     }
-    message_vision("$n揮手將靈猿趕開﹐靈猿吱的一聲鑽進煙裡不見了。\n", me, target, 1);
+    message_vision(HIK "$n揮手將靈猿趕開﹐靈猿吱的一聲鑽進煙裡不見了。\n" NOR, me, target, 1);
     return 0;
 }
 
@@ -175,7 +175,7 @@ int do_hydra(object me, object target, int sk)
 
     message_vision(CYN "$N雙手結印將先天符按在地上﹐地面倏地裂開一道縫隙。\n" NOR, me, target, 1);
     if( random(sk / 3) <= target->query_level() ) {
-        message_vision("巨蟒探出頭來嗅了嗅$n﹐似乎嫌對方太過扎手﹐又縮回地底去了。\n", me, target, 1);
+        message_vision(HIK "巨蟒探出頭來嗅了嗅$n﹐似乎嫌對方太過扎手﹐又縮回地底去了。\n" NOR, me, target, 1);
         return 0;
     }
 

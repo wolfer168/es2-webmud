@@ -18,6 +18,7 @@ private void create()
     art_desc  = "雪吟莊的劍法，身法飄忽、劍走陰柔，招招如鬼魅纏身；"
                 + "也能用來拆招卸力，將對手的攻勢引到一旁。";
     art_bonus = 0;
+    art_name_color = HIK;   // 招名輔色（docs/martial_arts/敘述顏色規劃.xlsx，2026-11-20）
 
     moves = ({
         ([ "name": "厲鬼纏身", "attack": 8, "defense": 4, "force": 1, "bonus": 5, "damage_type": "割傷",

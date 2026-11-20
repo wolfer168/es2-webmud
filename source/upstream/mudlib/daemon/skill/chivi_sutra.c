@@ -103,7 +103,7 @@ varargs void remove_defence(object me, string kind, int id, int quiet)
     me->add_temp("apply/" + armor_key(kind), -info["bonus"]);
     me->delete_temp("chivi/" + kind);
     if( !quiet )
-        tell_object(me, kind_color(kind) + "你的" + kind_attr(kind) + "傷害防禦力降低了。\n" NOR);
+        tell_object(me, HIK "你的" + kind_color(kind) + kind_attr(kind) + HIK "傷害防禦力降低了。\n" NOR);
 }
 
 void expire(object me, string kind, int id)
