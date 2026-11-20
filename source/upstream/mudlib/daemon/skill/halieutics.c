@@ -19,16 +19,20 @@ void skill_improved(object me, string skill)
     me->apply_restored_skill_progression(skill);
 }
 
-/* 江湖歷練（score: survive）：捕魚技巧每升到第 n 級給 n×30，
- * 以「累計應得 = 15 × 等級 × (等級 + 1)」補足差額，練過的等級也會一併補上。
- */
+/* 江湖歷練（score: survive）：捕魚技巧每升到第 n 級給 n×30。
+ * 江湖歷練還有打鬥等其他來源，不能拿總數來比，所以另外記下「已經領過到第幾級」
+ * （skill_bonus/halieutics_survive），升級時把沒領過的等級一併補上：
+ * 領過 done 級、現在 lv 級，補 30 × (done+1 到 lv 的等級總和) = 15 × (lv(lv+1) - done(done+1))。 */
 void skill_advanced(object me, string skill)
 {
-    int lv, target, cur;
+    int lv, done, gain;
 
     if( !userp(me) ) return;
     lv = me->query_skill("halieutics", 1);
-    target = 15 * lv * (lv + 1);
-    cur = me->query_score("survive");
-    if( target > cur ) me->gain_score("survive", target - cur);
+    done = me->query("skill_bonus/halieutics_survive");
+    if( lv <= done ) return;
+
+    gain = 15 * (lv * (lv + 1) - done * (done + 1));
+    me->set("skill_bonus/halieutics_survive", lv);
+    me->gain_score("survive", gain);
 }

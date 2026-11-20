@@ -24,9 +24,12 @@ private string *CATCH_MSG = ({
 });
 
 private string *WAIT_MSG = ({
-    "浮標輕輕晃了一下﹐又歸於平靜。\n",
-    "水面泛起一圈小小的漣漪﹐不知是魚兒碰了碰餌。\n",
-    "絲線在水面上微微顫動。\n",
+    "浮標輕輕晃了一下﹐又歸於平靜。",
+    "水面泛起一圈小小的漣漪﹐不知是魚兒碰了碰餌。",
+    "絲線在水面上微微顫動。",
+    "你屏息凝神﹐盯著水面上的浮標。",
+    "浮標往下沉了一點﹐隨即又浮了上來。",
+    "水下有個影子一閃﹐似乎在繞著魚餌打轉。",
 });
 
 private void end_fish(object me, int caught)
@@ -58,8 +61,8 @@ int do_fish(object me)
     if( !hit ) {
         // 沒釣到的 tick 也有收穫：技能點數 random(智力) + 1。
         me->improve_skill_exact("halieutics", random(intel) + 1);
-        if( random(3) == 0 )
-            tell_object(me, WAIT_MSG[random(sizeof(WAIT_MSG))]);
+        // 每個 tick 都有一句等待的敘述，讓玩家看得出一 tick 一次的節奏。
+        tell_object(me, WAIT_MSG[random(sizeof(WAIT_MSG))] + "\n");
         return 1;
     }
 
