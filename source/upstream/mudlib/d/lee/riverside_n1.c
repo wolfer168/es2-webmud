@@ -18,6 +18,8 @@ LONG
         "north" : __DIR__"riverside_n2",
         "south" : __DIR__"riverside_s"
     ]));
+    set("fishing", 1);
+    set("detail/溪水", "溪水在這段水岸邊打著淺淺的旋，岸邊的暗影裡有魚影一閃而過，垂釣 (fish) 或許能有收穫。");
     setup();
     replace_program(ROOM);
     set("map/area", "李家村");

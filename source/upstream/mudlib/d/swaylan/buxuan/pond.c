@@ -15,6 +15,8 @@ LONG
         "north" : __DIR__"steps1",
     ]));
     set("map/area", "水嵐縣");
+    set("fishing", 1);
+    set("detail/池水", "聚雲池的池水清澈見底，池中游魚成群，見人影也不躲閃，若有釣竿，坐在大石上垂釣 (fish) 正合適。");
     setup();
     replace_program(ROOM);
 }

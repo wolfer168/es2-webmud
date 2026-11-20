@@ -20,6 +20,8 @@ LONG
     ]));
     set("no_fight", 1);
     set("map/area", "水嵐縣");
+    set("fishing", 1);
+    set("detail/河水", "渡口的羿水在泥灘邊緩緩流動，木樁邊水色微黃，不時有魚吐出水泡，垂釣 (fish) 的人多半不會空手而回。");
     setup();
     replace_program(ROOM);
 }

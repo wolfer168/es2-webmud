@@ -20,6 +20,8 @@ LONG
         "south" : __DIR__"creek",
         "southwest" : __DIR__"watermelon_n3"
     ]));
+    set("fishing", 1);
+    set("detail/溪水", "溪水在村東門附近稍稍變寬，水面下魚影成群，可惜浣衣的村婦多，要垂釣 (fish) 得找個清靜些的角落。");
     setup();
     replace_program(ROOM);
     set("map/area", "李家村");
