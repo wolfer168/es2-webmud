@@ -54,7 +54,7 @@ MAP_POS = {
     '/d/baihua/school': ('/d/baihua/hillside', 2, 1),
     '/d/baihua/stone_road2': ('/d/baihua/hillside', 3, 1),
     '/d/baihua/wang_home': ('/d/baihua/hillside', 4, 1),
-    '/d/baihua/trail': ('/d/baihua/hillside', 2, 2),
+    '/d/baihua/trail': ('/d/baihua/hillside', 1, 1),
     '/d/baihua/road1': ('/d/baihua/hillside', 3, 2),
     '/d/baihua/alley': ('/d/baihua/hillside', 4, 2),
     '/d/baihua/road2': ('/d/baihua/hillside', 3, 3),
