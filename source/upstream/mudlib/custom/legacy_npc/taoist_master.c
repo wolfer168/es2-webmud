@@ -9,6 +9,8 @@ inherit "/custom/legacy_npc/legacy_npc";
 
 void create()
 {
+    object sword;
+
     seteuid(getuid());
     set_name("正閒道長", ({ "taoist master", "taoist", "master" }));
     set("title", "上清觀觀主");
@@ -27,7 +29,10 @@ void create()
     set_power("B");
     setup();
     carry_object("/custom/armor/cloth/taoist_robe")->wear();   // 道袍
-    carry_object("/custom/weapon/sword/yiyoung_sword")->wield();   // 儀陽劍
     carry_object("/custom/armor/finger/clear_ring")->wear();   // 淨身戒
-    carry_object("/obj/area/obj/longsword");   // 長劍
+    // 儀陽劍是唯一的一把；被玩家打走（還在世上）時，正閒道長重生才改帶長劍（2026-11-20）。
+    sword = carry_object("/custom/weapon/sword/yiyoung_sword");   // 儀陽劍
+    if( !objectp(sword) || environment(sword) != this_object() )
+        sword = carry_object("/obj/area/obj/longsword");   // 長劍
+    if( objectp(sword) ) sword->wield();
 }
