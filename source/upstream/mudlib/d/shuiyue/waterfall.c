@@ -35,5 +35,7 @@ LONG
         "south" : __DIR__"woods",
     ]));
     set("map/area", "水月村");
+    set("fishing", 1);
+    set("detail/深潭", "瀑布墜入的深潭沁綠幽深，潭邊的水面下魚影綽綽，有釣竿的遊客不妨在潭邊垂釣 (fish)。");
     setup();
 }

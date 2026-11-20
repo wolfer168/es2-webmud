@@ -16,6 +16,8 @@ LONG
 		"south" : __DIR__"ruin2",
 ]));
 
+    set("fishing", 1);
+    set("detail/河水", "河水雖然湍急，近岸處卻有幾處迴水，水面下隱約有魚影逆流而上，在這裡垂釣 (fish) 或許能釣到幾尾。");
     setup();
 	replace_program(ROOM);
 	set("map/area", "雪亭鎮");

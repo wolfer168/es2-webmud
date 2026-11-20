@@ -22,6 +22,8 @@ LONG
 	"northeast" : "/d/lee/entrance_s",
   ]));
 
+    set("fishing", 1);
+    set("detail/河水", "兩條小河在這裡匯成一處，水勢到此緩了些，匯流處的水面不時有魚躍起，垂釣 (fish) 應該不錯。");
     setup();
   replace_program(ROOM);
   set("map/area", "雪亭鎮");
