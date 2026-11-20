@@ -96,6 +96,18 @@ def taught_skills(code):
     return list(dict.fromkeys(out))
 
 
+def prize_list(code, items_by_id):
+    """NPC 的兌換獎品清單（例如珍寶商人收河魚腹珠抽獎的 PRIZES）：[(物品路徑, 數量)]，不取機率。"""
+    m = re.search(r'\bPRIZES\s*=\s*\(\{(.*?)\n\}\);', code, re.S)
+    if not m:
+        return []
+    out = []
+    for path, amount in re.findall(r'\(\{\s*"([^"]+)"\s*,\s*(\d+)\s*,\s*\d+\s*,\s*\w+\s*\}\)', m.group(1)):
+        if path in items_by_id:
+            out.append((path, int(amount)))
+    return out
+
+
 def puzzle_skills():
     """門派武功對照表裡學習條件為「解謎」的武功，不公開。"""
     if not SKILL_TABLE.exists():
@@ -435,6 +447,7 @@ def main(out):
             'faction': faction_of(code),
             'teaches': teaches,
             'sells': [p for p in goods if p in items_by_id],
+            'draws': prize_list(code, items_by_id),
         }
 
     # ---- 物品：房間地上、NPC 身上、商店
@@ -451,6 +464,8 @@ def main(out):
             add_src(e['path'], 'npc', nid)
         for p in extra[nid]['sells']:
             add_src(p, 'shop', nid)
+        for p, _n in extra[nid]['draws']:
+            add_src(p, 'draw', nid)
     # 方士煉製的丹藥（有 query_heat_product 的成品）：沒有地方賣也要列出效果，但不顯示價格（使用者指示，2026-11-14）
     for f in sorted((MUD / 'obj' / 'alchemist').glob('*.c')):
         if 'query_heat_product' in bc.read(f):
@@ -538,6 +553,7 @@ def main(out):
             'rooms': [[ids[r], c] for r, c in rlist], 'wander': src.get('wander', False),
             'equip': [[ids[e['path']], e['use']] for e in src['equip'] if e['path'] in item_src],
             'sells': [ids[p] for p in ex['sells']],
+            'draws': [[ids[p], n] for p, n in ex['draws']],
             'teaches': [ids[s] for s in ex['teaches'] if s in ids],
             'faction': fac_by_master.get(n) or fac_by_code.get(ex['faction']),
         }
