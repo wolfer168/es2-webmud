@@ -34,7 +34,7 @@ private void create()
     });
 
     art_entry     = 20;
-    art_entry_msg = "你終於練成了青邪杖法。\n";
+    art_entry_msg = HIW "你終於練成了青邪杖法。\n" NOR;
 
     ma_coef  = 10;
     mm_start = 30;
@@ -256,7 +256,7 @@ int perform_action(object me, string act, object target)
     }
 
     if( !objectp(weapon = staff_in_hand(me)) )
-        return notify_fail("你必須手持杖才能施展" + name + "。\n");
+        return notify_fail("你必須持杖才能施展" + name + "。\n");
     victim = pick_target(me, target);
     if( !objectp(victim) )
         return notify_fail("你並未與這個人交手。\n");

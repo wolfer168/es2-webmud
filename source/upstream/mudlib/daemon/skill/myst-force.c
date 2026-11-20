@@ -141,7 +141,7 @@ int do_balance(object me)
     me->consume_stat("sen", cost);
     me->supplement_stat("gin", me->query_attr("dex") + sk / 2);
     me->supplement_stat("kee", me->query_attr("con") + sk / 4);
-    message_vision("$N暗運步玄心法﹐一口真氣周流百骸﹐精神氣力漸漸平復了過來。\n", me);
+    message_vision(HIW "$N暗運步玄心法﹐一口真氣周流百骸﹐精神氣力漸漸平復了過來。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -161,7 +161,7 @@ int do_refresh(object me)
 
     if( cost > 0 ) me->consume_stat("kee", cost);
     me->supplement_stat("gin", sk + 10);
-    message_vision("$N運起步玄心法﹐一股清和的真氣直透靈台﹐精神為之一振。\n", me);
+    message_vision(HIC "$N運起步玄心法﹐一股清和的真氣直透靈台﹐精神為之一振。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -170,7 +170,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "myst-force":
-        message_vision(HIY "$N盤膝坐定﹐默運步玄心法﹐一股清和的真氣在週身經脈緩緩流轉。\n" NOR, me);
+        message_vision(HIW "$N盤膝坐定﹐默運步玄心法﹐一股清和的真氣在週身經脈緩緩流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":

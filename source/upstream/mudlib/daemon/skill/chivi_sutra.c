@@ -31,7 +31,7 @@ int query_entry_threshold() { return 100; }
 
 void skill_completed(object me, string skill)
 {
-    tell_object(me, HIY "你將紫薇心經默誦再三﹐隱隱覺得周身有一層無形的光暈流轉。\n" NOR);
+    tell_object(me, HIM "你將紫薇心經默誦再三﹐隱隱覺得周身有一層無形的光暈流轉。\n" NOR);
 }
 
 /* 回合計時：一個 tick 是兩秒。每次施展給一個編號，到期時編號對得上才解除（被 dispel 或重新施展過就不動）。 */
@@ -60,7 +60,7 @@ string kind_color(string kind)
 {
     if( kind == "fire" ) return HIR;
     if( kind == "storm" ) return HIM;
-    if( kind == "freeze" ) return HIC;
+    if( kind == "freeze" ) return HIW;
     return HIY;
 }
 
@@ -84,12 +84,12 @@ string kind_attr(string kind)
 /* 人人可見的施法敘述只有一行。 */
 string cast_line(string kind)
 {
-    return "$N施放【" + kind_name(kind) + "】﹐周身靈光流轉﹐護得嚴嚴實實。";
+    return "$N施放" + kind_color(kind) + "【" + kind_name(kind) + "】" + CYN + "﹐周身靈光流轉﹐護得嚴嚴實實。";
 }
 
 string cancel_line(string kind)
 {
-    return "$N消除【" + kind_name(kind) + "】﹐周身的靈光應聲散去。";
+    return "$N消除" + kind_color(kind) + "【" + kind_name(kind) + "】" + HIM + "﹐周身的靈光應聲散去。";
 }
 
 /* 解除某一系禦術。id 對不上表示已經被消除或重新施展過，不處理。 */
@@ -103,7 +103,7 @@ varargs void remove_defence(object me, string kind, int id, int quiet)
     me->add_temp("apply/" + armor_key(kind), -info["bonus"]);
     me->delete_temp("chivi/" + kind);
     if( !quiet )
-        tell_object(me, kind_color(kind) + "你的" + kind_attr(kind) + "傷害防禦力降低了。\n" NOR);
+        tell_object(me, HIK "你的" + kind_color(kind) + kind_attr(kind) + HIK "傷害防禦力降低了。\n" NOR);
 }
 
 void expire(object me, string kind, int id)
@@ -152,8 +152,8 @@ int do_defence(object me, string kind)
 
     me->add_temp("apply/" + armor_key(kind), bonus);
     me->set_temp("chivi/" + kind, ([ "bonus": bonus, "id": id ]));
-    message_vision(kind_color(kind) + cast_line(kind) + "\n" NOR, me, 0, 1);
-    tell_object(me, kind_color(kind) + "你的" + kind_attr(kind) + "傷害防禦力提高了。\n" NOR);
+    message_vision(CYN + cast_line(kind) + "\n" NOR, me, 0, 1);
+    tell_object(me, CYN "你的" + kind_color(kind) + kind_attr(kind) + CYN "傷害防禦力提高了。\n" NOR);
     call_out("expire", ticks * 2, me, kind, id);
     magic_gain(me, 1);
     return 1;
@@ -171,7 +171,7 @@ int do_dispel(object me)
     if( !spend_sen(me, 5) ) return 0;
 
     foreach(string kind in active) {
-        message_vision(kind_color(kind) + cancel_line(kind) + "\n" NOR, me, 0, 1);
+        message_vision(HIM + cancel_line(kind) + "\n" NOR, me, 0, 1);
         remove_defence(me, kind, 0, 0);
     }
     magic_gain(me, 1);

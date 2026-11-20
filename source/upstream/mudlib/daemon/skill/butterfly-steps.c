@@ -104,7 +104,7 @@ int perform_action(object me, string act, object target)
     me->consume_stat("gin", DISAPPEAR_GIN);
     me->supplement_stat("fatigue", DISAPPEAR_FATIGUE);
 
-    message_vision(HIW "$N使出「蝶影迷蹤步」﹐身形宛如蝶舞花叢﹐轉眼間消失不見。\n" NOR, me);
+    message_vision(HIW "$N使出「蝶影迷蹤步」﹐身形宛如蝶舞花叢﹐轉眼間消失不見。\n" NOR, me, 0, 1);
 
     // 雙方都停手（含殺意）；看得穿的對手之後可以重新出手。
     me->remove_all_killer();

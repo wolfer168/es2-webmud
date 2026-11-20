@@ -133,7 +133,7 @@ int conjure_magic(object me, string spell, object target)
     if( gold ) me->pay_money(GOLD_COST);
 
     name = target->query("name");
-    message_vision("$N手捏法訣，對著" + name + "唸動「" + cname + "」。\n", me);
+    message_vision(CYN "$N手捏法訣，對著" + name + "唸動" + (gold ? HIY : HIW) + "「" + cname + "」" + CYN "。\n" NOR, me, 0, 1);
 
     // 重骰：每一種武器技能各自重新抽（沒有保底，可能變好也可能變差）。
     foreach(sk in keys(target->query("damage"))) {

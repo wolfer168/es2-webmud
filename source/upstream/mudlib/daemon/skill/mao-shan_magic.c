@@ -95,7 +95,7 @@ int do_blank(object me)
         if( ob = find_scroll(me, kind) ) break;
     if( !ob ) return notify_fail("你身上沒有可以化回空白的符紙。\n");
     if( !spend_sen(me, 5) ) return 0;
-    message_vision("$N手掐法訣在符紙上一抹﹐符上的硃砂字跡隨即褪去。\n", me, 0, 1);
+    message_vision(HIK "$N手掐法訣在符紙上一抹﹐符上的硃砂字跡隨即褪去。\n" NOR, me, 0, 1);
     swap_scroll(me, ob, "blank");
     magic_gain(me, 1);
     return 1;
@@ -109,7 +109,8 @@ int do_draw(object me, string kind)
     if( !(ob = find_scroll(me, "blank")) ) return notify_fail("你身上沒有空白符紙。\n");
     if( !spend_sen(me, 10) ) return 0;
     name = ([ "yin": "少陰符", "yang": "正陽符", "nature": "先天符" ])[kind];
-    message_vision("$N提筆蘸了硃砂在符紙上畫了幾筆﹐一張" + name + "便成了。\n", me, 0, 1);
+    /* 符名的顏色（敘述顏色規劃）：少陰符 HIK、正陽符亮黃、先天符亮白。 */
+    message_vision("$N提筆蘸了硃砂在符紙上畫了幾筆﹐一張" + ([ "yin": HIK, "yang": HIY, "nature": HIW ])[kind] + name + NOR "便成了。\n", me, 0, 1);
     swap_scroll(me, ob, kind);
     magic_gain(me, 2);
     return 1;
@@ -131,7 +132,7 @@ int do_remedy(object me)
     }
     foreach(string stat in ({ "gin", "kee", "sen" }))
         me->supplement_stat(stat, 1 + random(sk / 4));
-    message_vision("$N點燃一張先天符﹐吸入那縷青煙後精神好了許多。\n", me, 0, 1);
+    message_vision(HIG "$N點燃一張先天符﹐吸入那縷青煙後精神好了許多。\n" NOR, me, 0, 1);
     magic_gain(me, 3);
     return 1;
 }
@@ -159,7 +160,7 @@ int do_vision(object me)
     me->add_temp("apply/awarness", bonus);
     me->add_temp("apply/vision_of_ghost", 1);
     me->set_temp("mao_shan/vision", 1);
-    message_vision("$N將先天符貼在眉心﹐雙眼泛起一層淡淡的幽光。\n", me, 0, 1);
+    message_vision(BLU "$N將先天符貼在眉心﹐雙眼泛起一層淡淡的幽光。\n" NOR, me, 0, 1);
     call_out("remove_vision", (sk / 5 > 0 ? sk / 5 : 1) * 2, me, bonus);
     magic_gain(me, 3);
     return 1;

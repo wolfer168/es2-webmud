@@ -14,6 +14,8 @@ string art_usage;       // enable 在哪個基本技能，例如 "blade"
 string art_desc;        // 武功簡介
 int art_bonus;          // 整套傷害加成 (%)
 mapping *moves = ({});  // 招式：name action lvl attack defense force bonus weight damage_type
+string art_main_color;  // 招式敘述的主色（色碼，例如 HIW）；不設就是平常的顏色
+string art_name_color;  // 招名的輔色（色碼，例如 HIY）；不設就不特別上色
 
 /* 升級獎勵：升到第 lv 級時
  *   武術造詣 = lv × ma_coef
@@ -85,12 +87,36 @@ mapping pick_move(object me)
     return list[0];
 }
 
+/* 招式敘述上色（使用者指示，2026-11-20，規劃見 docs/martial_arts/敘述顏色規劃.xlsx）：
+ * 整句用 art_main_color，招名用 art_name_color；招名外面緊貼著的括號（「」『』【】）一起上色。
+ * 句尾一定補 NOR，戰鬥系統接在後面的招架、命中字句維持平常的顏色。 */
+string colorize_action(string name, string action)
+{
+    string target, restore;
+    mixed *pairs, pair;
+
+    if( !stringp(art_main_color) && !stringp(art_name_color) ) return action;
+    restore = NOR + (stringp(art_main_color) ? art_main_color : "");
+    if( stringp(art_name_color) && stringp(name) && strlen(name) > 0 ) {
+        target = 0;
+        pairs = ({ ({ "「", "」" }), ({ "『", "』" }), ({ "【", "】" }) });
+        foreach(pair in pairs) {
+            string pat = pair[0] + name + pair[1];
+            if( strsrch(action, pat) >= 0 ) { target = pat; break; }
+        }
+        if( !target && strsrch(action, name) >= 0 ) target = name;
+        if( target ) action = replace_string(action, target, art_name_color + target + restore);
+    }
+    if( stringp(art_main_color) ) action = art_main_color + action;
+    return action + NOR;
+}
+
 /* 把招式資料轉成 COMBAT_D->fight() 用的 action。
  * pct 是另外乘上的百分比（一般 100）。 */
 mapping make_action(mapping m, int pct)
 {
     return ([
-        "action":      m["action"],
+        "action":      colorize_action(m["name"], m["action"]),
         "attack":      m["attack"],
         "defense":     m["defense"],
         "force":       m["force"],

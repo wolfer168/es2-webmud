@@ -38,7 +38,7 @@ private void create()
     });
 
     art_entry     = 20;
-    art_entry_msg = "你終於練成了黑山八卦掌。\n";
+    art_entry_msg = HIW "你終於練成了黑山八卦掌。\n" NOR;
 
     ma_coef  = 10;
     mm_start = 31;

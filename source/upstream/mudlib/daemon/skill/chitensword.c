@@ -31,7 +31,7 @@ private void create()
     });
 
     art_entry     = 20;
-    art_entry_msg = "你終於練成了殘蟻五劍訣。\n";
+    art_entry_msg = HIW "你終於練成了殘蟻五劍訣。\n" NOR;
 
     /* 每級武術造詣 等級 × 10；31 級起武學之道 (等級 - 30) × 10。 */
     ma_coef  = 10;

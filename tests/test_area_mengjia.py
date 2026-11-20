@@ -104,7 +104,8 @@ def test_five_tiger_blade_skill():
     assert '#define TRIGGER_PCT 10' in s and '#define DELAY_TICKS 3' in s
     assert 'victim->start_busy(DELAY_TICKS);' in s and '!userp(me) && random(100) < TRIGGER_PCT' in s
     assert '孟家祖傳絕學『五 虎 斷 門』刀風過處退路盡斷﹐$n被封得動彈不得！' in s
-    assert 'message_vision("\\n" + HIY + msg + NOR + "\\n\\n", me, victim);' in s    # 整段亮黃、前後空一行
+    assert 'message_vision("\\n" + msg + "\\n\\n", me, victim, 1);' in s    # 前後空一行、一行不斷行
+    assert 'HIY "『五 虎 斷 門』" NOR' in s    # 絕學名稱亮黃（敘述顏色規劃，2026-11-20）
     assert '外人學不得' in s and 'int valid_learn(object me)' in s                 # 玩家不能學
     assert '"five-tiger blade":"五虎斷門刀"' in read(MUD / 'data/chinese.o')
 

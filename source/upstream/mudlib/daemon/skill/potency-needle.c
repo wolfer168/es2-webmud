@@ -32,7 +32,7 @@ int valid_learn(object me)
 
 void skill_completed(object me, string skill)
 {
-    tell_object(me, HIY + gender_self(me) + "終於練成了引源針法，循經取穴之間，"
+    tell_object(me, CYN + gender_self(me) + "終於練成了引源針法，循經取穴之間，"
         "已能引動人身潛藏的本源之力。\n" NOR);
 }
 
@@ -59,14 +59,14 @@ private string kind_name(string kind)
 
 // 下針與效果敘述：$W 換成手上的針；「$n」在扎自己時，下針句換成「自己」、效果句換成「$N」。
 mapping ACTION = ([
-    "fatigue":   ({ "$N拈起$W，在$n足三里、湧泉兩穴各捻入一針。",
-                    "$n長長吁了口氣，臉上的倦色淡了幾分。" }),
-    "awareness": ({ "$N捻起$W，刺入$n耳後翳風穴。",
-                    "$n頓覺耳聰目明，四周一草一木的動靜都清清楚楚。" }),
-    "move":      ({ "$N持著$W，沿著$n小腿接連扎下三針。",
-                    "$n只覺一股暖流直通足底，腳步登時輕快了許多。" }),
-    "element":   ({ "$N將$W一針扎進$n掌心勞宮穴。",
-                    "$n掌中隱隱發燙，體內元氣躁動，似乎隨時要破掌而出。" }),
+    "fatigue":   ({ CYN "$N拈起$W，在$n足三里、湧泉兩穴各捻入一針。" NOR,
+                    HIG "$n長長吁了口氣，臉上的倦色淡了幾分。" NOR }),
+    "awareness": ({ CYN "$N捻起$W，刺入$n耳後翳風穴。" NOR,
+                    HIG "$n頓覺耳聰目明，四周一草一木的動靜都清清楚楚。" NOR }),
+    "move":      ({ CYN "$N持著$W，沿著$n小腿接連扎下三針。" NOR,
+                    HIG "$n只覺一股暖流直通足底，腳步登時輕快了許多。" NOR }),
+    "element":   ({ CYN "$N將$W一針扎進$n掌心勞宮穴。" NOR,
+                    HIG "$n掌中隱隱發燙，體內元氣躁動，似乎隨時要破掌而出。" NOR }),
 ]);
 
 /* 比照天師道法的格式：下針 → 效果，整句青色；引源針法不取招式名，沒有起手句。 */
@@ -79,7 +79,7 @@ void show_needle(object me, object target, string kind)
         res = replace_string(res, "$n", "$N");
     }
     // 練武假人是死物：四種效果都換成同一句（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
-    if( target->query("training_dummy") ) res = "針尾在$n身上輕輕晃了晃，$n毫無反應。";
+    if( target->query("training_dummy") ) res = HIK "針尾在$n身上輕輕晃了晃，$n毫無反應。" NOR;
     needle_line(me, target, act);
     needle_blank(me);
     needle_line(me, target, res);
@@ -122,7 +122,7 @@ int do_potency(object me, string kind, object target, int sk)
     data = target->query_condition(CND);
     if( mapp(data) && data["kind"] != kind )
         return notify_fail((target == me ? gender_self(me) : target->name())
-            + "體內被引動的" + kind_name(data["kind"]) + "之力未散，再引另一股只怕經脈承受不住。\n");
+            + HIM "體內被引動的" + kind_name(data["kind"]) + "之力未散，再引另一股只怕經脈承受不住。\n" NOR);
 
     me->consume_stat("sen", 10);
     show_needle(me, target, kind);

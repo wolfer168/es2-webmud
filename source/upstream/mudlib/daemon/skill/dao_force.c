@@ -123,7 +123,7 @@ int do_recover(object me)
     me->supplement_stat("fatigue", 3);
     foreach(string stat in ({ "gin", "kee", "sen" }))
         me->heal_stat(stat, roll(sk, 6, 2));
-    message_vision("$N閉上雙眼調息片刻﹐受損的經脈在清氣溫養下漸漸舒緩過來。\n", me, 0, 1);
+    message_vision(HIC "$N閉上雙眼調息片刻﹐受損的經脈在清氣溫養下漸漸舒緩過來。\n" NOR, me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -144,7 +144,7 @@ int do_remedy(object me)
     me->consume_stat("water", water < 50 ? water : 50);
     foreach(string stat in ({ "gin", "kee", "sen" }))
         me->supplement_stat(stat, roll(sk, 3, 2));
-    message_vision("$N緩緩吐納了幾回﹐臉上的倦色漸漸褪去。\n", me, 0, 1);
+    message_vision(HIC "$N緩緩吐納了幾回﹐臉上的倦色漸漸褪去。\n" NOR, me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -154,7 +154,7 @@ void remove_windarmor(object me, mapping bonus)
     if( !objectp(me) || !me->query_temp("dao_force/windarmor") ) return;
     foreach(string key, int val in bonus) me->add_temp("apply/" + key, -val);
     me->delete_temp("dao_force/windarmor");
-    tell_object(me, HIY "你周身的護體清風漸漸散去。\n" NOR);
+    tell_object(me, HIW "你周身的護體清風漸漸散去。\n" NOR);
 }
 
 /* windarmor：明道心法 90 級且風符 90 級；消耗神 等級/2；效果中不能再施展；戰鬥中可用。

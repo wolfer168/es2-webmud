@@ -54,8 +54,8 @@ int query_entry_level() { return 15; }
 // U-08：學成訊息。
 void skill_completed(object me, string sk)
 {
-    tell_object(me, gender_self(me) + "因為長期使用丹道【神農之術】，所以"
-        + gender_self(me) + "對這個法術已經逐漸熟悉。\n");
+    tell_object(me, gender_self(me) + HIC "因為長期使用丹道【神農之術】，所以"
+        + gender_self(me) + "對這個法術已經逐漸熟悉。\n" NOR);
 }
 
 // U-11（2026-10-22）：取消 31 級起的法術修為；升級不增加精、氣、神。
@@ -140,8 +140,8 @@ int conjure_magic(object me, string spell, object target)
     // S-30：固定消耗 15 神，失敗照扣。
     me->consume_stat("sen", SEN_COST);
     // 印名的顏色代碼會被斷行程式算進寬度，這句不自動斷行（整句不到 70 格）。
-    message_vision("$N用手在" + target->name() + "上虛畫了一個「" + seal_name
-        + "」，口中念念有詞地祝禱著。\n", me, 0, 1);
+    message_vision(CYN "$N用手在" + target->name() + "上虛畫了一個「" + seal_name
+        + "」，口中念念有詞地祝禱著。\n" NOR, me, 0, 1);
 
     // S-33：重複封印、錯色解印、解沒有封印的丹鼎，一律算失敗。
     current = target->query_seal();
@@ -152,21 +152,21 @@ int conjure_magic(object me, string spell, object target)
     if( ok && random(100) >= success_chance(me) ) ok = 0;
 
     if( !ok ) {
-        tell_object(me, gender_self(me) + "的法術失敗了。\n");
+        tell_object(me, gender_self(me) + HIK "的法術失敗了。\n" NOR);
         reward_failure(me);
         me->set_temp("conjure/failed", 1);
         return 1;
     }
 
-    message_vision(target->name() + "泛起一陣光芒，然後漸漸褪去 ....\n", me);
+    message_vision(target->name() + CYN "泛起一陣光芒，然後漸漸褪去 ....\n" NOR, me);
     if( action == "seal" ) {
         target->set_seal(color);
-        tell_object(me, gender_self(me) + "的" + seal_name + "效力已經成功的被"
-            + target->name() + "吸收了！\n");
+        tell_object(me, gender_self(me) + CYN "的" + seal_name + "效力已經成功的被"
+            + target->name() + "吸收了！\n" NOR);
     } else {
         target->set_seal(0);
-        tell_object(me, gender_self(me) + "的" + seal_name + "效力已經成功地解開"
-            + target->name() + "上的封印了！\n");
+        tell_object(me, gender_self(me) + CYN "的" + seal_name + "效力已經成功地解開"
+            + target->name() + "上的封印了！\n" NOR);
     }
     reward_success(me);
     return 1;

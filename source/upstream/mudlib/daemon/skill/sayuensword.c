@@ -85,7 +85,7 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
     if( sk < 90 || me->query_skill("sayuensword essence", 1) < 90 ) return;
     if( random(600) >= sk ) return;
     me->supplement_stat("gin", sk / 3);
-    message_vision("$N劍勢一收一放之間﹐氣息隨之流轉﹐精神為之一振。\n", me);
+    message_vision("$N劍勢一收一放之間﹐氣息隨之流轉﹐精神為之一振。\n", me, 0, 1);
 }
 
 /* 只能用在劍術。 */

@@ -58,9 +58,9 @@ void skill_completed(object me, string skill)
  *   ({ 等級門檻, 精氣上限各加多少, 膽識與根骨各加多少, 敘述第一句, 舊版（120／140／160）的領取記號 })
  * 領過的境界記在 celestial_force/tier_<第幾境>；舊版已領的照舊算已領，不會重複給。 */
 private mixed *MILESTONE = ({
-    ({ 140, 20, 1, "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。", "bonus_120" }),
-    ({ 160, 40, 2, "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。", "bonus_140" }),
-    ({ 190, 60, 4, "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。", "bonus_160" }),
+    ({ 140, 20, 1, HIY "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。" NOR, "bonus_120" }),
+    ({ 160, 40, 2, HIY "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。" NOR, "bonus_140" }),
+    ({ 190, 60, 4, HIY "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。" NOR, "bonus_160" }),
 });
 
 private void give_milestones(object me, int lv)
@@ -81,7 +81,8 @@ private void give_milestones(object me, int lv)
         tell_object(me, HIY + m[3] + "\n"
             "你的膽識增加了。\n"
             "你的根骨增加了。\n"
-            "你的精、氣因為修煉天邪神功增進不少。\n" NOR);
+            "你的精因為修煉天邪神功增進不少。\n"
+            "你的氣因為修煉天邪神功增進不少。\n" NOR);
     }
 }
 
@@ -140,7 +141,7 @@ int do_heal(object me)
     me->consume_stat("sen", cost);
     me->heal_stat("kee", n);
     me->supplement_stat("kee", n);
-    message_vision("$N運起天邪神功﹐一股熾熱的真氣在週身遊走﹐傷勢漸漸好轉。\n", me);
+    message_vision(HIY "$N運起天邪神功﹐一股熾熱的真氣在週身遊走﹐傷勢漸漸好轉。\n" NOR, me, 0, 1);
     return 1;
 }
 
@@ -214,7 +215,7 @@ int do_ghost(object me)
     me->add_temp("apply/intimidate", intimidate);
     me->add_temp("apply/vision_of_ghost", 1);
     me->set_temp("celestial/ghost", 1);
-    message_vision(HIB "$N運起天邪神功凝聚雙目﹐眼中泛起一層幽幽的青光。\n" NOR, me);
+    message_vision(HIB "$N運起天邪神功凝聚雙目﹐眼中泛起一層幽幽的青光。\n" NOR, me, 0, 1);
     call_out("remove_ghost", duration * 2, me, aware, intimidate);
     return 1;
 }
@@ -223,7 +224,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "celestial force":
-        message_vision(HIY "$N盤膝坐定﹐默運天邪神功﹐丹田中一股霸道的真氣緩緩流轉。\n" NOR, me);
+        message_vision(HIY "$N盤膝坐定﹐默運天邪神功﹐丹田中一股霸道的真氣緩緩流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "heal":
