@@ -573,10 +573,21 @@ def parse_npc(p, src, code):
     it['gender'] = set_str(code, 'gender')
     it['title'] = set_str(code, 'title')
     eq = []
+    # 路徑用 #define 代號寫的（例如梅吟風的 WHITE_GIRTH），先換回字串（2026-11-21）。
+    str_defs = dict(re.findall(r'#define\s+(\w+)\s+("(?:[^"\\]|\\.)*")', code))
     for m in re.finditer(r'carry_object\(\s*([^;]*?)\)\s*(->\s*(wield|wear)\(([^)]*)\))?\s*;', code):
-        path = resolve(m.group(1), it['id'])
-        if path:
-            eq.append({'path': path, 'use': m.group(3) or ''})
+        expr = re.sub(r'\b[A-Z_][A-Z0-9_]*\b', lambda d: str_defs.get(d.group(0), d.group(0)), m.group(1))
+        path = resolve(expr, it['id'])
+        if not path:
+            continue
+        use = m.group(3) or ''
+        # 唯一裝備寫法：x = carry_object(...); ... x->wield();（2026-11-21）
+        var = re.search(r'\b(\w+)\s*=\s*$', code[:m.start()])
+        if not use and var:
+            later = re.search(r'\b' + re.escape(var.group(1)) + r'\s*->\s*(wield|wear)\s*\(', code[m.end():])
+            if later:
+                use = later.group(1)
+        eq.append({'path': path, 'use': use})
     it['equip'] = eq
     skills = [[zh(k), int(v), k] for k, v in re.findall(r'set_skill\(\s*"([^"]+)"\s*,\s*(\d+)', code)]
     it['skills'] = skills
