@@ -21,7 +21,7 @@ void skill_improved(object me, string skill)
 
 /* 江湖歷練（score: survive）：捕魚技巧每升到第 n 級給 n×30，
  * 以「累計應得 = 15 × 等級 × (等級 + 1)」補足差額，練過的等級也會一併補上。
- * 江湖歷練取得有全站 ×2 倍率（gain_score），這裡先減半，讓實拿等於 n×30。 */
+ */
 void skill_advanced(object me, string skill)
 {
     int lv, target, cur;
@@ -30,5 +30,5 @@ void skill_advanced(object me, string skill)
     lv = me->query_skill("halieutics", 1);
     target = 15 * lv * (lv + 1);
     cur = me->query_score("survive");
-    if( target > cur ) me->gain_score("survive", (target - cur) / 2);
+    if( target > cur ) me->gain_score("survive", target - cur);
 }
