@@ -15,6 +15,8 @@ inherit "/custom/legacy_npc/legacy_npc";
 
 void create()
 {
+    object sword;
+
     seteuid(getuid());
     set_name("安懶道人", ({ "old taoist", "old", "taoist" }));
     set_race("human");
@@ -38,8 +40,11 @@ void create()
     carry_object("/custom/armor/finger/sapphire_ring")->wear();   // 藍水晶戒指
     carry_object("/custom/armor/cloth/tao_robe")->wear();   // 杏黃道袍
     carry_object("/custom/armor/armor/magic_armor")->wear();   // 法胄
-    carry_object("/custom/weapon/sword/sword_of_raven")->wield();   // 黃雀寶劍
-    carry_object("/custom/weapon/sword/peachwood_sword");   // 桃木劍
+    // 黃雀寶劍是唯一的一把；被玩家打走（還在世上）時，老道士重生才改帶桃木劍（2026-11-20）。
+    sword = carry_object("/custom/weapon/sword/sword_of_raven");   // 黃雀寶劍
+    if( !objectp(sword) || environment(sword) != this_object() )
+        sword = carry_object("/custom/weapon/sword/peachwood_sword");   // 桃木劍
+    if( objectp(sword) ) sword->wield();
 }
 
 // ------------------------------------------------------------------

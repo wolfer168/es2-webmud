@@ -9,6 +9,8 @@ inherit "/custom/legacy_npc/legacy_npc";
 
 void create()
 {
+    object blade;
+
     seteuid(getuid());
     set_name("褚商魂", ({ "chu xang-when", "chu", "xang-when" }));
     set("title", "雪吟莊大弟子");
@@ -27,10 +29,13 @@ void create()
     set("custom_faction", "fighter.snow");   // 雪吟莊（docs/martial_arts/門派武功對照表.md）
     set_power("B");
     setup();
-    carry_object("/custom/weapon/blade/white_blade")->wield();   // 長刀僉白
     carry_object("/d/lee/obj/yellow_jade_ring")->wear();   // 黃玉戒指
     carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴
     carry_object("/custom/armor/armor/white_rainbow_armor")->wear();   // 素虹軟甲
     carry_object("/custom/armor/cloth/silk_cloth")->wear();   // 天蠶寶衣
-    carry_object("/custom/weapon/blade/ghosts_blade");   // 百鬼刀
+    // 長刀僉白是唯一的一把；被玩家打走（還在世上）時，褚商魂重生才改帶百鬼刀（2026-11-20）。
+    blade = carry_object("/custom/weapon/blade/white_blade");   // 長刀僉白
+    if( !objectp(blade) || environment(blade) != this_object() )
+        blade = carry_object("/custom/weapon/blade/ghosts_blade");   // 百鬼刀
+    if( objectp(blade) ) blade->wield();
 }

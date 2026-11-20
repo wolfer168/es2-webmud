@@ -3,7 +3,7 @@
 #include <weapon.h>
 
 // 唯一性：世上（玩家身上、容器、地上、當鋪）只會有一把；NPC 重生時
-// 若它還在，NPC 就不會拿到，也沒有替代品。
+// 若它還在，NPC 就不會拿到；安懶道人（old_taoist）改帶桃木劍（2026-11-20）。
 inherit F_UNIQUE;
 inherit F_SWORD;
 
