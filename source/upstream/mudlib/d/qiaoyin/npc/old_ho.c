@@ -26,6 +26,7 @@ LONG
     set("merchandise", ([
         "/obj/alchemist/black_pill" : 30,                     // 烏心丹
         "/custom/item/scroll/blank" : 500,                // 空白符紙
+        "/d/swaylan/obj/bait" : 500,   // 魚餌（釣魚用）
         "/obj/alchemist/heat_firewood" : 2000,                     // 松材
         "/d/lee/obj/salt" : 50,                           // 鹽
         "/d/lee/obj/sugar" : 30,                          // 糖

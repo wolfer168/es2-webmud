@@ -37,7 +37,7 @@ private void end_fish(object me, int caught)
 /* 每 tick 呼叫一次；傳回 0 表示結束。 */
 int do_fish(object me)
 {
-    int tick, s, hit, in;
+    int tick, s, hit, intel;
     object fish;
 
     if( !me || !environment(me) ) return 0;
@@ -66,10 +66,10 @@ int do_fish(object me)
     }
     // 技能點數用智力公式：(random(智力)+1) × (random(智力)+1) + random(智力)，
     // 每條魚再隨機乘 1～3 倍。
-    in = me->query_attr("int");
-    if( in < 1 ) in = 1;
+    intel = me->query_attr("int");
+    if( intel < 1 ) intel = 1;
     me->improve_skill_exact("halieutics",
-        ((random(in) + 1) * (random(in) + 1) + random(in)) * (1 + random(3)));
+        ((random(intel) + 1) * (random(intel) + 1) + random(intel)) * (1 + random(3)));
     end_fish(me, 1);
     return 0;
 }
