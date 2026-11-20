@@ -54,7 +54,7 @@ MAP_POS = {
     '/d/baihua/school': ('/d/baihua/hillside', 2, 1),
     '/d/baihua/stone_road2': ('/d/baihua/hillside', 3, 1),
     '/d/baihua/wang_home': ('/d/baihua/hillside', 4, 1),
-    '/d/baihua/trail': ('/d/baihua/hillside', 2, 2),
+    '/d/baihua/trail': ('/d/baihua/hillside', 1, 1),
     '/d/baihua/road1': ('/d/baihua/hillside', 3, 2),
     '/d/baihua/alley': ('/d/baihua/hillside', 4, 2),
     '/d/baihua/road2': ('/d/baihua/hillside', 3, 3),
@@ -184,6 +184,10 @@ MAP_POS = {
     '/d/graveyard/forest_w': ('/d/graveyard/grave1', -6, 3),
     '/d/graveyard/forest_e': ('/d/graveyard/grave1', -4, 3),
 }
+MAP_POS.update({  # 武當暗巷：東出口接到廟路南，貼著廟路南往西南排
+    '/d/wutang/dark_alley_e': ('/d/wutang/temple_road_s', -1, 1),
+    '/d/wutang/dark_alley_w': ('/d/wutang/temple_road_s', -2, 0),
+})
 MAP_HIDE = {'/d/snow/inn_staff_room', '/d/oldpine/reeds2', '/d/oldpine/reeds3', '/d/oldpine/reeds4', '/d/oldpine/reeds5'}  # 不在地圖上顯示的房間
 
 DIRS = {  # 地圖座標：x 往東、y 往南、z 往上
@@ -916,46 +920,82 @@ def parse_skills(used_codes):
 # --------------------------------------------------------------------------- 地圖座標
 
 def layout(rooms, ids):
-    """依出口方向替區域內的房間排座標；衝突時往旁邊找空位。"""
+    """依出口方向替區域內的房間排座標，讓相連的房間盡量相距一格。
+    非羅盤方向（out／enter 等）依對向的出口反推位置；只有單向連線的房間也當作相鄰；
+    撞位時優先在來源房間旁邊找空格，不把房間拉遠。"""
     pos = {}
     used = set()
     comp_x = 0
-    ids = sorted(ids)
-    order = sorted(ids, key=lambda r: (-len(rooms[r]['exits']), r))
+    ids = set(ids)
+    order_ids = sorted(ids)
+    order = sorted(order_ids, key=lambda r: (-len(rooms[r]['exits']), r))
+    back = defaultdict(list)  # 目標房間 -> [(來源房間, 方向)]：誰有出口通到我
+    for r in order_ids:
+        for d, t in rooms[r]['exits'].items():
+            if t in ids:
+                back[t].append((r, d))
+        for m in rooms[r].get('special', []):
+            if m['to'] in ids:
+                back[m['to']].append((r, None))
+    flat = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)]
+
+    def place(cur, cand, z):
+        x, y, _ = pos[cur]
+        if (cand[0], cand[1], z) not in used:
+            return (cand[0], cand[1], z)
+        best = None
+        for ox, oy in flat:  # 先貼著來源房間找
+            c = (x + ox, y + oy, z)
+            if c not in used:
+                k = abs(c[0] - cand[0]) + abs(c[1] - cand[1])
+                if best is None or k < best[0]:
+                    best = (k, c)
+        if best:
+            return best[1]
+        for r in range(2, 8):
+            for ox in range(-r, r + 1):
+                for oy in range(-r, r + 1):
+                    c = (x + ox, y + oy, z)
+                    if c not in used:
+                        return c
+        return (cand[0], cand[1], z)
+
     for start in order:
         if start in pos:
             continue
         q = deque([start])
-        cx = comp_x
-        pos[start] = (cx, 0, 0)
+        pos[start] = (comp_x, 0, 0)
         used.add(pos[start])
         comp = [start]
         while q:
             cur = q.popleft()
             x, y, z = pos[cur]
+            nxt = []  # (房間, 偏移)
             for d, t in sorted(rooms[cur]['exits'].items()):
                 if t not in ids or t in pos:
                     continue
                 dx, dy, dz = DIRS.get(d, (0, 0, 0))
                 if (dx, dy, dz) == (0, 0, 0):
-                    dx = 1
-                cand = (x + dx, y + dy, z + dz)
-                if cand in used:
-                    for r in range(1, 6):
-                        found = None
-                        for ox in range(-r, r + 1):
-                            for oy in range(-r, r + 1):
-                                c = (cand[0] + ox, cand[1] + oy, cand[2])
-                                if c not in used:
-                                    found = c
-                                    break
-                            if found:
-                                break
-                        if found:
-                            cand = found
+                    # 非羅盤方向：看對方有沒有羅盤方向的出口回到我，反推位置
+                    for e, t2 in rooms[t]['exits'].items():
+                        if t2 == cur and DIRS.get(e, (0, 0, 0)) != (0, 0, 0):
+                            dx, dy, dz = (-v for v in DIRS[e])
                             break
-                pos[t] = cand
-                used.add(cand)
+                    else:
+                        dx = 1
+                nxt.append((t, (dx, dy, dz)))
+            for src, d in sorted(back[cur], key=lambda v: v[0]):  # 反向連線
+                if src in pos:
+                    continue
+                dx, dy, dz = (-v for v in DIRS[d]) if d in DIRS else (0, 0, 0)
+                if (dx, dy, dz) == (0, 0, 0):
+                    dx = -1
+                nxt.append((src, (dx, dy, dz)))
+            for t, (dx, dy, dz) in nxt:
+                if t in pos:
+                    continue
+                pos[t] = place(cur, (x + dx, y + dy), z + dz)
+                used.add(pos[t])
                 comp.append(t)
                 q.append(t)
         xs = [pos[r][0] for r in comp]
