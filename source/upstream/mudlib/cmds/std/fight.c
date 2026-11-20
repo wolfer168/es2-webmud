@@ -15,6 +15,10 @@ int main(object me, string arg)
 
     if( environment(me)->query("no_fight") )
 	return notify_fail("這裡禁止戰鬥。\n");
+
+    /* 疲勞 80 以上無法主動比試（使用者定案，2026-11-20） */
+    if( userp(me) && me->query_stat("fatigue") >= 80 )
+	return notify_fail("你現在過於疲勞，需要略作調息。\n");
  
     if( !arg
     ||	!objectp(obj = present(arg, environment(me)))
