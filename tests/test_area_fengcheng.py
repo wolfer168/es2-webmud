@@ -96,7 +96,7 @@ def test_seller_and_items():
     assert 'dragon_skin_bag' not in s   # 太古塵包取代龍麟袋（使用者指示，2026-11-20）
     assert 'set("value", 500);' in read(S / 'obj' / 'offering.c')
     assert 'set("value", 20000);' in read(MUD / 'custom/item/ancient_bag.c')   # 太古塵包 2 兩黃金
-    assert 'set_max_encumbrance(600000);' in read(MUD / 'custom/item/ancient_bag.c')   # 麻布袋 30000 的 20 倍
+    assert 'set_max_encumbrance(450000);' in read(MUD / 'custom/item/ancient_bag.c')   # 麻布袋 30000 的 15 倍
     assert (MUD / 'custom/item/scroll/blank.c').exists() and (MUD / 'custom/item/ancient_bag.c').exists()
 
 

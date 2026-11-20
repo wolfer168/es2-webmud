@@ -80,7 +80,7 @@
 |---|---|
 | 供品（`obj/offering.c`，id `gong`） | 祭拜先祖時準備的食物，不能吃，純道具；價錢 500 文 |
 | 空白符紙 | 現有 `custom/item/scroll/blank.c`，每張 10 文 |
-| 太古塵包 | `custom/item/ancient_bag.c`，**容量是麻布袋（`obj/area/obj/bag.c`）的 20 倍**；價錢 2 兩黃金（20000 文，2026-11-20 取代龍麟袋）；詳見 `CUSTOM_ANCIENT_BAG_AND_SUPER_SKIN.md` |
+| 太古塵包 | `custom/item/ancient_bag.c`，**容量是麻布袋（`obj/area/obj/bag.c`）的 15 倍**；價錢 2 兩黃金（20000 文，2026-11-20 取代龍麟袋）；詳見 `CUSTOM_ANCIENT_BAG_AND_SUPER_SKIN.md` |
 
 ## 紫雲盔
 
