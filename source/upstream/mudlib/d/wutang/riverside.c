@@ -34,9 +34,9 @@ LONG
     set("exits", ([
         "east" : __DIR__"gravel_road_s",
     ]));
+    // 兩岸各自產生一位船夫：老駱在這裡，小黃在對岸的紫煙鎮渡口（使用者指示，2026-11-19）。
     set("objects", ([
         __DIR__"npc/ro" : 1,
-        __DIR__"npc/huang" : 1,
     ]));
     set("no_fight", 1);
     set("map/area", "五堂鎮");
