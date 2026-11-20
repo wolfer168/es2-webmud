@@ -92,10 +92,12 @@ def test_gate_guard_blocks_until_riddle_solved():
 def test_seller_and_items():
     s = read(S / 'npc' / 'seller.c')
     assert '"/d/fengcheng/obj/offering" : 10' in s
-    assert '"/custom/item/scroll/blank" : 2000' in s and '"/custom/item/dragon_skin_bag" : 5' in s
+    assert '"/custom/item/scroll/blank" : 2000' in s and '"/custom/item/ancient_bag" : 5' in s
+    assert 'dragon_skin_bag' not in s   # 太古塵包取代龍麟袋（使用者指示，2026-11-20）
     assert 'set("value", 500);' in read(S / 'obj' / 'offering.c')
-    assert 'set("value", 200000);' in read(MUD / 'custom/item/dragon_skin_bag.c')   # 20 兩黃金
-    assert (MUD / 'custom/item/scroll/blank.c').exists() and (MUD / 'custom/item/dragon_skin_bag.c').exists()
+    assert 'set("value", 20000);' in read(MUD / 'custom/item/ancient_bag.c')   # 太古塵包 2 兩黃金
+    assert 'set_max_encumbrance(600000);' in read(MUD / 'custom/item/ancient_bag.c')   # 麻布袋 30000 的 20 倍
+    assert (MUD / 'custom/item/scroll/blank.c').exists() and (MUD / 'custom/item/ancient_bag.c').exists()
 
 
 def test_npcs_and_purple_helmet():

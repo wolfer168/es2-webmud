@@ -66,7 +66,7 @@
 | 李儒 | F14 | 現有 `custom/legacy_npc/li_ru.c`（不更動） |
 | 劍甲門傳人 陳學亮 | D16 | `npc/chen_xue_liang.c`；人類方士 60 級、強度 A、35 歲；**教強化之術**：`ask chen about 強化之術`，條件（法術 60、等級 10、兵刃精熟經驗 50000）夠了，他說三句話後傳授，條件不夠只說婉拒（不提數字）。設計見 `docs/martial_arts/劍甲門_強化之術.md` |
 | 神算子 | D16 | `npc/fortune_teller.c`；方士 10 級、強度 C；流程同喬陰算命先生（`ask teller about 算命` → 給一兩黃金 → `inquire 技能`），差別是只告知這項技能是否已到個人上限 |
-| 小販 | D18 | `npc/seller.c`；賣供品×10、空白符紙×2000、龍麟袋×5 |
+| 小販 | D18 | `npc/seller.c`；賣供品×10、空白符紙×2000、太古塵包×5（取代龍麟袋，2026-11-20） |
 | 店小二 | F18 | `npc/waiter.c`；平民 21 歲、強度 C |
 | 東方孤冥（玄天教主） | F18 二樓 | 現有 `custom/legacy_npc/dong_fang_gu_ming.c` |
 | 司馬蔚、官兵×4 | B20 城樓 | 現有 `si_ma_wei.c`；官兵用 `/obj/area/garrison` |
@@ -80,7 +80,7 @@
 |---|---|
 | 供品（`obj/offering.c`，id `gong`） | 祭拜先祖時準備的食物，不能吃，純道具；價錢 500 文 |
 | 空白符紙 | 現有 `custom/item/scroll/blank.c`，每張 10 文 |
-| 龍麟袋 | 現有 `custom/item/dragon_skin_bag.c`，**容量是麻布袋（`obj/area/obj/bag.c`）的 100 倍**；價錢 20 兩黃金（200000 文，2026-11-14 由 10000 文改） |
+| 太古塵包 | `custom/item/ancient_bag.c`，**容量是麻布袋（`obj/area/obj/bag.c`）的 20 倍**；價錢 2 兩黃金（20000 文，2026-11-20 取代龍麟袋）；詳見 `CUSTOM_ANCIENT_BAG_AND_SUPER_SKIN.md` |
 
 ## 紫雲盔
 
