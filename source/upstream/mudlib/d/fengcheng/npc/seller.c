@@ -28,6 +28,7 @@ void create()
     set("merchandise", ([
         "/d/fengcheng/obj/offering" : 10,
         "/custom/item/scroll/blank" : 2000,
+        "/d/swaylan/obj/bait" : 500,   // 魚餌（釣魚用）
         "/custom/item/ancient_bag" : 5,
     ]));
     set_power("C");

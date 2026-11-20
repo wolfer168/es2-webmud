@@ -32,6 +32,7 @@ LONG
         "/obj/area/obj/shortsword" : 3,
         "/obj/area/obj/kris" : 3,
         "/custom/item/scroll/blank" : 300,
+        "/d/swaylan/obj/bait" : 500,   // 魚餌（釣魚用）
     ]));
     set_power("C");
     setup();
