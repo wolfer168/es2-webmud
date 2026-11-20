@@ -451,6 +451,7 @@ static mapping ATTR_GROWTH = ([
     "archaic attainment":   "int",
     "mysticism":            "int",   // 五行陰陽之學（使用者指示，2026-11-14）
     "absorption":           "wis",
+    "halieutics":           "cps",   // 捕魚技巧：每 10 級擲一次（使用者指示，2026-11-20）
 ]);
 
 private int attr_growth_base(int value)
@@ -476,6 +477,7 @@ private void roll_attr_growth(string skill, int old_level, int new_level)
     // 偷襲暗算（backstab，增加膽識）與潛行（sneak，增加機敏）：盜賊逢 5 擲一次，
     // 其他職業逢 10 擲一次（使用者定案，2026-10-30；潛行 2026-11-02）。
     step = ((skill == "backstab" || skill == "sneak") && this_object()->query_class() != "thief") ? 10 : 5;
+    if( skill == "halieutics" ) step = 10;   // 捕魚技巧：不分職業，每 10 級擲一次定力
 
     last = this_object()->query("attr_growth/" + skill);
     if( last < old_level ) last = old_level;
