@@ -418,6 +418,15 @@ def cjk_wrap(s, width):
     return ''.join(out)
 
 
+def plain_text(s):
+    """給複製按鈕用的字串：拿掉色碼與結尾的換行；沒有加上任何排版用的斷行。"""
+    return re.sub(r'\x1b\[[0-9;]*m', '', s).rstrip('\n')
+
+
+def attr(s):
+    return html.escape(s, quote=True).replace('\n', '&#10;')
+
+
 def render_items(items, weapon, raw, dummy_hit=False):
     """把敘述項目組成帶真實 ESC 碼的字串；raw 為 True 時保留 $N 等變數。"""
     parts = []
@@ -562,7 +571,8 @@ def build():
             h_sample, names = to_html(wrapped)
             h_raw, _ = to_html(raw_wrapped)
             entries.append(dict(label=label, name=c['last_name'] if label == '招式' else '', line=c['line'],
-                                sample=h_sample, raw=h_raw, colors=names, channel=channel))
+                                sample=h_sample, raw=h_raw, colors=names, channel=channel,
+                                copy_s=plain_text(sample), copy_r=plain_text(raw)))
         a['entries'] = entries
         data.setdefault(a['cat'], []).append(a)
     return data
@@ -639,7 +649,8 @@ def art_section(a, cat_note=True):
             tag += ' · 色碼 ' + ' '.join(html.escape(x) for x in e['colors'])
         tag += '</span>'
         nm = f'<span class="mv">{html.escape(e["name"])}</span>' if e['name'] else ''
-        body.append(f'<div class="ent">{nm}<pre class="s">{e["sample"]}</pre><pre class="r">{e["raw"]}</pre>{tag}</div>')
+        btn = f'<button class="cp" type="button" title="複製這句敘述" data-s="{attr(e["copy_s"])}" data-r="{attr(e["copy_r"])}">複製</button>'
+        body.append(f'<div class="ent">{btn}<div class="bd">{nm}<pre class="s">{e["sample"]}</pre><pre class="r">{e["raw"]}</pre>{tag}</div></div>')
     body.append('</details>')
     return ''.join(body)
 
@@ -654,9 +665,11 @@ def spell_sections():
         h, names = to_html(it['text'])
         lines = h.split('\n')
         body = ''.join(f'<div class="ln">{ln if ln else "&nbsp;"}</div>' for ln in lines)
-        box = (f'<div class="ent spell"><span class="mv">{html.escape(it["spell_cname"])}</span>'
+        plain = plain_text(it['text'])
+        btn = f'<button class="cp" type="button" title="複製這個指令的完整畫面" data-s="{attr(plain)}" data-r="{attr(plain)}">複製</button>'
+        box = (f'<div class="ent spell">{btn}<div class="bd"><span class="mv">{html.escape(it["spell_cname"])}</span>'
                f'<div class="cmd">&gt; {html.escape(it["command"])}</div><div class="box">{body}</div>'
-               f'<span class="meta">{"色碼 " + " ".join(names) if names else "無色碼"} · 畫面共 {len(lines)} 行（含前後空行）</span></div>')
+               f'<span class="meta">{"色碼 " + " ".join(names) if names else "無色碼"} · 畫面共 {len(lines)} 行（含前後空行）</span></div></div>')
         res.setdefault((it['school'], it['school_cname']), []).append(box)
     return res
 
@@ -754,7 +767,7 @@ summary{{cursor:pointer;list-style:none}}summary::-webkit-details-marker{{displa
 summary::before{{content:"\\25BE";display:inline-block;width:1.1em;color:#8fb4ff}}details:not([open])>summary::before{{content:"\\25B8"}}
 summary .c{{color:var(--muted);font-weight:400;font-size:.78rem;margin-left:10px}}
 h3{{font-size:1rem;margin:16px 0 4px}}h3 small{{color:var(--muted);font-weight:400;font-size:.75rem;margin-left:10px}}h4{{font-size:.85rem;color:#c79a5a;margin:12px 0 4px}}
-.ent{{margin:6px 0}}.meta{{display:block;font-size:.72rem;color:#6d767e;margin:0 0 6px 4px}}.mv{{display:inline-block;font-size:.72rem;color:#c79a5a;margin-left:4px}}
+.ent{{margin:6px 0;display:flex;gap:8px;align-items:flex-start}}.ent .bd{{flex:1;min-width:0}}.cp{{flex:none;min-width:58px;text-align:center;margin-top:4px;background:#1d2328;color:#9fc0ff;border:1px solid #38424a;border-radius:4px;padding:2px 8px;font:12px inherit;cursor:pointer}}.cp:hover{{background:#26303a}}.cp.ok{{color:#6ee77a;border-color:#2f7a3a}}.meta{{display:block;font-size:.72rem;color:#6d767e;margin:0 0 6px 4px}}.mv{{display:inline-block;font-size:.72rem;color:#c79a5a;margin-left:4px}}
 pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1.5 "Noto Sans Mono","Noto Sans TC","PingFang TC",monospace;white-space:pre;overflow-x:auto;border-radius:3px}}
 .r{{display:none}}body.raw .r{{display:block}}body.raw .s{{display:none}}
 .empty{{color:var(--muted);font-size:.85rem}}label{{cursor:pointer}}
@@ -762,6 +775,7 @@ pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1
 </style></head><body><div class="wrap">
 <h1>武功敘述總表</h1>
 <p class="n">新版武功（含新寫的閃躲、內功）與法術 cast 會出現在遊戲裡的敘述；依職業、門派排列，最後是通用；共 {total} 句。顏色是 include/ansi.h 的色碼，斷行照遊戲的 cjk_wrap（寬度 70，色碼的字元也算寬度）與 message_vision 的 nowrap 設定。</p>
+<p class="n">每句最前面的「複製」按鈕會把那句敘述的字串（不含色碼、沒有排版用的斷行）放進剪貼簿；勾選「顯示程式原文」時複製的是帶 $N、$n、$w 的原文。法術格子複製的是整個指令的完整畫面。</p>
 <p class="n">範例名稱：$N＝無聊的傢伙、$n＝石假人（練武假人）、$l＝右臂、$w＝該類武器；對假人出招時戰鬥系統會拿掉部位，招式敘述也照這樣呈現；程式裡的變數用〔 〕標出。招式與招架、閃避是接在戰鬥敘述裡的片段（命中、傷害的字句由戰鬥系統接在後面）。法術 cast 是實際施展時遊戲送出的完整畫面，前後空行也保留。實際色彩依 zMUD 設定而定，下面色票只是參考。</p>
 <div class="top">
 <div class="bar"><label><input type="checkbox" id="raw"> 顯示程式原文（$N、$n、$w 不替換）</label>
@@ -771,6 +785,14 @@ pre{{margin:0;padding:6px 10px;background:var(--term);color:var(--t);font:14px/1
 </div>
 {body}
 </div><script>
+document.addEventListener('click',e=>{{
+  const b=e.target.closest('.cp'); if(!b) return;
+  const text=document.body.classList.contains('raw')?b.dataset.r:b.dataset.s;
+  const done=()=>{{b.classList.add('ok');const o=b.textContent;b.textContent='已複製';setTimeout(()=>{{b.classList.remove('ok');b.textContent=o;}},1200);}};
+  if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(text).then(done,()=>fallback(text,done));
+  else fallback(text,done);
+}});
+function fallback(text,done){{const t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{{document.execCommand('copy');done();}}catch(_){{}}document.body.removeChild(t);}}
 document.getElementById('raw').addEventListener('change',e=>document.body.classList.toggle('raw',e.target.checked));
 document.querySelectorAll('.bar button').forEach(b=>b.addEventListener('click',()=>{{
   const a=b.dataset.act, all=document.querySelectorAll('details');
