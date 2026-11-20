@@ -24,7 +24,7 @@ int stuff_ob(object me)
     if( !::stuff_ob(me) ) return 0;
 
     if( random(100) < 5 && objectp(pearl = new("/obj/fish_pearl")) ) {
-        tell_object(me, "你嚼著嚼著，牙齒忽然碰到一顆硬硬的東西，吐出來一看，竟是一顆圓潤的珍珠！\n");
+        tell_object(me, "你嚼著嚼著﹐牙齒碰到一顆硬東西﹐吐出來一看﹐竟是顆珍珠﹗\n");
         if( !pearl->move(me) ) pearl->move(environment(me));
     }
     return 1;

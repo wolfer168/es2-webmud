@@ -18,15 +18,15 @@ private object find_rod(object me)
 }
 
 private string *CATCH_MSG = ({
-    "浮標猛地往下一沉﹐$N手腕一翻﹐一尾河魚被甩出水面﹐在半空閃著銀光。\n",
-    "絲線忽然繃直﹐$N穩住竿身緩緩收線﹐一尾河魚拖著水花被拉上了岸。\n",
-    "水面「嘩」地炸開﹐$N順勢提竿﹐一尾河魚已經在鉤上活蹦亂跳。\n",
+    "浮標猛地一沉﹐$N手腕一翻﹐一尾河魚被甩出水面。\n",
+    "絲線忽然繃直﹐$N穩住竿身收線﹐一尾河魚被拉上了岸。\n",
+    "水面「嘩」地炸開﹐$N順勢提竿﹐河魚在鉤上活蹦亂跳。\n",
 });
 
 private string *WAIT_MSG = ({
     "浮標輕輕晃了一下﹐又歸於平靜。\n",
     "水面泛起一圈小小的漣漪﹐不知是魚兒碰了碰餌。\n",
-    "一陣風過﹐絲線在水面上微微顫動。\n",
+    "絲線在水面上微微顫動。\n",
 });
 
 private void end_fish(object me, int caught)
@@ -52,7 +52,12 @@ int do_fish(object me)
     if( tick >= 10 ) hit = 1;
     else hit = ((tick - 1) * 20 + (s > 0 ? random(s) : 0) > 200);
 
+    intel = me->query_attr("int");
+    if( intel < 1 ) intel = 1;
+
     if( !hit ) {
+        // 沒釣到的 tick 也有收穫：技能點數 random(智力) + 1。
+        me->improve_skill_exact("halieutics", random(intel) + 1);
         if( random(3) == 0 )
             tell_object(me, WAIT_MSG[random(sizeof(WAIT_MSG))]);
         return 1;
@@ -66,8 +71,6 @@ int do_fish(object me)
     }
     // 技能點數用智力公式：(random(智力)+1) × (random(智力)+1) + random(智力)，
     // 每條魚再隨機乘 1～3 倍。
-    intel = me->query_attr("int");
-    if( intel < 1 ) intel = 1;
     me->improve_skill_exact("halieutics",
         ((random(intel) + 1) * (random(intel) + 1) + random(intel)) * (1 + random(3)));
     end_fish(me, 1);
@@ -100,7 +103,7 @@ int main(object me, string arg)
 
     bait->add_amount(-1);
     me->set_temp("fishing/tick", 0);
-    message_vision("$N把魚餌掛上鉤﹐手腕輕輕一抖﹐絲線劃出一道弧線﹐魚鉤「噗通」一聲沒入水中。\n", me);
+    message_vision("$N把魚餌掛上鉤﹐手腕一抖﹐魚鉤「噗通」一聲入水。\n", me);
     me->start_busy((: do_fish, me :), (: halt_fish, me :));
     return 1;
 }
