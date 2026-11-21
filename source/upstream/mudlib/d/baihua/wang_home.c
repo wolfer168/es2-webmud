@@ -4,6 +4,25 @@
 
 inherit ROOM;
 
+// 穹槍訣任務：在老王家坐下聽他說故事（設計見 docs/martial_arts/穹槍訣.md）。
+void init()
+{
+    ::init();
+    add_action("do_sit", "sit");
+}
+
+int do_sit(string arg)
+{
+    object me = this_player();
+    object wang = present("old wang", this_object());
+
+    if( !objectp(wang) || !living(wang) ) return 0;
+    if( me->is_fighting() ) return notify_fail("你現在沒有辦法靜下心來坐著。\n");
+    message_vision("$N拍了拍地上的土，坐了下來聽老王話當年。\n", me);
+    wang->tell_story(me);
+    return 1;
+}
+
 void create()
 {
     set("short", "老王的家");
@@ -20,5 +39,4 @@ LONG
     ]));
     set("map/area", "百花村");
     setup();
-    replace_program(ROOM);
 }
