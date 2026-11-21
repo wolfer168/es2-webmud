@@ -20,8 +20,7 @@
 　 　　　　　　　　　　 技能滿足條件時，下次風符必出三重催咒。
 　 　‧cast crazy storm：暴風，風符 30，消耗 sen 30 delay 1 傷害 33%，
 　 　　　　　　　　　　 施法成功命中時忽視目標風抗性。
-　 　‧cast killer storm：飛戮風，風符 55，消耗 sen 50 delay 1 傷害
-　 　　　　　　　　　　　75%。
+　 　‧cast killer storm：飛戮風，風符 55，消耗 sen 50 delay 1 傷害 75%。
 　 　‧cast whirl storm：轉輪大風，風符 85，
 　 　　　　　　　　　　 消耗 sen 75 delay 3 傷害 125%。
 　 　‧風符技能足夠且隨機咒文技巧夠高時，有機會出現第二、三重催咒。

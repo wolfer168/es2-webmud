@@ -20,8 +20,8 @@
 　 　　　　　　　　　　　　 傷害 25% 加上施法者神的八分之一。
 　 　‧cast divine thunder：神光雷，雷法 60，消耗 sen 75 delay 2，
 　 　　　　　　　　　　　　無視抗性，不打氣，改打對手的神。
-　 　‧cast hexagram thunder：六卦熒雷，雷法 90，消耗 sen 90 delay 2，
-　 　　　　　　　　　　　　　傷害175%。
+　 　‧cast hexagram thunder：六卦熒雷，雷法 90，
+　 　　　　　　　　　　　　　消耗 sen 90 delay 2，傷害 175%。
 　 　‧雷法每次施法有 10% 機率雷力反噬，多停頓一回合。
 　 練成等級：1 級
 　 能力提升：無

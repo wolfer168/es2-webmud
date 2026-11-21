@@ -16,8 +16,8 @@
 　 任務起始：杜風凌
 　 特殊能力：
 　 　‧conjure blank：把符紙化回空白符紙。
-　 　‧conjure yin / yang / nature：在空白符紙上畫出少陰符、正陽符、
-　 　 先天符。
+　 　‧conjure yin / yang / nature：在空白符紙上畫出少陰符、
+　 　　　　　　　　　　　　　　　　正陽符、先天符。
 　 　‧conjure remedy：消耗先天符，恢復 gin kee sen。
 　 　‧conjure vision：消耗先天符，提昇警覺並開啟陰陽眼。
 　 練成等級：1 級
