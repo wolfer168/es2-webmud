@@ -15,7 +15,7 @@ inherit "/custom/legacy_npc/legacy_npc";
 
 #define PILL_MAX        4       // 丹藥的數量（每次重生重新計算）
 #define PILL_RATIO      20      // 氣或 HP 低於上限的百分之幾時吞丹（2026-11-21 由一成改為兩成）
-#define ROAR_CHANCE     40      // 戰鬥中每次心跳發出天邪虎嘯的機率（%）（2026-11-21 由 20 改為 40；NPC 不會內息不順）
+#define ROAR_CHANCE     20      // 戰鬥中每次心跳發出天邪虎嘯的機率（%）（2026-11-21 改回 20；NPC 不會內息不順）
 
 void create()
 {
