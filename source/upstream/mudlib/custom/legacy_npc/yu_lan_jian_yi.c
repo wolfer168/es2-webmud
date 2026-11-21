@@ -41,8 +41,16 @@ void create()
     set_skill("celestial palm", 200);
     map_skill("force", "celestial force");
     map_skill("unarmed", "celestial palm");
+    // 精、氣、神固定為 3000／4000／1500（使用者指示，2026-11-21），不隨強度自動計算。
+    set_stat_maximum("gin", 3000);
+    set_stat_maximum("kee", 4000);
+    set_stat_maximum("sen", 1500);
     set_power("S");
     setup();
+    foreach( string st, int v in ([ "gin": 3000, "kee": 4000, "sen": 1500 ]) ) {
+        set_stat_effective(st, v);
+        set_stat_current(st, v);
+    }
     carry_object("/custom/armor/head/brass_hat")->wear();   // 黃呢鐵帽
     carry_object("/custom/armor/feet/spider_boots")->wear();   // 玄蛛皂白靴
     carry_object("/custom/armor/armor/dragon_armor")->wear();   // 怒龍錦冑

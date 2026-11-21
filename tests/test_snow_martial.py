@@ -53,6 +53,8 @@ def test_deep_blade():
         assert '「" %s "%s" NOR "」' % (color, name) in s, name
     assert '#define SPECIAL_LEVEL   60' in s and '#define SPECIAL_CHANCE  66' in s
     assert 'n = damage * (100 + a * b) / 100;' in s
+    assert 'return move > 0 ? move / 10 * 2 : 0;' in s
+    assert 'make_action(m, 100 + move_bonus(me))' in s
     assert '忽然歪歪斜斜地砍出一刀﹐竟逼得$n避無可避！' in s
 
 

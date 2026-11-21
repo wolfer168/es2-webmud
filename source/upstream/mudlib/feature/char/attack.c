@@ -381,8 +381,17 @@ void init()
 //    /* 若這個物件被移動到非戰區，則不引發戰鬥。 */
 //  if(	environment() && environment()->query("no_fight") ) return;
 //
-    /* 若 this_player() 看不見這個人物，則不引發戰鬥。 */
-    if( ! this_object()->visible(this_player()) ) return;
+    /* NPC 看不看得見人，一律由出手的一方自己判定（看自己的警覺與對方的隱藏值），
+     * 與對方 sneak 成功與否無關（使用者指示，2026-11-21）。
+     * 下面的 hatred、vendetta 是 this_player() 出手，所以先看 this_player() 看不看得見這個人物；
+     * aggressive 是這個人物出手，另外在下面檢查這個人物看不看得見 this_player()。 */
+    if( ! this_object()->visible(this_player()) ) {
+	/* this_player() 看不見這個人物：this_player() 不會出手，只剩這個人物主動攻擊的情況。 */
+	if( query("attitude") == "aggressive"
+	&&  this_player()->visible(this_object()) )
+	    COMBAT_D->auto_fight(this_object(), this_player(), "aggressive");
+	return;
+    }
 
     /* 若雙方正互相仇視中，開始戰鬥。 */
     if( this_player()->is_killing(query("id")) ) {
@@ -399,8 +408,9 @@ void init()
     switch( query("attitude") )
     {
     case "aggressive":
-	/* 主動攻擊的生物 */
-	COMBAT_D->auto_fight(this_object(), this_player(), "aggressive");
+	/* 主動攻擊的生物：要這個人物自己看得見 this_player() 才會出手。 */
+	if( this_player()->visible(this_object()) )
+	    COMBAT_D->auto_fight(this_object(), this_player(), "aggressive");
 	break;
     case "peaceful":
     default:
