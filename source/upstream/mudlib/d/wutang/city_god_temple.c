@@ -16,6 +16,7 @@ LONG
     ]));
     set("objects", ([
         __DIR__"npc/town_god" : 1,
+        __DIR__"npc/old_woman" : 1,
     ]));
     set("no_fight", 1);
     set("map/area", "五堂鎮");

@@ -15,6 +15,7 @@
 - **NPC 數值**：照設計表；沒寫技能的依等級給徒手、閃躲、招架（等級 × 2），有兵器的加兵器技能；沒寫精氣神的依等級換算（武者／平民：精 12、氣 15、神 5 倍等級；道士 12、13、20；書生 10、10、15；最少 35）。蝶影幻步（butterfly-steps）先佔位 110。表上錯字修正：taoism_freezn → taoism-freeze，spelles → spells。
 - **閒聊**：楊子陵、雍泰、賣餅大叔、陸四爺、小鼠兒、老火、廟祝、老人、李山、葉翔各兩句，每 tick 16%（約 5～7 tick 一句）。
 - **新物品**：青布衣（`d/wutang/obj/blue_cloth.c`，防禦 4，價值 300 文）、餡餅（`d/wutang/obj/pie.c`，價值 30 文）。布衣（`obj/area/obj/cloth.c`）價值由 0 改為 200 文。
+- **穹槍訣任務**（2026-11-21）：城隍廟的老婦人是百花村老王妻子的姊姊，流程見 `docs/martial_arts/穹槍訣.md`「任務：老王尋妻」。
 - **任務**（慈嚴除障手、追風劍、六靈玄衣、趙欽差等）之後再做。
 - **風嘯拳法任務**（2026-11-05）：雍泰對進客棧的武者打聽四弟，收下貓眼戒指與骨灰罈後傳授風嘯拳法，流程見 `docs/martial_arts/共通_風嘯拳法.md`。
 - **蝶影幻步任務**（2026-11-07）：老人（後院）→ 李山（暗巷）→ 搜後院小溪得金牌 → 交老人換小紅巾 → 交廟祝換飲血 → 交葉翔。盜賊（尚未學過）傳授蝶影幻步，其他人與已學會的盜賊給 10 兩黃金，不限次數；道具記著取得者，別人轉手無法解謎；金牌、小紅巾價值 0，每項道具每次房間重置只有一份，不能補領。流程見 `docs/martial_arts/瑯夷派_蝶影幻步.md`，程式見 `d/wutang/butterfly_quest.h`、`npc/oldman.c`、`lee_shan.c`、`keeper.c`、`yaesae.c`、`backyard.c`。
@@ -52,7 +53,7 @@
 | R12 | `east_street2.c` | 街道 | 擴寫 |  |
 | T12 | `east_street3.c` | 街道 | 擴寫 |  |
 | V12 | `east_street4.c` | 街道 | 擴寫 |  |
-| X12 | `city_god_temple.c` | 城隍廟 | 擴寫 | 城隍爺 |
+| X12 | `city_god_temple.c` | 城隍廟 | 擴寫 | 城隍爺、老婦人（穹槍訣任務，2026-11-21） |
 | F14 | `gravel_road_s.c` | 碎石路 | 擴寫 |  |
 | H14 | `bamboo_hall.c` | 主廳 | 原文 | 呼延光 |
 | D14 | `riverside.c` | 河邊 | 原文 | 老駱、小黃 |
@@ -112,6 +113,7 @@
 | `npc/royalist.c` | 趙欽差 | human | soldier | 1 |  |
 | `npc/guard.c` | 護院武師 | blackteeth | fighter | 20 | cowhide_vest |
 | `npc/town_god.c` | 城隍爺 | human | commoner | 1 |  |
+| `npc/old_woman.c` | 老婦人 | human | commoner | 1 | 穹槍訣任務：老王妻子的姊姊，在城隍廟上香；對她說「老王」得到信 |
 | `npc/yang_zlin.c` | 冷梅莊一代弟子 楊子陵 | human | fighter | 45 | black_sword、black_iron_dagger、silk_cloth、wolf_boots、woof_hat |
 | `npc/apprentice.c` | 冷梅莊二代弟子 | human | fighter | 25 |  |
 | `npc/huyen_guan.c` | 綠竹居士 呼延光 | human | scholar | 35 | white_cloth |

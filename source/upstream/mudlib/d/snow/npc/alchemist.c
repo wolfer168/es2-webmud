@@ -4,6 +4,7 @@
 #include <npc.h>
 
 inherit F_VILLAGER;
+#include "/d/baihua/skypike_quest.h"
 
 void create()
 {
@@ -150,4 +151,26 @@ int acquire_skill(object ob, string skill)
 	}));
 
 	return 1;
+}
+
+// 穹槍訣任務（設計見 docs/martial_arts/穹槍訣.md）：百花村老王的妻子遺骨（野熊肉塊）。
+// 老王要玩家來找陳維俠時，拿肉塊給他看；他認出是老婦的骨肉，提到要化屍粉。不收下，也不限時間。
+int accept_object(object who, object ob)
+{
+	if( !userp(who) || !sq_is(ob, SQ_MEAT_FILE) ) return 0;
+	if( quest_busy ) return 0;
+	if( sq_stage(who) != SQ_TO_CHEN ) {
+		command("say 這是什麼東西？拿走拿走，老夫用不著。");
+		return 0;
+	}
+	who->set(SQ_STAGE, SQ_CHEN);
+	sq_start(({
+		"emote 掃了你一眼，怒道：這是人肉，而且是老婦的骨肉！",
+		"say 不過此老婦骨肉異常，若以化屍粉點之，也許……",
+		"emote 搖了搖頭。",
+		"say 我龍圖派以德為本，萬不可像那入了魔道的姑射一樣。",
+		"emote 嘆了一口氣。",
+		"say 走吧，讓她入土吧，免得又是一場浩劫。",
+	}), 0, who);
+	return 0;
 }
