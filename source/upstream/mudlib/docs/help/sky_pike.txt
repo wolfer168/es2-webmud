@@ -10,7 +10,6 @@
 　 任務起始：百花村 老王
 　 安裝：enable pike with sky_pike
          enable twohanded pike with sky_pike
-　 招式：星垂平野、天河倒掛、斗轉星移、七星連珠、穹頂壓城、破曉穿雲
 　 特殊能力：
 　 　‧滿天槍點與蓄力一擊：前四招命中高、傷害平；
                           後兩招命中低、傷害重。不能招架。
