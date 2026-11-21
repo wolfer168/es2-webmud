@@ -72,6 +72,7 @@ int accept_object(object who, object ob)
             who->remove_killer(this_object());
         }
         do_chat( (: listen_request, who :) );
+        call_out("drop_item", 1, ob);
         return 1;
     } else {
         command("say 這是什麼破銅爛鐵﹖拿開﹗");
@@ -114,4 +115,10 @@ void init()
             call_out((: attack_intruder, this_player() :), 5);
         }
     }
+}
+
+/* 收下的東西刪掉，不留在身上（give 指令只會銷毀錢；使用者定案，2026-11-22）。 */
+void drop_item(object ob)
+{
+    if( objectp(ob) && environment(ob) == this_object() ) destruct(ob);
 }
