@@ -53,6 +53,26 @@ int valid_learn(object me)
     return 1;
 }
 
+/* 行動力加成（使用者定案，2026-11-21）：每 10 點行動力，深空刀法傷害 +2%。 */
+int move_bonus(object me)
+{
+    int move = me->query_ability("move");
+    return move > 0 ? move / 10 * 2 : 0;
+}
+
+/* 出刀：招式傷害再乘上行動力加成；口訣絕招以這一刀的傷害為準，所以也跟著提高。 */
+void attack_using(object me, object opponent, object weapon)
+{
+    mapping m;
+    int damage;
+
+    if( !opponent ) return;
+    if( !objectp(weapon) ) weapon = 0;
+    m = pick_move(me);
+    damage = COMBAT_D->fight(me, opponent, art_id, make_action(m, 100 + move_bonus(me)), weapon);
+    after_strike(me, opponent, weapon, m, damage);
+}
+
 /* 乘法口訣：例如 2×2 → 二二得四、5×8 → 五八四十、9×9 → 九九八十一。 */
 string rhyme(int a, int b)
 {
