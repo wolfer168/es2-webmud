@@ -79,22 +79,21 @@ int two_handed(object weapon)
 /* 單手槍特攻『萬點寒星』：對手停頓 1 tick。 */
 void star_rain(object me, object opponent)
 {
-    message_vision(HIW "$N一槍落空﹐卻不收勢﹐手腕順勢急抖﹐槍尖霎時化出" MOVE("萬點寒星") HIW "﹐\n"
-        "恍如滿天星斗一齊傾落﹐虛虛實實﹐將$n周身要害盡數罩住﹗\n"
-        "$n只覺眼前星光亂閃﹐不知該擋哪一點﹐登時手忙腳亂﹐身形為之一滯。\n" NOR, me, opponent, 1);
+    message_vision(HIG "$N一槍落空﹐卻不收勢﹐手腕順勢急抖﹐槍尖霎時化出" HIW "『萬點寒星』" HIG "﹐恍如滿天星斗一齊傾落﹐虛虛實實﹐將$n周身要害盡數罩住﹗" NOR "\n"
+        CYN "$n只覺眼前星光亂閃﹐不知該擋哪一點﹐登時手忙腳亂﹐身形為之一滯。" NOR "\n", me, opponent, 1);
     opponent->start_busy(1);
 }
 
 /* 雙手槍特攻『破穹一擊』：該招傷害 200%，不能閃躲、招架；自身停頓 1 tick。 */
 void sky_breaker(object me, object opponent, object weapon)
 {
-    message_vision(HIW "$N一槍落空﹐竟借著回勢沉肩擰腰﹐將渾身勁力盡數灌入槍身﹗\n" NOR, me, opponent, 1);
+    message_vision(HIG "$N一槍落空﹐竟借著回勢沉肩擰腰﹐將渾身勁力盡數灌入槍身﹗\n" NOR, me, opponent, 1);
     special_hit(me, opponent, weapon,
         ([ "name": "破穹一擊", "attack": 6, "defense": 2, "force": 3, "bonus": 20, "damage_type": "刺傷",
-           "action": "$N雙手握槍一聲暴喝﹐" MOVE("破穹一擊") "直如天柱傾倒﹐挾著撕裂長空的銳嘯﹐迎面貫向$n的$l" ]),
+           "action": HIG "$N雙手握槍一聲暴喝﹐" HIW "『破穹一擊』" HIG "直如天柱傾倒﹐挾著撕裂長空的銳嘯﹐迎面貫向$n的$l" NOR ]),
         200, 0, HIT_MUST);
     if( objectp(me) ) {
-        message_vision("$N這一擊用盡了力氣﹐一時收不回槍勢。\n", me);
+        message_vision(CYN "$N這一擊用盡了力氣﹐一時收不回槍勢。\n" NOR, me, 0, 1);
         me->start_busy(1);
     }
 }

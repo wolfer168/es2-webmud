@@ -14,12 +14,13 @@ private void create() {
   seteuid (getuid());
 }
 
-/* 角色年齡跟著遊戲曆走（使用者指示，2026-11-06）：
- *   遊戲時間是現實的 60 倍（見 NATURE_D 的 TIME_TICK），遊戲一年 = 現實 365*24*60 秒（約六天）。
- *   年齡 = 種族最低年紀 + 自創角（birthday）起經過的遊戲年數，下線期間也照算。
- *   同 ID 魂飛魄散後新創的角色是新的身體，birthday 重設，所以又從種族最低年紀起算。
+/* 角色年齡跟著「這個角色的上線時數」走（使用者指示，2026-11-19，取代 2026-11-06 的遊戲曆算法；同日由 6 小時改為 12 小時）：
+ *   年齡 = 種族最低年紀 + 這個角色累計上線秒數 ÷ 12 小時；下線期間不算。
+ *   累計上線秒數存在角色自己的 "online_time"，同 ID 魂飛魄散後新創的角色是新的身體，從零起算。
+ *   舊角色沒有 online_time：用存檔裡原本的年齡反推（超出最低年紀的歲數 × 12 小時），年齡不會倒退。
  *   種族最低年紀取種族的 "min_age"，沒設就是十四歲（目前各種族都是十四歲起）。 */
-#define GAME_YEAR       (365 * 24 * 60)
+#define AGE_SECONDS     (12 * 3600)
+#define AGE_TICK_MAX    120     // 單次最多採計的秒數，避免時間跳動時暴增
 #define DEFAULT_MIN_AGE 14
 
 int query_min_age (object ob) {
@@ -33,15 +34,28 @@ int query_min_age (object ob) {
 
 /** 依遊戲曆重算玩家年齡；NPC 的年齡由各自檔案設定，不動。 */
 void update_age (object ob) {
-    int birth, age;
+    int min_age, online, last, now = time(), age;
 
     if (!objectp(ob) || !userp(ob))
         return;
-    if ((birth = (int)ob->query("birthday")) <= 0)
-        ob->set("birthday", birth = time());
-    age = query_min_age(ob);
-    if (birth < time())
-        age += (time() - birth) / GAME_YEAR;
+    if ((int)ob->query("birthday") <= 0)
+        ob->set("birthday", now);
+    min_age = query_min_age(ob);
+
+    online = (int)ob->query("online_time");
+    // 舊角色第一次換算：照原本的年齡折成上線秒數，年齡不倒退。
+    if (online <= 0 && (int)ob->query("age") > min_age)
+        online = ((int)ob->query("age") - min_age) * AGE_SECONDS;
+
+    // 只算上線期間：與上次結算的間隔（斷線重連時暫存會清掉，從這次起算）。
+    last = (int)ob->query_temp("age_tick");
+    if (last > 0 && now > last)
+        online += (now - last > AGE_TICK_MAX) ? AGE_TICK_MAX : (now - last);
+    ob->set_temp("age_tick", now);
+    if ((int)ob->query("online_time") != online)
+        ob->set("online_time", online);
+
+    age = min_age + online / AGE_SECONDS;
     if ((int)ob->query("age") != age)
         ob->set("age", age);
 }

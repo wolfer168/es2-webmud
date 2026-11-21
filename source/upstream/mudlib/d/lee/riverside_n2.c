@@ -14,6 +14,8 @@ LONG
     set("exits", ([
         "south" : __DIR__"riverside_n1"
     ]));
+    set("fishing", 1);
+    set("detail/溪水", "垂柳的枝條拂著水面，柳蔭下的溪水特別清涼，魚兒喜歡聚在這兒，垂釣 (fish) 想必有魚上鉤。");
     setup();
     replace_program(ROOM);
     set("map/area", "李家村");

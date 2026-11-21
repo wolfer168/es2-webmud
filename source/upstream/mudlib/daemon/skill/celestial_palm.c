@@ -100,7 +100,7 @@ void after_strike(object me, object opponent, object weapon, mapping m, int dama
     }
 
     if( random(100) < move_chance(me, 10, 30, 20) ) {
-        message_vision(HIG "$N掌勢一收一吐之間﹐暗暗調勻了內息﹐臉色好看了些。\n" NOR, me);
+        message_vision(HIG "$N掌勢一收一吐之間﹐暗暗調勻了內息﹐臉色好看了些。\n" NOR, me, 0, 1);
         me->supplement_stat("kee", sk / 6);
     }
 }

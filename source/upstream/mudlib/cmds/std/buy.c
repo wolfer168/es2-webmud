@@ -52,7 +52,8 @@ int main(object me, string arg)
                 return 1;
             }
             me->pay_money(price);
-            me->gain_score("survive", random(price/300 + me->query_attr("wis")/3) );
+            // 買東西的江湖歷練：random(價錢 ÷ 200 + 悟性)（使用者指示，2026-11-20）。
+            me->gain_score("survive", random(price/200 + me->query_attr("int")) );
             return 1;
         case 2:
             // CUSTOM finance no longer returns this value; keep a safe fallback.

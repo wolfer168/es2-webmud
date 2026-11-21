@@ -15,6 +15,8 @@ LONG
         "northwest" : __DIR__"ferry_dock",
     ]));
     set("map/area", "五堂鎮");
+    set("fishing", 1);
+    set("detail/河水", "羿水河邊的水流在這裡緩了下來，水色青綠，水面下不時有魚影一閃而過。岸邊的大石頭被釣客坐得光滑，在這兒垂釣 (fish) 想必有所收穫。");
     setup();
     replace_program(ROOM);
 }

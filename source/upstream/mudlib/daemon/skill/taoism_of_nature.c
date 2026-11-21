@@ -78,16 +78,13 @@ object find_scroll(object me)
     return 0;
 }
 
-/* 共同的施法前置：消耗先天符與神、停頓，並得法術修為 random(慧根/6) + 1。 */
+/* 共同的施法前置：消耗先天符與神、停頓，並得法術修為 random(靈性/2) + 1（2026-11-20 改）。 */
 void pay_cost(object me, object scroll, string spell)
 {
-    int wis;
-
     scroll->add_amount(-1);
     me->consume_stat("sen", SPELLS[spell][1]);
     me->start_busy(SPELLS[spell][2]);
-    wis = me->query_attr("wis");
-    me->gain_score("magic", (wis >= 6 ? random(wis / 6) : 0) + 1);
+    me->gain_score("magic", random(me->query_attr("spi") / 2) + 1);
 }
 
 // ------------------------------------------------------------------
@@ -131,7 +128,7 @@ int do_dog(object me, int sk)
         foreach(object old in dogs)
             if( objectp(old) ) old->dismiss();
 
-    message_vision("$N捏起一張先天符往地上一擲﹐低喝一聲「敕」﹐符紙化作一團青煙。\n", me, 0, 1);
+    message_vision("$N捏起一張先天符往地上一擲﹐低喝一聲" HIR "「敕」" NOR "﹐符紙化作一團青煙。\n", me, 0, 1);
     dogs = ({});
     for( i = 0; i < count; i++ ) {
         dog = new(DOG);
@@ -140,7 +137,7 @@ int do_dog(object me, int sk)
         dogs += ({ dog });
     }
     me->set_temp("maoshan/dogs", dogs);
-    message_vision("青煙散處竄出" + dog_list(dogs) + "﹐伏在$N腳邊低聲嗚嗚作響。\n", me, 0, 1);
+    message_vision(CYN "青煙散處竄出" + dog_list(dogs) + "﹐伏在$N腳邊低聲嗚嗚作響。\n" NOR, me, 0, 1);
     return 1;
 }
 
@@ -152,15 +149,15 @@ int do_monkey(object me, object target)
 {
     me->fight_ob(target);
     target->fight_ob(me);
-    message_vision("$N將先天符往空中一拋﹐符紙翻了幾個筋斗化成一隻靈猿﹐吱吱怪叫著撲到$n面前抓耳撓腮。\n",
+    message_vision(CYN "$N將先天符往空中一拋﹐符紙翻了幾個筋斗化成一隻靈猿﹐吱吱怪叫著撲到$n面前抓耳撓腮。\n" NOR,
         me, target, 1);
     if( random(100) < 75 ) {
-        message_vision("$n被攪得眼花撩亂﹐一時竟忘了出手。\n", me, target, 1);
+        message_vision(HIC "$n被攪得眼花撩亂﹐一時竟忘了出手。\n" NOR, me, target, 1);
         target->start_busy(2);
-        message_vision("靈猿一個翻身鑽進煙裡不見了。\n", me, target, 1);
+        message_vision(HIK "靈猿一個翻身鑽進煙裡不見了。\n" NOR, me, target, 1);
         return 1;
     }
-    message_vision("$n揮手將靈猿趕開﹐靈猿吱的一聲鑽進煙裡不見了。\n", me, target, 1);
+    message_vision(HIK "$n揮手將靈猿趕開﹐靈猿吱的一聲鑽進煙裡不見了。\n" NOR, me, target, 1);
     return 0;
 }
 
@@ -173,9 +170,9 @@ int do_hydra(object me, object target, int sk)
 {
     object *items, item;
 
-    message_vision("$N雙手結印將先天符按在地上﹐地面倏地裂開一道縫隙。\n", me, target, 1);
+    message_vision(CYN "$N雙手結印將先天符按在地上﹐地面倏地裂開一道縫隙。\n" NOR, me, target, 1);
     if( random(sk / 3) <= target->query_level() ) {
-        message_vision("巨蟒探出頭來嗅了嗅$n﹐似乎嫌對方太過扎手﹐又縮回地底去了。\n", me, target, 1);
+        message_vision(HIK "巨蟒探出頭來嗅了嗅$n﹐似乎嫌對方太過扎手﹐又縮回地底去了。\n" NOR, me, target, 1);
         return 0;
     }
 
@@ -185,8 +182,8 @@ int do_hydra(object me, object target, int sk)
         item = items[random(sizeof(items))];
         if( item->query("equipped") ) item->unequip();
         if( item->move(environment(me)) )
-            message_vision("巨蟒喉頭一陣蠕動﹐吐出一" + (item->query("unit") ? item->query("unit") : "件")
-                + item->name() + "﹐隨即沒入地底。\n", me, target, 1);
+            message_vision(HIG "巨蟒喉頭一陣蠕動﹐吐出一" + (item->query("unit") ? item->query("unit") : "件")
+                + item->name() + "﹐隨即沒入地底。\n" NOR, me, target, 1);
     }
     destruct(target);
     return 1;
@@ -211,7 +208,7 @@ int do_rain(object me, int sk)
     n = sk / 10 + (r > 0 ? random(r) : 0);
     cap = n / 3;
     if( cap < 1 ) cap = 1;
-    message_vision("$N手捏法訣仰天長嘯﹐將先天符向空中一拋﹐霎時烏雲四合。\n", me, 0, 1);
+    message_vision(CYN "$N手捏法訣仰天長嘯﹐將先天符向空中一拋﹐霎時烏雲四合。\n" NOR, me, 0, 1);
     message_vision(HIC "一陣甘霖灑落下來﹐眾人只覺渾身舒暢﹐疲憊一掃而空。\n" NOR, me, 0, 1);
     foreach(object ob in all_inventory(environment(me))) {
         if( ob == me || !userp(ob) || !living(ob) ) continue;

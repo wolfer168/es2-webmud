@@ -11,6 +11,10 @@ inherit "/custom/legacy_npc/legacy_npc";
 
 #define FACTION "fighter.huge"
 
+#define FULL_HEAL_MAX   6       // 補滿的次數上限（每次重生重新計算；使用者指示，2026-11-19）
+#define FULL_HEAL_RATIO 20      // 氣或 HP 低於上限的百分之幾時補滿
+#define PERFORM_CHANCE  30      // 打鬥中每個心跳施展絕招的機率（%）
+
 void create()
 {
     seteuid(getuid());
@@ -38,13 +42,72 @@ void create()
     // 技能等級與杖法對應由門派表（daemon/misc/npc_skill.c）自動套用，這裡只補招架。
     map_skill("parry", "chin_staff");
     set("legacy_patrol", 1);   // 巡邏範圍見下面的 patrol()（使用者指示，2026-11-17）
+    set_attr("con", 60);   // 根骨 60（使用者指示，2026-11-19）
+    // 精、氣、神固定為 2000／3000／1200（使用者指示，2026-11-19），不隨強度自動計算（作法同梅影風）。
+    set_stat_maximum("gin", 2000);
+    set_stat_maximum("kee", 3000);
+    set_stat_maximum("sen", 1200);
     set_power("S");
     setup();
+    foreach( string st, int v in ([ "gin": 2000, "kee": 3000, "sen": 1200 ]) ) {
+        set_stat_effective(st, v);
+        set_stat_current(st, v);
+    }
     carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴
     carry_object("/custom/armor/waist/ghosts_girdle")->wear();   // 百鬼腰束
     carry_object("/custom/weapon/staff/god_cane")->wield();   // 九曲十彎
     carry_object("/custom/armor/cloth/soft_cloth")->wear();   // 軟麻青絲衣
     carry_object("/custom/armor/neck/copper_rosary")->wear();   // 黃銅佛珠
+}
+
+// ------------------------------------------------------------------
+// 戰鬥行為：氣或 HP 低於兩成時噴血補滿，每次重生最多六次（設計與梅影風、柳東蘆相同；
+// 另外在受傷的當下就檢查，避免兩次心跳之間連吃重擊直接倒下，2026-11-19）；
+// 打鬥中每個心跳有 30% 機會施展青邪杖法絕招：50% crazy、30% stun、20% hide（使用者指示，2026-11-19）。
+// ------------------------------------------------------------------
+
+private int low_stat(string what)
+{
+    int max = query_stat_maximum(what);
+    return max > 0 && query_stat(what) * 100 < max * FULL_HEAL_RATIO;
+}
+
+private void full_heal()
+{
+    foreach( string what in ({ "kee", "HP" }) ) {
+        if( query_stat_maximum(what) <= 0 ) continue;
+        set_stat_effective(what, query_stat_maximum(what));
+        set_stat_current(what, query_stat_maximum(what));
+    }
+    add_temp("liuye/full_heal", 1);
+    message_vision(HIR "$N怪叫一聲﹐「哇」地噴出一大灘鮮血﹐雙眼卻突然精光大盛！！\n" NOR, this_object());
+}
+
+/* 受傷時先檢查：這一下會讓氣掉到兩成以下（或打死）就先補滿再吃傷害。
+ * 只在 heart_beat 檢查的話，兩次心跳之間連吃幾下重擊就會直接倒下，來不及補。 */
+varargs int receive_damage(int damage, object from, object attacker)
+{
+    if( damage > 0 && living(this_object())
+    &&  query_temp("liuye/full_heal") < FULL_HEAL_MAX
+    &&  (query_stat("kee") - damage) * 100 < query_stat_maximum("kee") * FULL_HEAL_RATIO )
+        full_heal();
+    return ::receive_damage(damage, from, attacker);
+}
+
+static void heart_beat()
+{
+    ::heart_beat();
+    if( !this_object() || !living(this_object()) || !is_fighting() ) return;
+
+    if( query_temp("liuye/full_heal") < FULL_HEAL_MAX && (low_stat("kee") || low_stat("HP")) )
+        full_heal();
+
+    if( !is_busy() && random(100) < PERFORM_CHANCE ) {
+        int r = random(100);
+
+        SKILL_D("chin_staff")->perform_action(this_object(),
+            r < 50 ? "crazy" : (r < 80 ? "stun" : "hide"), query_opponent());
+    }
 }
 
 // ------------------------------------------------------------------
@@ -56,7 +119,7 @@ int accept_info(object ob, string type)
     return type == "skills";
 }
 
-/* 拜師條件：平民（尚未加入任何職業）。拜師後成為武者（哭笑門弟子）。 */
+/* 拜師條件：平民（尚未加入任何職業）。拜師後成為武者（稱號「哭笑門武士」）。 */
 int accept_apprentice(object me)
 {
     if( me->query_class() != "commoner" ) {
@@ -70,7 +133,7 @@ int init_apprentice(object me)
 {
     if( ::init_apprentice(me) ) {
         me->set_class("fighter");
-        me->set("title", "哭笑門弟子");
+        me->set("title", "哭笑門武士");
         me->set("custom_faction", FACTION);
         command("emote 先是仰天大笑，繼而又眼眶泛紅，好一會兒才止住。");
         command("say 好，從今日起，你就是哭笑門的人了。");

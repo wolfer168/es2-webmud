@@ -72,7 +72,8 @@ void skill_advanced(object me, string skill)
         tell_object(me, HIW "你修煉寒梅心法有成，已經修完了十重基本心法。\n"
             "你的膂力增加了。\n"
             "你的膽識增加了。\n"
-            "你的精、氣因為長年修煉寒梅心法增進不少。\n" NOR);
+            "你的精因為長年修煉寒梅心法增進不少。\n"
+            "你的氣因為長年修煉寒梅心法增進不少。\n" NOR);
     }
 }
 
@@ -116,7 +117,7 @@ int do_refresh(object me)
         return notify_fail("你的氣不夠﹐無法運起寒梅心法回復精神。\n");
     me->consume_stat("kee", cost);
     me->supplement_stat("gin", sk);
-    message_vision("$N運起寒梅心法﹐一股清冷真氣直透靈台﹐精神為之一振。\n", me);
+    message_vision("$N運起寒梅心法﹐一股清冷真氣直透靈台﹐精神為之一振。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -134,7 +135,7 @@ int do_recover(object me)
     me->consume_stat("gin", cost);
     me->heal_stat("kee", 10 + sk / 8);
     me->supplement_stat("kee", 10 + sk / 5);
-    message_vision("$N運起寒梅心法調息療傷﹐臉色漸漸好轉。\n", me);
+    message_vision(HIW "$N運起寒梅心法調息療傷﹐臉色漸漸好轉。\n" NOR, me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -171,7 +172,7 @@ int do_mirror(object me)
     me->add_temp("apply/intimidate", intimidate);
     me->add_temp("apply/attack", attack);
     me->set_temp("hainmay/mirror", 1);
-    message_vision(HIW "$N心靜若水眼明如鏡﹐竟漸入【 明 鏡 止 水 】之境界！\n" NOR, me);
+    message_vision(HIW "$N心靜若水眼明如鏡﹐竟漸入【 明 鏡 止 水 】之境界！\n" NOR, me, 0, 1);
     call_out("remove_mirror", duration * 2, me, intimidate, attack);
     return 1;
 }
@@ -180,7 +181,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "hainmay force":
-        message_vision(HIY "$N盤膝坐定﹐默運寒梅心法﹐一股清冷之氣在週身經脈流轉。\n" NOR, me);
+        message_vision(HIW "$N盤膝坐定﹐默運寒梅心法﹐一股清冷之氣在週身經脈流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":

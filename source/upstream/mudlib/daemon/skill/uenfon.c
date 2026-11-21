@@ -83,7 +83,7 @@ void attack_using(object me, object opponent, object weapon)
             if( random(100) < point_chance(me) ) {
                 message_vision("\n" HIY "$N手中" + weapon->name() + "疾顫﹐"
                     + "眨眼間已連點$n身上三處大穴﹐$n手足一麻登時動彈不得﹗\n\n" NOR,
-                    me, opponent);
+                    me, opponent, 1);
                 opponent->start_busy(2);
             }
         }

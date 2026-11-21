@@ -306,10 +306,11 @@ html.embed .tools { padding-top: 10px; }
     return room ? `<button class="linkish" data-room="${esc(r)}">${esc(room.short)}</button><span class="hint">（${esc(areaOfRoom[r] || '')}）</span>` : '';
   }
   function whereHtml(it) {
-    const by = { room: [], npc: [], shop: [] };
+    const by = { room: [], npc: [], shop: [], draw: [] };
     (it.src || []).forEach(([k, ref]) => (by[k] || (by[k] = [])).push(ref));
     const parts = [];
     if (by.shop.length) parts.push('販售：' + by.shop.map(npcLink).join('、'));
+    if (by.draw.length) parts.push('兌換（河魚腹珠抽獎）：' + by.draw.map(npcLink).join('、'));
     if (by.craft && by.craft.length) parts.push('方士煉製');
     if (by.npc.length) parts.push('身上帶著：' + by.npc.map(npcLink).join('、'));
     if (by.room.length) parts.push('擺放在：' + by.room.map(roomLink).join('、'));
@@ -480,6 +481,7 @@ html.embed .tools { padding-top: 10px; }
     const t = [];
     if (n.faction) t.push(facById[n.faction].name);
     if (n.sells.length) t.push('商人');
+    if ((n.draws || []).length) t.push('兌換獎品');
     if (n.teaches.length) t.push('傳授武藝');
     if (n.wander) t.push('四處走動');
     return t;
@@ -504,6 +506,7 @@ html.embed .tools { padding-top: 10px; }
       `<dl class="kv">${n.title ? `<dt>稱號</dt><dd>${ansi(n.title)}</dd>` : ''}<dt>出沒地點</dt><dd>${rooms}${n.wander ? '<span class="hint">（會四處走動）</span>' : ''}</dd>` +
       (n.faction ? `<dt>門派</dt><dd>${facLink(n.faction)}</dd>` : '') +
       (n.sells.length ? `<dt>販賣</dt><dd>${n.sells.map(itemLink).join('、')}</dd>` : '') +
+      ((n.draws || []).length ? `<dt>兌換</dt><dd>拿河魚腹珠給他，一顆抽一次，可能得到：${n.draws.map(([i, c]) => itemLink(i) + (c > 1 ? ` ×${c}` : '')).join('、')}</dd>` : '') +
       (n.teaches.length ? `<dt>傳授</dt><dd>${n.teaches.map(skillLink).join('、')}</dd>` : '') +
       (eq ? `<dt>身上的東西</dt><dd>${eq}</dd>` : '') + `</dl>`;
   }
@@ -615,13 +618,13 @@ html.embed .tools { padding-top: 10px; }
     ['yaksa', '夜叉'], ['ashura', '阿修羅'],
   ];
   // 數值欄預設空白，灰字範例只是提示（使用者指示，2026-11-19）；空白的欄位不當成 0 帶入結果。
-  const CALC_HINT = { sg: '例：1000', sk: '例：300', ss: '例：300', big: '例：0', tg: '例：1000', tk: '例：300', ts: '例：300' };
-  const calcVals = { sg: '', sk: '', ss: '', tg: '', tk: '', ts: '', race: 'human', big: '' };
+  const CALC_HINT = { sg: '例：1000', sk: '例：300', ss: '例：300', souls: '例：0', tg: '例：1000', tk: '例：300', ts: '例：300' };
+  const calcVals = { sg: '', sk: '', ss: '', tg: '', tk: '', ts: '', race: 'human', souls: '' };
   try { Object.assign(calcVals, JSON.parse(localStorage.getItem('es2codex-devour2') || '{}')); } catch (e) {}
   const num = x => (x === '' || x == null) ? 0 : Math.max(0, Math.floor(Number(x)) || 0);
 
   function devourEstimate(v) {
-    const n = num(v.big), sg = num(v.sg), G0 = num(v.tg);
+    const n = num(v.souls), sg = num(v.sg), G0 = num(v.tg);
     const yaksa = v.race === 'yaksa';
     const extra = n >= 10 ? n - 9 : 0;
     const need = yaksa ? 250 + 25 * extra : 500 + 50 * extra;
@@ -643,9 +646,8 @@ html.embed .tools { padding-top: 10px; }
     if (v.sg === '' || v.tg === '')
       return '<h3>結果</h3><p class="hint" style="margin:0">填入你和目標的精最大值後，這裡會顯示估算結果。</p>';
     const r = devourEstimate(v);
-    const lines = [`<p class="hint" style="margin:0">這是你第 ${r.n + 1} 次有效吞魂（依你填的大幅次數估算），門檻 ${r.need}${r.yaksa ? '（夜叉族的魂魄門檻減半）' : ''}。</p>`];
-    // 前 10 次有效吞魂一定是大幅，所以大幅次數未滿 10 時就等於有效次數；滿 10 次後可能有小幅，實際門檻可能更高。
-    if (r.n >= 10) lines.push('<p class="hint" style="margin:0">大幅次數已滿十次：之後可能有過小幅增加，實際的有效吞魂次數與門檻可能比這裡高。</p>');
+    // 每吞完一隻玩家魂魄都算一隻（2026-11-20），門檻與大幅機率都看隻數。
+    const lines = [`<p class="hint" style="margin:0">這是你吞的第 ${r.n + 1} 縷魂魄，門檻 ${r.need}${r.yaksa ? '（夜叉族的魂魄門檻減半）' : ''}。</p>`];
     if (!r.ghostOk || !r.selfOk) {
       const why = [];
       if (!r.ghostOk) why.push(`目標的精最大值 ${v.tg} 未達門檻`);
@@ -829,7 +831,7 @@ html.embed .tools { padding-top: 10px; }
       `<button class="chip" data-sub="${esc(c.key)}" aria-pressed="${cur === c.key}">${esc(c.label)}</button>`).join('') + '</div>';
     const form = `<div class="calc-form">
       <fieldset><legend>你（夜叉）</legend>${numField('sg', '精最大值')}${numField('sk', '氣最大值')}${numField('ss', '神最大值')}
-        ${numField('big', '大幅次數')}<p class="hint" style="margin:0">大幅次數：至今吞下的魂魄中令你功力大進的次數，在遊戲裡不加目標吞魂就能查看。</p></fieldset>
+        ${numField('souls', '已吞魂魄')}<p class="hint" style="margin:0">已吞魂魄：至今吞噬過幾縷玩家的魂魄（沒達門檻、小幅增加的也算），在遊戲裡不加目標吞魂就能查看。</p></fieldset>
       <fieldset><legend>目標（玩家的鬼魂）</legend>${numField('tg', '精最大值')}${numField('tk', '氣最大值')}${numField('ts', '神最大值')}
         <label class="calc-field" for="calc-race"><span>種族</span><select id="calc-race" data-calc="race">${RACES.map(([k, l]) => `<option value="${k}"${calcVals.race === k ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
         <p class="hint" style="margin:0">填目標角色的最大值，不是變成鬼魂後剩下的量。目標的氣、神不影響結果。</p></fieldset>

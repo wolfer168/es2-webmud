@@ -34,7 +34,7 @@ private void create()
     });
 
     art_entry     = 20;
-    art_entry_msg = "你終於練成了青邪杖法。\n";
+    art_entry_msg = HIW "你終於練成了青邪杖法。\n" NOR;
 
     ma_coef  = 10;
     mm_start = 30;
@@ -82,7 +82,7 @@ string parry_message(object me, object attacker, int full)
     })[random(5)];
 }
 
-/* 反震（使用者定案，2026-11-17）：青邪杖法 90 級起，內功 enable 大邪心法且大邪心法 100 級起，
+/* 反震（使用者定案，2026-11-17；2026-11-19 補：必須手持用青邪杖法的單手杖或雙手杖）：青邪杖法 90 級起，內功 enable 大邪心法且大邪心法 100 級起，
  * 格擋成功（含完全擋下）有 青邪杖法/400 的機會反震，
  * 對手損失 大邪心法/4 ～ 大邪心法/3 點氣。等對方這一擊的訊息顯示完再反震。 */
 void do_reflect(object me, object attacker)
@@ -94,9 +94,18 @@ void do_reflect(object me, object attacker)
 
     f = me->query_skill("huge force", 1);
     dmg = f / 4 + random(f / 3 - f / 4 + 1);
-    message_vision(HIW "$N受到$n霸道的大邪真氣反震！\n" NOR, attacker, me);
+    message_vision(HIW "$N受到$n霸道的大邪真氣反震！\n" NOR, attacker, me, 1);   // 整句一行、不自動斷行（使用者指示，2026-11-19）
     attacker->receive_damage(dmg, me, me);
     if( objectp(attacker) ) show_status(attacker, kee_ratio(attacker));
+}
+
+/* 手持的杖正是用青邪杖法（單手杖或雙手杖其一）。反震只有這時候才會發動，空手或拿其他兵器都不行。 */
+private int holding_chin_staff(object me)
+{
+    foreach( string usage in ({ "twohanded staff", "staff" }) )
+        if( objectp(me->query_temp("weapon/" + usage)) && me->skill_mapped(usage) == art_id )
+            return 1;
+    return 0;
 }
 
 void parry_success(object me, object attacker, int full)
@@ -104,6 +113,7 @@ void parry_success(object me, object attacker, int full)
     int sk;
 
     if( !objectp(attacker) || !attacker->is_character() ) return;
+    if( !holding_chin_staff(me) ) return;
     sk = me->query_skill(art_id, 1);
     if( sk < REFLECT_ART_LEVEL ) return;
     if( me->skill_mapped("force") != "huge force" ) return;
@@ -174,12 +184,16 @@ private int natural_armor(object ob)
 private int do_crazy(object me, object victim, object weapon)
 {
     int i, n;
+    mapping mv;
 
-    message_vision(BLU "$N一式" HIR "【殘蟻瘋魔杖】" NOR BLU "﹐雙臂肌肉暴起﹐向$n發起瘋狂的攻擊！\n" NOR, me, victim);
+    message_vision(BLU "$N一式" HIR "【殘 蟻 瘋 魔 杖】" NOR BLU "﹐雙臂肌肉暴起﹐向$n發起瘋狂的攻擊！\n" NOR, me, victim, 1);   // 整句一行、不自動斷行（使用者指示，2026-11-19）
     n = 1 + me->query_skill(art_id, 1) / 50;
     for( i = 0; i < n; i++ ) {
         if( !can_follow(me, victim) ) break;
-        special_hit(me, victim, weapon, pick_move(me), 100, 100, 0);   // 隨機一招，照一般出手耗精
+        // 隨機一招，照一般出手耗精；命中能力（攻擊能力 + 技能 + 招式係數）提高三倍（使用者指示，2026-11-19）。
+        mv = copy(pick_move(me));
+        mv["attack"] += 2 * (me->query_ability("attack") + me->query_skill(art_id, 1) + mv["attack"]);
+        special_hit(me, victim, weapon, mv, 100, 100, 0);
     }
     return 1;
 }
@@ -187,8 +201,8 @@ private int do_crazy(object me, object victim, object weapon)
 /* stun：哭笑不得也。 */
 private int do_stun(object me, object victim, object weapon)
 {
-    message_vision("$N怪叫一聲豎起手中杖使出" HIY "【哭笑不得也】" NOR "﹐凝聚週身氣力向地面狠狠一砸！\n", me, victim);
-    message_vision(CYN "$n下盤不穩﹐被震了個正著﹐一屁股坐倒在地上。\n" NOR, me, victim);
+    message_vision("$N怪叫一聲豎起手中杖使出" HIY "【哭 笑 不 得 也】" NOR "﹐凝聚週身氣力向地面狠狠一砸！\n", me, victim, 1);   // 整句一行、不自動斷行（使用者指示，2026-11-19）
+    message_vision(CYN "$n下盤不穩﹐被震了個正著﹐一屁股坐倒在地上。\n" NOR, me, victim, 1);   // 整句一行、不自動斷行（使用者指示，2026-11-19）
     victim->start_busy(2);
     return 1;
 }
@@ -208,7 +222,7 @@ void hide_burst(object me, object victim)
     dmg = sk + random(sk / 2 + 1) + me->query_attr("str");
     armor = natural_armor(victim);
     dmg -= armor;
-    message_vision(HIR "$N先前打入$n體內的大邪真氣忽然爆發開來﹐$n只覺周身氣血翻騰！\n" NOR, me, victim);
+    message_vision(HIR "$N先前打入$n體內的大邪真氣忽然爆發開來﹐$n只覺周身氣血翻騰！\n" NOR, me, victim, 1);   // 整句一行、不自動斷行（使用者指示，2026-11-19）
     if( dmg > 0 ) victim->receive_damage(dmg, me, me);
     if( objectp(victim) ) show_status(victim, kee_ratio(victim));
 }
@@ -219,7 +233,7 @@ private int do_hide(object me, object victim, object weapon)
     int sk;
 
     sk = me->query_skill(art_id, 1);
-    message_vision(BLU "$N擬聚大邪真氣使出" HIW "【殘蟻逐食杖】" NOR BLU "﹐連擊$n周身大穴！\n" NOR, me, victim);
+    message_vision(BLU "$N擬聚大邪真氣使出" HIW "【殘 蟻 逐 食 杖】" NOR BLU "﹐連擊$n周身大穴！\n" NOR, me, victim, 1);   // 整句一行、不自動斷行（使用者指示，2026-11-19）
     victim->receive_damage(sk / 2, me, me);   // 必中
     if( objectp(victim) ) show_status(victim, kee_ratio(victim));
     if( can_follow(me, victim) )
@@ -242,7 +256,7 @@ int perform_action(object me, string act, object target)
     }
 
     if( !objectp(weapon = staff_in_hand(me)) )
-        return notify_fail("你必須手持杖才能施展" + name + "。\n");
+        return notify_fail("你必須持杖才能施展" + name + "。\n");
     victim = pick_target(me, target);
     if( !objectp(victim) )
         return notify_fail("你並未與這個人交手。\n");

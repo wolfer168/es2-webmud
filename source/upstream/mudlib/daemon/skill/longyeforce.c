@@ -119,7 +119,7 @@ int do_refresh(object me)
     me->damage_stat("kee", 2 + sk / 20);
     me->heal_stat("gin", 5 + sk / 5);
     me->supplement_stat("gin", 10 + sk / 2);
-    message_vision(HIB "$N悄悄吐納了幾口氣﹐眼中的倦意一掃而空。\n" NOR, me, 0, 1);
+    message_vision(HIC "$N悄悄吐納了幾口氣﹐眼中的倦意一掃而空。\n" NOR, me, 0, 1);
     me->start_busy(2);
     return 1;
 }

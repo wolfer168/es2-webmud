@@ -58,9 +58,9 @@ void skill_completed(object me, string skill)
  *   ({ 等級門檻, 精氣上限各加多少, 膽識與根骨各加多少, 敘述第一句, 舊版（120／140／160）的領取記號 })
  * 領過的境界記在 celestial_force/tier_<第幾境>；舊版已領的照舊算已領，不會重複給。 */
 private mixed *MILESTONE = ({
-    ({ 140, 20, 1, "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。", "bonus_120" }),
-    ({ 160, 40, 2, "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。", "bonus_140" }),
-    ({ 190, 60, 4, "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。", "bonus_160" }),
+    ({ 140, 20, 1, HIY "你的天邪神功漸入佳境﹐丹田中隱隱有虎嘯之聲。" NOR, "bonus_120" }),
+    ({ 160, 40, 2, HIY "你的天邪神功又進一層﹐霸道的真氣在百脈間奔騰不息。" NOR, "bonus_140" }),
+    ({ 190, 60, 4, HIY "你的天邪神功已臻化境﹐週身真氣鼓盪﹐有如猛虎下山。" NOR, "bonus_160" }),
 });
 
 private void give_milestones(object me, int lv)
@@ -78,10 +78,12 @@ private void give_milestones(object me, int lv)
         me->advance_stat("kee", m[1]);
         me->set_attr("cor", me->query_attr("cor", 1) + m[2]);
         me->set_attr("con", me->query_attr("con", 1) + m[2]);
-        tell_object(me, HIY + m[3] + "\n"
-            "你的膽識增加了。\n"
-            "你的根骨增加了。\n"
-            "你的精、氣因為修煉天邪神功增進不少。\n" NOR);
+        // 境界敘述與膽識、根骨黃色；精、氣增加用預設色（使用者指示，2026-11-20）。
+        tell_object(me, m[3] + "\n"
+            HIY "你的膽識增加了。\n"
+            "你的根骨增加了。\n" NOR
+            "你的精因為修煉天邪神功增進不少。\n"
+            "你的氣因為修煉天邪神功增進不少。\n");
     }
 }
 
@@ -127,7 +129,33 @@ int halt_exercise(object me, object owner, object from, string how)
     return 1;
 }
 
-/* heal：扣 天邪神功/20 的神，回復 天邪神功/2 + 根骨 的氣，並回復同量受傷的氣上限。 */
+/* 天邪虎嘯的內息不順（使用者定案，2026-11-20）：
+ *   天邪神功 140 起才能吼；玩家吼完有機率內息不順（140 級 75%，200 級 20%，中間依等級平均遞減），
+ *   期間不能再吼，只能用 heal 調順（戰鬥中 140 級 25%、200 級 50%，非戰鬥機率加倍）。
+ *   狀態記在暫存資料，下線即清除；NPC 不受影響。 */
+#define ROAR_LEVEL      140
+#define ROAR_BLOCK      "celestial/roar_blocked"
+
+int roar_block_chance(int sk)
+{
+    if( sk >= 200 ) return 20;
+    if( sk <= ROAR_LEVEL ) return 75;
+    return 75 - (sk - ROAR_LEVEL) * 55 / 60;
+}
+
+int roar_recover_chance(int sk, int fighting)
+{
+    int c;
+
+    if( sk >= 200 ) c = 50;
+    else if( sk <= ROAR_LEVEL ) c = 25;
+    else c = 25 + (sk - ROAR_LEVEL) * 25 / 60;
+    if( !fighting ) c *= 2;
+    return c > 100 ? 100 : c;
+}
+
+/* heal：扣 天邪神功/20 的神，回復 天邪神功/2 + 根骨 的氣，並回復同量受傷的氣上限；
+ * 內息不順時另外判定能否調順。 */
 int do_heal(object me)
 {
     int sk, cost, n;
@@ -140,7 +168,14 @@ int do_heal(object me)
     me->consume_stat("sen", cost);
     me->heal_stat("kee", n);
     me->supplement_stat("kee", n);
-    message_vision("$N運起天邪神功﹐一股熾熱的真氣在週身遊走﹐傷勢漸漸好轉。\n", me);
+    message_vision(HIY "$N運起天邪神功﹐一股熾熱的真氣在週身遊走﹐傷勢漸漸好轉。\n" NOR, me, 0, 1);
+    if( me->query_temp(ROAR_BLOCK) ) {
+        if( random(100) < roar_recover_chance(sk, me->is_fighting()) ) {
+            me->delete_temp(ROAR_BLOCK);
+            tell_object(me, CYN "你運轉天邪神功一周天﹐窒塞的內息漸漸暢通。\n" NOR);
+        } else
+            tell_object(me, "你試著導引內息﹐胸口仍隱隱窒悶﹐看來還得再調息一番。\n");
+    }
     return 1;
 }
 
@@ -160,6 +195,10 @@ int do_roar(object me)
         return notify_fail("你並未與人交手﹐無須發出天邪虎嘯。\n");
 
     sk = me->query_skill("celestial force", 1);
+    if( sk < ROAR_LEVEL )
+        return notify_fail("你的天邪神功火候未到﹐還發不出天邪虎嘯。\n");
+    if( me->query_temp(ROAR_BLOCK) )
+        return notify_fail("你的內息尚未調順﹐此時強行運氣只怕傷及經脈。\n");
     cost = sk / 20;
     if( me->query_stat("sen") <= cost )
         return notify_fail("你的神不夠﹐無法發出天邪虎嘯。\n");
@@ -182,6 +221,10 @@ int do_roar(object me)
     }
     me->supplement_stat("kee", sk / 2);
     me->start_busy(1);
+    if( userp(me) && random(100) < roar_block_chance(sk) ) {
+        me->set_temp(ROAR_BLOCK, 1);
+        tell_object(me, HIY "你吼聲方歇﹐只覺胸口一窒﹐內息竟有些不順。\n" NOR);
+    }
     return 1;
 }
 
@@ -214,7 +257,7 @@ int do_ghost(object me)
     me->add_temp("apply/intimidate", intimidate);
     me->add_temp("apply/vision_of_ghost", 1);
     me->set_temp("celestial/ghost", 1);
-    message_vision(HIB "$N運起天邪神功凝聚雙目﹐眼中泛起一層幽幽的青光。\n" NOR, me);
+    message_vision(HIB "$N運起天邪神功凝聚雙目﹐眼中泛起一層幽幽的青光。\n" NOR, me, 0, 1);
     call_out("remove_ghost", duration * 2, me, aware, intimidate);
     return 1;
 }
@@ -223,7 +266,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "celestial force":
-        message_vision(HIY "$N盤膝坐定﹐默運天邪神功﹐丹田中一股霸道的真氣緩緩流轉。\n" NOR, me);
+        message_vision(HIY "$N盤膝坐定﹐默運天邪神功﹐丹田中一股霸道的真氣緩緩流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "heal":

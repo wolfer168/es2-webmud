@@ -35,8 +35,8 @@ private void create()
     mm_start = 30;
     mm_minus = 29;
     mm_coef  = 10;
-    mm_first_msg = "你將三門刀法反覆演練﹐漸漸體會到「攻守之間﹐門戶自分」的道理﹐\n"
-                   + "對武學之道有了初步的領悟﹗\n";
+    /* 練成訊息（使用者指示，2026-11-20）；原本首次獲得武學之道的訊息拿掉了。 */
+    level_msgs = ([ 1: HIW "你對三門刀法已經有所領悟。" NOR "\n" ]);
 
     DAEMON_D->register_skill_daemon("ksanmando");
     setup();
@@ -50,7 +50,7 @@ private void three_gates(object me, object opponent, object weapon, mapping *lis
     int *ratios = ({}), max, r;
 
     message_vision(HIY "$N三刀接連得手﹐刀勢不停﹐將方才三招一氣呵成﹐再使一遍﹗\n" NOR,
-        me, opponent);
+        me, opponent, 1);
 
     foreach(m in list) {
         if( !objectp(opponent) || environment(opponent) != environment(me) ) break;
@@ -64,7 +64,7 @@ private void three_gates(object me, object opponent, object weapon, mapping *lis
     }
 
     if( objectp(opponent) )
-        foreach(r in ratios) message_vision(COMBAT_D->status_msg(r), opponent);
+        foreach(r in ratios) message_vision(COMBAT_D->status_msg(r), opponent, 0, 1);
 }
 
 /* 連中紀錄：最近三招都造成傷害時判定一次（往後滑）；沒中就歸零。

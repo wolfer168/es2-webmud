@@ -41,7 +41,7 @@ int query_entry_level() { return 10; }
 
 void skill_completed(object me, string sk)
 {
-    tell_object(me, HIY "你已經掌握了五行迷蹤步。\n" NOR);
+    tell_object(me, HIW "你已經掌握了五行迷蹤步。\n" NOR);
 }
 
 /* 每級獎勵（超過學成等級才給）：武術造詣 等級 × 10；

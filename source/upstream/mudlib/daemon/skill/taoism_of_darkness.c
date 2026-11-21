@@ -36,7 +36,7 @@ int query_entry_threshold() { return 30000; }
 
 void skill_completed(object me, string skill)
 {
-    tell_object(me, HIK "你對著少陰符低誦咒文﹐指間忽地竄起一點幽綠的火光﹐茅山奇術總算入了門。\n" NOR);
+    tell_object(me, GRN "你對著少陰符低誦咒文﹐指間忽地竄起一點幽綠的火光﹐茅山奇術總算入了門。\n" NOR);
 }
 
 // ------------------------------------------------------------------
@@ -96,12 +96,12 @@ void blank(object me)
 
 string spell_title(string spell)
 {
-    return "「" NOR RED + SPELLS[spell][3] + NOR HIK "」";
+    return RED "「" + SPELLS[spell][3] + "」" HIK;
 }
 
 void start_line(object me, object target, string spell)
 {
-    say_line(me, target, "$N拈起一張少陰符﹐口中念念有詞﹐開始施展" + spell_title(spell) + " ....");
+    say_line(me, target, HIK "$N拈起一張少陰符﹐口中念念有詞﹐開始施展" + spell_title(spell) + " ...." NOR);
     blank(me);
 }
 
@@ -129,16 +129,16 @@ int do_fire(object me, object target, string spell, int sen)
 
     start_line(me, target, spell);
     if( spell == "ghost_fire" )
-        say_line(me, target, "$N將少陰符夾在指間一晃﹐符紙化作一團幽綠鬼火﹐飄飄忽忽地撲向$n。");
+        say_line(me, target, HIK "$N將少陰符夾在指間一晃﹐符紙化作一團幽綠鬼火﹐飄飄忽忽地撲向$n。" NOR);
     else
-        say_line(me, target, "$N雙手捧起少陰符﹐符紙忽地化作一團青黑色的冥火﹐挾著陰風捲向$n。");
+        say_line(me, target, HIK "$N雙手捧起少陰符﹐符紙忽地化作一團青黑色的冥火﹐挾著陰風捲向$n。" NOR);
     blank(me);
 
     if( !SPELLS_D->spell_hits(me, target, "darkness", 1) ) {
         if( spell == "ghost_fire" )
-            say_line(me, target, "$n側身一讓﹐鬼火擦肩飄過﹐在半空中無聲熄滅。");
+            say_line(me, target, HIK "$n側身一讓﹐鬼火擦肩飄過﹐在半空中無聲熄滅。" NOR);
         else
-            say_line(me, target, "$n拚命往旁一滾﹐冥火落在地上﹐燒出一圈焦黑的痕跡。");
+            say_line(me, target, HIK "$n拚命往旁一滾﹐冥火落在地上﹐燒出一圈焦黑的痕跡。" NOR);
         return 0;
     }
 
@@ -151,14 +151,14 @@ int do_fire(object me, object target, string spell, int sen)
     // 練武假人是死物：只寫外觀留下的痕跡（使用者定案，2026-11-19，見 docs/NPC_DUMMY.md）。
     if( target->query("training_dummy") ) {
         if( spell == "ghost_fire" )
-            say_line(me, target, "鬼火貼著$n一燎﹐在$n身上留下一圈幽綠的焦痕。");
+            say_line(me, target, HIK "鬼火貼著$n一燎﹐在$n身上留下一圈幽綠的焦痕。" NOR);
         else
-            say_line(me, target, "冥火轟然撲上$n﹐烈焰翻騰﹐將$n燒得一片焦黑。");
+            say_line(me, target, HIK "冥火轟然撲上$n﹐烈焰翻騰﹐將$n燒得一片焦黑。" NOR);
     }
     else if( spell == "ghost_fire" )
-        say_line(me, target, "鬼火貼著$n的身子一燎﹐$n只覺一股陰寒直透骨髓。");
+        say_line(me, target, HIK "鬼火貼著$n的身子一燎﹐$n只覺一股陰寒直透骨髓。" NOR);
     else
-        say_line(me, target, "冥火轟然撲上$n的身子﹐燒得$n慘號連連﹐彷彿連魂魄都要焚盡了。");
+        say_line(me, target, HIK "冥火轟然撲上$n的身子﹐燒得$n慘號連連﹐彷彿連魂魄都要焚盡了。" NOR);
     if( objectp(target) ) COMBAT_D->report_status(target);
     award_spell_hit(me, dealt);
     return 1;
@@ -179,7 +179,7 @@ int do_smoke(object me)
         return notify_fail("你並未與人交手﹐用不著遁入煙中。\n");
 
     start_line(me, 0, "smoke");
-    say_line(me, 0, "$N將少陰符往腳下一擲﹐地上騰起一股灰黑濃煙﹐霎時將$N的身形吞沒。");
+    say_line(me, 0, HIK "$N將少陰符往腳下一擲﹐地上騰起一股灰黑濃煙﹐霎時將$N的身形吞沒。" NOR);
     blank(me);
 
     eff = (me->query_skill("sneak") + me->query_skill("taoism of darkness")) / 2;
@@ -240,8 +240,8 @@ varargs int cast_spell(object me, string spell, object target)
         hit = 1;
     }
     scroll->add_amount(-1);
-    // 每次施展得法術修為 random(慧根/6) + 1（比照天師咒術）。
-    me->gain_score("magic", (wis >= 6 ? random(wis / 6) : 0) + 1);
+    // 每次施展得法術修為 random(靈性/2) + 1（比照天師咒術，2026-11-20 改）。
+    me->gain_score("magic", random(me->query_attr("spi") / 2) + 1);
     if( spell != "smoke" ) hit = do_fire(me, target, spell, sen);
 
     spell_gain(me, SPELLS[spell][2], hit);

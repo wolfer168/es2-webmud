@@ -27,6 +27,9 @@ int main(object me, string arg)
         message_vision("$N用巫師的神力停止了這場打鬥。\n", me);
     } else {
         me->remove_all_enemy();
+        /* 敵人仍在（性命相搏）就沒有真的停手，不計疲勞；真的停下才 +3，只計一次 */
+        if( userp(me) && !me->is_fighting() )
+            me->supplement_stat("fatigue", 3);
         message_vision("$N向後一躍，離開戰圈罷手不鬥了。\n", me);
     }
 

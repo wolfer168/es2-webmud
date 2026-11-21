@@ -49,7 +49,7 @@ private void create()
     // 練成 20 級（使用者定案，2026-11-14）；之後每級武術造詣 等級 × 10，
     // 武學之道 (等級 - 50) × 10，51 級起。
     art_entry     = 20;
-    art_entry_msg = "你終於練成了玄天劍訣﹐劍意沉靜內斂﹐隱隱有雲氣在劍鋒之間流轉。\n";
+    art_entry_msg = HIY "你終於練成了玄天劍訣﹐劍意沉靜內斂﹐隱隱有雲氣在劍鋒之間流轉。\n" NOR;
 
     ma_coef  = 10;
     mm_start = 51;
@@ -168,20 +168,20 @@ private int hold_action(object me, object victim)
     if( victim->query("training_dummy") ) {
         if( random(100) < hold_chance(me) )
             message_vision(say_it("hold", "$N左手劍訣一指﹐使出",
-                "﹐一道沉靜的劍意籠住$n﹐$n依舊紋絲不動"), me, victim);
+                "﹐一道沉靜的劍意籠住$n﹐$n依舊紋絲不動"), me, victim, 1);
         else
             message_vision(say_it("hold", "$N劍訣一指﹐",
-                "的劍意罩向$n﹐卻散而不聚"), me, victim);
+                "的劍意罩向$n﹐卻散而不聚"), me, victim, 1);
         return 1;
     }
     if( random(100) < hold_chance(me) ) {
         message_vision(say_it("hold", "$N左手劍訣一指﹐使出",
-            "﹐一道沉靜的劍意籠住$n﹐$n只覺周身氣機一滯"), me, victim);
+            "﹐一道沉靜的劍意籠住$n﹐$n只覺周身氣機一滯"), me, victim, 1);
         victim->start_busy(2);
     }
     else
         message_vision(say_it("hold", "$N劍訣一指﹐",
-            "的劍意罩向$n﹐$n卻心神一凝﹐掙開了去"), me, victim);
+            "的劍意罩向$n﹐$n卻心神一凝﹐掙開了去"), me, victim, 1);
     return 1;
 }
 
@@ -205,26 +205,26 @@ private int break_action(object me, object victim, string act)
         // 練武假人是死物：失敗敘述不寫對方的反應（使用者定案，2026-11-19）。
         switch(act) {
         case "kee-break":
-            message_vision(say_it(act, "$N使出", "﹐劍氣點向$n﹐卻偏了開去"), me, victim);
+            message_vision(say_it(act, "$N使出", "﹐劍氣點向$n﹐卻偏了開去"), me, victim, 1);
             break;
         case "gin-break":
-            message_vision(say_it(act, "$N使出", "﹐劍意探向$n﹐卻無功而返"), me, victim);
+            message_vision(say_it(act, "$N使出", "﹐劍意探向$n﹐卻無功而返"), me, victim, 1);
             break;
         default:
-            message_vision(say_it(act, "$N使出", "﹐劍意無聲無息探向$n﹐卻半途散去"), me, victim);
+            message_vision(say_it(act, "$N使出", "﹐劍意無聲無息探向$n﹐卻半途散去"), me, victim, 1);
         }
         return 1;
     }
     if( failed ) {
         switch(act) {
         case "kee-break":
-            message_vision(say_it(act, "$N使出", "﹐劍氣點向$n的氣脈﹐卻被$n察覺偏了開去"), me, victim);
+            message_vision(say_it(act, "$N使出", "﹐劍氣點向$n的氣脈﹐卻被$n察覺偏了開去"), me, victim, 1);
             break;
         case "gin-break":
-            message_vision(say_it(act, "$N使出", "﹐劍意探向$n的靈台﹐$n卻凝神守住﹐劍意無功而返"), me, victim);
+            message_vision(say_it(act, "$N使出", "﹐劍意探向$n的靈台﹐$n卻凝神守住﹐劍意無功而返"), me, victim, 1);
             break;
         default:
-            message_vision(say_it(act, "$N使出", "﹐劍意無聲無息探向$n的心神﹐卻被$n一口氣斷了去路"), me, victim);
+            message_vision(say_it(act, "$N使出", "﹐劍意無聲無息探向$n的心神﹐卻被$n一口氣斷了去路"), me, victim, 1);
         }
         return 1;
     }
@@ -232,23 +232,23 @@ private int break_action(object me, object victim, string act)
     // 練武假人是死物：成功敘述不寫對方的反應（使用者定案，2026-11-19）；回流照舊。
     if( victim->query("training_dummy") ) switch(act) {
     case "kee-break":
-        message_vision(say_it(act, "$N" + wn + HIW + "輕輕一點﹐使出", "﹐一縷劍氣逕取$n﹐在$n身上留下一點細痕"), me, victim);
+        message_vision(say_it(act, "$N" + wn + HIW + "輕輕一點﹐使出", "﹐一縷劍氣逕取$n﹐在$n身上留下一點細痕"), me, victim, 1);
         break;
     case "gin-break":
-        message_vision(say_it(act, "$N" + wn + HIW + "微顫﹐使出", "﹐劍意直透$n﹐卻如石沉大海"), me, victim);
+        message_vision(say_it(act, "$N" + wn + HIW + "微顫﹐使出", "﹐劍意直透$n﹐卻如石沉大海"), me, victim, 1);
         break;
     default:
-        message_vision(say_it(act, "$N劍意隱於無形﹐使出", "﹐悄悄侵入$n﹐卻探不到半點心神"), me, victim);
+        message_vision(say_it(act, "$N劍意隱於無形﹐使出", "﹐悄悄侵入$n﹐卻探不到半點心神"), me, victim, 1);
     }
     else switch(act) {
     case "kee-break":
-        message_vision(say_it(act, "$N" + wn + HIW + "輕輕一點﹐使出", "﹐一縷劍氣逕取$n的氣脈﹐$n胸口一悶"), me, victim);
+        message_vision(say_it(act, "$N" + wn + HIW + "輕輕一點﹐使出", "﹐一縷劍氣逕取$n的氣脈﹐$n胸口一悶"), me, victim, 1);
         break;
     case "gin-break":
-        message_vision(say_it(act, "$N" + wn + HIW + "微顫﹐使出", "﹐劍意直透$n的靈台﹐$n眼前一花﹐精神為之一渙"), me, victim);
+        message_vision(say_it(act, "$N" + wn + HIW + "微顫﹐使出", "﹐劍意直透$n的靈台﹐$n眼前一花﹐精神為之一渙"), me, victim, 1);
         break;
     default:
-        message_vision(say_it(act, "$N劍意隱於無形﹐使出", "﹐悄悄侵入$n的心神﹐$n神思一恍"), me, victim);
+        message_vision(say_it(act, "$N劍意隱於無形﹐使出", "﹐悄悄侵入$n的心神﹐$n神思一恍"), me, victim, 1);
     }
 
     /* 傷害對手對應狀態的當前值；傷害的 1/4 恢復自身對應狀態的有效上限（格子），
@@ -257,7 +257,7 @@ private int break_action(object me, object victim, string act)
     victim->consume_stat(stat, dmg, me);
     me->heal_stat(stat, dmg / 4);
     me->supplement_stat(stat, dmg / 2);
-    message_vision(HIW "$N只覺一股精氣隨著劍意回流﹐丹田之中沉靜了許多。\n" NOR, me);
+    message_vision(HIW "$N只覺一股精氣隨著劍意回流﹐丹田之中沉靜了許多。\n" NOR, me, 0, 1);
     return 1;
 }
 

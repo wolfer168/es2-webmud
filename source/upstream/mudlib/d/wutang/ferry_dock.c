@@ -20,6 +20,8 @@ LONG
     ]));
     set("no_fight", 1);
     set("map/area", "五堂鎮");
+    set("fishing", 1);
+    set("detail/河水", "渡口邊的羿水清澈而平穩，木樁旁的水面下有魚群游動，船夫們說這裡的魚肥，閒著的人拿根釣竿垂釣 (fish) 倒也不會落空。");
     setup();
     replace_program(ROOM);
 }

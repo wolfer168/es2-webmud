@@ -109,7 +109,7 @@ int do_refresh(object me)
     cps = me->query_attr("cps");
     me->consume_stat("kee", cost);
     me->supplement_stat("gin", sk / 2 + (dex > 0 ? random(dex) : 0) + (cps > 0 ? random(cps) : 0));
-    message_vision("$N運起封山派內功﹐一股醇厚真氣流轉週身﹐精神為之一振。\n", me);
+    message_vision("$N運起封山派內功﹐一股醇厚真氣流轉週身﹐精神為之一振。\n", me, 0, 1);
     me->start_busy(1);
     return 1;
 }
@@ -127,7 +127,7 @@ int do_heal(object me)
     me->consume_stat("gin", cost);
     me->heal_stat("kee", 5 + sk / 10);
     me->supplement_stat("kee", 10 + sk / 5);
-    message_vision("$N運起封山派內功調息療傷﹐臉色漸漸好轉。\n", me);
+    message_vision("$N運起封山派內功調息療傷﹐臉色漸漸好轉。\n", me, 0, 1);
     me->start_busy(2);
     return 1;
 }
@@ -167,7 +167,7 @@ int do_focus(object me)
     me->add_temp("apply/defense", defense);
     me->add_temp("apply/damage", damage);
     me->set_temp("fonxan/focus", 1);
-    message_vision(HIW "$N凝神靜氣﹐將封山派內力運至週身﹐心神為之一凝。\n" NOR, me);
+    message_vision(HIW "$N凝神靜氣﹐將封山派內力運至週身﹐心神為之一凝。\n" NOR, me, 0, 1);
     call_out("remove_focus", duration * 2, me, intimidate, defense, damage);
     return 1;
 }
@@ -176,7 +176,7 @@ varargs int exert_function(object me, string func, object target)
 {
     switch(func) {
     case "fonxan force":
-        message_vision(HIY "$N盤膝坐定﹐默運封山派內功﹐一股醇厚真氣在週身經脈緩緩流轉。\n" NOR, me);
+        message_vision(HIY "$N盤膝坐定﹐默運封山派內功﹐一股醇厚真氣在週身經脈緩緩流轉。\n" NOR, me, 0, 1);
         me->start_busy((: do_exercise, me :), (: halt_exercise, me :));
         return 1;
     case "refresh":

@@ -102,7 +102,7 @@ void counter_attack(object me, object attacker, object weapon)
     if( environment(me) != environment(attacker) ) return;
     if( me->query_temp("weapon/sword") != weapon ) return;
 
-    message_vision("$N架開$n的攻擊﹐順勢舞出二道寒冷的劍氣直指$n週身要害！\n", me, attacker);
+    message_vision("$N架開$n的攻擊﹐順勢舞出二道寒冷的劍氣直指$n週身要害！\n", me, attacker, 1);
     for( i = 0; i < 2; i++ ) {
         if( !objectp(attacker) ) break;
         special_hit(me, attacker, weapon, 0, 100, i ? 0 : 100, HIT_MUST | HIT_SILENT);

@@ -816,14 +816,14 @@
       "id": "/d/wutang/dark_alley_e",
       "label": "暗巷",
       "area": "五堂鎮",
-      "x": 3,
-      "y": 0
+      "x": 4,
+      "y": 1
     },
     {
       "id": "/d/wutang/dark_alley_w",
       "label": "暗巷",
       "area": "五堂鎮",
-      "x": 2,
+      "x": 3,
       "y": 0
     },
     {
@@ -1847,8 +1847,8 @@
       "id": "/d/baihua/trail",
       "label": "荒野小徑",
       "area": "百花村",
-      "x": 2,
-      "y": 2
+      "x": 1,
+      "y": 1
     },
     {
       "id": "/d/baihua/road1",

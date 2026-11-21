@@ -90,6 +90,9 @@ private mapping sect = ([
             ([ "skill": "chitensword", "map": "sword", "level": 1 ]),
             ([ "skill": "chin_staff", "map": "staff", "level": 1 ]),
             ([ "skill": "chin_staff", "map": "twohanded staff", "level": 1 ]),
+            ([ "skill": "chin_staff", "map": "parry", "level": 1 ]),     // 使用者指示，2026-11-19：哭笑門 NPC 加上全部哭笑門武功
+            ([ "skill": "hesanzhang", "map": "unarmed", "level": 1 ]),
+            ([ "skill": "chin-steps", "map": "dodge", "level": 1 ]),
         }),
     ]),
     "fighter.snow": ([

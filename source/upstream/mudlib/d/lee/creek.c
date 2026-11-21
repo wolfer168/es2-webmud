@@ -15,6 +15,8 @@ LONG
         "north" : __DIR__"riverside_s",
         "west" : __DIR__"watermelon_n3"
     ]));
+    set("fishing", 1);
+    set("detail/溪水", "清淺的溪水貼著石塊流過，幾尾小魚在水底的卵石間悠游，坐在溪邊垂釣 (fish) 倒也愜意。");
     setup();
     replace_program(ROOM);
     set("map/area", "李家村");

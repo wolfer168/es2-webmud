@@ -102,7 +102,7 @@ private void heart_beat() {
     if (!this_object())
         return;
 
-    // 年齡跟著遊戲曆走：自創角起每過一個遊戲年長一歲（使用者指示，2026-11-06，見 CHAR_D update_age）。
+    // 年齡跟著上線時數走：這個角色每上線滿十二小時長一歲（使用者指示，2026-11-19，見 CHAR_D update_age）。
     CHAR_D->update_age(this_object());
 
     if (objectp(my_link))

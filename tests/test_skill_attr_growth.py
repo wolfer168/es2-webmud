@@ -43,5 +43,5 @@ def test_growth_mapping():
         'unarmed': 'str', 'force': 'con', 'dodge': 'dex', 'parry': 'cps', 'sneak': 'dex',
         'spells': 'spi', 'magic': 'spi', 'backstab': 'cor', 'killerhood': 'cor',
         'literate': 'int', 'archaic attainment': 'int', 'mysticism': 'int',
-        'absorption': 'wis',
+        'absorption': 'wis', 'halieutics': 'cps',
     }

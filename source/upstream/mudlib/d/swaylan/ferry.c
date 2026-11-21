@@ -16,6 +16,8 @@ LONG
     ]));
     set("no_fight", 1);
     set("map/area", "水嵐縣");
+    set("fishing", 1);
+    set("detail/河水", "棧橋下的羿水拍著樁腳，打著旋兒流過，樁邊的暗影裡有魚群徘徊，在橋邊垂釣 (fish) 想必有魚上鉤。");
     setup();
     replace_program(ROOM);
 }

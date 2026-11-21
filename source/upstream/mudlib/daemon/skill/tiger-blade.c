@@ -17,6 +17,7 @@ private void create()
     art_desc  = "虎刀門的看家刀法，刀勢霸道、殺氣濃重，只攻不守；"
                 + "功力催到十成時刀勢連綿不絕，一擊得手更會瘋狂追擊。";
     art_bonus = 0;
+    art_name_color = HIY;   // 招名輔色（docs/martial_arts/敘述顏色規劃.xlsx，2026-11-20）
 
     moves = ({
         ([ "name": "平地生雷", "attack": 9, "defense": -3, "force": 8, "bonus": 10, "damage_type": "割傷",
@@ -77,11 +78,11 @@ void attack_using(object me, object opponent, object weapon)
     if( me->query_skill("tiger-blade", 1) < 90 || ratio < 100 ) return;
     if( !objectp(opponent) || !living(opponent) || environment(me) != environment(opponent) ) return;
 
-    message_vision(HIR "$N一聲怒吼﹐勢如瘋虎般揮刀進擊！\n" NOR, me, opponent);
+    message_vision(HIR "$N一聲怒吼﹐勢如瘋虎般揮刀進擊！\n" NOR, me, opponent, 1);
     first_follow = strike(me, opponent, weapon);
 
     if( first_follow <= 0 || !objectp(opponent) || !living(opponent)
     ||  environment(me) != environment(opponent) ) return;
-    message_vision(HIR "$N一擊得手威勢更不可當﹐雙眼血紅﹐瘋狂追擊！\n" NOR, me, opponent);
+    message_vision(HIR "$N一擊得手威勢更不可當﹐雙眼血紅﹐瘋狂追擊！\n" NOR, me, opponent, 1);
     strike(me, opponent, weapon);
 }

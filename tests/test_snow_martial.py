@@ -26,8 +26,8 @@ def test_celestial_force():
     assert 'me->query_personal_skill_cap("tidy force")' in s
     assert 'me->advance_stat("gin", 1 + random(3));' in s and 'me->advance_stat("kee", 3);' in s
     assert 'me->advance_stat("sen", random(3));' in s
-    assert '({ 140, 20, 1, "你的天邪神功漸入佳境' in s and '({ 160, 40, 2, "你的天邪神功又進一層' in s
-    assert '({ 190, 60, 4, "你的天邪神功已臻化境' in s
+    assert '({ 140, 20, 1, HIY "你的天邪神功漸入佳境' in s and '({ 160, 40, 2, HIY "你的天邪神功又進一層' in s
+    assert '({ 190, 60, 4, HIY "你的天邪神功已臻化境' in s    # 練成訊息套敘述顏色規劃（2026-11-20）
     assert 'me->query("celestial_force/tier_" + (i + 1))' in s and 'me->query("celestial_force/" + m[4])' in s
     # heal：扣 sk/20 神，回 sk/2+根骨 的氣與格子
     assert 'n = sk / 2 + me->query_attr("con");' in s and 'me->heal_stat("kee", n);' in s
@@ -35,6 +35,11 @@ def test_celestial_force():
     assert 'foreach( ob in me->query_enemy() )' in s and 'ob->start_busy(2);' in s
     assert 'dmg = sk / 5 + me->query_attr("con");' in s and 'me->supplement_stat("kee", sk / 2);' in s
     assert 'me->start_busy(1);' in s and 'me->start_busy(2);' not in s
+    # 內息不順（2026-11-20）
+    assert '#define ROAR_LEVEL      140' in s and 'if( sk < ROAR_LEVEL )' in s
+    assert 'return 75 - (sk - ROAR_LEVEL) * 55 / 60;' in s and 'c = 25 + (sk - ROAR_LEVEL) * 25 / 60;' in s
+    assert 'if( !fighting ) c *= 2;' in s and 'if( userp(me) && random(100) < roar_block_chance(sk) )' in s
+    assert 'me->set_temp(ROAR_BLOCK, 1);' in s and 'me->delete_temp(ROAR_BLOCK);' in s
     # ghost：警覺 sk/2、攻勢 sk/4、陰陽眼、sk/5 回合
     assert 'aware = sk / 2;' in s and 'intimidate = sk / 4;' in s and 'duration = sk / 5;' in s
     assert 'me->add_temp("apply/vision_of_ghost", 1);' in s
