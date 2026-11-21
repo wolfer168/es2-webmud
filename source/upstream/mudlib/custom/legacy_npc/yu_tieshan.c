@@ -34,8 +34,16 @@ void create()
         "毅為師弟，而魚鐵山反而要稱這位小他三歲的老友師叔了。\n");
     set("custom_faction", FACTION);   // 雪吟莊（docs/martial_arts/門派武功對照表.md）
     map_skill("force", "celestial force");   // 內功用天邪神功（等級由 NPC 自動技能給）
+    // 精、氣、神固定為 3000／2800／1200（使用者指示，2026-11-21），不隨強度自動計算。
+    set_stat_maximum("gin", 3000);
+    set_stat_maximum("kee", 2800);
+    set_stat_maximum("sen", 1200);
     set_power("S");
     setup();
+    foreach( string st, int v in ([ "gin": 3000, "kee": 2800, "sen": 1200 ]) ) {
+        set_stat_effective(st, v);
+        set_stat_current(st, v);
+    }
     carry_object("/custom/armor/head/brass_hat")->wear();   // 黃呢鐵帽
     carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶
     carry_object("/custom/armor/feet/spider_boots")->wear();   // 玄蛛皂白靴
