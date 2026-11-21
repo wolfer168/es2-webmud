@@ -17,11 +17,11 @@
 　 特殊能力：
 　 　‧cast swamp thunder：澤雷，消耗 sen 5 delay 1，傷害 50%。
 　 　‧cast blaster thunder：爆雷，雷法 30，消耗 sen 50 delay 1，
-　 　　　　　　　　　　　　　傷害 25% 加上施法者神的八分之一。
+　 　　　　　　　　　　　　 傷害 25% 加上施法者神的八分之一。
 　 　‧cast divine thunder：神光雷，雷法 60，消耗 sen 75 delay 2，
-　 　　　　　　　　　　　　 無視抗性，不打氣，改打對手的神。
-　 　‧cast hexagram thunder：六卦熒雷，雷法 90，消耗 sen 90 delay 2，
-　 　　　　　　　　　　　　　 傷害175%。
+　 　　　　　　　　　　　　無視抗性，不打氣，改打對手的神。
+　 　‧cast hexagram thunder：六卦熒雷，雷法 90，
+　 　　　　　　　　　　　　　消耗 sen 90 delay 2，傷害 175%。
 　 　‧雷法每次施法有 10% 機率雷力反噬，多停頓一回合。
 　 練成等級：1 級
 　 能力提升：無
@@ -49,6 +49,9 @@
 　 學習條件：拜師後，人物等級 >=10
 　 任務起始：華子儀
 　 特殊能力：
+　 　‧exert nine-dragon force：打坐修練，每回合消耗精 2、氣 2、神 3，
+　 　　　　　　　　　　　　　　並減少精 1、氣 1、神 2 的上限；
+　 　　　　　　　　　　　　　　同時累積基本內功。
 　 　‧exert heal：以精化氣，消耗精的現在值，回復氣的現在值。
 　 　‧exert regenerate：以精化神，消耗精的現在值，回復神的現在值。
 　 　‧exert overload：消耗神 75，下次施展天師道法的基礎傷害提昇 50%。
