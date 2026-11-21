@@ -259,6 +259,7 @@ int accept_object(object player, object ob)
 		if( !ob->id("annatto comb") ) return 0;
 		command("say 咦﹖這 ... 這是 ... 我的梳子﹗");
 		do_chat((: ask_join, player :));
+		call_out("drop_item", 1, ob);
 		return 1;
 	}
 	if( ob->id("__ID_CHALLIE__") )	{
@@ -267,6 +268,13 @@ int accept_object(object player, object ob)
 			"你想到老太婆的暱稱, 也許可以使她相信那件破布.\n"
 		}));
 		player->set_temp("try/fon", 45);
+		call_out("drop_item", 1, ob);
 		return 1;
 	}
+}
+
+/* 收下的東西刪掉，不留在身上（give 指令只會銷毀錢；使用者定案，2026-11-22）。 */
+void drop_item(object ob)
+{
+    if( objectp(ob) && environment(ob) == this_object() ) destruct(ob);
 }

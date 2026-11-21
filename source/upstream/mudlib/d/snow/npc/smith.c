@@ -55,8 +55,12 @@ int accept_object(object who, object ob)
         thing=new(__DIR__"obj/arrow");
         thing->move(who);
 call_out((:message_vision(CYN + "鐵匠把剛做好的箭交給了$N。\n" NOR,this_player(),) :),2);
+        call_out("drop_item", 1, ob);
         return 1;
 }
 
-
-
+/* 收下的東西刪掉，不留在身上（give 指令只會銷毀錢；使用者定案，2026-11-22）。 */
+void drop_item(object ob)
+{
+    if( objectp(ob) && environment(ob) == this_object() ) destruct(ob);
+}

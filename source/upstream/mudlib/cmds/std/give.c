@@ -87,7 +87,16 @@ do_give(object me, object item, object who)
         + item->name() + "。\n");
 
     if( !userp(who) ) {
+        // 先確認 NPC 放得下再問他收不收：NPC 答應後常會立刻給獎或推進任務，
+        // 若之後才搬不進去，東西還在玩家身上卻已拿到好處（使用者定案，2026-11-22）。
+        // 錢（value() 有值）交出後直接銷毀，不佔 NPC 的位子，不必檢查。
+        if( !item->value()
+        &&  (sizeof(all_inventory(who)) >= 20
+            || who->query_encumbrance() + item->weight() > who->query_strength("carriage")) )
+            return notify_fail(who->name() + "身上已經放不下了。\n");
         if( !who->accept_object(me, item) ) return 0;
+        // 只有錢有 value() 函式，所以這裡只會銷毀錢；其他東西照常交到 NPC 身上，
+        // 要不要刪掉由各 NPC 自己處理（例：call_out("drop_item", 1, ob)）。
         if( item->value() ) {
 
             message_vision("$N拿出" + item->short() + "交給$n。\n", me, who);
