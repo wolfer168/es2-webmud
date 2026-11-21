@@ -985,10 +985,12 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
   $('#trgSave').addEventListener('click',()=>{
     const x=readTriggerForm();
     if(!x.pattern){trgTab='main';renderTriggerExtras();$('#trgError').textContent='請輸入句型。';return;}
-    try{const saved=auto.upsertTrigger(x);fillTriggerForm(saved);}
+    // 確定：存檔並關閉視窗；句型有誤時留在視窗裡顯示錯誤。
+    try{const saved=auto.upsertTrigger(x);fillTriggerForm(saved);dialog.close();}
     catch(err){$('#trgError').textContent='句型有誤：'+err.message;}
   });
-  $('#trgCancel').addEventListener('click',()=>fillTriggerForm(auto.state.triggers.find(x=>x.id===selectedTrigger)||null));
+  // 取消：放棄這次的修改並關閉視窗。
+  $('#trgCancel').addEventListener('click',()=>{fillTriggerForm(auto.state.triggers.find(x=>x.id===selectedTrigger)||null);dialog.close();});
   $('#trgNew').addEventListener('click',()=>{if(confirmLeave()){trgTab='main';fillTriggerForm(null);$('#trgPattern').focus();}});
   $('#trgCopy').addEventListener('click',()=>{
     const x=auto.state.triggers.find(y=>y.id===selectedTrigger);if(!x||!confirmLeave())return;
@@ -1020,10 +1022,10 @@ export function setupAutomationUI(auto,{dialog,toggleButton,openButtons}){
     try{
       const saved=auto.upsertTimer({id:editingTimer||undefined,name:$('#tmrName').value.trim(),seconds,fireAt,
         command:$('#tmrCommand').value.trim(),loop:$('#tmrLoop').checked});
-      fillTimerForm(saved);
+      fillTimerForm(saved);dialog.close();
     }catch(e){err(e.message);}
   });
-  $('#tmrCancel').addEventListener('click',()=>fillTimerForm(auto.state.timers.find(x=>x.id===editingTimer)||null));
+  $('#tmrCancel').addEventListener('click',()=>{fillTimerForm(auto.state.timers.find(x=>x.id===editingTimer)||null);dialog.close();});
   $('#tmrNew').addEventListener('click',()=>{if(confirmLeaveTimer()){tmrTab='main';fillTimerForm(null);$('#tmrName').focus();}});
   $('#tmrCopy').addEventListener('click',()=>{
     const x=auto.state.timers.find(y=>y.id===editingTimer);if(!x||!confirmLeaveTimer())return;
