@@ -833,8 +833,13 @@ def parse_skills(used_codes):
                 src += '\nregister_skill_daemon("%s")' % Path(p).stem.replace('_', ' ')
         code = p.stem.replace('_', ' ') if ' ' not in p.stem and p.stem in ('secondhand_axe',) else p.stem
         m = re.search(r'register_skill_daemon\("([^"]+)"\)', src)
+        mm = re.search(r'register_skill_daemon\(\s*(\w+)\s*\)', src)
+        md = mm and re.search(r'#define\s+%s\s+"([^"]+)"' % mm.group(1), src)
         if m:
             code = m.group(1)
+        elif md:
+            # 新版武功用巨集登記代碼（#define SKILL_ID "advance-sky sword"），代碼與對照表一致。
+            code = md.group(1)
         elif '_' in p.stem and p.stem.split('_')[0] in ('secondhand', 'twohanded'):
             code = p.stem.replace('_', ' ')
         desc = re.search(r'description:\s*(.+)', src)
