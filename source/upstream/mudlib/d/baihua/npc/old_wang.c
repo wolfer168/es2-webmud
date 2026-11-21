@@ -109,7 +109,7 @@ int accept_object(object who, object ob)
     if( sq_is(ob, SQ_MEAT_FILE) ) {
         switch( sq_stage(who) ) {
         case SQ_NONE:
-            command("emote 只顧著說故事，並沒有伸手接，似乎得先坐下來聽他說完。");
+            command("emote 只顧著說故事，並沒有伸手接，你不妨坐下來聽聽 (sit)。");
             return 0;
         case SQ_HELP:
             who->set(SQ_STAGE, SQ_TO_CHEN);
