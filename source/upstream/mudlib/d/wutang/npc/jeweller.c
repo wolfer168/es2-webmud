@@ -1,5 +1,6 @@
 // /d/wutang/npc/jeweller.c — 五堂鎮 NPC：珍寶商人（依五堂鎮設計表）。
 
+#include <ansi.h>
 #include <npc.h>
 inherit F_VILLAGER;
 inherit F_VENDOR;
@@ -47,16 +48,17 @@ private string *PRIZE_SAY = ({
     "這件兵器有些來歷﹐好好珍惜。",
 });
 
+// $n 是珍寶商人、$N 是拿到獎品的玩家（用 message_vision，本人看到「你」）。
 private string *PRIZE_EMOTE = ({
-    "從錢箱裡數出一堆沉甸甸的錢財﹐遞到$N手中。",
-    "從櫃底翻出一本泛黃的舊書﹐吹去灰塵遞給$N。",
-    "從木匣取出一疊符紙﹐綁好放進$N手裡。",
-    "神色古怪地遞過一個小紙包﹐叮嚀$N小心保管。",
-    "解下腰間的布包﹐鄭重其事地放進$N手裡。",
-    "從背後的暗格抽出一件兵器﹐雙手遞給$N。",
+    "$n從錢箱裡數出一堆沉甸甸的錢財﹐遞到$N手中。",
+    "$n從櫃底翻出一本泛黃的舊書﹐吹去灰塵遞給$N。",
+    "$n從木匣取出一疊符紙﹐綁好放進$N手裡。",
+    "$n神色古怪地遞過一個小紙包﹐叮嚀$N小心保管。",
+    "$n解下腰間的布包﹐鄭重其事地放進$N手裡。",
+    "$n從背後的暗格抽出一件兵器﹐雙手遞給$N。",
 });
 
-void do_draw(object who);
+void do_draw(object who, object pearl);
 
 /* 收下河魚腹珠就抽一次獎；別的東西不收。 */
 int accept_object(object who, object ob)
@@ -65,16 +67,19 @@ int accept_object(object who, object ob)
         command("say 這個我不收。");
         return 0;
     }
-    call_out("do_draw", 1, who);
+    call_out("do_draw", 1, who, ob);
     return 1;
 }
 
-void do_draw(object who)
+/* 抽獎前先確認珠子真的交到商人手上（give 搬不進來就不抽），確認後立刻銷毀，
+ * 不留在商人身上。玩家這時已經離開：珠子照樣銷毀、不抽獎（使用者定案，2026-11-22）。 */
+void do_draw(object who, object pearl)
 {
     int r, i, kind;
-    object prize;
     string file;
 
+    if( !objectp(pearl) || environment(pearl) != this_object() ) return;
+    destruct(pearl);
     if( !who || environment(who) != environment() ) return;
 
     command("emote 接過腹珠﹐湊到窗邊對著光細細端詳。");
@@ -102,7 +107,7 @@ void give_prize(object who, string file, int amount, int kind)
     if( amount > 1 ) prize->set_amount(amount);
 
     command("say " + PRIZE_SAY[kind]);
-    command("emote " + replace_string(PRIZE_EMOTE[kind], "$N", who->name()));
+    message_vision(CYN + PRIZE_EMOTE[kind] + "\n" NOR, who, this_object());
     if( !prize->move(who) ) {
         prize->move(environment());
         command("say 你身上放不下﹐東西我替你擱在地上了。");

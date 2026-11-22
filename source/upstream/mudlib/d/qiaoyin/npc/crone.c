@@ -40,6 +40,7 @@ int accept_object(object who, object ob)
 
     set_temp(BUSY, 1);
     call_out("pocket", 1, who);   // 等「你拿出古錢交給老乞婆」那行先出現
+    call_out("drop_item", 1, ob);
     return 1;
 }
 
@@ -58,4 +59,10 @@ void poke(object who)
         "$n頓時驚出一身冷汗。\n" NOR, this_object(), who, 1);
     if( !who->query_learn("killerhood") )
         who->improve_skill_exact("killerhood", 100);
+}
+
+/* 收下的東西刪掉，不留在身上（give 指令只會銷毀錢；使用者定案，2026-11-22）。 */
+void drop_item(object ob)
+{
+    if( objectp(ob) && environment(ob) == this_object() ) destruct(ob);
 }

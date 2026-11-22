@@ -94,5 +94,12 @@ int accept_object(object who, object ob)
 {
     if( !userp(who) || bq_stage(who) != BQ_BLADE || !bq_mine(who, ob, BQ_BLADE_FILE) ) return 0;
     call_out("speak", BQ_TICK, who, 0);
+    call_out("drop_item", 1, ob);
     return 1;
+}
+
+/* 收下的東西刪掉，不留在身上（give 指令只會銷毀錢；使用者定案，2026-11-22）。 */
+void drop_item(object ob)
+{
+    if( objectp(ob) && environment(ob) == this_object() ) destruct(ob);
 }

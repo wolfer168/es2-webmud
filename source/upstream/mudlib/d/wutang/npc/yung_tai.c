@@ -142,6 +142,7 @@ int accept_object(object who, object ob)
     if( file == RING ) {
         who->set_temp("yung_tai/ring", 1);
         call_out("react", TICK, who, RING_MSG);
+        call_out("drop_item", 1, ob);
         return 1;
     }
 
@@ -154,6 +155,7 @@ int accept_object(object who, object ob)
     remove_call_out("greet");
     start_talk();
     call_out("collapse", TICK);
+    call_out("drop_item", 1, ob);
     return 1;
 }
 
@@ -194,4 +196,10 @@ void teach(object who)
     tell_object(who, CYN "(雍泰將風嘯拳法的秘要盡數傳了給你)\n" NOR);
     message("vision", CYN + "雍泰低聲向" + who->name() + "講解了一套拳法的要訣。\n" NOR,
         environment(), who);
+}
+
+/* 收下的東西刪掉，不留在身上（give 指令只會銷毀錢；使用者定案，2026-11-22）。 */
+void drop_item(object ob)
+{
+    if( objectp(ob) && environment(ob) == this_object() ) destruct(ob);
 }
