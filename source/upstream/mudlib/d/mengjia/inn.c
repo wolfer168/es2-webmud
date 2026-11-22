@@ -11,6 +11,9 @@ void create()
 小客棧只有兩層，大堂收拾得乾乾淨淨，幾張方桌擺得整整齊齊，過路的商旅與江湖客三三兩兩坐著，低聲談著北邊的見聞。梯口堆著幾個酒罈，木梯被腳步磨得發亮，樓上隱約傳來走動的聲響。
 LONG
     );
+    set("objects", ([
+        "/custom/legacy_npc/lin_zheng_yang" : 1     // 靈雲觀觀主（使用者指示，2026-11-22）
+    ]));
     set("exits", ([
         "south" : __DIR__"crossroad",
         "up" : __DIR__"inn2",

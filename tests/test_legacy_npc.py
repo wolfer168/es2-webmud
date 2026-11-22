@@ -15,9 +15,9 @@ def read(p):
 
 
 def test_all_listed_npcs_exist():
-    assert len(ROWS) == 126
+    assert len(ROWS) == 127
     files = sorted(p.name for p in DIR.glob('*.c') if p.name != 'legacy_npc.c')
-    assert len(files) == 126
+    assert len(files) == 127
     assert sorted(Path(r[3]).name for r in ROWS) == files
 
 
