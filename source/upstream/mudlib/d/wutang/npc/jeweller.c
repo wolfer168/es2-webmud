@@ -11,7 +11,7 @@ void init()
     add_action("do_vendor_list", "list");
 }
 
-/* 河魚腹珠抽獎（設計見 docs/FISHING_DESIGN.md）。機率合計 100%（單位：%）。
+/* 河魚腹珠抽獎（設計見 docs/FISHING_DESIGN.md）。機率合計 100%（單位：萬分之一，合計 10000）。
  * 欄位：獎品檔案, 數量, 機率, 類別（類別決定商人說的話與取得敘述）。 */
 #define K_MONEY   0
 #define K_BOOK    1
@@ -21,22 +21,22 @@ void init()
 #define K_WEAPON  5
 
 private mixed *PRIZES = ({
-    ({ "/obj/money/gold",                                   10, 14, K_MONEY  }),
-    ({ "/obj/books/book_of_five_meridians",                  1, 10, K_BOOK   }),
-    ({ "/custom/item/scroll/blank",                       3000, 10, K_SCROLL }),
-    ({ "/obj/dust",                                          1, 10, K_DUST   }),
-    ({ "/custom/item/dragon_skin_bag",                       1,  5, K_BAG    }),
-    ({ "/obj/books/canon_of_true_words",                     1,  5, K_BOOK   }),
-    ({ "/custom/item/scroll/nature",                      1000,  5, K_SCROLL }),
-    ({ "/custom/item/scroll/yang",                        1000,  5, K_SCROLL }),
-    ({ "/custom/item/scroll/yin",                         1000,  5, K_SCROLL }),
-    ({ "/custom/weapon/sword/fishy_sword",                   1,  5, K_WEAPON }),
-    ({ "/custom/weapon/needle/dragon_needle",                1,  5, K_WEAPON }),
-    ({ "/custom/weapon/blade/warlord_blade",                 1,  5, K_WEAPON }),
-    ({ "/custom/weapon/staff/staff_of_wisdom",               1,  5, K_WEAPON }),
-    ({ "/custom/weapon/axe/short_axe_of_bloodmoon",          1,  5, K_WEAPON }),
-    ({ "/obj/money/sycee",                                   1,  1, K_MONEY  }),
-    ({ "/custom/item/super_skin",                            1,  5, K_BAG    }),
+    ({ "/obj/money/gold",                                   10,  1499, K_MONEY  }),
+    ({ "/obj/books/book_of_five_meridians",                  1,  1000, K_BOOK   }),
+    ({ "/custom/item/scroll/blank",                       3000,  1000, K_SCROLL }),
+    ({ "/obj/dust",                                          1,  1000, K_DUST   }),
+    ({ "/custom/item/dragon_skin_bag",                       1,    500, K_BAG    }),
+    ({ "/obj/books/canon_of_true_words",                     1,    500, K_BOOK   }),
+    ({ "/custom/item/scroll/nature",                      1000,    500, K_SCROLL }),
+    ({ "/custom/item/scroll/yang",                        1000,    500, K_SCROLL }),
+    ({ "/custom/item/scroll/yin",                         1000,    500, K_SCROLL }),
+    ({ "/custom/weapon/sword/fishy_sword",                   1,    500, K_WEAPON }),
+    ({ "/custom/weapon/needle/dragon_needle",                1,    500, K_WEAPON }),
+    ({ "/custom/weapon/blade/warlord_blade",                 1,    500, K_WEAPON }),
+    ({ "/custom/weapon/staff/staff_of_wisdom",               1,    500, K_WEAPON }),
+    ({ "/custom/weapon/axe/short_axe_of_bloodmoon",          1,    500, K_WEAPON }),
+    ({ "/obj/money/sycee",                                   1,      1, K_MONEY  }),
+    ({ "/custom/item/super_skin",                            1,    500, K_BAG    }),
 });
 
 private string *PRIZE_SAY = ({
@@ -85,7 +85,7 @@ void do_draw(object who, object pearl)
     command("emote 接過腹珠﹐湊到窗邊對著光細細端詳。");
     command("say 嗯﹐珠子成色不錯﹐讓我看看今天的運氣。");
 
-    r = random(100);
+    r = random(10000);
     for( i = 0; i < sizeof(PRIZES); i++ ) {
         r -= PRIZES[i][2];
         if( r < 0 ) break;
