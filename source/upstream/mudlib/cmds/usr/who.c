@@ -10,6 +10,22 @@ object *all, *target;
 string msg;
 int i, j;
 
+// 組合選項用：等級分段（0 代表 1～10 級……6 代表 61～70 級）、種族代號、職業代號。
+// 同一類條件符合任一個就列出，不同類條件要全部符合（使用者指示，2026-11-23）。
+int *lv_opts;
+string *race_opts, *class_opts;
+
+// 種族、職業選項對應的程式代號。和尚選項用 -bn（bonze），對應內部職業代號 monk。
+mapping race_map = ([
+    "-bh": "blackteeth", "-hn": "human",   "-av": "avatar",   "-wn": "woochan",
+    "-jo": "jiaojao",    "-yd": "yenhold", "-dl": "dingling", "-rr": "rainner",
+    "-aa": "ashura",     "-hs": "headless","-ya": "yaksa",    "-ml": "malik",
+]);
+mapping class_map = ([
+    "-at": "alchemist", "-cr": "commoner", "-fr": "fighter", "-sr": "soldier",
+    "-tf": "thief",     "-tt": "taoist",   "-sc": "scholar", "-bn": "monk",
+]);
+
 void msg_format(string arg);
 
 // 依「畫面上佔的格數」計算寬度：sprintf 把一個中文字（UTF-8 三個位元組）當成 3 格，
@@ -57,13 +73,29 @@ create()
   seteuid(getuid());
 }
 
+// 判斷一位使用者是否符合目前的組合條件。
+private int match_opts(object ob)
+{
+    if( sizeof(lv_opts) ) {
+        if( wizardp(ob) ) return 0;
+        if( member_array((ob->query_level()-1)/10, lv_opts) == -1 ) return 0;
+    }
+    if( sizeof(race_opts) && member_array(ob->query_race(), race_opts) == -1 ) return 0;
+    if( sizeof(class_opts) && member_array(ob->query_class(), class_opts) == -1 ) return 0;
+    return 1;
+}
+
 mixed
 main(object me, string arg, int remote)
 {
-    int center_lv;
+    int center_lv, n;
+    string *opts, o;
 
     target = ({});
     msg = "";
+    lv_opts = ({});
+    race_opts = ({});
+    class_opts = ({});
 
     /* 先過濾尚未登入完成的使用者，與隱形的上級巫師。
      * 注意在被 rwho_q 呼叫的狀況下，this_player() 為 0。
@@ -77,8 +109,10 @@ main(object me, string arg, int remote)
         all = filter(users(), (: objectp(environment($1)) && !wizardp($1) :));
 
     i = sizeof(all);
-    
-    if( !arg || arg=="" ) {
+
+    opts = arg ? filter(explode(arg, " "), (: $1 != "" :)) : ({});
+
+    if( !sizeof(opts) ) {
         center_lv = me->query_level();
         while( i-- ) {
             if (all[i]->query("level") - center_lv < 6 &&
@@ -88,8 +122,9 @@ main(object me, string arg, int remote)
                 target += ({ all[i] });
         }
         msg_format("1");
-    } else {
-        switch(arg){
+    } else if( sizeof(opts) == 1 && member_array(opts[0], ({ "-l", "-w", "-i", "-n" })) != -1 ) {
+        // 這四個選項只能單獨使用。
+        switch(opts[0]){
         case "-l":
             if( me->is_character() && !wizardp(me) ) {
                 write("為了減低系統負荷, 目前只有巫師可以使用 who -l。\n");
@@ -97,34 +132,6 @@ main(object me, string arg, int remote)
             }
             target = all;
             msg_format("5");
-            break;
-        case "-1":
-            target = filter(all, (:($1->query_level()-1)/10==0 && !wizardp($1) :));
-            msg_format("1");
-            break;
-        case "-2":
-            target = filter(all, (:($1->query_level()-1)/10==1 && !wizardp($1) :));
-            msg_format("1");
-            break;
-        case "-3":
-            target = filter(all, (:($1->query_level()-1)/10==2 && !wizardp($1) :));
-            msg_format("1");
-            break;
-        case "-4":
-            target = filter(all, (:($1->query_level()-1)/10==3 && !wizardp($1) :));
-            msg_format("1");
-            break;
-        case "-5":
-            target = filter(all, (:($1->query_level()-1)/10==4 && !wizardp($1) :));
-            msg_format("1");
-            break;
-        case "-6":   // 51～60 級（#30，2026-11-04）
-            target = filter(all, (:($1->query_level()-1)/10==5 && !wizardp($1) :));
-            msg_format("1");
-            break;
-        case "-7":   // 61～70 級（#30，2026-11-04）
-            target = filter(all, (:($1->query_level()-1)/10==6 && !wizardp($1) :));
-            msg_format("1");
             break;
         case "-w":
             target = filter(all, (: wizardp :));
@@ -136,90 +143,27 @@ main(object me, string arg, int remote)
         case "-n":
             msg_format("42");
             break;
-        case "-bh":
-            target = filter(all, (: $1->query_race()=="blackteeth" :));
-            msg_format("50");
-            break;
-        case "-hn":
-            target = filter(all, (: $1->query_race()=="human" :));
-            msg_format("50");
-            break;
-        case "-av":
-            target = filter(all, (: $1->query_race()=="avatar" :));
-            msg_format("50");
-            break;
-        case "-wn":
-            target = filter(all, (: $1->query_race()=="woochan" :));
-            msg_format("50");
-            break;
-        case "-jo":
-            target = filter(all, (: $1->query_race()=="jiaojao" :));
-            msg_format("50");
-            break;
-        case "-yd":
-            target = filter(all, (: $1->query_race()=="yenhold" :));
-            msg_format("50");
-            break;
-        case "-dl":
-            target = filter(all, (: $1->query_race()=="dingling" :));
-            msg_format("50");
-            break;
-        case "-rr":
-            target = filter(all, (: $1->query_race()=="rainner" :));
-            msg_format("50");
-            break;
-        case "-aa":
-            target = filter(all, (: $1->query_race()=="ashura" :));
-            msg_format("50");
-            break;
-        case "-hs":
-            target = filter(all, (: $1->query_race()=="headless" :));
-            msg_format("50");
-            break;
-        case "-ya":
-            target = filter(all, (: $1->query_race()=="yaksa" :));
-            msg_format("50");
-            break;
-        case "-ml":
-            target = filter(all, (: $1->query_race()=="malik" :));
-            msg_format("50");
-            break;
-        case "-at":
-            target = filter(all, (: $1->query_class()=="alchemist" :));
-            msg_format("50");
-            break;
-        case "-cr":
-            target = filter(all, (: $1->query_class()=="commoner" :));
-            msg_format("50");
-            break;
-        case "-fr":
-            target = filter(all, (: $1->query_class()=="fighter" :));
-            msg_format("50");
-            break;
-        case "-sr":
-            target = filter(all, (: $1->query_class()=="soldier" :));
-            msg_format("50");
-            break;
-        case "-tf":
-            target = filter(all, (: $1->query_class()=="thief" :));
-            msg_format("50");
-            break;
-        case "-tt":
-            target = filter(all, (: $1->query_class()=="taoist" :));
-            msg_format("50");
-            break;
-        case "-sc":
-            target = filter(all, (: $1->query_class()=="scholar" :));
-            msg_format("50");
-            break;
-        default :
-            if( objectp(me) && wizardp(me) &&  arg[0]=='@' ) {
-                //RWHO_Q->send_rwho_q(arg[1..sizeof(arg)], me, 0);
-                //write("網路訊息已送往 " + arg[1..sizeof(arg)] + " 請稍候。\n");
-                return notify_fail("遠端查詢功能已關閉。\n");
-            }
-            return notify_fail("指令格式更新﹕請看 help who。\n");
         }
+    } else {
+        // 等級（-1～-7）、種族、職業三類條件可以組合。
+        foreach( o in opts ) {
+            if( sscanf(o, "-%d", n) == 1 && o == "-" + n && n >= 1 && n <= 7 ) {
+                if( member_array(n - 1, lv_opts) == -1 ) lv_opts += ({ n - 1 });
+            } else if( race_map[o] ) {
+                race_opts += ({ race_map[o] });
+            } else if( class_map[o] ) {
+                class_opts += ({ class_map[o] });
+            } else if( member_array(o, ({ "-l", "-w", "-i", "-n" })) != -1 ) {
+                return notify_fail("-l、-w、-i、-n 只能單獨使用﹐請看 help who。\n");
+            } else if( sizeof(opts) == 1 && objectp(me) && wizardp(me) && o[0]=='@' ) {
+                //RWHO_Q->send_rwho_q(o[1..sizeof(o)], me, 0);
+                return notify_fail("遠端查詢功能已關閉。\n");
+            } else {
+                return notify_fail("指令格式更新﹕請看 help who。\n");
+            }
+        }
+        target = filter(all, (: match_opts($1) :));
+        msg_format("1");
     }
 
     msg = sprintf("◎ %s\n"
@@ -303,9 +247,10 @@ msg_format(string arg)
         target = sort_array(all, "sort_user", this_object());
         j = sizeof(target);
         while( j-- ) {
-            msg = sprintf("%s%-13s%s",
+            // 中文名字依畫面格數補空白對齊（一個中文字佔 2 格）。
+            msg = sprintf("%s%s%s",
                 msg,
-                target[j]->query("name", 1),
+                pad_right(target[j]->query("name", 1), 12) + " ",
                 (( i - j ) % 6 ) ? "" : "\n"
             );
         }
@@ -318,39 +263,57 @@ msg_format(string arg)
 
 int help(object me)
 {
-    write("指令格式 : who [選項]\n");
-    write("這個指令可以列出在線上的使用者及其等它相關資訊。神 > 5 時會損神。\n");
-    write("選項有下列幾種, 一次只可使用一種選項, 即 who -i -w 視同 who -i。\n");
-    write("\n");
+    write(@HELP
+指令格式 : who [選項]
 
-    write("無選項時, 列出與你等級相差 5 級以內之使用者。\n");
-    write("-1    列出等級 1 到等級 10 的使用者。\n");
-    write("-5    列出等級 41 到等級 50 的使用者。\n");
-    write("-6    列出等級 51 到等級 60 的使用者。\n");
-    write("-7    列出等級 61 到等級 70 的使用者。\n");
-    write("-w    只列出巫師, 有系統設計上的問題請與巫師溝通。\n");
-    write("-i    只列出使用者英文 id。\n");
-    write("-n    只列出使用者中文名稱。\n");
-    write("-l    列出所有使用者詳細資訊 (巫師專用)。\n");
-    write("\n");
+這個指令可以列出在線上的使用者及其相關資訊。神 > 5 時會損神。
 
-    write("-hn    列出 race 為 human 之使用者。bh => blackteeth\n");
-    write("hn => human    av => avatar    wn => woochan    jo => jiaojao\n");
-    write("yd => yenhold  dl => dingling  rr => rainner   aa => ashura\n");
-    write("hs => headless ya => yaksa     ml => malik\n");
-    write("\n");
+無選項時, 列出與你等級相差 5 級以內之使用者。
 
-    write("-at    列出 class 為 alchemist 之使用者。\n");
-    write("at => alchemist  cr => commoner  fr => fighter  sr => soldier\n");
-    write("tf => thief      tt => taoist    sc => scholar\n");
-    write("\n");
+等級、種族、職業三類選項可以組合使用, 例如 who -7 -at。
+同一類選項符合任一個就列出, 不同類選項要全部符合, 例如
+who -6 -7 -at -fr 列出 51 到 70 級、而且是 alchemist 或 fighter
+的使用者。沒有加等級選項時, 列出所有等級。
+HELP
+    );
+    write(@HELP
 
-    write("相關指令﹕finger\n");
+等級選項﹕
+-1    列出等級 1 到等級 10 的使用者。
+-2    列出等級 11 到等級 20 的使用者。
+-3    列出等級 21 到等級 30 的使用者。
+-4    列出等級 31 到等級 40 的使用者。
+-5    列出等級 41 到等級 50 的使用者。
+-6    列出等級 51 到等級 60 的使用者。
+-7    列出等級 61 到等級 70 的使用者。
+HELP
+    );
+    write(@HELP
 
-    if( wizardp(me) ) {
-        write("巫師可用 who @celestial.empire 查詢其他連線站的人數。\n");
-        write("遠端查詢目前已關閉，可用 mudlist 查看連線站。\n");
-    }
+種族選項﹕例如 -hn 列出 race 為 human 之使用者。
+bh => blackteeth  hn => human    av => avatar    wn => woochan
+jo => jiaojao     yd => yenhold  dl => dingling  rr => rainner
+aa => ashura      hs => headless ya => yaksa     ml => malik
+
+職業選項﹕例如 -at 列出 class 為 alchemist 之使用者。
+at => alchemist   cr => commoner  fr => fighter  sr => soldier
+tf => thief       tt => taoist    sc => scholar  bn => bonze
+HELP
+    );
+    write(@HELP
+
+以下選項只能單獨使用﹕
+-w    只列出巫師, 有系統設計上的問題請與巫師溝通。
+-i    只列出使用者英文 id。
+-n    只列出使用者中文名稱。
+-l    列出所有使用者詳細資訊 (巫師專用)。
+
+相關指令﹕finger
+HELP
+    );
+
+    if( wizardp(me) )
+        write("遠端查詢 (who @站名) 目前已關閉, 可用 mudlist 查看連線站。\n");
 
     return 1;
 }
