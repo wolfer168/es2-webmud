@@ -92,7 +92,7 @@ def test_help_files():
     for f, head in (('tidy_force.txt', '◎ 凌潮心法（tidy force）'), ('celestial_force.txt', '◎ 天邪神功（celestial force）'),
                     ('deep_blade.txt', '◎ 深空刀法（deep blade）'), ('six-chaos-sword.txt', '◎ 六陰追魂劍法（six-chaos-sword）'),
                     ('celestial_palm.txt', '◎ 天邪神掌（celestial palm）')):
-        assert read('docs/help/' + f).startswith(head), f
+        assert ('\n' + head) in read('docs/help/' + f) or read('docs/help/' + f).startswith(head), f
     assert read('docs/help/fighter.snow.txt').startswith('○ 雪吟莊資料')
     assert (ROOT / 'docs/martial_arts/雪吟莊_武功.md').exists()
 

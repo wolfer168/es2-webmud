@@ -214,6 +214,8 @@ def load_help():
                 if key:
                     cur[key] = fm.group(2).strip()
                 last = key
+            elif line.startswith('　') and not line.startswith('　　') and re.match(r'^(安裝|修練|相關參考|招式)：', body):
+                last = None
             elif body.startswith(('●', '‧')):
                 item = body[1:].strip()
                 if item != '無':
