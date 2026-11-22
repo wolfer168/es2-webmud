@@ -1,6 +1,6 @@
 # 舊站 NPC 清單（custom/legacy_npc/）
 
-> 依使用者提供的「舊有 NPC 待製作清單」（2026-10-15）製作，共 126 位，**尚未放入地圖**（武道通、雷同例外：已放入喬陰城外東側，見 `AREA_QIAOYIN_EAST.md`）。
+> 依使用者提供的「舊有 NPC 待製作清單」（2026-10-15）製作，共 127 位，**尚未放入地圖**（武道通、雷同例外：已放入喬陰城外東側，見 `AREA_QIAOYIN_EAST.md`）。
 > 名稱、英文 ID、敘述、年紀、性別、種族、裝備取自舊站畫面紀錄（`docs/LEGACY_ROOM_NPC_COMPENDIUM.md`，DOCUMENTED）；
 > 職業、等級、強度、門派、行為由使用者決定。屬性與精氣神由 NPC 強度系統計算（`docs/CUSTOM_NPC_POWER.md`），
 > 技能由 NPC 自動技能系統依職業、等級、門派給（`docs/CUSTOM_NPC_SKILL.md`）。
@@ -148,6 +148,7 @@
 | 124 | 張霸 | Chang ba | `custom/legacy_npc/chang_ba.c` | 黑風寨／山谷中 | 人類 | 武者 | 50 | A | 虎刀門（`fighter.tiger`） | — |
 | 125 | 蕭秋山 | Shao chu-san | `custom/legacy_npc/shao_chu_san.c` | 黑風寨／武器室 | 夜叉族 | 武者 | 30 | B | — | 主動攻擊 |
 | 126 | 閰狂風 | Yan kuang phon | `custom/legacy_npc/yan_kuang_phon.c` | 黑風寨／黑風寨大廳 | 夜叉族 | 武者 | 40 | B | 封山派（`fighter.fonxan`） | 主動攻擊 |
+| 127 | 林正陽 | Lin zheng yang | `custom/legacy_npc/lin_zheng_yang.c` | 茅山、孟家莊／小客棧 | 人類 | 道士 | 40 | A | 靈雲觀（`mao-shan.cloud`） | — |
 
 ## 尚未製作的裝備（NPC 身上先空著）
 

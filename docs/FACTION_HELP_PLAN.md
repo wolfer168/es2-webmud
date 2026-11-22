@@ -74,7 +74,7 @@
 | 紫衣派 | `taoist.thunder` | 已補（`taoist.thunder.txt`，2026-11-14） |
 | 幻霧觀 | `mao-shan.fog` | 已完成 |
 | 隱風觀 | `mao-shan.wind` | 已完成 |
-| 靈雲觀 | `mao-shan.cloud` | 待補說明 |
+| 靈雲觀 | `mao-shan.cloud` | 已完成（2026-11-22） |
 | 道士進階 | `taoist.adv` | 未製作 |
 
 ### 僧侶（bonze）　共通指令：zazen、meditate、paramita
