@@ -182,7 +182,7 @@ def load_help():
     """遊戲說明檔（mudlib/docs/help/*.txt）裡的技能段落：技能代碼 -> {kind, cond, start, abilities, gain}。
 
     格式見 CLAUDE.md「說明檔格式」：每項技能一段「◎ 名稱（id）」，依序寫技能種類、學習條件、
-    任務起始、特殊能力（每項「‧」開頭）、能力提昇。門派說明檔（職業.門派.txt）是精簡版，
+    任務起始、特殊能力（每項「●」開頭）、能力提昇。門派說明檔（職業.門派.txt）是精簡版，
     優先採用；只有技能自己的說明檔（詳細版）時才用它。圖鑑照說明檔的寫法，不另外寫公式。"""
     out = {}
     if not HELP_DIR.exists():
@@ -195,7 +195,7 @@ def load_help():
             m = re.match(r'^◎\s*(.+?)（([^）]+)）\s*$', line)
             if m:
                 code = m.group(2).strip()
-                cur = None if code in out else {'kind': '', 'cond': '', 'start': '', 'abilities': [], 'level': '', 'gain': ''}
+                cur = None if code in out else {'kind': '', 'cond': '', 'start': '', 'abilities': [], 'level': '', 'gain': '', 'score': ''}
                 if cur is not None:
                     out[code] = cur
                 last = None
@@ -208,20 +208,22 @@ def load_help():
                 cur = None
                 continue
             body = line.lstrip('　 ')
-            fm = re.match(r'^(技能種類|學習條件|任務起始|特殊能力|練成等級|能力提升|能力提昇)：(.*)$', body)
+            fm = re.match(r'^(技能種類|學習條件|任務起始|特殊能力|練成等級|能力提升|能力提昇|歷練提昇)：(.*)$', body)
             if fm and line.startswith('　') and not line.startswith('　　'):
-                key = {'技能種類': 'kind', '學習條件': 'cond', '任務起始': 'start', '特殊能力': None, '練成等級': 'level', '能力提升': 'gain', '能力提昇': 'gain'}[fm.group(1)]
+                key = {'技能種類': 'kind', '學習條件': 'cond', '任務起始': 'start', '特殊能力': None, '練成等級': 'level', '能力提升': 'gain', '能力提昇': 'gain', '歷練提昇': 'score'}[fm.group(1)]
                 if key:
                     cur[key] = fm.group(2).strip()
                 last = key
-            elif body.startswith('‧'):
+            elif line.startswith('　') and not line.startswith('　　') and re.match(r'^(安裝|修練|相關參考|招式)：', body):
+                last = None
+            elif body.startswith(('●', '‧')):
                 item = body[1:].strip()
                 if item != '無':
                     cur['abilities'].append(item)
                 last = 'abilities'
             elif last == 'abilities' and cur['abilities']:
                 cur['abilities'][-1] += body.strip()
-            elif last in ('kind', 'cond', 'start', 'level', 'gain'):
+            elif last in ('kind', 'cond', 'start', 'level', 'gain', 'score'):
                 cur[last] += body.strip()
     return out
 
