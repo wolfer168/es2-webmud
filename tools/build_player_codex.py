@@ -195,7 +195,7 @@ def load_help():
             m = re.match(r'^◎\s*(.+?)（([^）]+)）\s*$', line)
             if m:
                 code = m.group(2).strip()
-                cur = None if code in out else {'kind': '', 'cond': '', 'start': '', 'abilities': [], 'level': '', 'gain': ''}
+                cur = None if code in out else {'kind': '', 'cond': '', 'start': '', 'abilities': [], 'level': '', 'gain': '', 'score': ''}
                 if cur is not None:
                     out[code] = cur
                 last = None
@@ -208,9 +208,9 @@ def load_help():
                 cur = None
                 continue
             body = line.lstrip('　 ')
-            fm = re.match(r'^(技能種類|學習條件|任務起始|特殊能力|練成等級|能力提升|能力提昇)：(.*)$', body)
+            fm = re.match(r'^(技能種類|學習條件|任務起始|特殊能力|練成等級|能力提升|能力提昇|歷練提昇)：(.*)$', body)
             if fm and line.startswith('　') and not line.startswith('　　'):
-                key = {'技能種類': 'kind', '學習條件': 'cond', '任務起始': 'start', '特殊能力': None, '練成等級': 'level', '能力提升': 'gain', '能力提昇': 'gain'}[fm.group(1)]
+                key = {'技能種類': 'kind', '學習條件': 'cond', '任務起始': 'start', '特殊能力': None, '練成等級': 'level', '能力提升': 'gain', '能力提昇': 'gain', '歷練提昇': 'score'}[fm.group(1)]
                 if key:
                     cur[key] = fm.group(2).strip()
                 last = key
@@ -221,7 +221,7 @@ def load_help():
                 last = 'abilities'
             elif last == 'abilities' and cur['abilities']:
                 cur['abilities'][-1] += body.strip()
-            elif last in ('kind', 'cond', 'start', 'level', 'gain'):
+            elif last in ('kind', 'cond', 'start', 'level', 'gain', 'score'):
                 cur[last] += body.strip()
     return out
 

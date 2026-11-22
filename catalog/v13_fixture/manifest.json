@@ -4,7 +4,7 @@
   "git": {
     "repository": "https://github.com/taedlar/es2_mudlib",
     "origin": "https://github.com/wolfer168/es2-webmud",
-    "commit": "fadd07c296291290606f19b1f330b1e772490e55",
+    "commit": "68dba374c092b39225962553eb58121c460ba7e5",
     "branch": "claude/great-thompson-29z28d"
   },
   "total_files": 16,

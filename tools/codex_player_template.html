@@ -364,8 +364,9 @@ html.embed .tools { padding-top: 10px; }
     const h = s.help;
     return `<dl class="kv"><dt>技能種類</dt><dd>${esc(h.kind || '—')}</dd><dt>學習條件</dt><dd>${esc(h.cond || '—')}</dd>` +
       `<dt>任務起始</dt><dd>${esc(h.start || '—')}</dd>` +
-      `<dt>特殊能力</dt><dd>${h.abilities.length ? h.abilities.map(a => '‧' + esc(a)).join('<br>') : '無'}</dd>` +
+      `<dt>特殊能力</dt><dd>${h.abilities.length ? h.abilities.map(a => '● ' + esc(a)).join('<br>') : '無'}</dd>` +
       (h.level ? `<dt>練成等級</dt><dd>${esc(h.level)}</dd><dt>能力提升</dt>` : `<dt>能力提昇</dt>`) + `<dd>${esc(h.gain || '—')}</dd>` +
+      (h.level ? `<dt>歷練提昇</dt><dd>${esc(h.score || '—')}</dd>` : '') +
       (s.excl ? `<dt>專屬</dt><dd>${esc(s.excl)}</dd>` : '') +
       (s.factions.length ? `<dt>門派</dt><dd>${s.factions.map(facLink).join('、')}</dd>` : '') +
       (s.teachers.length ? `<dt>傳授</dt><dd>${s.teachers.map(npcLink).join('、')}</dd>` : '') +
