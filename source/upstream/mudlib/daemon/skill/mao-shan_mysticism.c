@@ -1,7 +1,8 @@
 /*---
 description: 茅山道法【奇門術】（mao-shan mysticism）。幻霧觀法術，enable 在法術（magic）上，以 conjure 施展。
              memory 記憶、recall 翔空、collect 集靈、slave 通靈、devour 噬魂。
-             記憶、集靈耗神 5；其他不耗神，但要消耗一張少陰符。
+             記憶、集靈耗神 5；通靈不耗神也不用少陰符；
+             翔空、集靈、噬魂要消耗一張少陰符（記憶、通靈不用）。
              設計見 docs/martial_arts/幻霧觀_茅山奇術與奇門術.md。
 ---*/
 #include <ansi.h>
@@ -66,8 +67,8 @@ void skill_completed(object me, string skill)
 mapping SPELLS = ([
     "memory":  ({  0, 5, 0, 1, 1, "記憶之術" }),
     "recall":  ({  0, 0, 1, 2, 2, "翔空之術" }),
-    "collect": ({  0, 5, 0, 1, 1, "集靈之術" }),
-    "slave":   ({ 30, 0, 1, 2, 3, "通靈之術" }),
+    "collect": ({  0, 5, 1, 1, 1, "集靈之術" }),
+    "slave":   ({ 30, 0, 0, 2, 3, "通靈之術" }),
     "devour":  ({ 60, 0, 1, 1, 3, "噬魂之術" }),
 ]);
 
@@ -220,7 +221,7 @@ int do_collect(object me, object corpse)
 
 // ------------------------------------------------------------------
 // 通靈之術：陰魂附上 NPC 的身體，讓它保護施法者。
-// 成功：random(奇門術 ÷ 3) > 對方等級；失敗只停頓，少陰符照用、陰魂不扣。
+// 成功：random(奇門術 ÷ 3) > 對方等級；失敗只停頓，陰魂不扣。
 // 最多控制 奇門術 ÷ 40 + 1 個（最多 6 個）；至死方休。
 // 主人斷線或離線（quit）：傀儡留在原地等候，期間別人奪不走；
 // 主人 15 分鐘內回來（斷線連回或重新登入）就繼續跟隨保護；
@@ -366,7 +367,7 @@ int do_slave(object me, object target)
     int sk = me->query_skill("mao-shan mysticism", 1);
 
     start_line(me, target, "slave");
-    say_line(me, target, HIK "$N咬破指尖在少陰符上一點﹐將符紙往$n額頭一拍﹐一縷黑氣順勢鑽了進去。" NOR);
+    say_line(me, target, HIK "$N咬破指尖﹐隔空朝$n額頭一點﹐一縷黑氣順勢鑽了進去。" NOR);
     blank(me);
     if( random(sk / 3 + 1) <= target->query_level() ) {
         say_line(me, target, HIW "$n猛地甩了甩頭﹐將那縷黑氣逼了出來。" NOR);
