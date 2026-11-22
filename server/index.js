@@ -253,6 +253,7 @@ const live=new Map();      // 工作階段編號 -> {row,tcp,ws,token,holdTimer,
 const byToken=new Map();   // 憑證 -> 工作階段編號
 const newToken=()=>crypto.randomBytes(18).toString('base64url');
 function issueToken(s){
+  if(!s.holdable)return;              // 電腦版網頁不保留，不發憑證
   if(s.token)byToken.delete(s.token);
   s.token=newToken();byToken.set(s.token,s.row.id);
   if(s.ws?.readyState===1)s.ws.send('@@BRIDGE|TOKEN|'+s.token);
@@ -276,7 +277,7 @@ function closeSession(s,why){
 }
 function holdSession(s){
   s.ws=null;s.row.parked=true;
-  if(!s.row.tcpConnected||RESUME_HOLD_MS<=0||s.tcp.destroyed){closeSession(s,'closed');return;}
+  if(!s.holdable||!s.row.tcpConnected||RESUME_HOLD_MS<=0||s.tcp.destroyed){closeSession(s,'closed');return;}
   bridgeTrace(`session ${s.row.id} held for resume (${Math.round(RESUME_HOLD_MS/1000)}s)`);
   clearTimeout(s.holdTimer);
   s.holdTimer=setTimeout(()=>{bridgeTrace(`session ${s.row.id} resume window expired`);closeSession(s,'expired');},RESUME_HOLD_MS);
@@ -338,7 +339,8 @@ wss.on('connection',(ws,req)=>{
   if(realIp)tcp.write(realIp);
   const codec=new TelnetCodec(b=>{if(!tcp.destroyed)tcp.write(b)});
   const row={id,started,remote:req.socket.remoteAddress||'',bytesIn:0,bytesOut:0,lastActivity:started,tcpConnected:false,closing:false,parked:false};
-  const s={row,tcp,ws:null,token:null,holdTimer:null,buffer:Buffer.alloc(0),closed:false};
+  // 只有手機網頁（連線網址帶 hold=1）才在斷線後保留；電腦版網頁斷線就結束，重連回到登入畫面。
+  const s={row,tcp,ws:null,token:null,holdTimer:null,buffer:Buffer.alloc(0),closed:false,holdable:u.searchParams.get('hold')==='1'};
   sessions.set(id,row);live.set(id,s);
   bridgeStats.peakSessions=Math.max(bridgeStats.peakSessions,sessions.size);
   // 結束這個工作階段（只做一次）：關遊戲連線、作廢憑證、從清單移除。
