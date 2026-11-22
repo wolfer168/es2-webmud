@@ -7,7 +7,7 @@ MUD = ROOT / 'source' / 'upstream' / 'mudlib'
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return re.sub(r'\x1b\[[0-9;]*m', '', p.read_text(encoding='utf-8'))
 
 
 def test_files_exist():

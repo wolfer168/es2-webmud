@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 # 風嘯拳法任務（使用者指示，2026-11-04～05；docs/martial_arts/共通_風嘯拳法.md「任務」）。
@@ -5,7 +6,8 @@ MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
 
 
 def read(p):
-    return (MUD / p).read_text(encoding='utf-8')
+    # 說明檔標題列有 HIY 色碼，比對內容時先去掉
+    return re.sub(r'\x1b\[[0-9;]*m', '', (MUD / p).read_text(encoding='utf-8'))
 
 
 def test_greeting_on_enter():

@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 # 雪吟莊武功（使用者定案，2026-11-05；docs/martial_arts/雪吟莊_武功.md）。
@@ -6,7 +7,8 @@ MUD = ROOT / 'source' / 'upstream' / 'mudlib'
 
 
 def read(p):
-    return (MUD / p).read_text(encoding='utf-8')
+    # 說明檔標題列有 HIY 色碼，比對內容時先去掉
+    return re.sub(r'\x1b\[[0-9;]*m', '', (MUD / p).read_text(encoding='utf-8'))
 
 
 def test_tidy_force():

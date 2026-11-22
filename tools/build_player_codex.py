@@ -191,7 +191,7 @@ def load_help():
     for f in files:
         cur = None
         last = None
-        for line in bc.read(f).splitlines():
+        for line in re.sub(r'\x1b\[[0-9;]*m', '', bc.read(f)).splitlines():  # 標題列的 HIY 色碼不算內容
             m = re.match(r'^◎\s*(.+?)（([^）]+)）\s*$', line)
             if m:
                 code = m.group(2).strip()
