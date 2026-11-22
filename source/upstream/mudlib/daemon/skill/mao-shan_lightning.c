@@ -1,6 +1,8 @@
 /*---
 description: 茅山【五雷術】（mao-shan lightning）。靈雲觀法術，enable 在法術（magic）上，以 conjure 施展。
-             cleanse 凝靈、bless 加持、consume 歸元；靈力只有一股，用掉要重新凝聚。
+             五卦雷咒：lightning-gold 金、lightning-wood 木、lightning-water 水、
+             lightning-fire 火、lightning-earth 土。每道消耗精、氣、神各 15 和一張先天符，
+             需持劍，只能對人形生物施放；五道可同時存在，同一道再施展會覆蓋並重算時間。
              設計見 docs/martial_arts/靈雲觀_幽冥三箭與五雷術.md。
 ---*/
 #include <ansi.h>
@@ -9,6 +11,7 @@ inherit SKILL;
 
 #define SCROLL  "/custom/item/scroll/nature"
 #define FACTION "mao-shan.cloud"
+#define COST    15
 
 string type() { return "magic"; }
 int valid_enable(string usage) { return usage == "magic"; }
@@ -30,25 +33,27 @@ int valid_learn(object me)
     return 1;
 }
 
+/* 練成 20 級（使用者定案，2026-11-22）。 */
+int query_entry_level() { return 20; }
+
 void skill_completed(object me, string skill)
 {
     tell_object(me, HIW "你默念雷訣﹐耳畔隱隱響起一陣悶雷﹐五雷術總算入了門。\n" NOR);
 }
 
 // ------------------------------------------------------------------
-// 法術資料（使用者定案，2026-11-22）
+// 五卦雷咒資料（舊站 2008 靈雲觀文章；數值使用者定案，2026-11-22）
 // ------------------------------------------------------------------
 
-/* 法術：耗神、停頓、層級（算點數用）、名稱。 */
+/* 卦：可用等級、名稱、名稱顏色、光色、提昇的屬性、元素抗性（apply 名稱，空字串為沒有）、
+ *     提昇的技能、層級（算點數用）。金卦另加護甲。 */
 mapping SPELLS = ([
-    "cleanse": ({ 20, 1, 1, "凝靈之術" }),
-    "bless":   ({ 50, 2, 3, "五雷加持" }),
-    "consume": ({ 20, 1, 2, "五雷歸元" }),
+    "lightning-gold":  ({  0, "金卦雷咒", HIY, "金光", "cor", "",                  "spells",         1 }),
+    "lightning-wood":  ({ 20, "木卦雷咒", HIG, "青光", "cps", "armor_vs_wind",     "sneak",          2 }),
+    "lightning-water": ({ 40, "水卦雷咒", HIC, "清光", "int", "armor_vs_fire",     "mysticism",      3 }),
+    "lightning-fire":  ({ 60, "火卦雷咒", HIR, "赤光", "wis", "armor_vs_lightning", "kee anatomy",   4 }),
+    "lightning-earth": ({ 80, "土卦雷咒", YEL, "黃光", "str", "armor_vs_ice",      "powerblow",      5 }),
 ]);
-
-/* 加持加上的屬性、元素（元素傷害、元素抗性用同一組）。 */
-#define ATTRS    ({ "str", "cor", "int", "cps", "wis" })
-#define ELEMENTS ({ "fire", "ice", "wind", "lightning" })
 
 /* 施法點數（照茅山法術）：
  * 基本法術：((random(靈性)+1) × (random(靈性)+1) + random(靈性)) × (random(層級)+1)
@@ -76,123 +81,138 @@ object find_scroll(object me)
 }
 
 // ------------------------------------------------------------------
-// 靈力：只有一股，時效 = 五雷術 tick（1 tick = 2 秒），bless、consume 用掉就要重新凝聚。
+// 加持：雷咒強度 T = 魔力 + 幽冥三箭 ÷ 2 + 五雷術；
+// 屬性 + T÷50、元素抗性 + T÷4（木卦風抗加倍，因為風抗只減半傷害）、
+// 技能 + T÷20、護甲（金卦）+ T÷10；持續 五雷術 ÷ 2 個 tick（1 tick = 2 秒）。
+// 同一卦再施展：先撤掉舊的再重新計算。
 // ------------------------------------------------------------------
 
-int has_mana(object me)
+/* 加成記在目標身上（lightning/<卦>），sign 1 加上、-1 撤掉。 */
+void apply_bonus(object who, string spell, mapping b, int sign)
 {
-    return me->query_temp("lightning/mana") > time();
+    mixed *s = SPELLS[spell];
+
+    who->add_temp("apply/" + s[4], sign * b["attr"]);
+    who->add_temp("apply/" + s[6], sign * b["skill"]);
+    if( s[5] != "" ) who->add_temp("apply/" + s[5], sign * b["resist"]);
+    if( spell == "lightning-gold" ) who->add_temp("apply/armor", sign * b["armor"]);
 }
 
-// ------------------------------------------------------------------
-// 加持：屬性 + (五雷術 + 靈性) ÷ 20，元素抗性 + 靈性 × 4，元素傷害 + 五雷術 ÷ 3；
-// 持續 五雷術 ÷ 2 個 tick。同一個人同時只吃一份加持。
-// ------------------------------------------------------------------
-
-void remove_bless(object who)
+void expire(object who, string spell, int serial)
 {
     mapping b;
 
-    if( !objectp(who) || !mapp(b = who->query_temp("lightning/bless")) ) return;
-    foreach(string a in ATTRS)
-        who->add_temp("apply/" + a, -b["attr"]);
-    foreach(string e in ELEMENTS) {
-        who->add_temp("apply/damage_vs_" + e, -b["damage"]);
-        who->add_temp("apply/armor_vs_" + e, -b["resist"]);
-    }
-    who->delete_temp("lightning/bless");
-    tell_object(who, HIK "你身上纏繞的雷光漸漸黯淡﹐終於散去了。\n" NOR);
+    if( !objectp(who) || !mapp(b = who->query_temp("lightning/" + spell))
+    ||  b["serial"] != serial ) return;
+    apply_bonus(who, spell, b, -1);
+    who->delete_temp("lightning/" + spell);
+    tell_object(who, CYN "你身上的" + SPELLS[spell][3] + "漸漸黯淡﹐終於散去。\n" NOR);
 }
 
-int do_bless(object me, object target, int sk)
+/* 效果敘述（對別人用 $n，對自己把 $n 換成「自己」）。 */
+string effect_line(string spell, int self)
 {
-    mapping b;
-    int spi, ticks;
+    string msg;
 
-    spi = me->query_attr("spi");
-    b = ([ "attr": (sk + spi) / 20, "damage": sk / 3, "resist": spi * 4 ]);
-    foreach(string a in ATTRS)
-        target->add_temp("apply/" + a, b["attr"]);
-    foreach(string e in ELEMENTS) {
-        target->add_temp("apply/damage_vs_" + e, b["damage"]);
-        target->add_temp("apply/armor_vs_" + e, b["resist"]);
+    switch( spell ) {
+    case "lightning-gold":
+        return self ? "$N劍訣一領﹐先天符化作一道金光﹐當頭罩了下來。"
+                    : "$N劍訣一領﹐先天符化作一道金光﹐直落$n頭頂。";
+    case "lightning-wood":  msg = "$N長劍橫胸一引﹐先天符化作一縷青光﹐繞著$n緩緩盤旋。"; break;
+    case "lightning-water": msg = "$N劍尖在地上輕輕一點﹐先天符化作一汪清光﹐漫向$n的腳邊。"; break;
+    case "lightning-fire":  msg = "$N劍鋒一抖﹐先天符化作一團赤光﹐旋入$n的眉心。"; break;
+    default:                msg = "$N劍柄頓地﹐先天符化作一團黃光﹐自腳下升起罩住$n。"; break;
     }
-    target->set_temp("lightning/bless", b);
-    ticks = sk / 2;
+    return self ? replace_string(msg, "$n", "自己") : msg;
+}
+
+string result_line(string spell)
+{
+    switch( spell ) {
+    case "lightning-gold":  return "金光裹住$n全身﹐$n只覺膽氣大壯﹐周身如披薄甲。";
+    case "lightning-wood":  return "青光沒入$n體內﹐$n心神一定﹐身邊的風也似繞著走了。";
+    case "lightning-water": return "清光漫上$n全身﹐$n頭腦一清﹐炎熱之氣不得近身。";
+    case "lightning-fire":  return "赤光融入$n身子﹐$n靈光乍現﹐耳畔隱隱有雷聲滾過。";
+    }
+    return "黃光凝在$n身上﹐$n膂力一沉﹐寒意再也侵不進來。";
+}
+
+int do_lightning(object me, object target, string spell)
+{
+    mapping b, old;
+    mixed *s = SPELLS[spell];
+    int sk, strength, ticks, serial, self;
+
+    sk = me->query_skill("mao-shan lightning");
+    strength = me->query_ability("magic") + me->query_skill("taoism of purify") / 2 + sk;
+    b = ([ "attr": strength / 50, "resist": strength / 4, "skill": strength / 20,
+           "armor": strength / 10 ]);
+    if( spell == "lightning-wood" ) b["resist"] *= 2;   // 風抗只減半傷害，加倍補回
+    self = (target == me);
+
+    // 已有同一卦：撤掉舊的，覆蓋並重算時間。
+    if( mapp(old = target->query_temp("lightning/" + spell)) ) {
+        apply_bonus(target, spell, old, -1);
+        target->delete_temp("lightning/" + spell);
+    }
+    serial = random(1000000) + 1;
+    b["serial"] = serial;
+    apply_bonus(target, spell, b, 1);
+    target->set_temp("lightning/" + spell, b);
+    ticks = me->query_skill("mao-shan lightning") / 2;
     if( ticks < 1 ) ticks = 1;
-    call_out("remove_bless", ticks * 2, target);
+    call_out("expire", ticks * 2, target, spell, serial);
 
-    message_vision(HIK "$N將先天符往空中一拋﹐雙手結印﹐低喝一聲" HIY "「雷來」" NOR HIK "﹗\n" NOR, me, target, 1);
+    message_vision(CYN "$N拈起一張先天符﹐劍尖斜指﹐開始施展" + s[2] + "「" + s[1] + "」" NOR CYN " ...." NOR "\n",
+        me, target, 1);
     message_vision("\n", me, 0, 1);
-    if( target == me )
-        message_vision(HIW "半空中雷光一閃﹐五道細細的電蛇盤旋而下﹐繞著$N的身子遊走不去。\n" NOR, me, 0, 1);
-    else
-        message_vision(HIW "半空中雷光一閃﹐五道細細的電蛇盤旋而下﹐繞著$n的身子遊走不去。\n" NOR, me, target, 1);
-    return 1;
-}
-
-int do_consume(object me, object target, int sk)
-{
-    int gin, sen;
-
-    gin = sk / 2 + random(sk * 2 / 3 - sk / 2 + 1);
-    sen = sk / 3 + random(sk * 2 / 3 - sk / 3 + 1);
-    target->supplement_stat("gin", gin);
-    target->supplement_stat("sen", sen);
-
-    message_vision(HIK "$N將先天符按在掌心﹐引體內靈力化作一縷電光﹐輕輕點向$n的眉心。\n" NOR, me, target, 1);
+    message_vision(CYN + effect_line(spell, self) + NOR "\n", me, target, 1);
     message_vision("\n", me, 0, 1);
-    message_vision(HIW "那縷電光沒入$n的眉心﹐$n只覺神清氣爽﹐疲憊一掃而空。\n" NOR, me, target, 1);
-    return 1;
-}
-
-int do_cleanse(object me, int sk)
-{
-    me->set_temp("lightning/mana", time() + (sk > 0 ? sk : 1) * 2);
-    message_vision(HIK "$N盤膝而坐﹐吐納幾口﹐將散落全身的靈力一絲絲收攏到丹田之中。\n" NOR, me, 0, 1);
+    if( mapp(old) )
+        message_vision(CYN + (self ? "$N" : "$n") + "身上的" + s[3] + "一閃﹐又旺盛了幾分。\n" NOR, me, target, 1);
+    else {
+        string msg = result_line(spell);
+        if( self ) msg = replace_string(msg, "$n", "$N");
+        message_vision(CYN + msg + NOR "\n", me, target, 1);
+    }
     return 1;
 }
 
 int conjure_magic(object me, string spell, object target)
 {
     object scroll;
+    mapping w;
     int sk;
 
     if( !me->query_skill("mao-shan lightning", 1) && !me->query_learn("mao-shan lightning") )
         return notify_fail("你還沒學會五雷術。\n");
     if( !stringp(spell) || undefinedp(SPELLS[spell]) )
-        return notify_fail("指令格式﹕conjure <法術名稱> [on <對象>]\n");
+        return notify_fail("指令格式﹕conjure <雷咒名稱> [on <對象>]\n");
     sk = me->query_skill("mao-shan lightning", 1);
+    if( sk < SPELLS[spell][0] )
+        return notify_fail("你的五雷術火候未到﹐還驅使不了這道雷咒。\n");
 
-    if( spell == "cleanse" ) {
-        if( has_mana(me) ) return notify_fail("你體內的靈力還凝聚著﹐不必再收攏了。\n");
-    } else {
-        if( !has_mana(me) )
-            return notify_fail("你體內靈力渙散﹐施展不了五雷術。\n");
-        if( !objectp(target) ) target = me;
-        if( !living(target) || environment(target) != environment(me) )
-            return notify_fail("這裡沒有可施法的對象。\n");
-        if( spell == "bless" && target->query_temp("lightning/bless") )
-            return notify_fail((target == me ? "你" : target->name()) + "身上已經纏著五雷的加持了。\n");
-        if( !(scroll = find_scroll(me)) )
-            return notify_fail("你身上沒有先天符﹐無從施展五雷術。\n");
-    }
-    if( me->query_stat("sen") < SPELLS[spell][0] )
-        return notify_fail("你心神渙散﹐無法施展五雷術。\n");
+    if( !mapp(w = me->query_temp("weapon")) || !objectp(w["sword"]) )
+        return notify_fail("你手中沒有劍﹐施展不了五雷術。\n");
 
-    me->consume_stat("sen", SPELLS[spell][0]);
-    if( scroll ) {
-        scroll->add_amount(-1);
-        me->delete_temp("lightning/mana");   // 靈力用掉了，要重新凝聚
-    }
+    if( !objectp(target) ) target = me;
+    if( !living(target) || environment(target) != environment(me) )
+        return notify_fail("這裡沒有可施法的對象。\n");
+    if( !target->query("humanoid") || target->query("training_dummy") )
+        return notify_fail("對方不是人形﹐雷咒附不上去。\n");
 
-    switch( spell ) {
-    case "cleanse": do_cleanse(me, sk); break;
-    case "bless":   do_bless(me, target, sk); break;
-    case "consume": do_consume(me, target, sk); break;
-    }
+    if( !(scroll = find_scroll(me)) )
+        return notify_fail("你身上沒有先天符﹐無從施展五雷術。\n");
+    if( me->query_stat("gin") < COST || me->query_stat("kee") < COST
+    ||  me->query_stat("sen") < COST )
+        return notify_fail("你精神不濟﹐無法施展五雷術。\n");
 
-    me->start_busy(SPELLS[spell][1]);
-    magic_gain(me, SPELLS[spell][2]);
+    foreach(string st in ({ "gin", "kee", "sen" }))
+        me->consume_stat(st, COST);
+    scroll->add_amount(-1);
+
+    do_lightning(me, target, spell);
+    me->start_busy(1);
+    magic_gain(me, SPELLS[spell][7]);
     return 1;
 }
