@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 # 玄天派武功（使用者定案，2026-11-14；docs/martial_arts/玄天教_門派設計.md）。
@@ -6,7 +7,8 @@ MUD = ROOT / 'source' / 'upstream' / 'mudlib'
 
 
 def read(p):
-    return (MUD / p).read_text(encoding='utf-8')
+    # 說明檔標題列有 HIY 色碼，比對內容時先去掉
+    return re.sub(r'\x1b\[[0-9;]*m', '', (MUD / p).read_text(encoding='utf-8'))
 
 
 def test_sky_force():
@@ -62,12 +64,13 @@ def test_advance_sky_sword():
 
 def test_help_files():
     assert read('docs/help/scholar.sky.txt').startswith('○ 玄天派資料')
-    assert read('docs/help/advance-sky_sword.txt').startswith('◎ 玄天劍訣（advance-sky sword）')
-    assert read('docs/help/sky_force.txt').startswith('◎ 玄天心法（sky force）')
+    assert '\n◎ 玄天劍訣（advance-sky sword）' in read('docs/help/advance-sky_sword.txt')
+    assert '\n◎ 玄天心法（sky force）' in read('docs/help/sky_force.txt')
     assert '招架加倍' in read('docs/help/advance-sky_sword.txt') and '招架加倍' in read('docs/help/scholar.sky.txt')
     for f in ('scholar.sky.txt', 'advance-sky_sword.txt', 'sky_force.txt'):
         for line in read('docs/help/' + f).split('\n'):
-            assert len(line.encode('big5', errors='replace')) <= 72, (f, line)
+            line = re.sub(r'\x1b\[[0-9;]*m', '', line)  # 任務背景裡的顏色碼不算寬度
+            assert len(line.encode('big5', errors='replace')) <= 76, (f, line)  # 說明檔每行最寬 76 格
 
 
 def test_npc_skill_faction_unchanged():

@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 # 風嘯拳法任務（使用者指示，2026-11-04～05；docs/martial_arts/共通_風嘯拳法.md「任務」）。
@@ -5,7 +6,8 @@ MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
 
 
 def read(p):
-    return (MUD / p).read_text(encoding='utf-8')
+    # 說明檔標題列有 HIY 色碼，比對內容時先去掉
+    return re.sub(r'\x1b\[[0-9;]*m', '', (MUD / p).read_text(encoding='utf-8'))
 
 
 def test_greeting_on_enter():
@@ -47,7 +49,7 @@ def test_fonxiaoken_skill():
     assert 'me->supplement_stat("gin", SPECIAL_GIN);' in s and 'opponent->start_busy(1);' in s
     assert 'HIW "$N吐氣開聲' in s and 'me->start_busy' not in s
     h = read('docs/help/fonxiaoken.txt')
-    assert h.startswith('◎ 風嘯拳法（fonxiaoken）') and '任務起始：五堂鎮醇雨樓客棧 雍泰' in h
+    assert '\n◎ 風嘯拳法（fonxiaoken）' in h and '任務起始：五堂鎮醇雨樓客棧 雍泰' in h
     assert (MUD.parents[2] / 'docs/martial_arts/共通_風嘯拳法.md').exists()
 
 

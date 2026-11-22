@@ -1,12 +1,19 @@
-◎ 武陀灸術【三自回針法】（recovery-needle）
+
+【任務背景】
+三自回針法是武陀灸堂的自救之術，針只能扎在自己身上，可回精、回氣、回
+神，每扎一針卻會增加疲勞。須先把經脈穴道之學練到火候，才能向堂主武道通
+學習。
+
+[1;33m◎ 武陀灸術【三自回針法】（recovery-needle）[0m
 　 技能種類：針灸之術
 　 學習條件：拜師武陀灸堂堂主武道通，經脈穴道之學 >=80
 　 任務起始：武道通
 　 安裝：enable cauterization with recovery-needle
 　 特殊能力：
-　 　‧回精針：acupuncture gin-up
-　 　‧回氣針：acupuncture kee-up
-　 　‧回神針：acupuncture sen-up
-　 　　　　　 只能扎在自己身上，回復精、氣或神，以及受傷減少的上限；
-　 　　　　　 每扎一針疲勞增加 1，疲勞已滿時不能施針。
+　 　●回精針：acupuncture gin-up
+　 　●回氣針：acupuncture kee-up
+　 　●回神針：acupuncture sen-up
+　 　　　　　　只能扎在自己身上，回復精、氣或神，以及受傷減少的上限；
+　 　　　　　　每扎一針疲勞增加 1，疲勞已滿時不能施針。
 　 能力提昇：無
+　 歷練提昇：無

@@ -30,9 +30,13 @@
   taoism_of_dunja    遁甲書        taoism_of_darkness 茅山奇術
   mao-shan_mysticism 奇門術
 
-【 其他技能 】
-  kee_anatomy  經脈穴道之學
-  enchance     強化之術
+【 共通技能 】
+  halieutics         捕魚技巧      soonlight_axe      迅雷斧法
+  fonxiaoken         風嘯拳法      uenfon             雲峰筆招
+  sky_pike           穹槍訣        kee_anatomy        經脈穴道之學
+  enchance           強化之術      ice-fire_axe       玄冰烈焰斧
+  taiyie             太乙劍法      chivi_sutra        天師道法【紫薇心經】
+  butterfly-steps    蝶影幻步
 
 【 種族 】
   human        人類／人類族      blackteeth   黑齒
@@ -43,17 +47,8 @@
   yaksa        夜叉              dance        刑天戰舞
   race.detail  種族詳細資料
 
-【 世界功能 】
-  world        世界與探索        snowkeep     雪亭
-  inn          客棧
-  home_help    私人家園
-
-【 連線與其他 】
-  web          WebMUD            zmud         zMUD
-  rules        遊戲基本規則      wizard_help  巫師說明
-
 使用方式：help <主題>
-例如：help newbie、help tiger、help inn
+例如：help newbie、help tiger、help halieutics
 
 一般指令也可直接查詢，例如：help look、help who、help skills。
 本 HELP 僅整理目前 ES2 WebMUD 已存在或已確認的功能；未完成內容不會自行補寫。

@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 # 雪吟莊武功（使用者定案，2026-11-05；docs/martial_arts/雪吟莊_武功.md）。
@@ -6,7 +7,8 @@ MUD = ROOT / 'source' / 'upstream' / 'mudlib'
 
 
 def read(p):
-    return (MUD / p).read_text(encoding='utf-8')
+    # 說明檔標題列有 HIY 色碼，比對內容時先去掉
+    return re.sub(r'\x1b\[[0-9;]*m', '', (MUD / p).read_text(encoding='utf-8'))
 
 
 def test_tidy_force():
@@ -92,7 +94,7 @@ def test_help_files():
     for f, head in (('tidy_force.txt', '◎ 凌潮心法（tidy force）'), ('celestial_force.txt', '◎ 天邪神功（celestial force）'),
                     ('deep_blade.txt', '◎ 深空刀法（deep blade）'), ('six-chaos-sword.txt', '◎ 六陰追魂劍法（six-chaos-sword）'),
                     ('celestial_palm.txt', '◎ 天邪神掌（celestial palm）')):
-        assert read('docs/help/' + f).startswith(head), f
+        assert ('\n' + head) in read('docs/help/' + f) or read('docs/help/' + f).startswith(head), f
     assert read('docs/help/fighter.snow.txt').startswith('○ 雪吟莊資料')
     assert (ROOT / 'docs/martial_arts/雪吟莊_武功.md').exists()
 

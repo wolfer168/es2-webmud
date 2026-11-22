@@ -7,7 +7,7 @@ MUD = ROOT / 'source' / 'upstream' / 'mudlib'
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return re.sub(r'\x1b\[[0-9;]*m', '', p.read_text(encoding='utf-8'))
 
 
 def test_files_exist():
@@ -30,7 +30,7 @@ def test_npcs_use_quest_header_after_inherit():
 
 def test_help_has_story_and_entry():
     s = read(MUD / 'docs/help/sky_pike.txt')
-    assert s.startswith('【任務背景】')
+    assert s.startswith('\n【任務背景】')
     assert '◎ 穹槍訣（sky_pike）' in s
     assert '百花村' in s and '五堂鎮' in s
     assert not re.search(r'\bexert\b|\bperform\b', s)
