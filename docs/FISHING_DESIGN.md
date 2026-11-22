@@ -177,7 +177,7 @@ n = 10：  必定釣起
 
 | 獎品 | 檔案 | 數量 | 機率 |
 |---|---|---|---|
-| 黃金 | `obj/money/gold.c` | 10 | 14% |
+| 黃金 | `obj/money/gold.c` | 10 | 14.99% |
 | 【五脈內經】book of five meridians | `obj/books/book_of_five_meridians.c` | 1 | 10% |
 | 空白符紙 | `custom/item/scroll/blank.c` | 3000 | 10% |
 | 化屍粉 | `obj/dust.c` | 1 | 10% |
@@ -191,7 +191,7 @@ n = 10：  必定釣起
 | 戰神劈天刀 warlord blade | `custom/weapon/blade/warlord_blade.c` | 1 | 5% |
 | 谷玉 staff of wisdom | `custom/weapon/staff/staff_of_wisdom.c` | 1 | 5% |
 | 血月短斧 short axe of bloodmoon | `custom/weapon/axe/short_axe_of_bloodmoon.c` | 1 | 5% |
-| 金元寶 sycee | `obj/money/sycee.c` | 1 | 1% |
+| 金元寶 sycee | `obj/money/sycee.c` | 1 | 0.01% |
 | 混元一氣袋 | `custom/item/super_skin.c` | 1 | 5% |
 
 說明：
@@ -256,3 +256,4 @@ n = 10：  必定釣起
 - 抽獎由珍寶商人的 `accept_object` 處理，沒改 `give.c`。
 - 沒釣到魚的 tick 也加技能點數 `random(智力) + 1`（使用者指示，2026-11-20）。
 - 屬性成長（使用者指示，2026-11-20）：捕魚技巧 100 級以上，每練到 10 的倍數有機會提升定力 1 點，規則同其他技能的屬性成長（`feature/char/skill.c` 的 `ATTR_GROWTH`，不分職業、100 級起每 10 級擲一次）。
+- 抽獎機率調整（使用者指示，2026-11-22）：金元寶由 1% 下調為 0.01%，減下的 0.99% 全部加到黃金（14% 變 14.99%），合計仍為 100%；程式內機率改以萬分之一為單位（10000）。
