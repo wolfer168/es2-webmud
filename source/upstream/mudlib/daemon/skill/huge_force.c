@@ -41,6 +41,7 @@ void skill_completed(object me, string sk)
     if( !me->query("huge_force/initial_con_bonus") ) {
         me->set_attr("con", me->query_attr("con", 1) + 1);
         me->set("huge_force/initial_con_bonus", 1);
+        tell_object(me, HIY "你的根骨增加了。\n" NOR);
     }
 }
 
