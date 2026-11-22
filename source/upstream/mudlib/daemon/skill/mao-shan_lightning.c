@@ -2,7 +2,7 @@
 description: 茅山【五雷術】（mao-shan lightning）。靈雲觀法術，enable 在法術（magic）上，以 conjure 施展。
              cleanse 凝神：耗神 20，凝聚一股靈力（只有一股，時效為五雷術 tick）。
              consume 歸元：耗神 20、靈力和一張先天符，恢復目標的精與神。
-             bless 五雷加持：耗精、氣、神各 20 和一張先天符（不用靈力），提昇屬性、元素抗性、元素傷害、護甲，
+             bless 五雷加持：耗精、氣、神各 20、靈力和一張先天符，提昇屬性、元素抗性、元素傷害、護甲，
              另依目標職業提昇一項技能；再施展時覆蓋並重算時間。
              三道都需持劍，只能對人形生物施放。
              設計見 docs/martial_arts/靈雲觀_幽冥三箭與五雷術.md。
@@ -257,12 +257,15 @@ int conjure_magic(object me, string spell, object target)
         return 1;
     }
 
+    if( !has_mana(me) )
+        return notify_fail("你體內靈力渙散﹐施展不了五雷術。\n");
     if( me->query_stat("gin") < COST || me->query_stat("kee") < COST
     ||  me->query_stat("sen") < COST )
         return notify_fail("你精神不濟﹐無法施展五雷術。\n");
     foreach(string st in ({ "gin", "kee", "sen" }))
         me->consume_stat(st, COST);
     scroll->add_amount(-1);
+    me->delete_temp("lightning/mana");   // 靈力用掉了
 
     do_bless(me, target);
     me->start_busy(1);
