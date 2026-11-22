@@ -4,7 +4,7 @@ LEGACY NPC. 名稱、英文 ID、敘述、年紀、性別、種族、裝備取�
 docs/LEGACY_ROOM_NPC_COMPENDIUM.md）；職業、等級、強度、門派、行為依使用者提供的
 「舊有 NPC 待製作清單」（2026-10-15）。已放入風城春風客棧二樓（d/fengcheng/inn2.c）。
 舊站區域：未能判定；房間：—。
-玄天派師父（使用者定案，2026-11-14）：平民或書生可直接拜師（不考慮讀書識字）；已入其他書生門派（例如步玄派）的不收；
+玄天派師父（使用者定案，2026-11-14）：平民或書生可直接拜師（不考慮讀書識字），夜叉、阿修羅不收（2026-11-22）；已入其他書生門派（例如步玄派）的不收；
 拜師後成為書生、「玄天派弟子」（門派代碼 scholar.sky）；拜師才可學，玄天劍訣、玄天心法要自行求教（acquire）。
 武功見 docs/martial_arts/玄天教_門派設計.md。
 尚未製作的裝備（先空著）：素雲頭巾(Cloud-circlet)。
@@ -54,6 +54,11 @@ int accept_apprentice(object me)
 {
     string cls = me->query_class(), faction = me->query("custom_faction"), title = me->query("title");
 
+    // 夜叉、阿修羅不收（使用者指示，2026-11-22）。
+    if( member_array(me->query_race(), ({ "yaksa", "ashura" })) != -1 ) {
+        command("say 玄天一脈的心法與閣下的根器格格不入，老夫不敢誤了閣下，還請另尋明師。");
+        return 0;
+    }
     if( cls == "scholar" ) {
         if( (stringp(faction) && faction != "" && faction != FACTION)
         ||  (stringp(title) && strsrch(title, "步玄") != -1) ) {

@@ -30,3 +30,11 @@ def test_dong_fang_teaches_only_disciples():
 
 def test_help_no_literate_requirement():
     assert '讀書識字' not in read(MUD / 'docs/help/scholar.sky.txt')
+
+
+def test_dong_fang_refuses_yaksa_and_ashura():
+    s = read(MUD / 'custom/legacy_npc/dong_fang_gu_ming.c')
+    assert 'member_array(me->query_race(), ({ "yaksa", "ashura" })) != -1' in s
+    # 種族檢查放在職業檢查之前，夜叉、阿修羅不論是平民或書生都不收。
+    assert s.index('"yaksa", "ashura"') < s.index('if( cls == "scholar" )')
+    assert '夜叉、阿修羅不收' in read(MUD / 'docs/help/scholar.sky.txt')
