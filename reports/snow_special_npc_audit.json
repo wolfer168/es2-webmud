@@ -36,7 +36,7 @@
           "exists": true
         }
       ],
-      "sha256": "25bd988acb99ef9d7ebff394a2d2a03dbc49ca2bd37ef20f8f279b646a9ee5d5"
+      "sha256": "adee82cbb65090288aa4c09c3bbddab81d8b651dbd86c0ab0e1603d6533d0262"
     },
     {
       "file": "teacher.c",
@@ -59,11 +59,15 @@
       "missingTokens": [],
       "absoluteDependencies": [
         {
+          "path": "/d/baihua/skypike_quest.h",
+          "exists": true
+        },
+        {
           "path": "/obj/area/obj/cloth",
           "exists": true
         }
       ],
-      "sha256": "9b4bd403590f60c29ca32375ce7d51d9da88577cbb4aaf2932f7e09e89990471"
+      "sha256": "831b374de884dc66eb276642d6b11d99625572b7ed45b33ee5ba10b9c5bc5862"
     },
     {
       "file": "girl.c",
@@ -74,7 +78,7 @@
       "behaviorTokensExpected": 8,
       "missingTokens": [],
       "absoluteDependencies": [],
-      "sha256": "508de843998ac11b4006c5f0c8e096cff226807cb4e6c4bc4b684013362fad5a"
+      "sha256": "f9dbc9beba1e1627cec0a3d0ddb5c86c73b48849b39fa3b6c177a43f3cb7c1ad"
     }
   ]
 }

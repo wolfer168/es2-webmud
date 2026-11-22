@@ -6,6 +6,6 @@
 　 　　　enable secondhand sword with close myst-sword
 　 　　　enable parry with close myst-sword
 　 特殊能力：
-　 　‧無。出劍輕快飄逸，守多於攻。
+　 　●無。出劍輕快飄逸，守多於攻。
 　 練成等級：20 級
 　 能力提昇：無

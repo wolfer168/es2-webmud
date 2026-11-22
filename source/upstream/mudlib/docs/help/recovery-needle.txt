@@ -4,9 +4,9 @@
 　 任務起始：武道通
 　 安裝：enable cauterization with recovery-needle
 　 特殊能力：
-　 　‧回精針：acupuncture gin-up
-　 　‧回氣針：acupuncture kee-up
-　 　‧回神針：acupuncture sen-up
-　 　　　　　 只能扎在自己身上，回復精、氣或神，以及受傷減少的上限；
-　 　　　　　 每扎一針疲勞增加 1，疲勞已滿時不能施針。
+　 　●回精針：acupuncture gin-up
+　 　●回氣針：acupuncture kee-up
+　 　●回神針：acupuncture sen-up
+　 　　　　　　只能扎在自己身上，回復精、氣或神，以及受傷減少的上限；
+　 　　　　　　每扎一針疲勞增加 1，疲勞已滿時不能施針。
 　 能力提昇：無
