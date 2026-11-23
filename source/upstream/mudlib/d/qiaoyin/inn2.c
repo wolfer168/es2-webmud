@@ -16,7 +16,7 @@ LONG
     ]));
     set("objects", ([
         __DIR__"npc/cao_xuanzhi" : 1,
-        "/custom/legacy_npc/yin_euyen" : 1,
+        "/d/qiaoyin/npc/yin_euyen" : 1,
     ]));
     set("map/layer", "二樓");
     set("map/area", "喬陰縣");

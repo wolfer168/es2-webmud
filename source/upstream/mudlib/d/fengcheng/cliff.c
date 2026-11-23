@@ -15,7 +15,7 @@ LONG
         "southdown" : __DIR__"east_gate",
     ]));
     set("objects", ([
-        "/obj/area/man" : 1,
+        "/d/npc/man" : 1,
     ]));
     set("map/area", "風城");
     setup();

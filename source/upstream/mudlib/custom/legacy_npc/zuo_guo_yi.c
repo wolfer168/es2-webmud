@@ -23,7 +23,7 @@ void create()
         "一般﹐讓人望而生畏﹐即使是已經死了的人也不敢輕易惹他。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/cloth/blood_stained_cloth")->wear();   // 征衣「血染」
+    carry_object("/d/npc/obj/blood_stained_cloth")->wear();   // 征衣「血染」
     carry_object("/custom/armor/armor/iron_torso")->wear();   // 鑌鐵胸鎧
     carry_object("/custom/weapon/axe/grandaxe")->wield();   // 十石大斧
 }

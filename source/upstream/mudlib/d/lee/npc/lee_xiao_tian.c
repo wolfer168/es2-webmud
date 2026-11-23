@@ -13,6 +13,6 @@ void create()
     set("chat_msg", ({ "李嘯天低頭翻著帳簿，偶爾撥動算盤珠。\n" }));
     set_power("B");
     setup();
-    carry_object("/d/lee/obj/yellow_jade_ring")->wear();
-    carry_object("/d/lee/obj/willow_blade")->wield();
+    carry_object("/d/npc/obj/yellow_jade_ring")->wear();
+    carry_object("/d/lee/npc/obj/willow_blade")->wield();
 }

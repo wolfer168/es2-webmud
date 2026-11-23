@@ -43,7 +43,7 @@ LONG
     );
     set("detail/窗戶", "一面敞開的窗戶，縱身一躍 (jump) 就可以回到將軍府前廣場。\n");
     set("objects", ([
-        "/custom/legacy_npc/xun_yuan_jian_yue" : 1,
+        "/d/baobao/npc/xun_yuan_jian_yue" : 1,
     ]));
     set("map/area", "八寶樓");
     set("map/mode", "maze");

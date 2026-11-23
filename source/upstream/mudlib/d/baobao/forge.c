@@ -15,7 +15,7 @@ LONG
         "east" : __DIR__"fist_room",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/chong_bai_hu" : 1,
+        "/d/baobao/npc/chong_bai_hu" : 1,
     ]));
     set("map/area", "八寶樓");
     set("map/mode", "maze");

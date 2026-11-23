@@ -72,7 +72,7 @@
 - **鐵匠鋪**賣：短劍、匕首、銀針、鋤頭各 5（都用現成的普通品）。
 - **城門守衛**（北、南、東城門各 4 名；東大街原本也有，2026-10-30 拿掉）：照設計表做新的守衛（人類、軍人，出生時隨機拿設計表四種武器之一，
   穿 ring_mail、clothboot）；不攔人。狂擊亂鬥 200，戰鬥中 30% 機率施展（使用者指示，2026-11-10）。
-- **冷梅莊二代弟子**：沿用 `d/wutang/npc/apprentice.c`。**鏢師**：照五堂鎮護院武師改寫成鏢師身分。
+- **冷梅莊二代弟子**：沿用 `d/swaylan/lunmay/npc/apprentice.c`。**鏢師**：照五堂鎮護院武師改寫成鏢師身分。
 - **黃天霸、高風**：沿用 `custom/legacy_npc/` 的現成檔案。
 
 ### NPC 敘述（新寫）
@@ -433,9 +433,9 @@
 
 | NPC | 檔案 | 說明 |
 |---|---|---|
-| 梅影風 | 沿用 `d/wutang/npc/may_yin_fong.c` | 搬到正廳 |
-| 「追風劍」梅嵐武 | 沿用 `custom/legacy_npc/may_lan_wu.c` | 前院 |
-| 冷梅莊二代弟子 | 沿用 `d/wutang/npc/apprentice.c` | 練武場 ×2 |
+| 梅影風 | 沿用 `d/swaylan/lunmay/npc/may_yin_fong.c` | 搬到正廳 |
+| 「追風劍」梅嵐武 | 沿用 `d/swaylan/lunmay/npc/may_lan_wu.c` | 前院 |
+| 冷梅莊二代弟子 | 沿用 `d/swaylan/lunmay/npc/apprentice.c` | 練武場 ×2 |
 | 梅夫人(May) | 新 `npc/may_wife.c` | 人類、31 歲、平民、等級 5、強度 C；穿 green_cloth、pearl_ring |
 | 古大叔(Goo) | 新 `npc/goo.c` | 冷梅莊老僕；人類、70 歲、平民、等級 5、強度 C；布衣 |
 | 冷梅莊三代弟子(Apprentice) | 新 `npc/apprentice3.c` | 人類、15 歲、武者、等級 10、強度 C；長劍、布衣；冷梅莊門派記號 |
@@ -611,7 +611,7 @@ NPC 敘述（新寫；三代弟子照設計表原文）：
 | 寶蓮寺住持 無想禪師(Abbot) | 新 `temple/npc/abbot.c` | 女、65 歲、和尚、等級 65、強度 S；禪杖（現成 zenstaff）、大悲法衣（新）、念珠（新）。賣【法華經】【大悲咒】【往生經】【佛名經】各五兩銀子（現成經書，只有在寶蓮寺照這個價錢）；迷羅香等迷羅香法做好再上架 |
 | 小尼姑(Young nun) | 新 `temple/npc/young_nun.c` | 女、10 歲、和尚、等級 5、強度 C；念珠；會走動，但不離開寶蓮寺 |
 | 駱雲峰(Luo yun-feng) | 新 `buxuan/npc/luo_yun_feng.c` | 白色長衫（現成 white_scholar_dress）、判官筆兩支（主手、左手）；可求教雲峰筆招（見待確認 #4） |
-| 步玄派掌門 駱易 | 沿用 `custom/legacy_npc/ro_yi.c` | 沐華居 |
+| 步玄派掌門 駱易 | 沿用 `d/swaylan/buxuan/npc/ro_yi.c` | 沐華居 |
 | 步玄派弟子(Apprentice) | 新 `buxuan/npc/apprentice.c` | 長劍、短劍、布衣；寫法參考冷梅莊弟子（見待確認 #6） |
 | 農夫(Farmer) | 新 `buxuan/npc/farmer.c` | 照李家村農夫，敘述改成步玄派的 |
 
@@ -918,10 +918,10 @@ NPC 敘述（新寫）：
 
 | NPC | 說明 |
 |---|---|
-| 縣令 趙弘春 | 沿用 `custom/legacy_npc/zhao_hong_chun.c` |
-| 酉縣總捕頭 林育崙 | 沿用 `custom/legacy_npc/lin_yu_lun.c`（舊站敘述、鋼戰甲、烏蠶寶衣、鐵佛珠、偃月刀都已在檔案裡） |
-| 景隆錢莊鑣師 程槐 | 沿用 `custom/legacy_npc/cheng_huai.c`（驂龍翔斧） |
-| 野狗 | 沿用 `d/qiaoyin/npc/wild_dog.c` |
+| 縣令 趙弘春 | 沿用 `d/ziyan/npc/zhao_hong_chun.c` |
+| 酉縣總捕頭 林育崙 | 沿用 `d/ziyan/npc/lin_yu_lun.c`（舊站敘述、鋼戰甲、烏蠶寶衣、鐵佛珠、偃月刀都已在檔案裡） |
+| 景隆錢莊鑣師 程槐 | 沿用 `d/ziyan/npc/cheng_huai.c`（驂龍翔斧） |
+| 野狗 | 沿用 `d/npc/wild_dog.c` |
 | 捕快(Constable) | 新；人類、25 歲、軍人、等級 30、強度 A |
 | 衙役(Guard) | 新；設計表只寫「縣衙處理雜事的雜役」，人類、30 歲、軍人、等級 15、強度 B；狂擊亂鬥 200，戰鬥中 30% 機率施展（2026-11-10） |
 | 藥鋪掌櫃 | 新；賣龍涎草 ×50、烏心丹 ×30（原本還賣小還丹 ×20、醒神丹 ×30；2026-11-07 起 NPC 不再販售二階丹藥，見煉丹流程 T-38） |
@@ -1289,8 +1289,8 @@ NPC 敘述（新寫；設計表的背景寫進去）：
 
 ### 製作時發現的問題與決定
 
-- 龍鱗璧玉袍、青龍白虎斧、雙鬢鋏在專案裡**已有 ES2 原資料的物品檔**（`custom/armor/armor/dragon_jade_robe.c`、
-  `custom/weapon/axe/dragon_tiger_axe.c`、`custom/weapon/sword/needle_sword.c`，目前沒有任何 NPC 使用），
+- 龍鱗璧玉袍、青龍白虎斧、雙鬢鋏在專案裡**已有 ES2 原資料的物品檔**（`d/swaylan/forest/npc/obj/dragon_jade_robe.c`、
+  `d/swaylan/forest/npc/obj/dragon_tiger_axe.c`、`d/swaylan/forest/npc/obj/needle_sword.c`，目前沒有任何 NPC 使用），
   數值與設計表不同（例如原資料的龍鱗璧玉袍是鎧甲、火焰防禦 20、定力 +1，沒有冰防禦；雙鬢鋏沒有射針特攻）。
   → 使用者決定「新數值、舊敘述」（2026-10-30）：這三個原資料檔的名稱與敘述保留，數值改照設計表。
   雙鬢鋏的傷害調到一下最高約 120（含傷害力 +5，使用者指示）；落空時 50% 射針傷氣 10。

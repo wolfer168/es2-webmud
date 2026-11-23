@@ -342,7 +342,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/guard",
+    "path": "/d/snowkeep/npc/guard",
     "type": "npc",
     "name": "青衣漢子",
     "actions": [
@@ -424,7 +424,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/obj/crate",
+    "path": "/d/snow/obj/crate",
     "type": "npc",
     "name": "大木箱",
     "actions": [
@@ -441,7 +441,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/obj/pot",
+    "path": "/d/snow/obj/pot",
     "type": "npc",
     "name": "大水缸",
     "actions": [],
@@ -453,7 +453,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/wagon",
+    "path": "/d/snow/obj/wagon",
     "type": "npc",
     "name": "運貨驢車",
     "actions": [
@@ -802,7 +802,7 @@
     "manual_review": []
   },
   {
-    "path": "/obj/area/traveller",
+    "path": "/d/oldpine/npc/traveller",
     "type": "item",
     "name": "過路客",
     "actions": [],

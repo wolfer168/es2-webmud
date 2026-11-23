@@ -22,8 +22,8 @@ LONG
     set_skill("force", 60);
     set_power("A");
     setup();
-    carry_object("/custom/armor/feet/violet_shoes")->wear();
-    carry_object("/custom/armor/cloth/violet_cloth")->wear();
-    carry_object("/custom/armor/head/violet_hairpin")->wear();
-    carry_object("/custom/armor/waist/voliet_jade")->wear();
+    carry_object("/d/oldpine/npc/obj/violet_shoes")->wear();
+    carry_object("/d/oldpine/npc/obj/violet_cloth")->wear();
+    carry_object("/d/oldpine/npc/obj/violet_hairpin")->wear();
+    carry_object("/d/oldpine/npc/obj/voliet_jade")->wear();
 }

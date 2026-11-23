@@ -16,7 +16,7 @@ LONG
         "south" : __DIR__"east_street2",
     ]));
     set("objects", ([
-        "/obj/area/man" : 1,
+        "/d/npc/man" : 1,
     ]));
     set("map/area", "風城");
     setup();

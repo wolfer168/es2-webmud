@@ -17,7 +17,7 @@ LONG
         "north" : __DIR__"lunmay/gate",
     ]));
     set("objects", ([
-        "/d/wutang/npc/apprentice" : 2,
+        "/d/swaylan/lunmay/npc/apprentice" : 2,
     ]));
     set("map/area", "水嵐縣");
     setup();

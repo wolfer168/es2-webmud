@@ -1,6 +1,6 @@
 # 武器附加屬性（隨機前綴／後綴）
 
-依 es2_pal「武器附加屬性表」製作，套用在 `obj/area/obj/` 的 12 種一般武器：長劍、短劍、單刀、鬼頭刀、大劍（bastardsword、greatsword）、闊劍、彎刀、大刀、板斧、長槍、鐵鞭，以及匕首（`obj/area/obj/dagger.c`）、齊眉棍（`d/lee/obj/brow_staff.c`）、木杖（`custom/weapon/staff/long_staff.c`）、禪杖（`custom/weapon/staff/zenstaff.c`）和竹釣竿（`custom/weapon/whip/bamboo_fishing_rod.c`），以及巨劍（`custom/weapon/sword/colosus_sword.c`，2026-11-14 加入，出詞綴機會 3 倍）。
+依 es2_pal「武器附加屬性表」製作，套用在 `obj/area/obj/` 的 12 種一般武器：長劍、短劍、單刀、鬼頭刀、大劍（bastardsword、greatsword）、闊劍、彎刀、大刀、板斧、長槍、鐵鞭，以及匕首（`obj/area/obj/dagger.c`）、齊眉棍（`d/lee/npc/obj/brow_staff.c`）、木杖（`custom/weapon/staff/long_staff.c`）、禪杖（`d/npc/obj/zenstaff.c`）和竹釣竿（`d/wutang/npc/obj/bamboo_fishing_rod.c`），以及巨劍（`d/shuiyue/npc/obj/colosus_sword.c`，2026-11-14 加入，出詞綴機會 3 倍）。
 
 ## 規則
 

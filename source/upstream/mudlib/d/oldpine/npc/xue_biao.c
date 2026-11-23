@@ -36,8 +36,8 @@ LONG
     set("bounty", ([ "military service": 110 ]));
     set_power("B");
     setup();
-    carry_object("/d/oldpine/obj/coarse_cloth")->wear();
+    carry_object("/d/npc/obj/coarse_cloth")->wear();
     carry_object("/obj/area/obj/glaive")->wield();
-    carry_object("/d/oldpine/obj/head_cloth")->wear();
+    carry_object("/d/oldpine/npc/obj/head_cloth")->wear();
     carry_money("silver", 20);
 }

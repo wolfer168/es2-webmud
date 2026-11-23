@@ -22,9 +22,9 @@ void create()
     set("custom_faction", "thief.yin");   // 隱教（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
-    carry_object("/custom/armor/cloth/silk_cloth")->wear();   // 天蠶寶衣
-    carry_object("/custom/armor/waist/silver_girth")->wear();   // 銀彎束腰
+    carry_object("/d/npc/obj/silk_cloth")->wear();   // 天蠶寶衣
+    carry_object("/d/swaylan/lunmay/npc/obj/silver_girth")->wear();   // 銀彎束腰
     carry_object("/custom/armor/hand/silk_gloves")->wear();   // 蠶絲手套
     carry_object("/custom/armor/armor/white_dragon_plate")->wear();   // 混天白龍
-    carry_object("/custom/armor/finger/white_ring")->wear();   // 白玉戒指
+    carry_object("/d/swaylan/lunmay/npc/obj/white_ring")->wear();   // 白玉戒指
 }

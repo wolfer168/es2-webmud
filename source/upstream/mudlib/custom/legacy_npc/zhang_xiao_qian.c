@@ -23,6 +23,6 @@ void create()
         "變變看。\n");
     set_power("C");
     setup();
-    carry_object("/d/lee/obj/leather_boots")->wear();   // 皮靴
-    carry_object("/custom/armor/cloth/white_scholar_dress")->wear();   // 白色長衫
+    carry_object("/d/lee/npc/obj/leather_boots")->wear();   // 皮靴
+    carry_object("/d/npc/obj/white_scholar_dress")->wear();   // 白色長衫
 }

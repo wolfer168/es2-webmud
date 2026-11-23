@@ -24,7 +24,7 @@ def exits(path):
 def test_rooms_and_npcs():
     rooms = sorted(p.stem for p in Q.glob('*.c'))
     assert len(rooms) == 35
-    assert len(list((Q / 'npc').glob('*.c'))) == 14
+    assert len(list((Q / 'npc').glob('*.c'))) == 20   # 2026-11-23 NPC 歸位（docs/NPC_ITEM_PLACEMENT.md）：六位舊站 NPC、市井無賴搬進來，野狗搬到 /d/npc
     for r in rooms:
         s = read(Q / (r + '.c'))
         assert 'set("map/area", "喬陰縣");' in s, r

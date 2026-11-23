@@ -33,7 +33,7 @@ LONG
     ]));
     set_power("A");
     setup();
-    carry_object("/custom/weapon/staff/wither_zenstaff")->wield();
-    carry_object("/custom/armor/cloth/animitta_kasaya")->wear();
-    carry_object("/custom/armor/neck/psakaml")->wear();
+    carry_object("/d/oldpine/npc/obj/wither_zenstaff")->wield();
+    carry_object("/d/oldpine/npc/obj/animitta_kasaya")->wear();
+    carry_object("/d/npc/obj/psakaml")->wear();
 }

@@ -8047,8 +8047,8 @@
     ]
   },
   {
-    "file": "d/snow/npc/guard.c",
-    "path": "/d/snow/npc/guard",
+    "file": "d/snowkeep/npc/guard.c",
+    "path": "/d/snowkeep/npc/guard",
     "type": "npc",
     "sha256": "88c867193035be064b95075b1fb9ed1a2bb0370ac369dff69e5c51e9a71ba105",
     "inherits": [
@@ -8798,8 +8798,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/clothboot.c",
-    "path": "/d/snow/npc/obj/clothboot",
+    "file": "d/npc/obj/clothboot.c",
+    "path": "/d/npc/obj/clothboot",
     "type": "npc",
     "sha256": "0d9b2ec2e889e2a6f46d538cab6445abb670a0273b02183b5becfc24d5e5b88b",
     "inherits": [
@@ -8928,8 +8928,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/crate.c",
-    "path": "/d/snow/npc/obj/crate",
+    "file": "d/snow/obj/crate.c",
+    "path": "/d/snow/obj/crate",
     "type": "npc",
     "sha256": "5e6be0e1d44d9ffc830550d47d88bbc34d5dea1192f80c39c3fb69f84d2375d3",
     "inherits": [
@@ -8992,8 +8992,8 @@
     ]
   },
   {
-    "file": "d/snow/npc/obj/fur_hat.c",
-    "path": "/d/snow/npc/obj/fur_hat",
+    "file": "d/npc/obj/fur_hat.c",
+    "path": "/d/npc/obj/fur_hat",
     "type": "npc",
     "sha256": "276b8db4a1a3296a7428ca795cdcfc5c6e94e977b995c6e1499da99a983bdadc",
     "inherits": [
@@ -9047,8 +9047,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/hairpin.c",
-    "path": "/d/snow/npc/obj/hairpin",
+    "file": "d/snow/obj/hairpin.c",
+    "path": "/d/snow/obj/hairpin",
     "type": "npc",
     "sha256": "c10667224fdcb20879e8286ccdbd839bde94935b02b09eee5bca64bab98fdb28",
     "inherits": [
@@ -9086,8 +9086,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/helmet.c",
-    "path": "/d/snow/npc/obj/helmet",
+    "file": "d/npc/obj/helmet.c",
+    "path": "/d/npc/obj/helmet",
     "type": "npc",
     "sha256": "7ee2fb6287865064840773077c0eaf782f36feb5380cb94c38a390fe637a6431",
     "inherits": [
@@ -9146,8 +9146,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/hoe.c",
-    "path": "/d/snow/npc/obj/hoe",
+    "file": "d/npc/obj/hoe.c",
+    "path": "/d/npc/obj/hoe",
     "type": "npc",
     "sha256": "b3c731bce873030314c83799a53435526d5acce58eba40546e15843a2df1ad61",
     "inherits": [
@@ -9218,8 +9218,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/leather_armor.c",
-    "path": "/d/snow/npc/obj/leather_armor",
+    "file": "d/npc/obj/leather_armor.c",
+    "path": "/d/npc/obj/leather_armor",
     "type": "npc",
     "sha256": "59c19add7b9a86caba304352f18b0f1040a15b84d6a38343c1437b0c6b2a7873",
     "inherits": [
@@ -9311,8 +9311,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/pot.c",
-    "path": "/d/snow/npc/obj/pot",
+    "file": "d/snow/obj/pot.c",
+    "path": "/d/snow/obj/pot",
     "type": "npc",
     "sha256": "8690c1affc507f43d851aeff328c16c1c224e6db6e82f466f21f7548a60320da",
     "inherits": [
@@ -9350,8 +9350,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/roast_chicken.c",
-    "path": "/d/snow/npc/obj/roast_chicken",
+    "file": "d/npc/obj/roast_chicken.c",
+    "path": "/d/npc/obj/roast_chicken",
     "type": "npc",
     "sha256": "97f1121b00721c575d791b1bd793971c42f0f8a5ad217b8da77d7c810509a594",
     "inherits": [
@@ -9520,8 +9520,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/smock.c",
-    "path": "/d/snow/npc/obj/smock",
+    "file": "d/npc/obj/smock.c",
+    "path": "/d/npc/obj/smock",
     "type": "npc",
     "sha256": "aa84282e77e96e78e9602cd46735a4e10a464f8c58671c30a8145fa8a1839c04",
     "inherits": [
@@ -9642,8 +9642,8 @@
     ]
   },
   {
-    "file": "d/snow/npc/obj/tummy_cover.c",
-    "path": "/d/snow/npc/obj/tummy_cover",
+    "file": "d/npc/obj/tummy_cover.c",
+    "path": "/d/npc/obj/tummy_cover",
     "type": "npc",
     "sha256": "e8af33eb85f69f8d3cc3a0f733205fd34e0fc6bdecddc179d562cea6af986128",
     "inherits": [
@@ -9698,8 +9698,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/wagon.c",
-    "path": "/d/snow/npc/obj/wagon",
+    "file": "d/snow/obj/wagon.c",
+    "path": "/d/snow/obj/wagon",
     "type": "npc",
     "sha256": "f7a35e30416f416cd37a21fbc5cd650dff7ad5039d41d736aa1fc166e42fbc83",
     "inherits": [
@@ -9761,8 +9761,8 @@
     ]
   },
   {
-    "file": "d/snow/npc/obj/white_dress.c",
-    "path": "/d/snow/npc/obj/white_dress",
+    "file": "d/npc/obj/white_dress.c",
+    "path": "/d/npc/obj/white_dress",
     "type": "npc",
     "sha256": "a27deca2f238de8f3af562bace737c52e6b67b15b54607c3900d35627cefd0af",
     "inherits": [
@@ -9858,8 +9858,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/woodblade.c",
-    "path": "/d/snow/npc/obj/woodblade",
+    "file": "d/snow/obj/woodblade.c",
+    "path": "/d/snow/obj/woodblade",
     "type": "npc",
     "sha256": "30ab335e7af05e60b2ffdb708e4e3e3d445fd74caae66ce6a8f30bf9057d778d",
     "inherits": [
@@ -9898,8 +9898,8 @@
     "manual_review": []
   },
   {
-    "file": "d/snow/npc/obj/woodsword.c",
-    "path": "/d/snow/npc/obj/woodsword",
+    "file": "d/snow/obj/woodsword.c",
+    "path": "/d/snow/obj/woodsword",
     "type": "npc",
     "sha256": "ee04370e236c9a9ba0c44648f0a711416289fbd37d61a56d605aa4440a87d4d2",
     "inherits": [
@@ -10649,7 +10649,7 @@
     },
     "objects": [
       {
-        "target": "/obj/area/man",
+        "target": "/d/npc/man",
         "relative": false,
         "count": 1
       }
@@ -14454,8 +14454,8 @@
     "manual_review": []
   },
   {
-    "file": "obj/area/man.c",
-    "path": "/obj/area/man",
+    "file": "d/npc/man.c",
+    "path": "/d/npc/man",
     "type": "item",
     "sha256": "8616be9ad8bb444ff051ad72253cd6db8dc4b8f218f40ef722224e46b8e1a473",
     "inherits": [
@@ -15631,8 +15631,8 @@
     "manual_review": []
   },
   {
-    "file": "obj/area/traveller.c",
-    "path": "/obj/area/traveller",
+    "file": "d/oldpine/npc/traveller.c",
+    "path": "/d/oldpine/npc/traveller",
     "type": "item",
     "sha256": "d6cc6374742a5b8ba24cd2130f1b28e189987f0b3a200b50fa8ee9ed7bb7685b",
     "inherits": [
@@ -15719,8 +15719,8 @@
     "manual_review": []
   },
   {
-    "file": "obj/area/vagabond.c",
-    "path": "/obj/area/vagabond",
+    "file": "d/qiaoyin/npc/vagabond.c",
+    "path": "/d/qiaoyin/npc/vagabond",
     "type": "item",
     "sha256": "63b0b8ec622cebc6ac5acaeb99cd94c57c0e8106b5b89dbda735a817673be1fe",
     "inherits": [

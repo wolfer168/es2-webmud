@@ -1,5 +1,5 @@
 // /d/baihua/npc/traveller.c — 百花村 NPC：過路客（帶短劍）（依使用者設計表，2026-10-20）。
-// 複製 obj/area/traveller.c，改拿路人的短劍；短劍產生時會擲隨機附加屬性。
+// 複製 d/oldpine/npc/traveller.c，改拿路人的短劍；短劍產生時會擲隨機附加屬性。
 
 #include <npc.h>
 

@@ -19,7 +19,7 @@ LONG
         "south" : __DIR__"side_s",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/chu_xang_when" : 1,
+        "/d/snowkeep/npc/chu_xang_when" : 1,
     ]));
     set("map/area", "雪吟莊");
     setup();

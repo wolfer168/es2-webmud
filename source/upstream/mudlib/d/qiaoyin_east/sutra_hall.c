@@ -18,7 +18,7 @@ LONG
     ]));
     create_door("west", "房門", "east", DOOR_CLOSED);
     set("objects", ([
-        "/custom/legacy_npc/lay_ton" : 1,
+        "/d/qiaoyin_east/npc/lay_ton" : 1,
     ]));
     set("map/area", "白雲觀");
     setup();

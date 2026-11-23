@@ -905,7 +905,7 @@
     },
     "objects": [
       {
-        "target": "/obj/area/man",
+        "target": "/d/npc/man",
         "relative": false,
         "count": 1
       }

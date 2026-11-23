@@ -24,9 +24,9 @@ void create()
     set_power("A");
     setup();
 
-    carry_object("/custom/zhenwu/obj/steel_boots")->wear();
+    carry_object("/d/npc/obj/steel_boots")->wear();
     carry_object("/custom/zhenwu/obj/fire_gauntlets")->wear();
-    carry_object("/custom/zhenwu/obj/steel_armor")->wear();
+    carry_object("/d/npc/obj/steel_armor")->wear();
     carry_object("/custom/zhenwu/obj/great_axe_of_mighty")->wield("twohanded axe");
     carry_object("/obj/books/book_of_assault");   // 【奇兵精意】（使用者指定，2026-10-16）
 }

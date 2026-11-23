@@ -26,5 +26,5 @@ void create()
         "聶晟學習過。\n");
     set_power("B");
     setup();
-    carry_object("/custom/weapon/dagger/shennong_dagger")->wield();   // 神農匕
+    carry_object("/d/baihua/npc/obj/shennong_dagger")->wield();   // 神農匕
 }

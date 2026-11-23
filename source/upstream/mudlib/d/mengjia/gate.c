@@ -17,7 +17,7 @@ LONG
         "east" : __DIR__"crossroad",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/tian_yu" : 1,
+        "/d/mengjia/npc/tian_yu" : 1,
     ]));
     set("map/area", "孟家莊");
     setup();

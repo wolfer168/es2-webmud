@@ -15,7 +15,7 @@ LONG
         "west" : __DIR__"square",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/old_taoist" : 1,
+        "/d/kangping/npc/old_taoist" : 1,
     ]));
     set("map/area", "康平村");
     setup();

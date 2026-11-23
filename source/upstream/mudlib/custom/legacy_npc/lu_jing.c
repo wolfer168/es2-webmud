@@ -23,9 +23,9 @@ void create()
         "染成一片血黑色的槌頭。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/head/battle_helm")->wear();   // 步軍戰盔
-    carry_object("/custom/armor/armor/battle_armor")->wear();   // 步軍戰鎧
+    carry_object("/d/qiaoyin/npc/obj/battle_helm")->wear();   // 步軍戰盔
+    carry_object("/d/qiaoyin/npc/obj/battle_armor")->wear();   // 步軍戰鎧
     carry_object("/custom/weapon/blunt/crasher_maul")->wield();   // 碎腦鎚
-    carry_object("/d/snow/npc/obj/clothboot")->wear();   // 皂步靴
-    carry_object("/custom/armor/cloth/cyan_cloth")->wear();   // 青布官服
+    carry_object("/d/npc/obj/clothboot")->wear();   // 皂步靴
+    carry_object("/d/qiaoyin/npc/obj/cyan_cloth")->wear();   // 青布官服
 }

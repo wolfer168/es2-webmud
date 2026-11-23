@@ -28,13 +28,13 @@ LONG
     set_skill("parry", 2);
     // merchandise 的數字是庫存份數，價錢是各物品自己的 value。
     set("merchandise", ([
-        "/d/swaylan/obj/fishing_stick" : 10,
+        "/d/swaylan/npc/obj/fishing_stick" : 10,
         "/obj/food/pork" : 50,
-        "/d/swaylan/obj/chrysanthemum_skin" : 30,
+        "/d/swaylan/npc/obj/chrysanthemum_skin" : 30,
         "/obj/food/manto" : 50,
-        "/d/swaylan/obj/bait" : 300,
-        "/d/swaylan/obj/noodle" : 20,
-        "/d/swaylan/obj/white_wine" : 30,
+        "/d/npc/obj/bait" : 300,
+        "/d/swaylan/npc/obj/noodle" : 20,
+        "/d/swaylan/npc/obj/white_wine" : 30,
     ]));
     set_power("C");
     setup();

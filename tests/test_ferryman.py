@@ -15,12 +15,13 @@ def test_ferryman_rules():
     assert '#define FARE        50' in s and '#define CROSS_TICKS 5' in s
     assert 'string *BANKS = ({ "/d/wutang/riverside", "/d/ziyan/ferry" });' in s
     assert 'ob->value() < FARE' in s and 'crossing = 1;' in s
-    for npc, boat in (('ro', 'ferry_boat_ro'), ('huang', 'ferry_boat_huang')):
-        s = read('d/wutang/npc/%s.c' % npc)
+    # 小黃停在紫煙鎮渡口，2026-11-23 歸位到 d/ziyan/npc。
+    for npc, boat in (('d/wutang/npc/ro.c', 'ferry_boat_ro'), ('d/ziyan/npc/huang.c', 'ferry_boat_huang')):
+        s = read(npc)
         assert 'inherit "/d/wutang/npc/ferryman";' in s
         assert 'set("boat_room", "/d/wutang/%s");' % boat in s
         assert '五十文錢' in s and 'set("chat_chance", 15);' in s
-    s = read('d/wutang/npc/huang.c')
+    s = read('d/ziyan/npc/huang.c')
     assert 'present("ferry' + 'man ro", env)' in s and '++together < 3' in s
 
 

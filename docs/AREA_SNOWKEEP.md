@@ -23,7 +23,7 @@ F6 小徑        H6 後花園        J6 側廳 ── L6 東廂房
 ## 已確認的決定（使用者回覆，2026-11-06）
 
 1. J6 側廳與 J8 大廳相通（設計表沒畫線，依舊資料大廳四個出口）。
-2. 青衣漢子沿用 `d/snow/npc/guard.c`，改成**不再攔人**；交出英雄帖仍會被領進雪吟莊大門。
+2. 青衣漢子沿用 `d/snowkeep/npc/guard.c`，改成**不再攔人**；交出英雄帖仍會被領進雪吟莊大門。
 3. 許彥之、王賢都在 H8 前院；其他 NPC 照提案（見下表）。
 4. 八卦桌：按錯時已沉下的銅鈕全部彈回；石階開啟 450 tick；從地牢往上回涼亭一直都能走。
 5. H2→J2：獄卒在場時攔人；獄卒不在時，身上要有鑰匙才打得開牢門，鑰匙不會用掉。
@@ -83,8 +83,8 @@ F6 小徑        H6 後花園        J6 側廳 ── L6 東廂房
 | 獄卒(Jailer) | `d/snowkeep/npc/jailer.c` | 人類、40 歲、武者、等級 50、強度 A；蛟骨刀、真元戰袍、烈陽護膝、鑲珠束腰 |
 | 王賢(Wang hsian) | `d/snowkeep/npc/wang_hsian.c` | 人類、25 歲、武者、等級 20、強度 C；皮短靴、護心鏡、單刀；敘述照設計表 |
 | 雪吟莊弟子、雪吟莊刀客 | `d/snowkeep/npc/apprentice.c`、`blademan.c` | 見 `docs/martial_arts/雪吟莊_武功.md` 第七節；這次的設計表沒有指定房間，先不放 |
-| 黃銅鑰匙(Brass key) | `d/snowkeep/obj/brass_key.c` | 魚鐵山身上；開地牢深處的牢門 |
-| 護心鏡(Heart plate) | `custom/armor/armor/heart_plate.c` | 鎧甲；防禦 10、守勢等級 10 |
+| 黃銅鑰匙(Brass key) | `d/snowkeep/npc/obj/brass_key.c` | 魚鐵山身上；開地牢深處的牢門 |
+| 護心鏡(Heart plate) | `d/snowkeep/npc/obj/heart_plate.c` | 鎧甲；防禦 10、守勢等級 10 |
 
 魚鐵山的精、氣、神固定為 3000／2800／1200（使用者指示，2026-11-21），不隨強度自動計算。
 

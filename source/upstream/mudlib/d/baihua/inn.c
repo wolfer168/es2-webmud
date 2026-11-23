@@ -15,7 +15,7 @@ LONG
         "west" : __DIR__"road2",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/gong_sun_zhi" : 1,
+        "/d/baihua/npc/gong_sun_zhi" : 1,
         __DIR__"npc/innkeeper" : 1,
         __DIR__"npc/traveller" : 1,
     ]));

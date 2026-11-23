@@ -15,7 +15,7 @@ LONG
         "down" : __DIR__"inn",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/dong_fang_gu_ming" : 1,
+        "/d/fengcheng/npc/dong_fang_gu_ming" : 1,
     ]));
     set("map/area", "風城");
     set("map/layer", "二樓");

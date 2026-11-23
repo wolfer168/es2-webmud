@@ -25,8 +25,8 @@ LONG
     set("bounty", ([ "military service": 1000 ]));
     set_power("A");
     setup();
-    carry_object("/custom/weapon/sword/needle_sword")->wield();      // 雙鬢鋏
-    carry_object("/custom/armor/armor/dragon_jade_robe")->wear();    // 龍鱗璧玉袍
-    carry_object("/d/swaylan/forest/obj/black_jade_pendant")->wear(); // 玄玉墜
+    carry_object("/d/swaylan/forest/npc/obj/needle_sword")->wield();      // 雙鬢鋏
+    carry_object("/d/swaylan/forest/npc/obj/dragon_jade_robe")->wear();    // 龍鱗璧玉袍
+    carry_object("/d/swaylan/forest/npc/obj/black_jade_pendant")->wear(); // 玄玉墜
     carry_money("silver", 5 + random(26));
 }

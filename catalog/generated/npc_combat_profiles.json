@@ -490,7 +490,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/guard",
+    "path": "/d/snowkeep/npc/guard",
     "name": "青衣漢子",
     "level": 20,
     "attributes": {
@@ -774,7 +774,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/clothboot",
+    "path": "/d/npc/obj/clothboot",
     "name": "皂步靴",
     "level": null,
     "attributes": {},
@@ -813,7 +813,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/crate",
+    "path": "/d/snow/obj/crate",
     "name": "大木箱",
     "level": null,
     "attributes": {},
@@ -828,7 +828,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/obj/fur_hat",
+    "path": "/d/npc/obj/fur_hat",
     "name": "毛皮帽",
     "level": null,
     "attributes": {},
@@ -841,7 +841,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/hairpin",
+    "path": "/d/snow/obj/hairpin",
     "name": "古銅髮簪",
     "level": null,
     "attributes": {},
@@ -854,7 +854,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/helmet",
+    "path": "/d/npc/obj/helmet",
     "name": "銅盔",
     "level": null,
     "attributes": {},
@@ -867,7 +867,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/hoe",
+    "path": "/d/npc/obj/hoe",
     "name": "鋤頭",
     "level": null,
     "attributes": {},
@@ -893,7 +893,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/leather_armor",
+    "path": "/d/npc/obj/leather_armor",
     "name": "硬皮甲冑",
     "level": null,
     "attributes": {},
@@ -919,7 +919,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/pot",
+    "path": "/d/snow/obj/pot",
     "name": "大水缸",
     "level": null,
     "attributes": {},
@@ -932,7 +932,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/roast_chicken",
+    "path": "/d/npc/obj/roast_chicken",
     "name": "紅燒雞",
     "level": null,
     "attributes": {},
@@ -984,7 +984,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/smock",
+    "path": "/d/npc/obj/smock",
     "name": "打鐵褂子",
     "level": null,
     "attributes": {},
@@ -1016,7 +1016,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/obj/tummy_cover",
+    "path": "/d/npc/obj/tummy_cover",
     "name": "肚兜",
     "level": null,
     "attributes": {},
@@ -1029,7 +1029,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/wagon",
+    "path": "/d/snow/obj/wagon",
     "name": "運貨驢車",
     "level": null,
     "attributes": {},
@@ -1044,7 +1044,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/obj/white_dress",
+    "path": "/d/npc/obj/white_dress",
     "name": "白綢羽衫",
     "level": null,
     "attributes": {},
@@ -1070,7 +1070,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/woodblade",
+    "path": "/d/snow/obj/woodblade",
     "name": "木刀",
     "level": null,
     "attributes": {},
@@ -1083,7 +1083,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/woodsword",
+    "path": "/d/snow/obj/woodsword",
     "name": "木劍",
     "level": null,
     "attributes": {},

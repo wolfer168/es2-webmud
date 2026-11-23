@@ -17,7 +17,7 @@ LONG
     set("objects", ([
         __DIR__"obj/skeleton" : 1,
         __DIR__"obj/corpse" : 1,
-        "/custom/legacy_npc/gong_sun_wei" : 1,
+        "/d/baobao/npc/gong_sun_wei" : 1,
     ]));
     set("map/area", "八寶樓");
     set("map/mode", "maze");

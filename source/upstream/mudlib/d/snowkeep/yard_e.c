@@ -18,7 +18,7 @@ LONG
         "north" : __DIR__"garden_s",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/hsu_yen_chih" : 1,
+        "/d/snowkeep/npc/hsu_yen_chih" : 1,
         __DIR__"npc/wang_hsian" : 1,
     ]));
     set("map/area", "雪吟莊");

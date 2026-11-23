@@ -84,7 +84,7 @@ void new_crate()
 	if( !environment()
 	||	sizeof(all_inventory(environment())) >= 15 ) return;
 
-	ob = new(__DIR__"obj/crate");
+	ob = new("/d/snow/obj/crate");
 	ob->move(environment());
 	say("工頭說道﹕喂﹗那邊卸貨的小心一點﹐別給摔壞了﹗\n");
 }

@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"courtyard",
     ]));
     set("objects", ([
-        "/d/wutang/npc/apprentice" : 2,
+        "/d/swaylan/lunmay/npc/apprentice" : 2,
     ]));
     set("map/area", "冷梅莊");
     setup();

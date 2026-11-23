@@ -30,7 +30,7 @@
 | 格子 | 房間 | 檔案 | 說明 | NPC／物品 |
 |---|---|---|---|---|
 | D2、H2 | 練武場 | `ground_w`、`ground_e` | 新寫（D2 擱木劍與沙袋） | 石假人 ×3（各一） |
-| F2 | 後院 | `yard` | 新寫 | 水井（`/d/lee/obj/well`） |
+| F2 | 後院 | `yard` | 新寫 | 水井（`/d/obj/well`） |
 | B4 | 靜室 | `cell` | 新寫；east 房門可關、預設關閉 | — |
 | B6 | 客房 | `guest_room` | 新寫；east 房門可關、預設關閉；`look 茶杯` 提到可以喝，`drink 茶杯` 補水到上限的四分之一 | — |
 | D4、H4 | 西廊、東廊 | `corridor_w`、`corridor_e` | 新寫 | — |
@@ -74,10 +74,10 @@
 | NPC | 設定 |
 |---|---|
 | 天風道長（Tianfong taoist） | 巫首、180 歲、道士、玄衣派（`taoist.storm`）、等級 40、強度 A、紫薇心經 180 級；桃木劍、青色道袍、青銅道冠 |
-| 青色道袍（新物品） | `custom/armor/cloth/cyan_taoist_robe.c`：防 5、火風冰雷四系防護各 20、慧根 +1、價值 30000、重 1200 |
+| 青色道袍（新物品） | `d/qiaoyin_east/npc/obj/cyan_taoist_robe.c`：防 5、火風冰雷四系防護各 20、慧根 +1、價值 30000、重 1200 |
 | 石假人 | `d/qiaoyin_east/npc/stone_stake.c`，繼承共用假人基底 |
-| 雷同 | `custom/legacy_npc/lay_ton.c` 加巡邏，放經堂 |
-| 武道通 | `custom/legacy_npc/wu_dauton.c` 拿掉巡邏，放武陀灸堂；從 `d/snow/square_n.c` 移除 |
+| 雷同 | `d/qiaoyin_east/npc/lay_ton.c` 加巡邏，放經堂 |
+| 武道通 | `d/qiaoyin_east/npc/wu_dauton.c` 拿掉巡邏，放武陀灸堂；從 `d/snow/square_n.c` 移除 |
 
 ## 驗證
 

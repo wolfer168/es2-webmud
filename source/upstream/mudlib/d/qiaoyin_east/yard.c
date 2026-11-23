@@ -17,7 +17,7 @@ LONG
         "south" : __DIR__"court",
     ]));
     set("objects", ([
-        "/d/lee/obj/well" : 1,
+        "/d/obj/well" : 1,
     ]));
     set("map/area", "白雲觀");
     setup();

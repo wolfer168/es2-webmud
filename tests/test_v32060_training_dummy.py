@@ -6,7 +6,7 @@ BASE = MUD / "feature/npc/dummy.c"
 DUMMIES = [
     MUD / "custom/zhenwu/npc/target_stake.c",
     MUD / "d/swaylan/lunmay/npc/stake.c",
-    MUD / "d/baihua/npc/stone_lion.c",
+    MUD / "d/npc/stone_lion.c",
     MUD / "d/qiaoyin_east/npc/stone_stake.c",
     MUD / "custom/wizroom/w/windstory/obj/stone_stake.c",
 ]

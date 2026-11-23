@@ -31,7 +31,7 @@ LONG
         "west" : __DIR__"dungeon",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/yu_lan_jian_yi" : 1,
+        "/d/snowkeep/npc/yu_lan_jian_yi" : 1,
     ]));
     set("map/area", "雪吟莊");
     set("map/layer", "地下");

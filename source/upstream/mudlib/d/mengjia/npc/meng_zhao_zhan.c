@@ -21,8 +21,8 @@ void create()
     set_skill("parry", 120);
     set_power("A");
     setup();
-    carry_object("/custom/armor/cloth/white_scholar_dress")->wear();   // 白色長衫
-    carry_object("/custom/armor/leg/red_dust_legs")->wear();   // 風塵腿護
-    carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶
-    carry_object("/custom/weapon/blade/ghosts_blade")->wield();   // 百鬼刀
+    carry_object("/d/npc/obj/white_scholar_dress")->wear();   // 白色長衫
+    carry_object("/d/mengjia/npc/obj/red_dust_legs")->wear();   // 風塵腿護
+    carry_object("/d/npc/obj/water_dragon_girdle")->wear();   // 蛟龍帶
+    carry_object("/d/npc/obj/ghosts_blade")->wield();   // 百鬼刀
 }

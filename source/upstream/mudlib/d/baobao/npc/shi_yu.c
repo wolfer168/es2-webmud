@@ -18,7 +18,7 @@ void create()
         "高強的武功都會莫名其妙的中了他下的毒。\n");
     set_power("B");
     setup();
-    carry_object("/custom/weapon/sword/hundreds_poison_sword")->wield();   // 百鬒寒鳩劍
-    carry_object("/custom/armor/armor/padded_armor")->wear();   // 軟襯甲
-    carry_object("/custom/armor/feet/cloud_boots")->wear();   // 流雲靴
+    carry_object("/d/baobao/npc/obj/hundreds_poison_sword")->wield();   // 百鬒寒鳩劍
+    carry_object("/d/npc/obj/padded_armor")->wear();   // 軟襯甲
+    carry_object("/d/npc/obj/cloud_boots")->wear();   // 流雲靴
 }

@@ -16,8 +16,8 @@ inherit F_FIGHTER;
 #define TICK        2                   // 一個 tick 的秒數
 #define FAINT_TICKS 5                   // 收下骨灰罈後昏倒幾個 tick
 #define QUEST_SKILL "fonxiaoken"
-#define RING        "/d/graveyard/obj/chrysoberyl_ring"
-#define URN         "/d/graveyard/obj/urn"
+#define RING        "/d/npc/obj/chrysoberyl_ring"
+#define URN         "/d/npc/obj/urn"
 
 // 進房時的對話，$N 是雍泰，$n 是剛進來的玩家。
 string *GREET_MSG = ({

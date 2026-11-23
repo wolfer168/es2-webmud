@@ -17,7 +17,7 @@ LONG
         "south" : __DIR__"tree_tomb",
     ]));
     set("objects", ([
-        "/obj/area/vagabond" : 1,
+        "/d/qiaoyin/npc/vagabond" : 1,
     ]));
     set("map/area", "喬陰縣");
     setup();

@@ -101,7 +101,7 @@
     {
       "from": "/d/snow/ebridge",
       "kind": "object",
-      "to": "/d/snow/npc/guard",
+      "to": "/d/snowkeep/npc/guard",
       "resolved": true,
       "count": 2
     },
@@ -150,14 +150,14 @@
     {
       "from": "/d/snow/fireplace",
       "kind": "object",
-      "to": "/d/snow/npc/obj/woodsword",
+      "to": "/d/snow/obj/woodsword",
       "resolved": true,
       "count": 1
     },
     {
       "from": "/d/snow/fireplace",
       "kind": "object",
-      "to": "/d/snow/npc/obj/woodblade",
+      "to": "/d/snow/obj/woodblade",
       "resolved": true,
       "count": 1
     },
@@ -409,28 +409,28 @@
     {
       "from": "/d/snow/npc/child1",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/tummy_cover",
+      "to": "/d/npc/obj/tummy_cover",
       "resolved": true,
       "action": "wear"
     },
     {
       "from": "/d/snow/npc/child2",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/woodsword",
+      "to": "/d/snow/obj/woodsword",
       "resolved": true,
       "action": "wield"
     },
     {
       "from": "/d/snow/npc/child3",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/tummy_cover",
+      "to": "/d/npc/obj/tummy_cover",
       "resolved": true,
       "action": "wear"
     },
     {
       "from": "/d/snow/npc/child4",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/tummy_cover",
+      "to": "/d/npc/obj/tummy_cover",
       "resolved": true,
       "action": "wear"
     },
@@ -465,7 +465,7 @@
     {
       "from": "/d/snow/npc/girl",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/white_dress",
+      "to": "/d/npc/obj/white_dress",
       "resolved": true,
       "action": "wear"
     },
@@ -493,28 +493,28 @@
     {
       "from": "/d/snow/npc/herbalist",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/fur_hat",
+      "to": "/d/npc/obj/fur_hat",
       "resolved": true,
       "action": "wear"
     },
     {
       "from": "/d/snow/npc/lieutenant",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/leather_armor",
+      "to": "/d/npc/obj/leather_armor",
       "resolved": true,
       "action": "wear"
     },
     {
       "from": "/d/snow/npc/lieutenant",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/helmet",
+      "to": "/d/npc/obj/helmet",
       "resolved": true,
       "action": "wear"
     },
     {
       "from": "/d/snow/npc/lieutenant",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/clothboot",
+      "to": "/d/npc/obj/clothboot",
       "resolved": true,
       "action": "wear"
     },
@@ -542,7 +542,7 @@
     {
       "from": "/d/snow/npc/smith",
       "kind": "merchandise",
-      "to": "/d/snow/npc/obj/hoe",
+      "to": "/d/npc/obj/hoe",
       "resolved": true,
       "stock": 3
     },
@@ -570,7 +570,7 @@
     {
       "from": "/d/snow/npc/smith",
       "kind": "equipment",
-      "to": "/d/snow/npc/obj/smock",
+      "to": "/d/npc/obj/smock",
       "resolved": true,
       "action": "wear"
     },
@@ -598,7 +598,7 @@
     {
       "from": "/d/snow/npc/waiter",
       "kind": "merchandise",
-      "to": "/d/snow/npc/obj/roast_chicken",
+      "to": "/d/npc/obj/roast_chicken",
       "resolved": true,
       "stock": 30
     },
@@ -689,7 +689,7 @@
     {
       "from": "/d/snow/nstreet2",
       "kind": "object",
-      "to": "/obj/area/man",
+      "to": "/d/npc/man",
       "resolved": true,
       "count": 1
     },
@@ -850,7 +850,7 @@
     {
       "from": "/d/snow/square",
       "kind": "object",
-      "to": "/d/snow/npc/obj/pot",
+      "to": "/d/snow/obj/pot",
       "resolved": true,
       "count": 1
     },
@@ -1039,14 +1039,14 @@
     {
       "from": "/d/snow/store",
       "kind": "object",
-      "to": "/d/snow/npc/obj/wagon",
+      "to": "/d/snow/obj/wagon",
       "resolved": true,
       "count": 1
     },
     {
       "from": "/d/snow/store",
       "kind": "object",
-      "to": "/d/snow/npc/obj/crate",
+      "to": "/d/snow/obj/crate",
       "resolved": true,
       "count": 3
     },
@@ -1135,35 +1135,35 @@
       "direction": "west"
     },
     {
-      "from": "/obj/area/man",
+      "from": "/d/npc/man",
       "kind": "equipment",
       "to": "/obj/area/obj/cloth",
       "resolved": true,
       "action": "wear"
     },
     {
-      "from": "/obj/area/man",
+      "from": "/d/npc/man",
       "kind": "equipment",
       "to": "/obj/area/obj/shortsword",
       "resolved": true,
       "action": "wield"
     },
     {
-      "from": "/obj/area/traveller",
+      "from": "/d/oldpine/npc/traveller",
       "kind": "equipment",
       "to": "/obj/area/obj/cloth",
       "resolved": true,
       "action": "wear"
     },
     {
-      "from": "/obj/area/traveller",
+      "from": "/d/oldpine/npc/traveller",
       "kind": "equipment",
       "to": "/obj/area/obj/whip",
       "resolved": true,
       "action": "wield"
     },
     {
-      "from": "/obj/area/vagabond",
+      "from": "/d/qiaoyin/npc/vagabond",
       "kind": "equipment",
       "to": "/obj/area/obj/knife",
       "resolved": true,
@@ -2155,7 +2155,7 @@
         {
           "from": "/d/snow/ebridge",
           "kind": "object",
-          "to": "/d/snow/npc/guard",
+          "to": "/d/snowkeep/npc/guard",
           "resolved": true,
           "count": 2
         }
@@ -2249,14 +2249,14 @@
         {
           "from": "/d/snow/fireplace",
           "kind": "object",
-          "to": "/d/snow/npc/obj/woodsword",
+          "to": "/d/snow/obj/woodsword",
           "resolved": true,
           "count": 1
         },
         {
           "from": "/d/snow/fireplace",
           "kind": "object",
-          "to": "/d/snow/npc/obj/woodblade",
+          "to": "/d/snow/obj/woodblade",
           "resolved": true,
           "count": 1
         }
@@ -2762,7 +2762,7 @@
         {
           "from": "/d/snow/npc/child1",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/tummy_cover",
+          "to": "/d/npc/obj/tummy_cover",
           "resolved": true,
           "action": "wear"
         }
@@ -2782,7 +2782,7 @@
         {
           "from": "/d/snow/npc/child2",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/woodsword",
+          "to": "/d/snow/obj/woodsword",
           "resolved": true,
           "action": "wield"
         }
@@ -2794,7 +2794,7 @@
         {
           "from": "/d/snow/npc/child3",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/tummy_cover",
+          "to": "/d/npc/obj/tummy_cover",
           "resolved": true,
           "action": "wear"
         }
@@ -2806,7 +2806,7 @@
         {
           "from": "/d/snow/npc/child4",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/tummy_cover",
+          "to": "/d/npc/obj/tummy_cover",
           "resolved": true,
           "action": "wear"
         }
@@ -2891,7 +2891,7 @@
         {
           "from": "/d/snow/npc/girl",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/white_dress",
+          "to": "/d/npc/obj/white_dress",
           "resolved": true,
           "action": "wear"
         },
@@ -2911,12 +2911,12 @@
         }
       ]
     },
-    "/d/snow/npc/guard": {
+    "/d/snowkeep/npc/guard": {
       "incoming": [
         {
           "from": "/d/snow/ebridge",
           "kind": "object",
-          "to": "/d/snow/npc/guard",
+          "to": "/d/snowkeep/npc/guard",
           "resolved": true,
           "count": 2
         }
@@ -2944,7 +2944,7 @@
         {
           "from": "/d/snow/npc/herbalist",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/fur_hat",
+          "to": "/d/npc/obj/fur_hat",
           "resolved": true,
           "action": "wear"
         }
@@ -2988,21 +2988,21 @@
         {
           "from": "/d/snow/npc/lieutenant",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/leather_armor",
+          "to": "/d/npc/obj/leather_armor",
           "resolved": true,
           "action": "wear"
         },
         {
           "from": "/d/snow/npc/lieutenant",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/helmet",
+          "to": "/d/npc/obj/helmet",
           "resolved": true,
           "action": "wear"
         },
         {
           "from": "/d/snow/npc/lieutenant",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/clothboot",
+          "to": "/d/npc/obj/clothboot",
           "resolved": true,
           "action": "wear"
         }
@@ -3079,12 +3079,12 @@
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/clothboot": {
+    "/d/npc/obj/clothboot": {
       "incoming": [
         {
           "from": "/d/snow/npc/lieutenant",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/clothboot",
+          "to": "/d/npc/obj/clothboot",
           "resolved": true,
           "action": "wear"
         }
@@ -3099,52 +3099,52 @@
       "incoming": [],
       "outgoing": []
     },
-    "/d/snow/npc/obj/crate": {
+    "/d/snow/obj/crate": {
       "incoming": [
         {
           "from": "/d/snow/store",
           "kind": "object",
-          "to": "/d/snow/npc/obj/crate",
+          "to": "/d/snow/obj/crate",
           "resolved": true,
           "count": 3
         }
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/fur_hat": {
+    "/d/npc/obj/fur_hat": {
       "incoming": [
         {
           "from": "/d/snow/npc/herbalist",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/fur_hat",
+          "to": "/d/npc/obj/fur_hat",
           "resolved": true,
           "action": "wear"
         }
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/hairpin": {
+    "/d/snow/obj/hairpin": {
       "incoming": [],
       "outgoing": []
     },
-    "/d/snow/npc/obj/helmet": {
+    "/d/npc/obj/helmet": {
       "incoming": [
         {
           "from": "/d/snow/npc/lieutenant",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/helmet",
+          "to": "/d/npc/obj/helmet",
           "resolved": true,
           "action": "wear"
         }
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/hoe": {
+    "/d/npc/obj/hoe": {
       "incoming": [
         {
           "from": "/d/snow/npc/smith",
           "kind": "merchandise",
-          "to": "/d/snow/npc/obj/hoe",
+          "to": "/d/npc/obj/hoe",
           "resolved": true,
           "stock": 3
         }
@@ -3155,12 +3155,12 @@
       "incoming": [],
       "outgoing": []
     },
-    "/d/snow/npc/obj/leather_armor": {
+    "/d/npc/obj/leather_armor": {
       "incoming": [
         {
           "from": "/d/snow/npc/lieutenant",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/leather_armor",
+          "to": "/d/npc/obj/leather_armor",
           "resolved": true,
           "action": "wear"
         }
@@ -3171,24 +3171,24 @@
       "incoming": [],
       "outgoing": []
     },
-    "/d/snow/npc/obj/pot": {
+    "/d/snow/obj/pot": {
       "incoming": [
         {
           "from": "/d/snow/square",
           "kind": "object",
-          "to": "/d/snow/npc/obj/pot",
+          "to": "/d/snow/obj/pot",
           "resolved": true,
           "count": 1
         }
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/roast_chicken": {
+    "/d/npc/obj/roast_chicken": {
       "incoming": [
         {
           "from": "/d/snow/npc/waiter",
           "kind": "merchandise",
-          "to": "/d/snow/npc/obj/roast_chicken",
+          "to": "/d/npc/obj/roast_chicken",
           "resolved": true,
           "stock": 30
         }
@@ -3231,12 +3231,12 @@
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/smock": {
+    "/d/npc/obj/smock": {
       "incoming": [
         {
           "from": "/d/snow/npc/smith",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/smock",
+          "to": "/d/npc/obj/smock",
           "resolved": true,
           "action": "wear"
         }
@@ -3255,50 +3255,50 @@
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/tummy_cover": {
+    "/d/npc/obj/tummy_cover": {
       "incoming": [
         {
           "from": "/d/snow/npc/child1",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/tummy_cover",
+          "to": "/d/npc/obj/tummy_cover",
           "resolved": true,
           "action": "wear"
         },
         {
           "from": "/d/snow/npc/child3",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/tummy_cover",
+          "to": "/d/npc/obj/tummy_cover",
           "resolved": true,
           "action": "wear"
         },
         {
           "from": "/d/snow/npc/child4",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/tummy_cover",
+          "to": "/d/npc/obj/tummy_cover",
           "resolved": true,
           "action": "wear"
         }
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/wagon": {
+    "/d/snow/obj/wagon": {
       "incoming": [
         {
           "from": "/d/snow/store",
           "kind": "object",
-          "to": "/d/snow/npc/obj/wagon",
+          "to": "/d/snow/obj/wagon",
           "resolved": true,
           "count": 1
         }
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/white_dress": {
+    "/d/npc/obj/white_dress": {
       "incoming": [
         {
           "from": "/d/snow/npc/girl",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/white_dress",
+          "to": "/d/npc/obj/white_dress",
           "resolved": true,
           "action": "wear"
         }
@@ -3309,31 +3309,31 @@
       "incoming": [],
       "outgoing": []
     },
-    "/d/snow/npc/obj/woodblade": {
+    "/d/snow/obj/woodblade": {
       "incoming": [
         {
           "from": "/d/snow/fireplace",
           "kind": "object",
-          "to": "/d/snow/npc/obj/woodblade",
+          "to": "/d/snow/obj/woodblade",
           "resolved": true,
           "count": 1
         }
       ],
       "outgoing": []
     },
-    "/d/snow/npc/obj/woodsword": {
+    "/d/snow/obj/woodsword": {
       "incoming": [
         {
           "from": "/d/snow/fireplace",
           "kind": "object",
-          "to": "/d/snow/npc/obj/woodsword",
+          "to": "/d/snow/obj/woodsword",
           "resolved": true,
           "count": 1
         },
         {
           "from": "/d/snow/npc/child2",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/woodsword",
+          "to": "/d/snow/obj/woodsword",
           "resolved": true,
           "action": "wield"
         }
@@ -3385,7 +3385,7 @@
         {
           "from": "/d/snow/npc/smith",
           "kind": "merchandise",
-          "to": "/d/snow/npc/obj/hoe",
+          "to": "/d/npc/obj/hoe",
           "resolved": true,
           "stock": 3
         },
@@ -3413,7 +3413,7 @@
         {
           "from": "/d/snow/npc/smith",
           "kind": "equipment",
-          "to": "/d/snow/npc/obj/smock",
+          "to": "/d/npc/obj/smock",
           "resolved": true,
           "action": "wear"
         }
@@ -3466,7 +3466,7 @@
         {
           "from": "/d/snow/npc/waiter",
           "kind": "merchandise",
-          "to": "/d/snow/npc/obj/roast_chicken",
+          "to": "/d/npc/obj/roast_chicken",
           "resolved": true,
           "stock": 30
         }
@@ -3644,7 +3644,7 @@
         {
           "from": "/d/snow/nstreet2",
           "kind": "object",
-          "to": "/obj/area/man",
+          "to": "/d/npc/man",
           "resolved": true,
           "count": 1
         }
@@ -3994,7 +3994,7 @@
         {
           "from": "/d/snow/square",
           "kind": "object",
-          "to": "/d/snow/npc/obj/pot",
+          "to": "/d/snow/obj/pot",
           "resolved": true,
           "count": 1
         },
@@ -4365,14 +4365,14 @@
         {
           "from": "/d/snow/store",
           "kind": "object",
-          "to": "/d/snow/npc/obj/wagon",
+          "to": "/d/snow/obj/wagon",
           "resolved": true,
           "count": 1
         },
         {
           "from": "/d/snow/store",
           "kind": "object",
-          "to": "/d/snow/npc/obj/crate",
+          "to": "/d/snow/obj/crate",
           "resolved": true,
           "count": 3
         }
@@ -4974,26 +4974,26 @@
       "incoming": [],
       "outgoing": []
     },
-    "/obj/area/man": {
+    "/d/npc/man": {
       "incoming": [
         {
           "from": "/d/snow/nstreet2",
           "kind": "object",
-          "to": "/obj/area/man",
+          "to": "/d/npc/man",
           "resolved": true,
           "count": 1
         }
       ],
       "outgoing": [
         {
-          "from": "/obj/area/man",
+          "from": "/d/npc/man",
           "kind": "equipment",
           "to": "/obj/area/obj/cloth",
           "resolved": true,
           "action": "wear"
         },
         {
-          "from": "/obj/area/man",
+          "from": "/d/npc/man",
           "kind": "equipment",
           "to": "/obj/area/obj/shortsword",
           "resolved": true,
@@ -5074,14 +5074,14 @@
           "action": "wear"
         },
         {
-          "from": "/obj/area/man",
+          "from": "/d/npc/man",
           "kind": "equipment",
           "to": "/obj/area/obj/cloth",
           "resolved": true,
           "action": "wear"
         },
         {
-          "from": "/obj/area/traveller",
+          "from": "/d/oldpine/npc/traveller",
           "kind": "equipment",
           "to": "/obj/area/obj/cloth",
           "resolved": true,
@@ -5128,7 +5128,7 @@
     "/obj/area/obj/knife": {
       "incoming": [
         {
-          "from": "/obj/area/vagabond",
+          "from": "/d/qiaoyin/npc/vagabond",
           "kind": "equipment",
           "to": "/obj/area/obj/knife",
           "resolved": true,
@@ -5186,7 +5186,7 @@
           "stock": 5
         },
         {
-          "from": "/obj/area/man",
+          "from": "/d/npc/man",
           "kind": "equipment",
           "to": "/obj/area/obj/shortsword",
           "resolved": true,
@@ -5202,7 +5202,7 @@
     "/obj/area/obj/whip": {
       "incoming": [
         {
-          "from": "/obj/area/traveller",
+          "from": "/d/oldpine/npc/traveller",
           "kind": "equipment",
           "to": "/obj/area/obj/whip",
           "resolved": true,
@@ -5215,18 +5215,18 @@
       "incoming": [],
       "outgoing": []
     },
-    "/obj/area/traveller": {
+    "/d/oldpine/npc/traveller": {
       "incoming": [],
       "outgoing": [
         {
-          "from": "/obj/area/traveller",
+          "from": "/d/oldpine/npc/traveller",
           "kind": "equipment",
           "to": "/obj/area/obj/cloth",
           "resolved": true,
           "action": "wear"
         },
         {
-          "from": "/obj/area/traveller",
+          "from": "/d/oldpine/npc/traveller",
           "kind": "equipment",
           "to": "/obj/area/obj/whip",
           "resolved": true,
@@ -5234,11 +5234,11 @@
         }
       ]
     },
-    "/obj/area/vagabond": {
+    "/d/qiaoyin/npc/vagabond": {
       "incoming": [],
       "outgoing": [
         {
-          "from": "/obj/area/vagabond",
+          "from": "/d/qiaoyin/npc/vagabond",
           "kind": "equipment",
           "to": "/obj/area/obj/knife",
           "resolved": true,

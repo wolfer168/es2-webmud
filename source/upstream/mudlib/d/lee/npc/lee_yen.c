@@ -20,8 +20,8 @@ void create()
         "/obj/alchemist/heat_firewood" : 3000,   // 松柴 3000 根（使用者指示 #21，2026-10-30）
         "/obj/alchemist/heat_reactor" : 10,
         "/obj/alchemist/heat_furnace" : 5,
-        "/d/lee/obj/medicine_bottle" : 20,
-        "/d/lee/obj/heaven_dew" : 10,
+        "/d/lee/npc/obj/medicine_bottle" : 20,
+        "/d/lee/npc/obj/heaven_dew" : 10,
         "/obj/alchemist/aquapill" : 50,                  // 金液丹
         // 以上丹藥數量依使用者指示 #5（2026-10-23）
     ]));

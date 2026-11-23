@@ -24,9 +24,9 @@ void create()
     set_power("B");
     setup();
     carry_object("/custom/weapon/blade/snow_blade")->wield();   // 啐雪大刀
-    carry_object("/custom/armor/finger/ring_of_mighty_lord")->wear();   // 霸王指環
-    carry_object("/custom/armor/head/royal_helmet")->wear();   // 霸王銅冠
+    carry_object("/d/npc/obj/ring_of_mighty_lord")->wear();   // 霸王指環
+    carry_object("/d/baobao/npc/obj/royal_helmet")->wear();   // 霸王銅冠
     carry_object("/custom/armor/armor/iron_armor")->wear();   // 鐵戰甲
-    carry_object("/custom/armor/cloth/cyan_cloth")->wear();   // 青布官服
-    carry_object("/custom/armor/hand/steel_bracers")->wear();   // 精鋼護腕
+    carry_object("/d/qiaoyin/npc/obj/cyan_cloth")->wear();   // 青布官服
+    carry_object("/d/baobao/npc/obj/steel_bracers")->wear();   // 精鋼護腕
 }

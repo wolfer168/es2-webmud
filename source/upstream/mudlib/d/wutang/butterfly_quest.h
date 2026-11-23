@@ -24,8 +24,8 @@
 #define BQ_BLADE    6                       // 拿到飲血，要交給葉翔
 
 #define BQ_PLAQUE_FILE "/d/wutang/obj/golden_plaque"
-#define BQ_SCARF_FILE  "/d/wutang/obj/red_scarf"
-#define BQ_BLADE_FILE  "/d/wutang/obj/drinkblood"
+#define BQ_SCARF_FILE  "/d/wutang/npc/obj/red_scarf"
+#define BQ_BLADE_FILE  "/d/wutang/npc/obj/drinkblood"
 
 private int bq_stage(object who) { return who->query(BQ_STAGE); }
 

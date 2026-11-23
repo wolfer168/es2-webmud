@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"armory",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/o_yan_zhi" : 1,
+        "/d/baobao/npc/o_yan_zhi" : 1,
     ]));
     set("map/area", "八寶樓");
     set("map/mode", "maze");

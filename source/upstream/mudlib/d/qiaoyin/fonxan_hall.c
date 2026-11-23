@@ -16,7 +16,7 @@ LONG
         "southwest" : __DIR__"east_street3",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/liuh_don_lu" : 1,
+        "/d/qiaoyin/npc/liuh_don_lu" : 1,
         __DIR__"npc/doo_yeng" : 1,
     ]));
     set("map/area", "喬陰縣");

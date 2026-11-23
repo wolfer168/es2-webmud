@@ -105,8 +105,8 @@ def test_command_exits():
 
 def test_npcs_placed():
     want = {
-        'gate': ['"/d/baihua/npc/stone_lion" : 2'],
-        'main_hall': ['"/custom/legacy_npc/taoist_leader" : 1'],
+        'gate': ['"/d/npc/stone_lion" : 2'],
+        'main_hall': ['"/d/taiyi/npc/taoist_leader" : 1'],
         'cell': ['__DIR__"npc/shang_ching" : 1'],
         'cliff': ['__DIR__"npc/hsuan_ching" : 1'],
         'guest1': ['__DIR__"npc/pilgrim" : 1'],
@@ -123,7 +123,7 @@ def test_npcs_placed():
 
 
 def test_masters():
-    s = read(MUD / 'custom/legacy_npc/taoist_leader.c')
+    s = read(MUD / 'd/taiyi/npc/taoist_leader.c')
     assert '#define FACTION "taoist.freeze"' in s
     assert 'if( me->query_class() != "commoner" )' in s and '素衣派弟子' in s
     for sk in ('taoism-freeze', 'spells', 'sword', 'dodge', 'parry', 'polar-silkworm force'):

@@ -24,6 +24,6 @@ void create()
     set_power("A");
     setup();
     carry_object("/custom/weapon/pike/iron_pike")->wield();   // 渾鐵龍蛇槍
-    carry_object("/custom/armor/hand/steel_bracers")->wear();   // 精鋼護腕
-    carry_object("/custom/zhenwu/obj/steel_armor")->wear();   // 精鋼戰甲
+    carry_object("/d/baobao/npc/obj/steel_bracers")->wear();   // 精鋼護腕
+    carry_object("/d/npc/obj/steel_armor")->wear();   // 精鋼戰甲
 }

@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"forest",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/barbarian_chief" : 1,
+        "/d/graveyard/npc/barbarian_chief" : 1,
         __DIR__"npc/barbarian" : 2,
     ]));
     set("map/area", "亂葬崗");

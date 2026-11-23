@@ -23,7 +23,7 @@ void create()
     set("custom_faction", "fighter.tiger");   // 虎刀門（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
-    carry_object("/custom/armor/armor/chain_shirt")->wear();   // 鎖鏈背心
+    carry_object("/d/swaylan/lunmay/npc/obj/chain_shirt")->wear();   // 鎖鏈背心
     carry_object("/custom/armor/cloth/gray_robe")->wear();   // 灰袍
     carry_object("/custom/weapon/blade/poison_wind_blade")->wield();   // 酖風刀
 }

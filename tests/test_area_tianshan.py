@@ -1,4 +1,5 @@
 from pathlib import Path
+from placement import current
 import json
 import re
 import unicodedata
@@ -16,7 +17,7 @@ GRID = {'fog': 'N10', 'spring': 'N8', 'cave1': 'P8', 'cave2': 'R8', 'cave_mouth'
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def exits(name):
@@ -86,11 +87,11 @@ def test_npcs():
     q = read(S / 'npc' / 'liuh_qingqing.c')
     assert 'ob->id("gong")' in q and '#define HALL  "/d/tianshan/hall"' in q and 'call_out("greet"' in q
     assert '你好啊，我最近要祭奠我爺爺了。' in q
-    assert '/custom/legacy_npc/mountain_god' in read(S / 'peach_grove.c')
-    g = read(MUD / 'custom/legacy_npc/mountain_god.c')
+    assert '/d/tianshan/npc/mountain_god' in read(S / 'peach_grove.c')
+    g = read(MUD / 'd/tianshan/npc/mountain_god.c')
     assert 'carry_object("/obj/books/book_of_anatomy");' in g          # 桃仙身上有【脈穴內經】
     assert (MUD / 'obj/books/book_of_anatomy.c').exists()
-    assert 'id("gong")' not in read(MUD / 'd/fengcheng/obj/offering.c') and '"gong"' in read(MUD / 'd/fengcheng/obj/offering.c')
+    assert 'id("gong")' not in read(MUD / 'd/fengcheng/npc/obj/offering.c') and '"gong"' in read(MUD / 'd/fengcheng/npc/obj/offering.c')
 
 
 NO_LINE_START = '﹗！？﹖，﹐。﹒、；﹔：﹕」』）】〉》…'
@@ -124,8 +125,8 @@ def test_web_map():
 
 
 def test_senxu_item_on_mountain_god():
-    g = read(MUD / 'custom/legacy_npc/mountain_god.c')
-    assert 'carry_object("/d/tianshan/obj/senxu");' in g
+    g = read(MUD / 'd/tianshan/npc/mountain_god.c')
+    assert 'carry_object("/d/tianshan/npc/obj/senxu");' in g
     i = read(S / 'obj' / 'senxu.c')
     assert 'set_weight(10);' in i and 'set("value", 20000);' in i
     assert 'me->supplement_stat("food", 25);' in i

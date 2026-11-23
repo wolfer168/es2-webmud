@@ -11,12 +11,12 @@ def read(p):
 
 
 def test_files_exist():
-    for f in ('d/baihua/skypike_quest.h', 'd/baihua/obj/sister_letter.c', 'd/baihua/obj/ling_tzi.c',
-              'd/wutang/npc/old_woman.c', 'd/oldpine/obj/meat.c', 'd/oldpine/obj/dragon_pill.c',
+    for f in ('d/baihua/skypike_quest.h', 'd/npc/obj/sister_letter.c', 'd/baihua/npc/obj/ling_tzi.c',
+              'd/wutang/npc/old_woman.c', 'd/npc/obj/meat.c', 'd/npc/obj/dragon_pill.c',
               'obj/dust.c', 'docs/help/sky_pike.txt', 'daemon/skill/sky_pike.c'):
         assert (MUD / f).exists(), f
     assert 'old_woman' in read(MUD / 'd/wutang/city_god_temple.c')
-    assert '/d/oldpine/obj/meat' in read(MUD / 'd/oldpine/npc/wild_bear.c')
+    assert '/d/npc/obj/meat' in read(MUD / 'd/oldpine/npc/wild_bear.c')
 
 
 def test_npcs_use_quest_header_after_inherit():
@@ -44,4 +44,4 @@ def test_endgame_rewards():
 
 
 def SQ_PILL_OK(h):
-    return '/d/oldpine/obj/dragon_pill' in h and '/obj/dust' in h
+    return '/d/npc/obj/dragon_pill' in h and '/obj/dust' in h

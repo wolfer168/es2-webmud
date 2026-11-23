@@ -18,7 +18,7 @@ LONG
     ]));
     set("objects", ([
         __DIR__"npc/nan_kong_hen" : 1,
-        "/obj/area/man" : 1,
+        "/d/npc/man" : 1,
     ]));
     set("outdoors", "baihua");
     set("map/area", "百花村");

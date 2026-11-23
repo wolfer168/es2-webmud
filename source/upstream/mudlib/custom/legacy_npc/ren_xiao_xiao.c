@@ -22,6 +22,6 @@ void create()
         "她看起來滿面愁容，似乎正在為什麼事發愁。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/feet/violet_shoes")->wear();   // 紫紗靴
+    carry_object("/d/oldpine/npc/obj/violet_shoes")->wear();   // 紫紗靴
     carry_object("/custom/armor/cloth/rainbow_gown")->wear();   // 霓虹采裳
 }

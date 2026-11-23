@@ -38,9 +38,9 @@ LONG
     set("custom_faction", "taoist.fire");   // 門派記號（docs/martial_arts/門派武功對照表.md）
     set_power("S");
     setup();
-    carry_object("/custom/armor/cloth/red_robe")->wear();
-    carry_object("/custom/armor/head/red_hat")->wear();
-    carry_object("/custom/weapon/sword/sword_of_redrune")->wield();
+    carry_object("/d/wutang/npc/obj/red_robe")->wear();
+    carry_object("/d/wutang/npc/obj/red_hat")->wear();
+    carry_object("/d/wutang/npc/obj/sword_of_redrune")->wield();
 }
 
 // ------------------------------------------------------------------

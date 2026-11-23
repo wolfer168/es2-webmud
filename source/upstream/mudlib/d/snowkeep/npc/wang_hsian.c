@@ -20,6 +20,6 @@ void create()
     set_power("C");
     setup();
     carry_object("/obj/area/obj/leather_boot")->wear();        // 皮短靴
-    carry_object("/custom/armor/armor/heart_plate")->wear();   // 護心鏡
+    carry_object("/d/snowkeep/npc/obj/heart_plate")->wear();   // 護心鏡
     carry_object("/obj/area/obj/blade")->wield();              // 單刀
 }

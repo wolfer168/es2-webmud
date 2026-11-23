@@ -12,7 +12,7 @@ void create()
 LONG
     );
     set("objects", ([
-        "/custom/legacy_npc/lin_zheng_yang" : 1     // 靈雲觀觀主（使用者指示，2026-11-22）
+        "/d/mengjia/npc/lin_zheng_yang" : 1     // 靈雲觀觀主（使用者指示，2026-11-22）
     ]));
     set("exits", ([
         "south" : __DIR__"crossroad",

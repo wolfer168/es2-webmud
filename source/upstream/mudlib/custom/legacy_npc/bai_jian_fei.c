@@ -27,8 +27,8 @@ void create()
     set("custom_faction", "fighter.fonxan");   // 封山派（docs/martial_arts/門派武功對照表.md）
     set_power("B");
     setup();
-    carry_object("/custom/armor/feet/boots_of_cleanse")->wear();   // 塵不沾
-    carry_object("/custom/armor/waist/silver_girth")->wear();   // 銀彎束腰
+    carry_object("/d/qiaoyin_east/npc/obj/boots_of_cleanse")->wear();   // 塵不沾
+    carry_object("/d/swaylan/lunmay/npc/obj/silver_girth")->wear();   // 銀彎束腰
     carry_object("/custom/armor/armor/white_dragon_plate")->wear();   // 混天白龍
     carry_object("/custom/weapon/sword/cherry_blossoms_sword")->wield();   // 櫻吹雪
     carry_object("/custom/weapon/sword/white_dragon_fang");   // 白龍牙

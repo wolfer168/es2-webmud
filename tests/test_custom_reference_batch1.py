@@ -1,8 +1,9 @@
 from pathlib import Path
+from placement import LibDir
 import re
 
 MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
-C = MUD / 'custom'
+C = LibDir(MUD / 'custom')
 
 WEAPONS = ['sword/charm_sword', 'blade/green_blade', 'sword/jeweled_shortsword', 'sword/ironsword', 'sword/loving_sword',
            'sword/rapid_sword', 'sword/godness_sword', 'sword/royal_sword_of_honor', 'sword/flurry_sword',

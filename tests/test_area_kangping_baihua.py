@@ -24,7 +24,7 @@ def exits(path):
 
 
 def test_rooms_npcs_and_objects_exist():
-    for d, area, n_rooms, n_npcs in ((K, '康平村', 7, 2), (B, '百花村', 15, 12)):
+    for d, area, n_rooms, n_npcs in ((K, '康平村', 7, 5), (B, '百花村', 15, 12)):   # 2026-11-23 NPC 歸位：康平村多 3 位舊站 NPC；百花村多公孫志、石獅子搬到 /d/npc
         rooms = sorted(d.glob('*.c'))
         assert len(rooms) == n_rooms
         assert len(list((d / 'npc').glob('*.c'))) == n_npcs
@@ -66,20 +66,20 @@ def test_inns_and_vendors():
         assert 'inherit INN;' in s and 'set("no_fight", 1);' in s and 'set("valid_startroom", 1);' in s
     for p in (K / 'npc/innkeeper.c', B / 'npc/innkeeper.c'):
         s = read(p)
-        assert '"/d/snow/npc/obj/roast_chicken" : 30' in s
+        assert '"/d/npc/obj/roast_chicken" : 30' in s
         assert '"/obj/food/dumpling" : 20' in s and '"/obj/food/pork" : 10' in s
 
 
 def test_special_npcs_and_weapons():
-    assert 'inherit "/feature/npc/dummy";' in read(B / 'npc/stone_lion.c')
+    assert 'inherit "/feature/npc/dummy";' in read(MUD / 'd/npc/stone_lion.c')
     assert '"/obj/area/obj/shortsword")->wield();' in read(B / 'npc/traveller.c')
     assert 'set("custom_faction", "alchemist.longtu");' in read(B / 'npc/wang_yean.c')
     assert 'set("title"' not in read(B / 'npc/wang_yean.c')
     assert 'set("custom_faction", "taoist.storm");' in read(B / 'npc/nan_kong_hen.c')
-    s = read(MUD / 'custom/weapon/staff/sinia_staff.c')
+    s = read(MUD / 'd/baihua/npc/obj/sinia_staff.c')
     assert 'init_damage(3, 12, 135, 0, "twohanded staff");' in s and '"armor": 5' in s and '"defense": 25' in s
     assert 'set("value", 10000);' in s
-    s = read(MUD / 'custom/weapon/staff/shepherd_cane.c')
+    s = read(MUD / 'd/baihua/npc/obj/shepherd_cane.c')
     assert 'set("wield_as", "staff");' in s and 'set("value", 1000);' in s and '"cane"' in s
 
 

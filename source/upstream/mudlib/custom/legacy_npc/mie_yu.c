@@ -25,7 +25,7 @@ void create()
     set_power("A");
     setup();
     carry_object("/custom/armor/hand/black_gauntlets")->wear();   // 黑鐵護手
-    carry_object("/custom/armor/cloth/blood_stained_cloth")->wear();   // 征衣「血染」
-    carry_object("/custom/zhenwu/obj/steel_armor")->wear();   // 精鋼戰甲
+    carry_object("/d/npc/obj/blood_stained_cloth")->wear();   // 征衣「血染」
+    carry_object("/d/npc/obj/steel_armor")->wear();   // 精鋼戰甲
     carry_object("/custom/weapon/sword/dragon_heavy_sword")->wield();   // 重劍龍吟
 }

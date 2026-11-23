@@ -1,6 +1,8 @@
 /* 舊站 NPC 共用基底（custom/legacy_npc/）。NEW
  *
  * 舊站 NPC 依使用者提供的「舊有 NPC 待製作清單」（2026-10-15）製作，先不放入地圖。
+ * 放進地圖的舊站 NPC 搬到所在區域的 npc 資料夾（例如 d/baobao/npc/），仍繼承這個基底；
+ * 這裡只留還沒放進地圖的（使用者指示，2026-11-23，docs/NPC_ITEM_PLACEMENT.md）。
  * 清單見 docs/LEGACY_NPC_LIST.md。
  *
  * 在 create() 裡設定：

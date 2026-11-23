@@ -24,9 +24,9 @@ LONG
     set("custom_faction", "fighter.lunmay");   // 門派記號（docs/CUSTOM_NPC_SKILL.md）
     set_power("A");
     setup();
-    carry_object("/custom/weapon/sword/black_sword")->wield();
-    carry_object("/custom/weapon/dagger/black_iron_dagger")->wield();
-    carry_object("/custom/armor/cloth/silk_cloth")->wear();
-    carry_object("/custom/armor/feet/wolf_boots")->wear();
-    carry_object("/custom/armor/head/woof_hat")->wear();
+    carry_object("/d/wutang/npc/obj/black_sword")->wield();
+    carry_object("/d/npc/obj/black_iron_dagger")->wield();
+    carry_object("/d/npc/obj/silk_cloth")->wear();
+    carry_object("/d/wutang/npc/obj/wolf_boots")->wear();
+    carry_object("/d/wutang/npc/obj/woof_hat")->wear();
 }

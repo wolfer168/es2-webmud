@@ -71,7 +71,7 @@ def test_inn_herb_and_tiger():
     s2 = read(S / 'inn2.c')
     assert 'inherit ROOM;' in s2 and 'no_fight' not in s2            # 二樓戰區
     h = read(S / 'herb_shop.c')
-    assert 'inherit HERB;' in h and '"/d/snow/npc/herbalist"' in h   # 同雪亭小藥鋪
+    assert 'inherit HERB;' in h and '"/d/mengjia/npc/herbalist"' in h   # 雪亭藥鋪掌櫃複製一份給孟家莊（2026-11-23）
     f = read(S / 'forest.c')
     assert 'ob->query("white_tiger")' in f and 'return ::valid_leave(me, dir);' in f
     assert 'return notify_fail(ob->name() + "低吼著擋在你面前' in f      # 擋人要有 notify_fail，否則會顯示 What?
@@ -86,12 +86,12 @@ def test_chest_refills_book_each_reset():
 
 
 def test_npc_settings():
-    jh = read(MUD / 'custom/legacy_npc/meng_jiang_hong.c')
+    jh = read(MUD / 'd/mengjia/npc/meng_jiang_hong.c')
     assert 'set_level(35);' in jh and 'set_power("A");' in jh
     assert 'set_skill("five-tiger blade", 160);' in jh and 'map_skill("blade", "five-tiger blade");' in jh
     zz = read(S / 'npc' / 'meng_zhao_zhan.c')
     assert 'set_level(35);' in zz and 'set_power("A");' in zz and 'set_skill("five-tiger blade", 160);' in zz
-    hx = read(MUD / 'custom/legacy_npc/hua_xing.c')
+    hx = read(MUD / 'd/mengjia/npc/hua_xing.c')
     assert 'set_level(30);' in hx and 'set_power("A");' in hx and 'set_class("thief");' in hx
     tg = read(S / 'npc' / 'tomb_guard.c')
     assert 'set_level(50);' in tg and 'set_power("A");' in tg and 'exorcist_cassock' in tg

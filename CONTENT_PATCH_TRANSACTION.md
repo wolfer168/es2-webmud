@@ -140,7 +140,7 @@ Safety properties: canonical-path containment, exact pre-write SHA guard, duplic
 - **MODIFIED** `d/lee/gate_s.c` (村口大門): spawns existing `d/lee/npc/guard.c` (守衛) ×2.
 - **NEW** `d/lee/npc/traveller.c` (旅客) — human, lvl 5, commoner, age 20, attrs default
   human random, wears `/obj/area/obj/cloth` + wields `/obj/area/obj/shortsword`. NOTE:
-  `obj/area/traveller.c` already exists under the same English name ("traveller") but is
+  `d/oldpine/npc/traveller.c` already exists under the same English name ("traveller") but is
   a different, unrelated character (過路客 — female jiaojao thief, lvl 20, whip) — left
   untouched, new file added instead of reusing/editing it.
   `d/lee/entrance_s.c` (村口) spawns it ×3.

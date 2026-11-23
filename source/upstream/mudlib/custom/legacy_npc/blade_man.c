@@ -27,7 +27,7 @@ void create()
     set_power("A");
     setup();
     carry_object("/custom/weapon/blade/blood_blade")->wield();   // 靈刀祭血
-    carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴
+    carry_object("/d/npc/obj/flying_boots")->wear();   // 飛天靴
     carry_object("/custom/armor/cloth/red_cloth")->wear();   // 紅色武道衣
     carry_object("/custom/armor/armor/raw_iron_armor")->wear();   // 生鐵戰甲
 }

@@ -70,7 +70,7 @@ def test_top_floor_jump():
 
 
 def test_npcs():
-    L = MUD / 'custom' / 'legacy_npc'
+    L = MUD / 'd' / 'baobao' / 'npc'   # 舊站 NPC 放進八寶樓後搬到區域 npc 資料夾（2026-11-23）
     want = {'o_yan_zhi': ('30', '"B"', 'scholar.myst'), 'si_ma_lei': ('60', '"A"', None),
             'chong_bai_hu': ('50', '"A"', 'fighter.tiger'), 'ma_zhong_shen': ('30', '"B"', None),
             'gong_sun_wei': ('45', '"A"', 'thief.longye'), 'bai_yu': ('50', '"A"', 'taoist.storm'),
@@ -89,8 +89,8 @@ def test_npcs():
     assert 'set("age", 65);' in shi and 'set_level(30);' in shi and 'set_power("B");' in shi
     for p in ('hundreds_poison_sword', 'padded_armor', 'cloud_boots'):
         assert p in shi
-    assert (MUD / 'custom/weapon/sword/hundreds_poison_sword.c').exists()
-    assert (MUD / 'custom/armor/armor/padded_armor.c').exists() and (MUD / 'custom/armor/feet/cloud_boots.c').exists()
+    assert (MUD / 'd/baobao/npc/obj/hundreds_poison_sword.c').exists()
+    assert (MUD / 'd/npc/obj/padded_armor.c').exists() and (MUD / 'd/npc/obj/cloud_boots.c').exists()
     objs = read(B / 'ghost_realm.c')
     assert 'obj/skeleton' in objs and 'obj/corpse' in objs and 'npc' not in read(B / 'obj' / 'skeleton.c')
     assert '枯乾的骸骨' in read(B / 'obj' / 'skeleton.c') and '腐爛的男屍' in read(B / 'obj' / 'corpse.c')

@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 def read(rel): return (ROOT/rel).read_text(encoding="utf-8")
 
 def test_strength_controls_how_many_40kg_crates_can_be_carried():
-    crate=read("source/upstream/mudlib/d/snow/npc/obj/crate.c")
+    crate=read("source/upstream/mudlib/d/snow/obj/crate.c")
     combat=read("source/upstream/mudlib/feature/char/combat.c")
     char=read("source/upstream/mudlib/std/char.c")
     assert "set_weight(40000)" in crate
@@ -13,7 +13,7 @@ def test_strength_controls_how_many_40kg_crates_can_be_carried():
     assert 'query_encumbrance() + ob->weight() > query_strength("carriage")' in char
 
 def test_loaded_crates_are_counted_one_by_one():
-    s=read("source/upstream/mudlib/d/snow/npc/obj/wagon.c")
+    s=read("source/upstream/mudlib/d/snow/obj/wagon.c")
     assert 'ob->id("crate")' in s
     assert 'add_temp("wage_crates", 1)' in s
 

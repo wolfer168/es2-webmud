@@ -16,7 +16,7 @@ LONG
         "east" : __DIR__"mist2",
     ]));
     set("objects", ([
-        "/obj/area/traveller" : 2,
+        "/d/oldpine/npc/traveller" : 2,
     ]));
     set("map/area", "迷霧森林");
     setup();

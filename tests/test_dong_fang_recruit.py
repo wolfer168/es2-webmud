@@ -9,7 +9,7 @@ def read(p):
 
 
 def test_dong_fang_recruits_commoner_or_scholar():
-    s = read(MUD / 'custom/legacy_npc/dong_fang_gu_ming.c')
+    s = read(MUD / 'd/fengcheng/npc/dong_fang_gu_ming.c')
     assert '#define FACTION "scholar.sky"' in s
     assert 'int accept_apprentice(object me)' in s and 'literate' not in s   # 不考慮讀書識字
     assert 'cls != "commoner"' in s and 'cls == "scholar"' in s
@@ -19,13 +19,13 @@ def test_dong_fang_recruits_commoner_or_scholar():
 
 
 def test_dong_fang_teaches_only_disciples():
-    s = read(MUD / 'custom/legacy_npc/dong_fang_gu_ming.c')
+    s = read(MUD / 'd/fengcheng/npc/dong_fang_gu_ming.c')
     assert 'if( me->query("custom_faction") != FACTION ) return 0;' in s
     for sk in ('advance-sky sword', 'sky force'):
         assert 'case "%s":' % sk in s
         assert (MUD / 'daemon/skill' / (sk.replace(' ', '_') + '.c')).exists()
     assert 'me->query_level() < 5' in s       # 玄天心法要等級 5
-    assert '/custom/legacy_npc/dong_fang_gu_ming' in read(MUD / 'd/fengcheng/inn2.c')
+    assert '/d/fengcheng/npc/dong_fang_gu_ming' in read(MUD / 'd/fengcheng/inn2.c')
 
 
 def test_help_no_literate_requirement():
@@ -33,7 +33,7 @@ def test_help_no_literate_requirement():
 
 
 def test_dong_fang_refuses_yaksa_and_ashura():
-    s = read(MUD / 'custom/legacy_npc/dong_fang_gu_ming.c')
+    s = read(MUD / 'd/fengcheng/npc/dong_fang_gu_ming.c')
     assert 'member_array(me->query_race(), ({ "yaksa", "ashura" })) != -1' in s
     # 種族檢查放在職業檢查之前，夜叉、阿修羅不論是平民或書生都不收。
     assert s.index('"yaksa", "ashura"') < s.index('if( cls == "scholar" )')

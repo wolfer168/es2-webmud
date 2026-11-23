@@ -14,14 +14,14 @@ void create()
     set("long", "李忠是賣雜貨小夥計，整天笑嘻嘻的，一臉老實樣。\n");
     // merchandise 的數字是庫存份數，不是價錢——價錢是各道具檔自己的 "value"。
     set("merchandise", ([
-        "/d/lee/obj/waterskin" : 20,
+        "/d/npc/obj/waterskin" : 20,
         "/obj/area/obj/bag" : 10,
-        "/d/lee/obj/salt" : 100,
-        "/d/lee/obj/sugar" : 100,
-        "/d/lee/obj/flour" : 100,
+        "/d/npc/obj/salt" : 100,
+        "/d/npc/obj/sugar" : 100,
+        "/d/lee/npc/obj/flour" : 100,
         "/custom/item/scroll/blank" : 1000,   // 空白符紙（2026-10-24）
-        "/d/swaylan/obj/bait" : 500,   // 魚餌（釣魚用）
-        "/custom/weapon/needle/silver_needle" : 10,   // 銀針
+        "/d/npc/obj/bait" : 500,   // 魚餌（釣魚用）
+        "/d/npc/obj/silver_needle" : 10,   // 銀針
     ]));
     set_power("C");
     setup();

@@ -18,5 +18,5 @@ LONG
     );
     set_power("C");
     setup();
-    carry_object("/custom/weapon/staff/shepherd_cane")->wield();
+    carry_object("/d/baihua/npc/obj/shepherd_cane")->wield();
 }

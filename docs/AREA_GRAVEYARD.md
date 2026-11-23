@@ -52,10 +52,10 @@
 | 老和尚 (Old bonze) | `d/graveyard/npc/old_bonze.c` | 和尚 | 20 | B | 黃銅禪杖、念珠 |
 | 小和尚 (Young bonze) | `d/graveyard/npc/young_bonze.c` | 和尚 | 1 | C | 念珠 |
 | 野人 (Barbarian) ×2 | `d/graveyard/npc/barbarian.c` | 武者 | 12 | B | —（膂力 20） |
-| 青衣女郎 (Lady) | `custom/legacy_npc/lady.c` | 盜賊 | 5 | B | 匕首（既有） |
-| 吳長貴 (Wu changuei) | `custom/legacy_npc/wu_changuei.c` | 盜賊 | 15 | B | 既有 |
-| 劉乙忘玄 (Liuye) | `custom/legacy_npc/liuye_the_master_of_grimace.c` | 武者 | 70 | S | 九曲十彎等；在老和尚處出生，會在亂葬崗與太乙觀之間走動，不進雪亭鎮 |
-| 野人酋長 (Barbarian chief) | `custom/legacy_npc/barbarian_chief.c` | 武者 | 15 | A | 白骨杖；看到玩家就下殺手 |
+| 青衣女郎 (Lady) | `d/graveyard/npc/lady.c` | 盜賊 | 5 | B | 匕首（既有） |
+| 吳長貴 (Wu changuei) | `d/graveyard/npc/wu_changuei.c` | 盜賊 | 15 | B | 既有 |
+| 劉乙忘玄 (Liuye) | `d/graveyard/npc/liuye_the_master_of_grimace.c` | 武者 | 70 | S | 九曲十彎等；在老和尚處出生，會在亂葬崗與太乙觀之間走動，不進雪亭鎮 |
+| 野人酋長 (Barbarian chief) | `d/graveyard/npc/barbarian_chief.c` | 武者 | 15 | A | 白骨杖；看到玩家就下殺手 |
 
 - 野人酋長原為程度 5、C 級；使用者要求酋長比野人強，調為程度 15、A 級（2026-11-04）。
 - 野人設計表沒有寫主動攻擊，所以不主動攻擊。

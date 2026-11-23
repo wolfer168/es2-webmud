@@ -29,7 +29,7 @@ LONG
     map_skill("secondhand dagger", "uenfon");
     set_power("A");
     setup();
-    carry_object("/custom/armor/cloth/white_scholar_dress")->wear();
+    carry_object("/d/npc/obj/white_scholar_dress")->wear();
     carry_object("/obj/area/obj/pen")->wield();
     carry_object("/obj/area/obj/pen")->wield("secondhand dagger");
 }

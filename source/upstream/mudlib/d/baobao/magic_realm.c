@@ -15,7 +15,7 @@ LONG
         "west" : __DIR__"illusion_realm",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/bai_yu" : 1,
+        "/d/baobao/npc/bai_yu" : 1,
     ]));
     set("map/area", "八寶樓");
     set("map/mode", "maze");

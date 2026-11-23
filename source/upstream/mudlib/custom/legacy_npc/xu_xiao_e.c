@@ -29,6 +29,6 @@ void create()
     set_power("B");
     setup();
     carry_object("/custom/weapon/blade/black_kris")->wield();   // 黑風刀
-    carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶
-    carry_object("/d/lee/obj/tight_cloth")->wear();   // 緊身衣
+    carry_object("/d/npc/obj/water_dragon_girdle")->wear();   // 蛟龍帶
+    carry_object("/d/lee/npc/obj/tight_cloth")->wear();   // 緊身衣
 }

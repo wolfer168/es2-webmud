@@ -16,8 +16,8 @@ LONG
     ]));
 
     set("objects", ([
-	__DIR__ "npc/obj/woodsword": 1,
-	__DIR__ "npc/obj/woodblade": 1
+	"/d/snow/obj/woodsword": 1,
+	"/d/snow/obj/woodblade": 1
     ]));
 
     setup();

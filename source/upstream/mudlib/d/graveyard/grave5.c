@@ -39,7 +39,7 @@ LONG
         "east" : __DIR__"grave4",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/lady" : 1,
+        "/d/graveyard/npc/lady" : 1,
     ]));
     set("map/area", "亂葬崗");
     setup();

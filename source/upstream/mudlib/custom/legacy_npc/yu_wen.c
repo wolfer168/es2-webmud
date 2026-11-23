@@ -22,5 +22,5 @@ void create()
         "幾聲低沉的嘆氣聲 ...。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/cloth/black_mandarin_jacket")->wear();   // 黑醬色馬褂
+    carry_object("/d/wutang/npc/obj/black_mandarin_jacket")->wear();   // 黑醬色馬褂
 }

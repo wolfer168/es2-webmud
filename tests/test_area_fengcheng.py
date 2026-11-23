@@ -1,4 +1,5 @@
 from pathlib import Path
+from placement import current
 import json
 import re
 import unicodedata
@@ -17,7 +18,7 @@ GRID = {'qingyun_temple': 'J10', 'cliff': 'L10', 'inner_yard': 'H12', 'mountain_
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def exits(name):
@@ -43,7 +44,7 @@ def test_rooms_and_npcs():
             assert (S / 'npc' / (npc + '.c')).exists(), (r, npc)
     assert 'set("map/layer", "二樓");' in read(S / 'inn2.c')
     assert 'set("map/layer", "城樓");' in read(S / 'tower.c')
-    assert len(list((S / 'npc').glob('*.c'))) == 7
+    assert len(list((S / 'npc').glob('*.c'))) == 10   # 2026-11-23 NPC 歸位（docs/NPC_ITEM_PLACEMENT.md）：放進風城的三位舊站 NPC
 
 
 def test_exits_are_two_way():
@@ -91,7 +92,7 @@ def test_gate_guard_blocks_until_riddle_solved():
 
 def test_seller_and_items():
     s = read(S / 'npc' / 'seller.c')
-    assert '"/d/fengcheng/obj/offering" : 10' in s
+    assert '"/d/fengcheng/npc/obj/offering" : 10' in s
     assert '"/custom/item/scroll/blank" : 2000' in s and '"/custom/item/ancient_bag" : 5' in s
     assert 'dragon_skin_bag' not in s   # 太古塵包取代龍麟袋（使用者指示，2026-11-20）
     assert 'set("value", 500);' in read(S / 'obj' / 'offering.c')
@@ -103,7 +104,7 @@ def test_seller_and_items():
 def test_npcs_and_purple_helmet():
     h = read(S / 'npc' / 'hua_zi_yi.c')
     assert 'set_level(60);' in h and 'set_power("S");' in h and 'numinous_sword' in h and 'purple_helmet' in h
-    helm = read(MUD / 'custom/armor/head/purple_helmet.c')
+    helm = read(MUD / 'd/fengcheng/npc/obj/purple_helmet.c')
     assert '"wis": 1,' in helm and '"spi": 1,' in helm and '"armor": 25,' in helm
     assert 'set_weight(2000);' in helm and 'set("value", 12000);' in helm
     f = read(S / 'npc' / 'fortune_teller.c')
@@ -116,7 +117,7 @@ def test_npcs_and_purple_helmet():
     assert chen.count('call_out("say_to"') == 2 and 'call_out("teach", 3 * TICK, who);' in chen
     assert 'who->set_skill(SKILL_ID, 1);' in chen and '#define SKILL_ID  "enchance"' in chen
     assert (MUD / 'daemon/skill/enchance.c').exists()
-    assert '/obj/area/garrison' in read(S / 'tower.c') and 'si_ma_wei' in read(S / 'tower.c')
+    assert '/d/npc/garrison' in read(S / 'tower.c') and 'si_ma_wei' in read(S / 'tower.c')
 
 
 NO_LINE_START = '﹗！？﹖，﹐。﹒、；﹔：﹕」』）】〉》…'

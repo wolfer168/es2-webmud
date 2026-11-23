@@ -16,7 +16,7 @@ LONG
         "south" : __DIR__"gate",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/meng_jiang_hong" : 1,
+        "/d/mengjia/npc/meng_jiang_hong" : 1,
     ]));
     set("map/area", "孟家莊");
     setup();

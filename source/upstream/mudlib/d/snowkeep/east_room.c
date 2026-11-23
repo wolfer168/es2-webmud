@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"side_n",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/ku_wu_wang" : 1,
+        "/d/snowkeep/npc/ku_wu_wang" : 1,
     ]));
     set("map/area", "雪吟莊");
     setup();

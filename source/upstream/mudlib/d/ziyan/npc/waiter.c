@@ -28,10 +28,10 @@ LONG
     set_skill("parry", 2);
     // merchandise 的數字是庫存份數，價錢是各物品自己的 value。
     set("merchandise", ([
-        "/d/ziyan/obj/white_wine" : 30,   // 白干酒：四兩銀子
+        "/d/ziyan/npc/obj/white_wine" : 30,   // 白干酒：四兩銀子
         "/obj/food/manto" : 50,           // 饅頭：十文錢
-        "/d/ziyan/obj/vase" : 30,         // 果汁瓶：四兩銀子
-        "/d/ziyan/obj/pig_heart" : 30,    // 豬心：四兩銀子
+        "/d/ziyan/npc/obj/vase" : 30,         // 果汁瓶：四兩銀子
+        "/d/ziyan/npc/obj/pig_heart" : 30,    // 豬心：四兩銀子
     ]));
     set_power("C");
     setup();

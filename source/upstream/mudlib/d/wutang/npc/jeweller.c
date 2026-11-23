@@ -30,11 +30,11 @@ private mixed *PRIZES = ({
     ({ "/custom/item/scroll/nature",                      1000,    500, K_SCROLL }),
     ({ "/custom/item/scroll/yang",                        1000,    500, K_SCROLL }),
     ({ "/custom/item/scroll/yin",                         1000,    500, K_SCROLL }),
-    ({ "/custom/weapon/sword/fishy_sword",                   1,    500, K_WEAPON }),
-    ({ "/custom/weapon/needle/dragon_needle",                1,    500, K_WEAPON }),
-    ({ "/custom/weapon/blade/warlord_blade",                 1,    500, K_WEAPON }),
-    ({ "/custom/weapon/staff/staff_of_wisdom",               1,    500, K_WEAPON }),
-    ({ "/custom/weapon/axe/short_axe_of_bloodmoon",          1,    500, K_WEAPON }),
+    ({ "/d/wutang/npc/obj/fishy_sword",                   1,    500, K_WEAPON }),
+    ({ "/d/wutang/npc/obj/dragon_needle",                1,    500, K_WEAPON }),
+    ({ "/d/wutang/npc/obj/warlord_blade",                 1,    500, K_WEAPON }),
+    ({ "/d/wutang/npc/obj/staff_of_wisdom",               1,    500, K_WEAPON }),
+    ({ "/d/wutang/npc/obj/short_axe_of_bloodmoon",          1,    500, K_WEAPON }),
     ({ "/obj/money/sycee",                                   1,      1, K_MONEY  }),
     ({ "/custom/item/super_skin",                            1,    500, K_BAG    }),
 });
@@ -131,9 +131,9 @@ LONG
     set_skill("parry", 20);
     // merchandise 的數字是庫存份數，價錢是各物品自己的 value。
     set("merchandise", ([
-        "/custom/armor/finger/han_jade_ring" : 5,
-        "/custom/armor/finger/white_jade_ring" : 5,
-        "/d/lee/obj/yellow_jade_ring" : 5,
+        "/d/npc/obj/han_jade_ring" : 5,
+        "/d/wutang/npc/obj/white_jade_ring" : 5,
+        "/d/npc/obj/yellow_jade_ring" : 5,
     ]));
     set_power("C");
     setup();

@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"hall",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/yu_tieshan" : 1,
+        "/d/snowkeep/npc/yu_tieshan" : 1,
     ]));
     set("map/area", "雪吟莊");
     setup();

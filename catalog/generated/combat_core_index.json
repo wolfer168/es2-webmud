@@ -836,7 +836,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/guard",
+    "path": "/d/snowkeep/npc/guard",
     "type": "npc",
     "functions": [
       "accept_object",
@@ -1364,7 +1364,7 @@
     "inherits": []
   },
   {
-    "path": "/obj/area/man",
+    "path": "/d/npc/man",
     "type": "item",
     "functions": [
       "create"
@@ -1378,7 +1378,7 @@
     ]
   },
   {
-    "path": "/obj/area/traveller",
+    "path": "/d/oldpine/npc/traveller",
     "type": "item",
     "functions": [
       "accept_fight",
@@ -1393,7 +1393,7 @@
     ]
   },
   {
-    "path": "/obj/area/vagabond",
+    "path": "/d/qiaoyin/npc/vagabond",
     "type": "item",
     "functions": [
       "create"

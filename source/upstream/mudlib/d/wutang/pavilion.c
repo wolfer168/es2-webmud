@@ -17,7 +17,7 @@ LONG
     // 楊子陵與冷梅莊二代弟子由碎石路移來（使用者指示 #26，2026-11-03）。
     set("objects", ([
         __DIR__"npc/yang_zlin" : 1,
-        __DIR__"npc/apprentice" : 1,
+        "/d/swaylan/lunmay/npc/apprentice" : 1,
     ]));
     set("map/area", "五堂鎮");
     setup();

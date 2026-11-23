@@ -2,7 +2,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FOREMAN = ROOT / "source/upstream/mudlib/d/snow/npc/foreman.c"
-CRATE = ROOT / "source/upstream/mudlib/d/snow/npc/obj/crate.c"
+CRATE = ROOT / "source/upstream/mudlib/d/snow/obj/crate.c"
 
 
 def text(path):

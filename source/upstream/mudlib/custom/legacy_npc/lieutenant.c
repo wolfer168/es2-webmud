@@ -21,9 +21,9 @@ void create()
     set_power("B");
     setup();
     carry_object("/obj/area/obj/bastardsword")->wield();   // 大劍
-    carry_object("/d/snow/npc/obj/clothboot")->wear();   // 皂步靴
-    carry_object("/d/snow/npc/obj/helmet")->wear();   // 銅盔
-    carry_object("/custom/armor/cloth/cyan_cloth")->wear();   // 青布官服
-    carry_object("/custom/armor/waist/iron_girth")->wear();   // 精鐵環扣
-    carry_object("/custom/armor/armor/ring_armor")->wear();   // 連身鎖子甲
+    carry_object("/d/npc/obj/clothboot")->wear();   // 皂步靴
+    carry_object("/d/npc/obj/helmet")->wear();   // 銅盔
+    carry_object("/d/qiaoyin/npc/obj/cyan_cloth")->wear();   // 青布官服
+    carry_object("/d/npc/obj/iron_girth")->wear();   // 精鐵環扣
+    carry_object("/d/npc/obj/ring_armor")->wear();   // 連身鎖子甲
 }

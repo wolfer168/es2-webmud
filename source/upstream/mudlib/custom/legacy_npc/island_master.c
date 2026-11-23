@@ -21,8 +21,8 @@ void create()
         "你眼前這位正是當初名震江湖劍斬神猿的陷空島島主, 他正對你微笑著!\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/feet/flying_boots")->wear();   // 飛天靴
-    carry_object("/d/wutang/obj/blue_cloth")->wear();   // 青布衣
+    carry_object("/d/npc/obj/flying_boots")->wear();   // 飛天靴
+    carry_object("/d/wutang/npc/obj/blue_cloth")->wear();   // 青布衣
     carry_object("/custom/armor/armor/monkey_armor")->wear();   // 猿仙絲冑
     carry_object("/custom/weapon/sword/white_dragon_fang")->wield();   // 白龍牙
 }

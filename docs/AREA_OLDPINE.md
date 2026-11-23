@@ -57,7 +57,7 @@
 | 受傷的旅客 | `npc/injured_traveller.c` | 身上帶一顆武魁龍轉 |
 | 旅行小販 | `npc/seller.c` | 販賣短劍 3、短刀 3、空白符紙 300 |
 | 店小二 | `npc/waiter.c` | 販賣牛皮水袋 10、饅頭 50、烤鹿肉 50 |
-| 過路客、路人 | `/obj/area/traveller`、`/obj/area/man` | 沿用既有 NPC |
+| 過路客、路人 | `/d/oldpine/npc/traveller`、`/d/npc/man` | 沿用既有 NPC |
 | 野鹿、老鼠、松鼠、土狼、凶暴的野熊、小黑熊、大黑熊 | `npc/*.c` | 見上方強度表；凶暴的野熊身上帶一團肉塊 |
 | 山羊 | `npc/goat.c` | 野獸強度 2，不主動攻擊（2026-10-24 新增，草叢 grass2 與百花村山腰上各 3 隻）；土狼目前沒有放在任何房間 |
 

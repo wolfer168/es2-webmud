@@ -31,7 +31,7 @@ void create() {
         "/obj/food/dumpling": 50,
         "/obj/food/manto": 50,
         "/obj/food/pork": 30,
-        __DIR__"obj/roast_chicken": 30,
+        "/d/npc/obj/roast_chicken": 30,
     ]));
 
     set_power("C");

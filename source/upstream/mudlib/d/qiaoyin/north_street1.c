@@ -17,7 +17,7 @@ LONG
         "south" : __DIR__"north_street2",
     ]));
     set("objects", ([
-        "/obj/area/man" : 1,
+        "/d/npc/man" : 1,
     ]));
     set("map/area", "喬陰縣");
     setup();

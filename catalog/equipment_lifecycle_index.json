@@ -256,7 +256,7 @@
     ]
   },
   {
-    "path": "/d/snow/npc/guard",
+    "path": "/d/snowkeep/npc/guard",
     "type": "npc",
     "name": "青衣漢子",
     "equipment_hooks": [
@@ -395,7 +395,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/clothboot",
+    "path": "/d/npc/obj/clothboot",
     "type": "npc",
     "name": "皂步靴",
     "equipment_hooks": [],
@@ -424,7 +424,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/fur_hat",
+    "path": "/d/npc/obj/fur_hat",
     "type": "npc",
     "name": "毛皮帽",
     "equipment_hooks": [],
@@ -451,7 +451,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/hairpin",
+    "path": "/d/snow/obj/hairpin",
     "type": "npc",
     "name": "古銅髮簪",
     "equipment_hooks": [],
@@ -464,7 +464,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/helmet",
+    "path": "/d/npc/obj/helmet",
     "type": "npc",
     "name": "銅盔",
     "equipment_hooks": [],
@@ -493,7 +493,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/leather_armor",
+    "path": "/d/npc/obj/leather_armor",
     "type": "npc",
     "name": "硬皮甲冑",
     "equipment_hooks": [
@@ -522,7 +522,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/smock",
+    "path": "/d/npc/obj/smock",
     "type": "npc",
     "name": "打鐵褂子",
     "equipment_hooks": [
@@ -553,7 +553,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/tummy_cover",
+    "path": "/d/npc/obj/tummy_cover",
     "type": "npc",
     "name": "肚兜",
     "equipment_hooks": [],
@@ -580,7 +580,7 @@
     "manual_review": []
   },
   {
-    "path": "/d/snow/npc/obj/white_dress",
+    "path": "/d/npc/obj/white_dress",
     "type": "npc",
     "name": "白綢羽衫",
     "equipment_hooks": [],
@@ -751,7 +751,7 @@
     ]
   },
   {
-    "path": "/obj/area/man",
+    "path": "/d/npc/man",
     "type": "item",
     "name": "路人",
     "equipment_hooks": [
@@ -875,7 +875,7 @@
     "manual_review": []
   },
   {
-    "path": "/obj/area/traveller",
+    "path": "/d/oldpine/npc/traveller",
     "type": "item",
     "name": "過路客",
     "equipment_hooks": [
@@ -891,7 +891,7 @@
     "manual_review": []
   },
   {
-    "path": "/obj/area/vagabond",
+    "path": "/d/qiaoyin/npc/vagabond",
     "type": "item",
     "name": "市井無賴",
     "equipment_hooks": [

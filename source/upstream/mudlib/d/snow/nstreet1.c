@@ -25,7 +25,7 @@ LONG
   ]));
   set("outdoors", "snow");
   set("objects", ([
-	"/custom/ghost/npc/wandering_soul": 1,
+	"/d/npc/ghost/wandering_soul": 1,
   ]));
 
     setup();

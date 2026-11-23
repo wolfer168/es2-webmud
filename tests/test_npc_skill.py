@@ -69,8 +69,8 @@ def test_formula_examples():
 def test_sect_npcs_marked():
     for f, fac in (('d/oldpine/npc/kao_shen.c', '"fighter.tiger"'),
                    ('d/wutang/npc/yang_zlin.c', '"fighter.lunmay"'),
-                   ('d/wutang/npc/apprentice.c', '"fighter.lunmay"'),
-                   ('d/wutang/npc/may_yin_fong.c', 'FACTION')):
+                   ('d/swaylan/lunmay/npc/apprentice.c', '"fighter.lunmay"'),
+                   ('d/swaylan/lunmay/npc/may_yin_fong.c', 'FACTION')):
         s = read(f)
         assert 'set("custom_faction", %s);' % fac in s, f
         assert s.index('set("custom_faction"') < s.index('set_power('), f
@@ -114,8 +114,8 @@ def test_user_decisions_2026_10_14():
     assert 'if( skills[rq] < 1 ) ok = 0;' in s                       # 前置武功學得到即視為練滿
     assert 'if( !maps[art["map"]] && has_art(art["skill"]) )' in s     # 以先列的為主
     assert '"devil force": 10,' in read('custom/weapon/blade/green_blade.c')
-    for f, fac in (('custom/taoism/npc/fire_taoist.c', 'taoist.fire'), ('custom/taoism/npc/freeze_taoist.c', 'taoist.freeze'),
-                   ('custom/taoism/npc/storm_taoist.c', 'taoist.storm'), ('custom/taoism/npc/thunder_taoist.c', 'taoist.thunder'),
+    for f, fac in (('d/snow/npc/fire_taoist.c', 'taoist.fire'), ('d/snow/npc/freeze_taoist.c', 'taoist.freeze'),
+                   ('d/snow/npc/storm_taoist.c', 'taoist.storm'), ('d/snow/npc/thunder_taoist.c', 'taoist.thunder'),
                    ('d/wutang/npc/guo_boo.c', 'taoist.fire'), ('d/wutang/npc/red_taoist.c', 'taoist.fire'),
                    ('d/wutang/npc/white_taoist.c', 'taoist.freeze')):
         assert 'set("custom_faction", "%s");' % fac in read(f), f

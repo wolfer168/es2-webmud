@@ -21,7 +21,7 @@ void create()
         "此人約莫四十來歲。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/feet/straw_boots")->wear();   // 草鞋
+    carry_object("/d/baihua/npc/obj/straw_boots")->wear();   // 草鞋
     carry_object("/obj/area/obj/robe")->wear();   // 布袍
     carry_object("/obj/armor/fur_hat")->wear();   // 毛皮帽
     carry_object("/obj/area/obj/broadaxe")->wield();   // 板斧

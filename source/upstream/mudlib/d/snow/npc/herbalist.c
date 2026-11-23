@@ -33,7 +33,7 @@ void create()
 	set_power("C");
 	setup();
 	carry_object("/obj/area/obj/cloth")->wear();
-	carry_object(__DIR__"obj/fur_hat")->wear();
+	carry_object("/d/npc/obj/fur_hat")->wear();
 }
 
 void init()

@@ -15,7 +15,7 @@ LONG
         "north" : __DIR__"east_street1",
     ]));
     set("objects", ([
-        __DIR__"npc/guard" : 4,
+        "/d/npc/guard" : 4,
     ]));
     set("map/area", "五堂鎮");
     setup();

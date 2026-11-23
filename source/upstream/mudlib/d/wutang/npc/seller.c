@@ -33,7 +33,7 @@ LONG
     }));
     // merchandise 的數字是庫存份數，價錢是各物品自己的 value。
     set("merchandise", ([
-        "/d/wutang/obj/pie" : 20,
+        "/d/wutang/npc/obj/pie" : 20,
     ]));
     set_power("C");
     setup();

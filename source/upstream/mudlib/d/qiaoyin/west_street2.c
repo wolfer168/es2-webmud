@@ -16,7 +16,7 @@ LONG
         "east" : __DIR__"west_street3",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/chaxigol" : 1,
+        "/d/qiaoyin/npc/chaxigol" : 1,
     ]));
     set("map/area", "喬陰縣");
     setup();

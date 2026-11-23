@@ -30,8 +30,8 @@ bash ~/es2-webmud/deploy/oracle/update.sh
 | 改到的地方 | 位置 | 生效方式 |
 |---|---|---|
 | 房間 | `mudlib/d/`、`mudlib/custom/*/room/` | 巫師 `update <檔名>`（站在房間裡可用 `update here`） |
-| NPC | `mudlib/d/*/npc/`、`mudlib/custom/legacy_npc/` 等 | `update <檔名>`；地圖上已有的要等房間重置或清掉重生 |
-| 物品、裝備 | `mudlib/obj/`（`user.c`、`login.c` 除外）、`mudlib/d/*/obj/`、`mudlib/custom/armor/` 等 | `update <檔名>`；玩家身上已有的是舊版 |
+| NPC | `mudlib/d/*/npc/`、`mudlib/d/npc/`、`mudlib/custom/legacy_npc/` 等 | `update <檔名>`；地圖上已有的要等房間重置或清掉重生 |
+| 物品、裝備 | `mudlib/obj/`（`user.c`、`login.c` 除外）、`mudlib/d/*/obj/`、`mudlib/d/obj/`、`mudlib/custom/armor/` 等 | `update <檔名>`；玩家身上已有的是舊版 |
 | 武功、法術 | `mudlib/daemon/skill/` | `update <技能檔>` |
 | 玩家指令 | `mudlib/cmds/` | `update <指令檔>` |
 | 說明檔 | `mudlib/docs/help/` | 直接生效 |

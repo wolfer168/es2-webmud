@@ -8,7 +8,7 @@ void create()
     set("long", "一個在村裡跑來跑去的小孩，衣角沾著灰土，像是剛從廣場玩回來。\n");
     set_power("C");
     setup();
-    carry_object("/d/snow/npc/obj/tummy_cover")->wear();
+    carry_object("/d/npc/obj/tummy_cover")->wear();
 }
 
 // MODIFIED: F_VILLAGER 預設的 accept_fight() 一律拒絕（return 0），

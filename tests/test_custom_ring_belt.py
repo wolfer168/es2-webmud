@@ -1,13 +1,14 @@
 from pathlib import Path
+from placement import LibDir, current
 import re
 
 MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
-RING = MUD / 'custom' / 'armor' / 'finger'
-BELT = MUD / 'custom' / 'armor' / 'waist'
+RING = LibDir(MUD / 'custom' / 'armor' / 'finger')
+BELT = LibDir(MUD / 'custom' / 'armor' / 'waist')
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def test_rings_and_belts():

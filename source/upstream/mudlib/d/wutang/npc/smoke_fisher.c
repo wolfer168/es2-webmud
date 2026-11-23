@@ -21,7 +21,7 @@ LONG
     set_skill("whip", 100);
     set_power("S");
     setup();
-    carry_object("/custom/weapon/whip/silk_fishing_stick")->wield();
-    carry_object("/custom/armor/cloth/straw_cloth")->wear();
-    carry_object("/custom/armor/feet/spider_boots")->wear();
+    carry_object("/d/wutang/npc/obj/silk_fishing_stick")->wield();
+    carry_object("/d/wutang/npc/obj/straw_cloth")->wear();
+    carry_object("/d/npc/obj/spider_boots")->wear();
 }

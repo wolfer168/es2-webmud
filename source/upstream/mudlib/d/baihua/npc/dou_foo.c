@@ -18,5 +18,5 @@ LONG
     );
     set_power("B");
     setup();
-    carry_object("/custom/weapon/staff/sinia_staff")->wield();
+    carry_object("/d/baihua/npc/obj/sinia_staff")->wield();
 }

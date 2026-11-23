@@ -14,11 +14,25 @@ def read(p):
     return p.read_text(encoding='utf-8')
 
 
+# 已放進地圖的舊站 NPC 搬到所在區域的 npc 資料夾（2026-11-23，docs/NPC_ITEM_PLACEMENT.md），
+# 檔案位置以清單的「檔案」欄為準。
+FILES = {Path(r[3]).stem: MUD / r[3] for r in ROWS}
+
+
+def npc(stem):
+    return FILES[stem]
+
+
 def test_all_listed_npcs_exist():
     assert len(ROWS) == 127
+    assert len(FILES) == 127
+    for stem, p in FILES.items():
+        assert p.exists(), stem
+    # 還沒放進地圖的留在 custom/legacy_npc/；放進地圖的在區域的 npc 資料夾。
     files = sorted(p.name for p in DIR.glob('*.c') if p.name != 'legacy_npc.c')
-    assert len(files) == 127
-    assert sorted(Path(r[3]).name for r in ROWS) == files
+    assert files == sorted(p.name for p in FILES.values() if p.parent == DIR)
+    for p in FILES.values():
+        assert p.parent == DIR or p.parent.name == 'npc', p
 
 
 def test_npc_settings_follow_list():
@@ -39,22 +53,22 @@ def test_user_decisions():
     aggressive = {6, 7, 8, 10, 16, 17, 19, 38, 41, 50, 51, 59, 60, 70, 125, 126}
     assert {int(r[0]) for r in ROWS if '主動攻擊' in r[7]} == aggressive
     assert {int(r[0]) for r in ROWS if '巡邏' in r[7]} == {15, 16, 17, 19, 21, 39}   # 21 劉乙忘玄 2026-11-17 放在亂葬崗老和尚處巡邏；80 武道通 2026-11-16 搬回武陀灸堂，不再巡邏；39 雷同放白雲觀巡邏
-    assert '"si-ma lei"' in read(DIR / 'si_ma_lei.c')
-    assert '"madam han"' in read(DIR / 'madam_han.c')
-    assert 'set_class("commoner");' in read(DIR / 'yan_she.c')
-    s = read(DIR / 'guard_of_hell.c')
+    assert '"si-ma lei"' in read(npc('si_ma_lei'))
+    assert '"madam han"' in read(npc('madam_han'))
+    assert 'set_class("commoner");' in read(npc('yan_she'))
+    s = read(npc('guard_of_hell'))
     assert 'set_race("headless");' in s and 'set_class("fighter");' in s and 'set_level(30);' in s
-    assert '/obj/area/obj/bastardsword' in read(DIR / 'lieutenant.c')
-    assert '/obj/books/strange_tales_of_the_celestial_court' in read(DIR / 'o_yan_zhi.c')
+    assert '/obj/area/obj/bastardsword' in read(npc('lieutenant'))
+    assert '/obj/books/strange_tales_of_the_celestial_court' in read(npc('o_yan_zhi'))
 
 
 def test_new_items():
-    s = read(MUD / 'custom/armor/cloth/green_cloth.c')
+    s = read(MUD / 'd/npc/obj/green_cloth.c')
     assert '"green cloth"' in s and '"armor": 3' in s and '"spi": 1' in s and '"int": 1' in s
-    assert 'green_cloth' in read(DIR / 'yaksa.c')
-    s = read(MUD / 'custom/armor/armor/heart_armor.c')
+    assert 'green_cloth' in read(npc('yaksa'))
+    s = read(MUD / 'd/snowkeep/npc/obj/heart_armor.c')
     assert '"heart armor"' in s and '"armor": 8' in s and '"cps": 1' in s
-    assert 'heart_armor' in read(DIR / 'hsu_yen_chih.c')
+    assert 'heart_armor' in read(npc('hsu_yen_chih'))
 
 
 def test_base_behaviour():
@@ -65,6 +79,6 @@ def test_base_behaviour():
 
 
 def test_carried_items_exist():
-    for f in DIR.glob('*.c'):
+    for f in FILES.values():
         for path in re.findall(r'carry_object\("([^"]+)"\)', read(f)):
             assert (MUD / (path.lstrip('/') + '.c')).exists(), (f.name, path)

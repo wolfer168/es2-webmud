@@ -63,15 +63,15 @@
 |---|---|---|
 | 青雲觀主 華子儀 | J10 | `npc/hua_zi_yi.c`；人類道士 60 級、強度 S、60 歲；裝備虛靈劍、紫雲盔、紫色道袍；**紫衣派師父**（使用者定案，2026-11-14）：只收平民、慧根（wis）至少 16，拜師後成為道士、稱號「紫衣派弟子」；已有師承的不收。拜師才可學：天師道法【雷法】、清河映星劍、陰陽奇門步與基本劍術、招架、閃躲、徒手搏鬥入門即可自行求教（`acquire`），九龍神功與基本內功要人物等級 10 |
 | 將軍府門衛×2 | H14 | `npc/gate_guard.c`；軍人 30 級、強度 B |
-| 李儒 | F14 | 現有 `custom/legacy_npc/li_ru.c`（不更動） |
+| 李儒 | F14 | 現有 `d/fengcheng/npc/li_ru.c`（不更動） |
 | 劍甲門傳人 陳學亮 | D16 | `npc/chen_xue_liang.c`；人類方士 60 級、強度 A、35 歲；**教強化之術**：`ask chen about 強化之術`，條件（法術 60、等級 10、兵刃精熟經驗 50000）夠了，他說三句話後傳授，條件不夠只說婉拒（不提數字）。設計見 `docs/martial_arts/劍甲門_強化之術.md` |
 | 神算子 | D16 | `npc/fortune_teller.c`；方士 10 級、強度 C；流程同喬陰算命先生（`ask teller about 算命` → 給一兩黃金 → `inquire 技能`），差別是只告知這項技能是否已到個人上限 |
 | 小販 | D18 | `npc/seller.c`；賣供品×10、空白符紙×2000、太古塵包×5（取代龍麟袋，2026-11-20） |
 | 店小二 | F18 | `npc/waiter.c`；平民 21 歲、強度 C |
-| 東方孤冥（玄天教主） | F18 二樓 | 現有 `custom/legacy_npc/dong_fang_gu_ming.c` |
-| 司馬蔚、官兵×4 | B20 城樓 | 現有 `si_ma_wei.c`；官兵用 `/obj/area/garrison` |
-| 官兵×4 | L12 東城門 | `/obj/area/garrison` |
-| 路人 | L10、L14 | `/obj/area/man` |
+| 東方孤冥（玄天教主） | F18 二樓 | 現有 `d/fengcheng/npc/dong_fang_gu_ming.c` |
+| 司馬蔚、官兵×4 | B20 城樓 | 現有 `si_ma_wei.c`；官兵用 `/d/npc/garrison` |
+| 官兵×4 | L12 東城門 | `/d/npc/garrison` |
+| 路人 | L10、L14 | `/d/npc/man` |
 | 字謎小孩 | L18 | `npc/child.c`；見上一節 |
 
 ## 物品
@@ -84,7 +84,7 @@
 
 ## 紫雲盔
 
-現有 `custom/armor/head/purple_helmet.c` 改為智慧 +1、精神 +1、防禦 25，重量 2000、價值 12000（同金羽神盔）。
+現有 `d/fengcheng/npc/obj/purple_helmet.c` 改為智慧 +1、精神 +1、防禦 25，重量 2000、價值 12000（同金羽神盔）。
 原本是精神 +1、法術 +5、防禦 5、價值 20000。
 
 ## 網頁地圖

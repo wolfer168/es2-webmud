@@ -15,7 +15,7 @@ LONG
         "north" : __DIR__"west_street3",
     ]));
     set("objects", ([
-        "/d/wutang/npc/guard" : 2,
+        "/d/npc/guard" : 2,
     ]));
     set("map/area", "喬陰縣");
     setup();

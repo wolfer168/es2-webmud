@@ -35,8 +35,8 @@ LONG
     }));
     set_power("A");
     setup();
-    carry_object("/custom/weapon/sword/peachwood_sword")->wield();   // 桃木劍
-    carry_object("/custom/armor/cloth/green_robe")->wear();   // 青衣道袍
+    carry_object("/d/npc/obj/peachwood_sword")->wield();   // 桃木劍
+    carry_object("/d/npc/obj/green_robe")->wear();   // 青衣道袍
 }
 
 int accept_info(object ob, string type)

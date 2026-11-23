@@ -37,5 +37,5 @@ LONG
     }));
     set_power("C");
     setup();
-    carry_object("/d/snow/npc/obj/smock")->wear();
+    carry_object("/d/npc/obj/smock")->wear();
 }

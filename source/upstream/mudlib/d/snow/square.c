@@ -12,10 +12,10 @@ void create()
 LONG
 	);
 	set("objects", ([ /* sizeof() == 1 */
-		__DIR__"npc/obj/pot" : 1,
+		"/d/snow/obj/pot" : 1,
 		__DIR__"npc/gammer" : 1,
 		__DIR__"npc/junkman": 1,
-		"/custom/ghost/npc/hungry_ghost": 2,
+		"/d/npc/ghost/hungry_ghost": 2,
 	]));
 	set("detail", ([ /* sizeof() == 2 */
 		"榕樹" : "這株榕樹少說也有兩三百歲了﹐一條條長長的鬚根幾乎垂到地面﹐

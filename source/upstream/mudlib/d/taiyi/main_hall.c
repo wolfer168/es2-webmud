@@ -17,7 +17,7 @@ LONG
         "north" : __DIR__"yard",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/taoist_leader" : 1,
+        "/d/taiyi/npc/taoist_leader" : 1,
     ]));
     set("map/area", "太乙觀");
     setup();

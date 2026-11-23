@@ -25,9 +25,9 @@ void create()
         "氣和纍纍戰功依舊深得祐聖帝信賴。\n");
     set_power("A");
     setup();
-    carry_object("/custom/armor/armor/tiger_plate")->wear();   // 虎嘯旭日鎧
+    carry_object("/d/baobao/npc/obj/tiger_plate")->wear();   // 虎嘯旭日鎧
     carry_object("/custom/zhenwu/obj/fire_gauntlets")->wear();   // 冶磺套
     carry_object("/custom/weapon/blunt/black_iron_hammer")->wield();   // 黑鐵大槌
     carry_object("/custom/armor/cloth/dragon_cloth")->wear();   // 蟠龍朝服
-    carry_object("/custom/armor/head/royal_helmet")->wear();   // 霸王銅冠
+    carry_object("/d/baobao/npc/obj/royal_helmet")->wear();   // 霸王銅冠
 }

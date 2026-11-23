@@ -16,5 +16,5 @@ LONG
     );
     set_power("C");
     setup();
-    carry_object("/d/graveyard/obj/rosary")->wear();
+    carry_object("/d/graveyard/npc/obj/rosary")->wear();
 }

@@ -1,5 +1,6 @@
 """亂葬崗（d/graveyard）：房間、出口、指令出入、NPC 與敘述排版（docs/AREA_GRAVEYARD.md）。"""
 from pathlib import Path
+from placement import current
 import json
 import re
 
@@ -13,7 +14,7 @@ OLD_TEXT = {'shrine', 'grave5', 'grave8', 'weeds'}   # 舊資料全文引用
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def exits(name):
@@ -88,12 +89,12 @@ def test_command_exits():
 
 def test_npcs_placed():
     want = {
-        'grave5': ['"/custom/legacy_npc/lady" : 1'],
+        'grave5': ['"/d/graveyard/npc/lady" : 1'],
         'shrine': ['__DIR__"npc/dirty_taoist" : 1'],
         'grave7': ['__DIR__"npc/old_bonze" : 1', '__DIR__"npc/young_bonze" : 1',
-                  '"/custom/legacy_npc/liuye_the_master_of_grimace" : 1'],
-        'forest_w': ['"/custom/legacy_npc/wu_changuei" : 1'],
-        'forest_e': ['"/custom/legacy_npc/barbarian_chief" : 1', '__DIR__"npc/barbarian" : 2'],
+                  '"/d/graveyard/npc/liuye_the_master_of_grimace" : 1'],
+        'forest_w': ['"/d/graveyard/npc/wu_changuei" : 1'],
+        'forest_e': ['"/d/graveyard/npc/barbarian_chief" : 1', '__DIR__"npc/barbarian" : 2'],
     }
     for r, objs in want.items():
         for o in objs:
@@ -101,14 +102,14 @@ def test_npcs_placed():
     for f in re.findall(r'"(/d/graveyard/obj/[a-z_]+)"', ''.join(read(p) for p in (G / 'npc').glob('*.c'))):
         assert (MUD / (f[1:] + '.c')).exists(), f
     # 酋長要比野人強（使用者指示，2026-11-04）。
-    chief = read(MUD / 'custom/legacy_npc/barbarian_chief.c')
+    chief = read(MUD / 'd/graveyard/npc/barbarian_chief.c')
     bar = read(G / 'npc/barbarian.c')
     assert 'set_level(15);' in chief and 'set_power("A");' in chief
     assert 'set_level(12);' in bar and 'set_power("B");' in bar and 'set_attr("str", 20);' in bar
 
 
 def test_items():
-    ring = read(G / 'obj/chrysoberyl_ring.c')
+    ring = read(MUD / 'd/npc/obj/chrysoberyl_ring.c')   # 亂葬崗與五堂鎮共用，放 /d/obj（2026-11-23）
     assert '"cps": 1,' in ring and '「雍順」' in ring
     staff = read(G / 'obj/brass_zenstaff.c')
     assert 'set_weight(18840);' in staff and 'set("value", 72000);' in staff

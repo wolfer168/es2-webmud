@@ -15,7 +15,7 @@ LONG
         "north" : __DIR__"hut",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/wu_dauton" : 1,
+        "/d/qiaoyin_east/npc/wu_dauton" : 1,
     ]));
     set("map/area", "喬陰東郊");
     setup();

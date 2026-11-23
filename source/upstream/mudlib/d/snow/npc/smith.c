@@ -17,11 +17,11 @@ void create()
                 "如果你想買一些鐵器﹐可以用 list 看有哪些東西﹐用 buy 向鐵匠購買。\n");
 
         set("merchandise", ([
-                __DIR__"obj/hoe": 3,
+                "/d/npc/obj/hoe": 3,
                 __DIR__"obj/shovel": 5,
                 "/obj/area/obj/dagger": 10,
                 "/obj/area/obj/shortsword": 5,
-                "/custom/weapon/blade/large_blade": 10,  // 大刀（使用者指定，2026-10-19）
+                "/d/snow/npc/obj/large_blade": 10,  // 大刀（使用者指定，2026-10-19）
         ]));
 
         set("chat_chance", 5);
@@ -33,7 +33,7 @@ void create()
         }));
         set_power("C");
         setup();
-        carry_object(__DIR__"obj/smock")->wear();
+        carry_object("/d/npc/obj/smock")->wear();
 }
 
 int accept_fight()

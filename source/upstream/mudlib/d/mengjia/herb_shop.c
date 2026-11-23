@@ -15,7 +15,7 @@ LONG
         "north" : __DIR__"gate",
     ]));
     set("objects", ([
-        "/d/snow/npc/herbalist" : 1,
+        "/d/mengjia/npc/herbalist" : 1,
     ]));
     set("map/area", "孟家莊");
     setup();

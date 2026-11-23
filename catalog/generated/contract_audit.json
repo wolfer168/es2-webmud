@@ -24,27 +24,27 @@
     {
       "severity": "advisory",
       "kind": "wear_without_visible_remove",
-      "path": "/obj/area/man"
+      "path": "/d/npc/man"
     },
     {
       "severity": "advisory",
       "kind": "wield_without_visible_unwield",
-      "path": "/obj/area/man"
+      "path": "/d/npc/man"
     },
     {
       "severity": "advisory",
       "kind": "wear_without_visible_remove",
-      "path": "/obj/area/traveller"
+      "path": "/d/oldpine/npc/traveller"
     },
     {
       "severity": "advisory",
       "kind": "wield_without_visible_unwield",
-      "path": "/obj/area/traveller"
+      "path": "/d/oldpine/npc/traveller"
     },
     {
       "severity": "advisory",
       "kind": "wield_without_visible_unwield",
-      "path": "/obj/area/vagabond"
+      "path": "/d/qiaoyin/npc/vagabond"
     }
   ],
   "note": "Advisory source-shape checks only. Inheritance may provide missing contracts."

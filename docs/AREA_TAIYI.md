@@ -1,11 +1,11 @@
 # 新區域：太乙觀（素衣派師門）
 
-狀態：**已製作（2026-11-09）**：`source/upstream/mudlib/d/taiyi/`（房間 19 間、NPC 3 種）；白齊用 `custom/legacy_npc/taoist_leader.c`，
-石獅子用 `d/baihua/npc/stone_lion.c`。`d/graveyard/grave8` 新增往西出口接太乙觀門口。測試：`tests/test_area_taiyi.py`。
+狀態：**已製作（2026-11-09）**：`source/upstream/mudlib/d/taiyi/`（房間 19 間、NPC 3 種）；白齊用 `d/taiyi/npc/taoist_leader.c`，
+石獅子用 `d/npc/stone_lion.c`。`d/graveyard/grave8` 新增往西出口接太乙觀門口。測試：`tests/test_area_taiyi.py`。
 來源：使用者提供的 Excel（2026-11-09，格子地圖＋房間表＋NPC 表）；使用者說明：
 太乙觀是素衣派的師門所在，香火鼎盛，位於雪亭鎮往青邪大山的必經之路；白齊是素衣派掌門，精通天師道法【冰咒】，
 五行步法（五行迷蹤步）則由上清道長親自傳授（上清、玄清是白齊的得意門徒，見使用者 2026-11-09 更正）。
-舊資料：白齊與「賓客宿房」（`docs/LEGACY_ROOM_NPC_COMPENDIUM.md`「太乙觀」、`custom/legacy_npc/taoist_leader.c`，尚未放入地圖）。
+舊資料：白齊與「賓客宿房」（`docs/LEGACY_ROOM_NPC_COMPENDIUM.md`「太乙觀」、`d/taiyi/npc/taoist_leader.c`，尚未放入地圖）。
 
 ## 地圖（Excel 格子；一格＝兩欄）
 
@@ -55,9 +55,9 @@
 
 | 名字 | 設計表內容 | 備註 |
 |---|---|---|
-| 石獅子 x2 | 檔案 `d/baihua/npc/stone_lion.c` | 現成的假人 NPC，比照百花村；兩尊放在門口 |
-| 白齊 | 檔案 `custom/legacy_npc/taoist_leader.c`（太乙觀觀主） | 素衣派掌門，負責拜師（不限種族與性別）與傳授天師道法【冰咒】；放正殿；舊敘述不改 |
-| 上清道長 | 太乙觀觀主白齊的得意門徒；人類（hn）、**45 歲**（使用者更正）、道士、50 級、強度 A；桃木劍＋青衣道袍（`custom/armor/cloth/green_robe.c`） | 親自傳授五行迷蹤步（只傳素衣派弟子）；放廂房 |
+| 石獅子 x2 | 檔案 `d/npc/stone_lion.c` | 現成的假人 NPC，比照百花村；兩尊放在門口 |
+| 白齊 | 檔案 `d/taiyi/npc/taoist_leader.c`（太乙觀觀主） | 素衣派掌門，負責拜師（不限種族與性別）與傳授天師道法【冰咒】；放正殿；舊敘述不改 |
+| 上清道長 | 太乙觀觀主白齊的得意門徒；人類（hn）、**45 歲**（使用者更正）、道士、50 級、強度 A；桃木劍＋青衣道袍（`d/npc/obj/green_robe.c`） | 親自傳授五行迷蹤步（只傳素衣派弟子）；放廂房 |
 | 玄清道長 | 同上 | 放山崖邊；有謎題，會傳授太乙劍法（`taiyie`），**任務之後再寫** |
 | 進香客 | 進香的人，敘述不用長；人類、32 歲、平民、5 級、強度 c；身上帶 40～50 銀、無裝備 | 香客廂房 F10、F14 各一位 |
 

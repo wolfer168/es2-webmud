@@ -18,7 +18,7 @@ LONG
         "eastup" : "/d/tianshan/fog",
     ]));
     set("objects", ([
-        "/obj/area/garrison" : 4,
+        "/d/npc/garrison" : 4,
     ]));
     set("map/area", "風城");
     setup();
