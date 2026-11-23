@@ -33,11 +33,11 @@
 | NPC | 位置 | 說明 |
 |---|---|---|
 | 孟憶柔 | B8 後院 | `npc/meng_yi_rou.c`；人類方士 10 級、強度 B、18 歲 |
-| 孟驚鴻（「出塵刀」） | B10 孟家莊 | 現有 `custom/legacy_npc/meng_jiang_hong.c`，**改為武者 35 級、強度 A**；五虎斷門刀 160 級 |
-| 田由 | B12 孟家大門 | 現有 `custom/legacy_npc/tian_yu.c` |
+| 孟驚鴻（「出塵刀」） | B10 孟家莊 | 現有 `d/mengjia/npc/meng_jiang_hong.c`，**改為武者 35 級、強度 A**；五虎斷門刀 160 級 |
+| 田由 | B12 孟家大門 | 現有 `d/mengjia/npc/tian_yu.c` |
 | 同仁藥鋪掌櫃 | B14 | 沿用 `/d/snow/npc/herbalist` |
 | 田申 | D8 客棧二樓 | `npc/tian_shen.c`；刑天族武者 30 級、強度 B、36 歲 |
-| 花興（花蝴蝶） | 暗道 | 現有 `custom/legacy_npc/hua_xing.c`，**改為盜賊 30 級、強度 A** |
+| 花興（花蝴蝶） | 暗道 | 現有 `d/mengjia/npc/hua_xing.c`，**改為盜賊 30 級、強度 A** |
 | 孟昭展（「多情刀」） | F12 大街 | `npc/meng_zhao_zhan.c`；人類武者 35 級、強度 A、32 歲；五虎斷門刀 160 級 |
 | 白額虎 | F10 密林 | `npc/white_tiger.c`；野獸強度 8，看到玩家就下殺手；沒打死前不能往北，會重生並繼續擋路 |
 | 守墓人 | F6 墓室 | `npc/tomb_guard.c`；人類道士 50 級、強度 A、80 歲，用雷法；裝備伏魔法衣、肩鎧、桃木劍、五文錢 |

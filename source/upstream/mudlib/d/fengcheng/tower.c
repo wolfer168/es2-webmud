@@ -15,8 +15,8 @@ LONG
         "down" : __DIR__"gate",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/si_ma_wei" : 1,
-        "/obj/area/garrison" : 4,
+        "/d/fengcheng/npc/si_ma_wei" : 1,
+        "/d/npc/garrison" : 4,
     ]));
     set("map/area", "風城");
     set("map/layer", "城樓");

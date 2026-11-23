@@ -24,7 +24,7 @@ void create()
     set("custom_faction", "fighter.fonxan");   // 封山派（docs/martial_arts/門派武功對照表.md）
     set_power("B");
     setup();
-    carry_object("/custom/armor/leg/red_dust_legs")->wear();   // 風塵腿護
-    carry_object("/d/wutang/obj/blue_cloth")->wear();   // 青布衣
-    carry_object("/custom/armor/armor/steel_chain_armor")->wear();   // 鋼戰甲
+    carry_object("/d/mengjia/npc/obj/red_dust_legs")->wear();   // 風塵腿護
+    carry_object("/d/wutang/npc/obj/blue_cloth")->wear();   // 青布衣
+    carry_object("/d/ziyan/npc/obj/steel_chain_armor")->wear();   // 鋼戰甲
 }

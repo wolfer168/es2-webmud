@@ -16,7 +16,7 @@ LONG
     ]));
     set("objects", ([
         __DIR__"npc/hsiao_bi_chen" : 1,
-        "/custom/legacy_npc/hsiao_lang_sheng" : 1,
+        "/d/qiaoyin/npc/hsiao_lang_sheng" : 1,
     ]));
     set("map/area", "喬陰縣");
     setup();

@@ -22,10 +22,10 @@ void create()
     set_power("S");
     setup();
     // 古劍醒塵是唯一的一把；被玩家打走（還在世上）時，蔚楓重生就改拿巨神劍。
-    sword = carry_object("/custom/weapon/sword/au_han_sword");   // 古劍醒塵
+    sword = carry_object("/d/shuiyue/npc/obj/au_han_sword");   // 古劍醒塵
     if( !objectp(sword) || environment(sword) != this_object() )
-        sword = carry_object("/custom/weapon/sword/colosus_sword");   // 巨神劍
+        sword = carry_object("/d/shuiyue/npc/obj/colosus_sword");   // 巨神劍
     if( objectp(sword) ) sword->wield();
-    carry_object("/custom/armor/cloth/iron_cloth")->wear();   // 鐵布衫
-    carry_object("/custom/armor/feet/forgod_boots")->wear();   // 封神靴
+    carry_object("/d/npc/obj/iron_cloth")->wear();   // 鐵布衫
+    carry_object("/d/npc/obj/forgod_boots")->wear();   // 封神靴
 }

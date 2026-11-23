@@ -23,7 +23,7 @@ void create()
 		"/obj/armor/fur_hat": 5,
 		"/obj/bottle": 5,
 		"/custom/item/scroll/blank": 1000,	// 空白符紙（2026-10-24）
-		"/d/swaylan/obj/bait" : 500,   // 魚餌（釣魚用）
+		"/d/npc/obj/bait" : 500,   // 魚餌（釣魚用）
 	]));
 	set("chat_chance", 5);
 	set("chat_msg", ({

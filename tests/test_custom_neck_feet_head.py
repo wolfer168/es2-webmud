@@ -1,7 +1,8 @@
 from pathlib import Path
+from placement import LibDir
 
 MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
-ARMOR = MUD / 'custom' / 'armor'
+ARMOR = LibDir(MUD / 'custom' / 'armor')
 
 
 def read(p):
@@ -29,7 +30,7 @@ def test_unique_and_restricted():
 def test_names_and_reused_items():
     assert 'set_name("蛈蜇杳龍屐"' in read(ARMOR / 'feet' / 'dragon_boots.c')
     assert 'set_name("啖紅裐雲靴"' in read(ARMOR / 'feet' / 'red_boots.c')
-    for p in ['d/snow/npc/obj/clothboot.c', 'd/snow/npc/obj/hairpin.c', 'custom/zhenwu/obj/steel_boots.c']:
+    for p in ['d/npc/obj/clothboot.c', 'd/snow/obj/hairpin.c', 'd/npc/obj/steel_boots.c']:
         assert (MUD / p).exists(), p
 
 

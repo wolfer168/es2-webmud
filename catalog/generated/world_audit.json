@@ -39,21 +39,21 @@
       "/d/snow/npc/obj/blue_cloth",
       "/d/snow/npc/obj/broadsword",
       "/d/snow/npc/obj/cane",
-      "/d/snow/npc/obj/clothboot",
+      "/d/npc/obj/clothboot",
       "/d/snow/npc/obj/coin",
       "/d/snow/npc/obj/comb",
-      "/d/snow/npc/obj/fur_hat",
-      "/d/snow/npc/obj/hairpin",
-      "/d/snow/npc/obj/helmet",
+      "/d/npc/obj/fur_hat",
+      "/d/snow/obj/hairpin",
+      "/d/npc/obj/helmet",
       "/d/snow/npc/obj/invitation",
-      "/d/snow/npc/obj/leather_armor",
+      "/d/npc/obj/leather_armor",
       "/d/snow/npc/obj/note",
       "/d/snow/npc/obj/silversword",
       "/d/snow/npc/obj/slasher_sword",
-      "/d/snow/npc/obj/smock",
+      "/d/npc/obj/smock",
       "/d/snow/npc/obj/syndicator",
-      "/d/snow/npc/obj/tummy_cover",
-      "/d/snow/npc/obj/white_dress",
+      "/d/npc/obj/tummy_cover",
+      "/d/npc/obj/white_dress",
       "/d/snow/npc/obj/wine_pot",
       "/d/snow/npc/patrol",
       "/feature/npc/bandit",
@@ -100,8 +100,8 @@
       "/obj/area/obj/weirblade",
       "/obj/area/obj/whip",
       "/obj/area/obj/woodsword",
-      "/obj/area/traveller",
-      "/obj/area/vagabond",
+      "/d/oldpine/npc/traveller",
+      "/d/qiaoyin/npc/vagabond",
       "/obj/armor/cloth",
       "/obj/bankbond",
       "/obj/block",
@@ -314,7 +314,7 @@
       "manual_review": true
     },
     {
-      "path": "/d/snow/npc/guard",
+      "path": "/d/snowkeep/npc/guard",
       "type": "npc",
       "name": "青衣漢子",
       "score": 2,
@@ -677,7 +677,7 @@
       "manual_review": true
     },
     {
-      "path": "/d/snow/npc/obj/crate",
+      "path": "/d/snow/obj/crate",
       "type": "npc",
       "name": "大木箱",
       "score": 1,
@@ -688,7 +688,7 @@
       "manual_review": true
     },
     {
-      "path": "/d/snow/npc/obj/pot",
+      "path": "/d/snow/obj/pot",
       "type": "npc",
       "name": "大水缸",
       "score": 1,
@@ -699,7 +699,7 @@
       "manual_review": false
     },
     {
-      "path": "/d/snow/npc/obj/wagon",
+      "path": "/d/snow/obj/wagon",
       "type": "npc",
       "name": "運貨驢車",
       "score": 1,
@@ -809,7 +809,7 @@
       "manual_review": false
     },
     {
-      "path": "/obj/area/traveller",
+      "path": "/d/oldpine/npc/traveller",
       "type": "item",
       "name": "過路客",
       "score": 1,

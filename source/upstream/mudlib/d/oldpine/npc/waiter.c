@@ -29,9 +29,9 @@ LONG
     set_skill("parry", 2);
     // merchandise 的數字是庫存份數，價錢是各物品自己的 value。
     set("merchandise", ([
-        "/d/lee/obj/waterskin" : 10,
+        "/d/npc/obj/waterskin" : 10,
         "/obj/food/manto" : 50,
-        "/d/oldpine/obj/venison" : 50,
+        "/d/oldpine/npc/obj/venison" : 50,
     ]));
     set_power("C");
     setup();

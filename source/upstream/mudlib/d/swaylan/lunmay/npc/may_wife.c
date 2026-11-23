@@ -21,6 +21,6 @@ LONG
     set_skill("parry", 10);
     set_power("C");
     setup();
-    carry_object("/custom/armor/cloth/green_cloth")->wear();
-    carry_object("/custom/armor/finger/pearl_ring")->wear();
+    carry_object("/d/npc/obj/green_cloth")->wear();
+    carry_object("/d/swaylan/lunmay/npc/obj/pearl_ring")->wear();
 }

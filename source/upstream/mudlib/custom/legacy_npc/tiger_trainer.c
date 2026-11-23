@@ -21,7 +21,7 @@ void create()
     set("custom_faction", "fighter.tiger");   // 虎刀門（docs/martial_arts/門派武功對照表.md）
     set_power("B");
     setup();
-    carry_object("/custom/armor/armor/ringmail")->wear();   // 鎖子甲
+    carry_object("/d/baihua/npc/obj/ringmail")->wear();   // 鎖子甲
     carry_object("/custom/armor/feet/bull_boots")->wear();   // 蠻牛靴
     carry_object("/custom/armor/cloth/tiger_coat")->wear();   // 斑斕虎氅
     carry_object("/custom/weapon/blade/colosus_blade")->wield();   // 巨刀

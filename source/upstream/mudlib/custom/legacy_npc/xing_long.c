@@ -26,7 +26,7 @@ void create()
     set("custom_faction", "fighter.huge");   // 哭笑門（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
-    carry_object("/custom/armor/feet/cloud_boots")->wear();   // 流雲靴
-    carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶
+    carry_object("/d/npc/obj/cloud_boots")->wear();   // 流雲靴
+    carry_object("/d/npc/obj/water_dragon_girdle")->wear();   // 蛟龍帶
     carry_object("/custom/weapon/staff/staff_of_eroticism")->wield();   // 交歡杖
 }

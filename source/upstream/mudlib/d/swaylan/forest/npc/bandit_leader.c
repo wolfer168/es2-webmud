@@ -23,6 +23,6 @@ LONG
     set_power("B");
     setup();
     carry_object("/obj/area/obj/longsword")->wield();
-    carry_object("/d/swaylan/forest/obj/jade_armor")->wear();
+    carry_object("/d/swaylan/forest/npc/obj/jade_armor")->wear();
     carry_money("silver", 5 + random(26));
 }

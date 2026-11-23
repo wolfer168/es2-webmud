@@ -72,7 +72,7 @@ checks={
  'antispam_no_penalty': 'penalty_attr' not in login and 'SPAM_WINDOW\t1800' in login and 'SPAM_LIMIT\t10' in login,
  'ghost_npcs': all(f'setup_ghost({g}, {s})' in read(f'custom/ghost/npc/{f}.c') and read(f'custom/ghost/npc/{f}.c').count('」\\n",')+read(f'custom/ghost/npc/{f}.c').count('。\\n",') >= 2 for f,g,s in
      [('hungry_ghost',20,20),('wandering_soul',40,20),('wronged_ghost',50,25),('tiger_thrall',60,30),('mountain_sprite',100,20),('water_goblin',100,20)])
-     and all(x in read('custom/ghost/std_ghost.c') for x in ['#define GHOST_CHAT_CHANCE  9','(: ghost_say :),\n        (: random_move :),\n        (: random_move :),','set("life_form", "ghost")','set_race("human")','say(HIK + msg','return raw ? str : HIK + str + NOR;']),
+     and all(x in read('d/npc/ghost/std_ghost.c') for x in ['#define GHOST_CHAT_CHANCE  9','(: ghost_say :),\n        (: random_move :),\n        (: random_move :),','set("life_form", "ghost")','set_race("human")','say(HIK + msg','return raw ? str : HIK + str + NOR;']),
  'who_rainner_filter': '"-rr": "rainner"' in read('cmds/usr/who.c'),
  'rainner_snake_on_levelup': 'random(2)' in races['rainner'] and 'give_snake' in races['rainner'],
 }

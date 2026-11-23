@@ -89,7 +89,7 @@
     },
     "npcs": [
       {
-        "path": "/d/snow/npc/guard",
+        "path": "/d/snowkeep/npc/guard",
         "count": 2,
         "display": "青衣漢子(Guard)",
         "name": "青衣漢子",
@@ -116,7 +116,7 @@
         ]
       },
       {
-        "path": "/custom/ghost/npc/wronged_ghost",
+        "path": "/d/npc/ghost/wronged_ghost",
         "count": 1,
         "display": "枉死鬼(Wronged ghost)",
         "name": "枉死鬼",
@@ -341,19 +341,19 @@
             "equipped": true
           },
           {
-            "path": "/d/snow/npc/obj/leather_armor",
+            "path": "/d/npc/obj/leather_armor",
             "name": "硬皮甲冑",
             "id": "leather armor",
             "equipped": true
           },
           {
-            "path": "/d/snow/npc/obj/helmet",
+            "path": "/d/npc/obj/helmet",
             "name": "銅盔",
             "id": "brass helmet",
             "equipped": true
           },
           {
-            "path": "/d/snow/npc/obj/clothboot",
+            "path": "/d/npc/obj/clothboot",
             "name": "皂步靴",
             "id": "black boots",
             "equipped": true
@@ -367,7 +367,7 @@
         ]
       },
       {
-        "path": "/custom/ghost/npc/tiger_thrall",
+        "path": "/d/npc/ghost/tiger_thrall",
         "count": 1,
         "display": "倀鬼(Tiger thrall)",
         "name": "倀鬼",
@@ -451,7 +451,7 @@
     },
     "npcs": [
       {
-        "path": "/custom/ghost/npc/wandering_soul",
+        "path": "/d/npc/ghost/wandering_soul",
         "count": 1,
         "display": "遊魂(Wandering soul)",
         "name": "遊魂",
@@ -479,7 +479,7 @@
     },
     "npcs": [
       {
-        "path": "/obj/area/man",
+        "path": "/d/npc/man",
         "count": 1,
         "display": "路人(Man)",
         "name": "路人",
@@ -527,7 +527,7 @@
     },
     "npcs": [
       {
-        "path": "/custom/taoism/npc/fire_taoist",
+        "path": "/d/snow/npc/fire_taoist",
         "count": 1,
         "display": "朱衣派弟子(Red-taoist)",
         "name": "朱衣派弟子",
@@ -554,7 +554,7 @@
         ]
       },
       {
-        "path": "/custom/taoism/npc/freeze_taoist",
+        "path": "/d/snow/npc/freeze_taoist",
         "count": 1,
         "display": "素衣派弟子(White-taoist)",
         "name": "素衣派弟子",
@@ -581,7 +581,7 @@
         ]
       },
       {
-        "path": "/custom/taoism/npc/storm_taoist",
+        "path": "/d/snow/npc/storm_taoist",
         "count": 1,
         "display": "玄衣派弟子(Black-taoist)",
         "name": "玄衣派弟子",
@@ -608,7 +608,7 @@
         ]
       },
       {
-        "path": "/custom/taoism/npc/thunder_taoist",
+        "path": "/d/snow/npc/thunder_taoist",
         "count": 1,
         "display": "紫衣派弟子(Purple-taoist)",
         "name": "紫衣派弟子",
@@ -635,7 +635,7 @@
         ]
       },
       {
-        "path": "/custom/ghost/npc/water_goblin",
+        "path": "/d/npc/ghost/water_goblin",
         "count": 1,
         "display": "魍魎(Water goblin)",
         "name": "魍魎",
@@ -671,7 +671,7 @@
     },
     "npcs": [
       {
-        "path": "/custom/ghost/npc/wandering_soul",
+        "path": "/d/npc/ghost/wandering_soul",
         "count": 1,
         "display": "遊魂(Wandering soul)",
         "name": "遊魂",
@@ -709,7 +709,7 @@
         "look": "一個身穿白衣的女子﹐看起來年紀不會超過二十歲﹐容貌雖不甚美﹐卻\n別有一股靈秀之氣﹐令人凜然不敢輕侮。\n白衣女子屬於人類族。她的外表看起來約十多歲。\n她身上帶著﹕\nＶ白綢羽衫 (White dress)\nＶ繞指柔劍 (Slasher sword)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/white_dress",
+            "path": "/d/npc/obj/white_dress",
             "name": "白綢羽衫",
             "id": "white dress",
             "equipped": true
@@ -788,7 +788,7 @@
         "look": "一個流著鼻涕的小孩﹐睜著一雙無邪的眼睛望著你。\n小孩屬於人類族。他的外表看起來不到十歲。\n他身上帶著﹕\nＶ肚兜 (Tummy cover)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/tummy_cover",
+            "path": "/d/npc/obj/tummy_cover",
             "name": "肚兜",
             "id": "tummy cover",
             "equipped": true
@@ -842,7 +842,7 @@
         "look": "一個身材粗壯的鐵匠﹐正忙碌地工作著。\n如果你想買一些鐵器﹐可以用 list 看有哪些東西﹐用 buy 向鐵匠購買。\n他身上帶著﹕\nＶ打鐵褂子 (Work smock)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/smock",
+            "path": "/d/npc/obj/smock",
             "name": "打鐵褂子",
             "id": "work smock",
             "equipped": true
@@ -911,7 +911,7 @@
         "inventory": []
       },
       {
-        "path": "/custom/ghost/npc/hungry_ghost",
+        "path": "/d/npc/ghost/hungry_ghost",
         "count": 2,
         "display": "餓鬼(Hungry ghost)",
         "name": "餓鬼",
@@ -961,7 +961,7 @@
         "look": "一個流著鼻涕的小孩﹐睜著一雙無邪的眼睛望著你。\n小孩屬於人類族。他的外表看起來不到十歲。\n他身上帶著﹕\nＶ肚兜 (Tummy cover)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/tummy_cover",
+            "path": "/d/npc/obj/tummy_cover",
             "name": "肚兜",
             "id": "tummy cover",
             "equipped": true
@@ -982,7 +982,7 @@
         "look": "一個約七、八歲大的男孩﹐笑瞇瞇地望著你。\n他身上帶著﹕\nＶ木劍 (Wooden sword)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/woodsword",
+            "path": "/d/snow/obj/woodsword",
             "name": "木劍",
             "id": "wooden sword",
             "equipped": true
@@ -990,7 +990,7 @@
         ]
       },
       {
-        "path": "/custom/legacy_npc/wu_dauton",
+        "path": "/d/qiaoyin_east/npc/wu_dauton",
         "count": 1,
         "display": "武陀灸堂堂主「鬼華陀」武道通(Wu dauton)",
         "name": "武道通",
@@ -1003,25 +1003,25 @@
         "look": "武道通年輕時本為龍圖丹派的方士, 因為一次因緣際會結識了一位江湖異人, 習得\n了幾手針灸之術, 從此便不再苦煉丹道, 開始如著魔般浸淫於施針下灸之學。之後\n竟因久疏龍圖丹派本門功夫, 而遭致開革之禍。武道通離開龍圖丹派之後, 便隱居\n於斐縣縣郊, 為當地居民針灸治病, 沒有想到卻聲名大噪起來, 由於醫術高明, 行\n事瘋癲乖張, 得了個「鬼華陀」的稱號。到了晚年, 乃自行開宗立派, 創設「武陀\n灸堂」, 傳授附近居民武藝與防身灸術, 門下弟子不下百人, 多雲遊四海, 行醫救\n世。\n武道通屬於人類族。他的外表看起來約七十多歲。\n他身上帶著﹕\nＶ\\x1b[1;37m塵不沾\\x1b[m (Boots of cleanse)\nＶ蜂尾針 (Bee needle)\nＶ\\x1b[0;33m虎紋戒指\\x1b[m (Tiger ring)\n  \\x1b[1;30m附骨之蛆\\x1b[m (Needle of bone maggot)",
         "inventory": [
           {
-            "path": "/custom/armor/feet/boots_of_cleanse",
+            "path": "/d/qiaoyin_east/npc/obj/boots_of_cleanse",
             "name": "\\x1b[1;37m塵不沾\\x1b[m",
             "id": "boots of cleanse",
             "equipped": true
           },
           {
-            "path": "/custom/weapon/needle/bee_needle",
+            "path": "/d/qiaoyin_east/npc/obj/bee_needle",
             "name": "蜂尾針",
             "id": "bee needle",
             "equipped": true
           },
           {
-            "path": "/custom/armor/finger/tiger_ring",
+            "path": "/d/qiaoyin_east/npc/obj/tiger_ring",
             "name": "\\x1b[0;33m虎紋戒指\\x1b[m",
             "id": "tiger ring",
             "equipped": true
           },
           {
-            "path": "/custom/weapon/needle/needle_of_bone_maggot",
+            "path": "/d/qiaoyin_east/npc/obj/needle_of_bone_maggot",
             "name": "\\x1b[1;30m附骨之蛆\\x1b[m",
             "id": "needle of bone maggot",
             "equipped": false
@@ -1154,7 +1154,7 @@
     },
     "npcs": [
       {
-        "path": "/custom/ghost/npc/mountain_sprite",
+        "path": "/d/npc/ghost/mountain_sprite",
         "count": 1,
         "display": "魑魅(Mountain sprite)",
         "name": "魑魅",
@@ -1337,19 +1337,19 @@
         "look": "一名負責巡看李家村出入口的守衛，穿著便於行動的短裝，目光時常警覺地掃視著來往的行人。\n守衛屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\nＶ齊眉棍 (Brow staff)\nＶ麻布衣 (Hemp cloth)\nＶ麻布鞋 (Hemp boots)",
         "inventory": [
           {
-            "path": "/d/lee/obj/brow_staff",
+            "path": "/d/lee/npc/obj/brow_staff",
             "name": "齊眉棍",
             "id": "brow staff",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hemp_cloth",
+            "path": "/d/npc/obj/hemp_cloth",
             "name": "麻布衣",
             "id": "hemp cloth",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hemp_boots",
+            "path": "/d/lee/npc/obj/hemp_boots",
             "name": "麻布鞋",
             "id": "hemp boots",
             "equipped": true
@@ -1381,19 +1381,19 @@
         "look": "一名負責巡看李家村出入口的守衛，穿著便於行動的短裝，目光時常警覺地掃視著來往的行人。\n守衛屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\nＶ齊眉棍 (Brow staff)\nＶ麻布衣 (Hemp cloth)\nＶ麻布鞋 (Hemp boots)",
         "inventory": [
           {
-            "path": "/d/lee/obj/brow_staff",
+            "path": "/d/lee/npc/obj/brow_staff",
             "name": "齊眉棍",
             "id": "brow staff",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hemp_cloth",
+            "path": "/d/npc/obj/hemp_cloth",
             "name": "麻布衣",
             "id": "hemp cloth",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hemp_boots",
+            "path": "/d/lee/npc/obj/hemp_boots",
             "name": "麻布鞋",
             "id": "hemp boots",
             "equipped": true
@@ -1426,19 +1426,19 @@
         "look": "一名負責巡看李家村出入口的守衛，穿著便於行動的短裝，目光時常警覺地掃視著來往的行人。\n守衛屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\nＶ齊眉棍 (Brow staff)\nＶ麻布衣 (Hemp cloth)\nＶ麻布鞋 (Hemp boots)",
         "inventory": [
           {
-            "path": "/d/lee/obj/brow_staff",
+            "path": "/d/lee/npc/obj/brow_staff",
             "name": "齊眉棍",
             "id": "brow staff",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hemp_cloth",
+            "path": "/d/npc/obj/hemp_cloth",
             "name": "麻布衣",
             "id": "hemp cloth",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hemp_boots",
+            "path": "/d/lee/npc/obj/hemp_boots",
             "name": "麻布鞋",
             "id": "hemp boots",
             "equipped": true
@@ -1470,19 +1470,19 @@
         "look": "一名負責巡看李家村出入口的守衛，穿著便於行動的短裝，目光時常警覺地掃視著來往的行人。\n守衛屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\nＶ齊眉棍 (Brow staff)\nＶ麻布衣 (Hemp cloth)\nＶ麻布鞋 (Hemp boots)",
         "inventory": [
           {
-            "path": "/d/lee/obj/brow_staff",
+            "path": "/d/lee/npc/obj/brow_staff",
             "name": "齊眉棍",
             "id": "brow staff",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hemp_cloth",
+            "path": "/d/npc/obj/hemp_cloth",
             "name": "麻布衣",
             "id": "hemp cloth",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hemp_boots",
+            "path": "/d/lee/npc/obj/hemp_boots",
             "name": "麻布鞋",
             "id": "hemp boots",
             "equipped": true
@@ -1539,19 +1539,19 @@
         "look": "李勇是村子裡惟一的獵戶，雖然沒學過甚麼武功，天生的神力卻讓他足以打敗\n普通好手，從他家裡滿屋子的獸皮你就能了解他的實力。\n李勇屬於人類族。他的外表看起來約二十多歲。\n他身上帶著﹕\nＶ皮靴 (Leather boots)\nＶ緊身衣 (Tight cloth)\nＶ獵叉 (Hunter pike)",
         "inventory": [
           {
-            "path": "/d/lee/obj/leather_boots",
+            "path": "/d/lee/npc/obj/leather_boots",
             "name": "皮靴",
             "id": "leather boots",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/tight_cloth",
+            "path": "/d/lee/npc/obj/tight_cloth",
             "name": "緊身衣",
             "id": "tight cloth",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/hunter_pike",
+            "path": "/d/lee/npc/obj/hunter_pike",
             "name": "獵叉",
             "id": "hunter pike",
             "equipped": true
@@ -1598,7 +1598,7 @@
         "inventory": []
       },
       {
-        "path": "/custom/legacy_npc/du_feng_ling",
+        "path": "/d/lee/npc/du_feng_ling",
         "count": 1,
         "display": "幻霧觀觀主 杜風凌(Du feng ling)",
         "name": "杜風凌",
@@ -1611,19 +1611,19 @@
         "look": "杜風凌本是西方大漠的巫首族人﹐自幼拜林遠為師﹐修習茅山道法。也許是\n因為天賦異常﹐入門十數年就熟練的掌握了茅山道法的精髓並將其融會貫通,\n漸漸將一些不受重視的小把戲發展起來﹐當時盛傳杜風凌將會是下任茅山的\n掌門人。怎料當時的茅山掌門人﹐林遠﹐為了追查茅山劍法竟然屍橫荒野﹐\n一時間茅山派一片大亂。不少人因鄙視杜風凌所擅長的『茅山奇術』竟然離\n開茅山自成流派﹐而杜風凌也因其家族牽扯到黃泉村一事﹐而不得不暫回西\n方大漠。當他返回天朝以後﹐無法說服他的師兄弟重歸茅山﹐便憤然再返大\n漠﹐借助他家族在大漠的勢力自創『幻霧觀』。此次不知是為何事﹐竟然又\n來到天朝境內。\n杜風凌屬於馬立克族。他的外表看起來約七十多歲。\n他身上帶著﹕\nＶ青衣道袍 (Green robe)\nＶ桃木劍 (Peachwood sword)\nＶ\\x1b[1;32m漢玉戒指\\x1b[m (Jade ring)",
         "inventory": [
           {
-            "path": "/custom/armor/cloth/green_robe",
+            "path": "/d/npc/obj/green_robe",
             "name": "青衣道袍",
             "id": "green robe",
             "equipped": true
           },
           {
-            "path": "/custom/weapon/sword/peachwood_sword",
+            "path": "/d/npc/obj/peachwood_sword",
             "name": "桃木劍",
             "id": "peachwood sword",
             "equipped": true
           },
           {
-            "path": "/custom/armor/finger/han_jade_ring",
+            "path": "/d/npc/obj/han_jade_ring",
             "name": "\\x1b[1;32m漢玉戒指\\x1b[m",
             "id": "jade ring",
             "equipped": true
@@ -1701,13 +1701,13 @@
         "look": "李員外家的二總管為人精明，年少時好舞刀弄槍，被派任當鋪掌櫃之後，諸事都處理得緊緊有條。\n李嘯天屬於人類族。他的外表看起來約四十多歲。\n他身上帶著﹕\nＶ黃玉戒指 (Yellow jade ring)\nＶ柳葉刀 (Willow blade)",
         "inventory": [
           {
-            "path": "/d/lee/obj/yellow_jade_ring",
+            "path": "/d/npc/obj/yellow_jade_ring",
             "name": "黃玉戒指",
             "id": "yellow jade ring",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/willow_blade",
+            "path": "/d/lee/npc/obj/willow_blade",
             "name": "柳葉刀",
             "id": "willow blade",
             "equipped": true
@@ -1817,7 +1817,7 @@
         "look": "一個在村裡跑來跑去的小孩，衣角沾著灰土，像是剛從廣場玩回來。\n小孩屬於人類族。他的外表看起來不到十歲。\n他身上帶著﹕\nＶ肚兜 (Tummy cover)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/tummy_cover",
+            "path": "/d/npc/obj/tummy_cover",
             "name": "肚兜",
             "id": "tummy cover",
             "equipped": true
@@ -1850,13 +1850,13 @@
         "look": "聶晟是李家村裡惟一不姓李的住民。十多年前，村裡許多的居民曾經得了一種怪病，聶晟\n恰巧路過，治好了村民，於是李員外請他留下，成為村裡的大夫。\n聶晟身形削瘦，做文人打扮，表情冷漠，似乎不太容易親近。\n聶晟屬於人類族。他的外表看起來約四十多歲。\n他身上帶著﹕\nＶ白綢羽衫 (White dress)\nＶ\\x1b[1;37m水晶戒指\\x1b[m (Crystal ring)\nＶ皮鞭 (Leather whip)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/white_dress",
+            "path": "/d/npc/obj/white_dress",
             "name": "白綢羽衫",
             "id": "white dress",
             "equipped": true
           },
           {
-            "path": "/d/lee/obj/crystal_ring",
+            "path": "/d/lee/npc/obj/crystal_ring",
             "name": "\\x1b[1;37m水晶戒指\\x1b[m",
             "id": "crystal ring",
             "equipped": true
@@ -1910,7 +1910,7 @@
         "look": "一個在村裡跑來跑去的小孩，衣角沾著灰土，像是剛從廣場玩回來。\n小孩屬於人類族。他的外表看起來不到十歲。\n他身上帶著﹕\nＶ肚兜 (Tummy cover)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/tummy_cover",
+            "path": "/d/npc/obj/tummy_cover",
             "name": "肚兜",
             "id": "tummy cover",
             "equipped": true
@@ -2173,7 +2173,7 @@
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/leather_vest",
+            "path": "/d/oldpine/npc/obj/leather_vest",
             "name": "皮背心",
             "id": "leather vest",
             "equipped": true
@@ -2205,7 +2205,7 @@
         "look": "體型壯碩的大熊，且不知為何異常兇暴。\n他身上帶著﹕\n  肉塊 (Meat)",
         "inventory": [
           {
-            "path": "/d/oldpine/obj/meat",
+            "path": "/d/npc/obj/meat",
             "name": "肉塊",
             "id": "meat",
             "equipped": false
@@ -2409,7 +2409,7 @@
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/leather_vest",
+            "path": "/d/oldpine/npc/obj/leather_vest",
             "name": "皮背心",
             "id": "leather vest",
             "equipped": true
@@ -2450,7 +2450,7 @@
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/leather_vest",
+            "path": "/d/oldpine/npc/obj/leather_vest",
             "name": "皮背心",
             "id": "leather vest",
             "equipped": true
@@ -2471,7 +2471,7 @@
         "look": "看起來傷勢頗為嚴重，若不及時醫治恐危及性命。\n受傷的旅客屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\n  武魁龍轉 (Dragon pill)",
         "inventory": [
           {
-            "path": "/d/oldpine/obj/dragon_pill",
+            "path": "/d/npc/obj/dragon_pill",
             "name": "武魁龍轉",
             "id": "dragon pill",
             "equipped": false
@@ -2521,7 +2521,7 @@
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/leather_vest",
+            "path": "/d/oldpine/npc/obj/leather_vest",
             "name": "皮背心",
             "id": "leather vest",
             "equipped": true
@@ -2590,25 +2590,25 @@
         "look": "一位膚色白皙的女郎，眉頭深鎖，似乎正在為什麼事情煩心。\n靈玉嬋屬於人類族。她的外表看起來約十多歲。\n她身上帶著﹕\nＶ\\x1b[1;35m紫紗靴\\x1b[m (Violet shoes)\nＶ\\x1b[1;35m紫紗衫\\x1b[m (Violet cloth)\nＶ\\x1b[1;35m紫玉釵\\x1b[m (Violet hairpin)\nＶ\\x1b[1;35m紫雲玉珮\\x1b[m (Voliet jade)",
         "inventory": [
           {
-            "path": "/custom/armor/feet/violet_shoes",
+            "path": "/d/oldpine/npc/obj/violet_shoes",
             "name": "\\x1b[1;35m紫紗靴\\x1b[m",
             "id": "violet shoes",
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/violet_cloth",
+            "path": "/d/oldpine/npc/obj/violet_cloth",
             "name": "\\x1b[1;35m紫紗衫\\x1b[m",
             "id": "violet cloth",
             "equipped": true
           },
           {
-            "path": "/custom/armor/head/violet_hairpin",
+            "path": "/d/oldpine/npc/obj/violet_hairpin",
             "name": "\\x1b[1;35m紫玉釵\\x1b[m",
             "id": "violet hairpin",
             "equipped": true
           },
           {
-            "path": "/custom/armor/waist/voliet_jade",
+            "path": "/d/oldpine/npc/obj/voliet_jade",
             "name": "\\x1b[1;35m紫雲玉珮\\x1b[m",
             "id": "voliet jade",
             "equipped": true
@@ -2641,7 +2641,7 @@
     },
     "npcs": [
       {
-        "path": "/d/oldpine/npc/goat",
+        "path": "/d/npc/goat",
         "count": 3,
         "display": "山羊(Goat)",
         "name": "山羊",
@@ -2692,7 +2692,7 @@
         "look": "徐彪是老松林的土匪之一，因為在喬陰城裡犯下了不少案子，因此這一帶的\n百姓都認得他，他的特徵是一條從額頭到鼻子的傷疤，不少痛恨他的百姓都\n背地裡稱他「疤鼻子」。\n徐彪屬於厭火族。他的外表看起來約四十多歲。\n他身上帶著﹕\nＶ粗布衣 (Coarse cloth)\nＶ鬼頭刀 (Glaive)\nＶ頭巾 (Head cloth)",
         "inventory": [
           {
-            "path": "/d/oldpine/obj/coarse_cloth",
+            "path": "/d/npc/obj/coarse_cloth",
             "name": "粗布衣",
             "id": "coarse cloth",
             "equipped": true
@@ -2704,7 +2704,7 @@
             "equipped": true
           },
           {
-            "path": "/d/oldpine/obj/head_cloth",
+            "path": "/d/oldpine/npc/obj/head_cloth",
             "name": "頭巾",
             "id": "head cloth",
             "equipped": true
@@ -2731,7 +2731,7 @@
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/leather_vest",
+            "path": "/d/oldpine/npc/obj/leather_vest",
             "name": "皮背心",
             "id": "leather vest",
             "equipped": true
@@ -2837,19 +2837,19 @@
         "look": "大觀和尚是彤雲寺的住持，到南方雲遊七年，幾天前才剛回來。\n大觀和尚屬於人類族。他的外表看起來約六十多歲。\n他身上帶著﹕\nＶ\\x1b[1;36m枯禪杖\\x1b[m (Wither zenstaff)\nＶ\\x1b[1;31m無相福田\\x1b[m (Animitta kasaya)\nＶ金剛念珠 (Psakaml)",
         "inventory": [
           {
-            "path": "/custom/weapon/staff/wither_zenstaff",
+            "path": "/d/oldpine/npc/obj/wither_zenstaff",
             "name": "\\x1b[1;36m枯禪杖\\x1b[m",
             "id": "wither zenstaff",
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/animitta_kasaya",
+            "path": "/d/oldpine/npc/obj/animitta_kasaya",
             "name": "\\x1b[1;31m無相福田\\x1b[m",
             "id": "animitta kasaya",
             "equipped": true
           },
           {
-            "path": "/custom/armor/neck/psakaml",
+            "path": "/d/npc/obj/psakaml",
             "name": "金剛念珠",
             "id": "psakaml",
             "equipped": true
@@ -2869,7 +2869,7 @@
     },
     "npcs": [
       {
-        "path": "/obj/area/traveller",
+        "path": "/d/oldpine/npc/traveller",
         "count": 2,
         "display": "過路客(Traveller)",
         "name": "過路客",
@@ -2922,7 +2922,7 @@
         "inventory": []
       },
       {
-        "path": "/obj/area/man",
+        "path": "/d/npc/man",
         "count": 1,
         "display": "路人(Man)",
         "name": "路人",
@@ -3244,7 +3244,7 @@
     },
     "npcs": [
       {
-        "path": "/d/oldpine/npc/squirrel",
+        "path": "/d/npc/squirrel",
         "count": 4,
         "display": "松鼠(Squirrel)",
         "name": "松鼠",
@@ -3302,7 +3302,7 @@
         "look": "一位隱居在綠竹林中的居士，一襲雪白長袍，神態閒適，眉宇間透著一股\n書卷氣。據說他見多識廣，天下奇聞軼事少有他不知道的，連五陵客棧的\n李再延都對他推崇備至。\n呼延光屬於人類族。他的外表看起來約五十多歲。\n他身上帶著﹕\nＶ白長袍 (White cloth)",
         "inventory": [
           {
-            "path": "/custom/armor/cloth/white_cloth",
+            "path": "/d/npc/obj/white_cloth",
             "name": "白長袍",
             "id": "white cloth",
             "equipped": true
@@ -3321,7 +3321,7 @@
     },
     "npcs": [
       {
-        "path": "/d/wutang/npc/guard",
+        "path": "/d/npc/guard",
         "count": 4,
         "display": "護院武師(Guard)",
         "name": "護院武師",
@@ -3334,7 +3334,7 @@
         "look": "肌肉虯結一身橫肉，看起來並不好惹的樣子。\n護院武師屬於黑齒族。他的外表看起來約二十多歲。\n他身上帶著﹕\nＶ牛皮背心 (Leather vest)\nＶ單刀 (Blade)",
         "inventory": [
           {
-            "path": "/custom/armor/cloth/cowhide_vest",
+            "path": "/d/npc/obj/cowhide_vest",
             "name": "牛皮背心",
             "id": "leather vest",
             "equipped": true
@@ -3393,19 +3393,19 @@
         "look": "看起來在這裡但感覺不到他在這裡，只見一翁一竿在草船上坐著，彷彿時間就這樣停止了。\n煙波釣叟屬於人類族。他的外表看起來約七十多歲。\n他身上帶著﹕\nＶ青絲釣竿 (Fishing stick)\nＶ簑衣 (Cloth)\nＶ玄蛛皂白靴 (Spider boots)",
         "inventory": [
           {
-            "path": "/custom/weapon/whip/silk_fishing_stick",
+            "path": "/d/wutang/npc/obj/silk_fishing_stick",
             "name": "青絲釣竿",
             "id": "fishing stick",
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/straw_cloth",
+            "path": "/d/wutang/npc/obj/straw_cloth",
             "name": "簑衣",
             "id": "cloth",
             "equipped": true
           },
           {
-            "path": "/custom/armor/feet/spider_boots",
+            "path": "/d/npc/obj/spider_boots",
             "name": "玄蛛皂白靴",
             "id": "spider boots",
             "equipped": true
@@ -3529,19 +3529,19 @@
         "look": "一個神色剽悍的禿頭老者﹐若不是穿著道袍﹐說不定你會以為他是個武林豪傑。\n郭布屬於人類族。他的外表看起來約六十多歲。\n他身上帶著﹕\nＶ鮮紅道袍 (Red robe)\nＶ鮮紅道冠 (Red hat)\nＶ\\x1b[1;31m咒劍紅羽\\x1b[m (Sword of redrune)",
         "inventory": [
           {
-            "path": "/custom/armor/cloth/red_robe",
+            "path": "/d/wutang/npc/obj/red_robe",
             "name": "鮮紅道袍",
             "id": "red robe",
             "equipped": true
           },
           {
-            "path": "/custom/armor/head/red_hat",
+            "path": "/d/wutang/npc/obj/red_hat",
             "name": "鮮紅道冠",
             "id": "red hat",
             "equipped": true
           },
           {
-            "path": "/custom/weapon/sword/sword_of_redrune",
+            "path": "/d/wutang/npc/obj/sword_of_redrune",
             "name": "\\x1b[1;31m咒劍紅羽\\x1b[m",
             "id": "sword of redrune",
             "equipped": true
@@ -3726,7 +3726,7 @@
         "look": "拿根釣竿悠哉的垂釣中。\n釣客屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\nＶ竹釣竿 (Bamboo fishing rod)",
         "inventory": [
           {
-            "path": "/custom/weapon/whip/bamboo_fishing_rod",
+            "path": "/d/wutang/npc/obj/bamboo_fishing_rod",
             "name": "竹釣竿",
             "id": "bamboo fishing rod",
             "equipped": true
@@ -4137,7 +4137,7 @@
         "look": "身上透出淡淡的寒氣，應該是修習冰咒的素衣派道士。\n白衣道士屬於無腸族。他的外表看起來約二十多歲。\n他身上帶著﹕\nＶ純白道袍 (White robe)\nＶ長劍 (Longsword)",
         "inventory": [
           {
-            "path": "/custom/armor/cloth/white_taoist_robe",
+            "path": "/d/wutang/npc/obj/white_taoist_robe",
             "name": "純白道袍",
             "id": "white robe",
             "equipped": true
@@ -4164,7 +4164,7 @@
         "look": "一身道士打扮，看他的氣息應是朱衣派道士。\n紅衣道士屬於人類族。他的外表看起來約二十多歲。\n他身上帶著﹕\nＶ鮮紅道袍 (Red robe)\nＶ長劍 (Longsword)",
         "inventory": [
           {
-            "path": "/custom/armor/cloth/red_robe",
+            "path": "/d/wutang/npc/obj/red_robe",
             "name": "鮮紅道袍",
             "id": "red robe",
             "equipped": true
@@ -4216,13 +4216,13 @@
         "look": "一個相貌斯文的青年書生正獨自一人在這裡沈思。\n青年書生屬於人類族。他的外表看起來約二十多歲。\n他身上帶著﹕\nＶ鑲玉短劍 (Jeweled shortsword)\nＶ青布衣 (Blue cloth)\n  【古文觀止】 (Anthology of Classical Prose)",
         "inventory": [
           {
-            "path": "/custom/weapon/sword/jeweled_shortsword",
+            "path": "/d/wutang/npc/obj/jeweled_shortsword",
             "name": "鑲玉短劍",
             "id": "jeweled shortsword",
             "equipped": true
           },
           {
-            "path": "/d/wutang/obj/blue_cloth",
+            "path": "/d/wutang/npc/obj/blue_cloth",
             "name": "青布衣",
             "id": "blue cloth",
             "equipped": true
@@ -4309,31 +4309,31 @@
         "look": "楊子陵在冷梅派第一代弟子中排行第四, 為梅影風某日出外於路上所遇到的棄嬰, 因機緣而入冷梅派, 目前劍術內功已略有小成, 一手真冷梅劍法在武林中也頗有微名。\n楊子陵屬於人類族。他的外表看起來約三十多歲。\n他身上帶著﹕\nＶ黑劍 (Black sword)\nＶ黑鋼短刃 (Black iron dagger)\nＶ\\x1b[1;37m天蠶寶衣\\x1b[m (Silk cloth)\nＶ狼皮靴 (Wolf boots)\nＶ狼皮帽 (Woof hat)",
         "inventory": [
           {
-            "path": "/custom/weapon/sword/black_sword",
+            "path": "/d/wutang/npc/obj/black_sword",
             "name": "黑劍",
             "id": "black sword",
             "equipped": true
           },
           {
-            "path": "/custom/weapon/dagger/black_iron_dagger",
+            "path": "/d/npc/obj/black_iron_dagger",
             "name": "黑鋼短刃",
             "id": "black iron dagger",
             "equipped": true
           },
           {
-            "path": "/custom/armor/cloth/silk_cloth",
+            "path": "/d/npc/obj/silk_cloth",
             "name": "\\x1b[1;37m天蠶寶衣\\x1b[m",
             "id": "silk cloth",
             "equipped": true
           },
           {
-            "path": "/custom/armor/feet/wolf_boots",
+            "path": "/d/wutang/npc/obj/wolf_boots",
             "name": "狼皮靴",
             "id": "wolf boots",
             "equipped": true
           },
           {
-            "path": "/custom/armor/head/woof_hat",
+            "path": "/d/wutang/npc/obj/woof_hat",
             "name": "狼皮帽",
             "id": "woof hat",
             "equipped": true
@@ -4341,7 +4341,7 @@
         ]
       },
       {
-        "path": "/d/wutang/npc/apprentice",
+        "path": "/d/swaylan/lunmay/npc/apprentice",
         "count": 1,
         "display": "冷梅莊二代弟子(Apprentice)",
         "name": "冷梅莊二代弟子",
@@ -4415,7 +4415,7 @@
         "inventory": []
       },
       {
-        "path": "/d/wutang/npc/huang",
+        "path": "/d/ziyan/npc/huang",
         "count": 1,
         "display": "小黃(Shipman)",
         "name": "小黃",
@@ -4639,7 +4639,7 @@
         "look": "米沛是振武軍最高指揮官，身披戰甲，神情沉穩威嚴。他在軍中多年，以實戰與軍功一步步升任主將，看來約五十多歲。軍中傳聞具備相當實力的軍人可向他申請更進一步的職務，但相關條件目前仍待可靠資料補齊。\n他身上帶著﹕\nＶ精鋼戰靴 (Steel boots)\nＶ冶磺套 (Fire gauntlets)\nＶ精鋼戰甲 (Steel armor)\nＶ萬夫莫敵 (Great axe of mighty)\n  【奇兵精意】 (Book of assault)",
         "inventory": [
           {
-            "path": "/custom/zhenwu/obj/steel_boots",
+            "path": "/d/npc/obj/steel_boots",
             "name": "精鋼戰靴",
             "id": "steel boots",
             "equipped": true
@@ -4651,7 +4651,7 @@
             "equipped": true
           },
           {
-            "path": "/custom/zhenwu/obj/steel_armor",
+            "path": "/d/npc/obj/steel_armor",
             "name": "精鋼戰甲",
             "id": "steel armor",
             "equipped": true
@@ -4707,19 +4707,19 @@
         "look": "軍營裡的新兵，通常負責簡單的體力工作。\n他身上帶著﹕\nＶ皂步靴 (Black boots)\nＶ銅盔 (Brass helmet)\nＶ硬皮甲冑 (Leather armor)\nＶ短槍 (Short pike)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/clothboot",
+            "path": "/d/npc/obj/clothboot",
             "name": "皂步靴",
             "id": "black boots",
             "equipped": true
           },
           {
-            "path": "/d/snow/npc/obj/helmet",
+            "path": "/d/npc/obj/helmet",
             "name": "銅盔",
             "id": "brass helmet",
             "equipped": true
           },
           {
-            "path": "/d/snow/npc/obj/leather_armor",
+            "path": "/d/npc/obj/leather_armor",
             "name": "硬皮甲冑",
             "id": "leather armor",
             "equipped": true
@@ -4822,19 +4822,19 @@
         "look": "振武軍營士兵是天朝帝國邊防最基層的步兵。他身穿粗糙皮甲，手執沉重長槍，雖沒有江湖大俠般的絕頂輕功，卻有一身扎實的軍旅外家拳腳，每日都在營邊巡邏警戒。\n他身上帶著﹕\nＶ皂步靴 (Black boots)\nＶ銅盔 (Brass helmet)\nＶ硬皮甲冑 (Leather armor)\nＶ長槍 (Long pike)",
         "inventory": [
           {
-            "path": "/d/snow/npc/obj/clothboot",
+            "path": "/d/npc/obj/clothboot",
             "name": "皂步靴",
             "id": "black boots",
             "equipped": true
           },
           {
-            "path": "/d/snow/npc/obj/helmet",
+            "path": "/d/npc/obj/helmet",
             "name": "銅盔",
             "id": "brass helmet",
             "equipped": true
           },
           {
-            "path": "/d/snow/npc/obj/leather_armor",
+            "path": "/d/npc/obj/leather_armor",
             "name": "硬皮甲冑",
             "id": "leather armor",
             "equipped": true
@@ -4938,25 +4938,25 @@
         "look": "魯熙年是一個身材微胖的中年武官﹐兩眼瞇成一條線﹐臉上總是露出似笑非笑的古怪表情。魯熙年同時也是振武營負責招募新兵的募兵官，如果你想從軍，請向他，辦理入伍(enlist)手續。\n他身上帶著﹕\nＶ精鋼砍刀 (Steelblade)\nＶ鐵盔 (Iron helmet)\nＶ精鐵環扣 (Iron girth)\nＶ連身鎖子甲 (Ring armor)",
         "inventory": [
           {
-            "path": "/custom/weapon/blade/steelblade",
+            "path": "/d/npc/obj/steelblade",
             "name": "精鋼砍刀",
             "id": "steelblade",
             "equipped": true
           },
           {
-            "path": "/custom/armor/head/iron_helmet",
+            "path": "/d/npc/obj/iron_helmet",
             "name": "鐵盔",
             "id": "iron helmet",
             "equipped": true
           },
           {
-            "path": "/custom/armor/waist/iron_girth",
+            "path": "/d/npc/obj/iron_girth",
             "name": "精鐵環扣",
             "id": "iron girth",
             "equipped": true
           },
           {
-            "path": "/custom/armor/armor/ring_armor",
+            "path": "/d/npc/obj/ring_armor",
             "name": "連身鎖子甲",
             "id": "ring armor",
             "equipped": true

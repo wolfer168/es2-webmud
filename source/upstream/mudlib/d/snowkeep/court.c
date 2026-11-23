@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"side_s",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/phoxin" : 1,
+        "/d/snowkeep/npc/phoxin" : 1,
     ]));
     set("map/area", "雪吟莊");
     setup();

@@ -15,8 +15,8 @@ void create()
     set("chat_msg_combat", ({ (: command, "berserk" :) }));
     set_power("C");
     setup();
-    carry_object("/d/snow/npc/obj/clothboot")->wear();
-    carry_object("/d/snow/npc/obj/helmet")->wear();
-    carry_object("/d/snow/npc/obj/leather_armor")->wear();
+    carry_object("/d/npc/obj/clothboot")->wear();
+    carry_object("/d/npc/obj/helmet")->wear();
+    carry_object("/d/npc/obj/leather_armor")->wear();
     carry_object("/obj/area/obj/pike")->wield();
 }

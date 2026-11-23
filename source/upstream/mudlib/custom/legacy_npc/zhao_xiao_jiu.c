@@ -23,8 +23,8 @@ void create()
         "收集古籍，從中找尋失傳的法術。\n");
     set_power("B");
     setup();
-    carry_object("/custom/weapon/sword/peachwood_sword")->wield();   // 桃木劍
-    carry_object("/custom/armor/feet/black_cloth_boots")->wear();   // 黑布鞋
-    carry_object("/custom/armor/head/copper_hat")->wear();   // 青銅道冠
+    carry_object("/d/npc/obj/peachwood_sword")->wield();   // 桃木劍
+    carry_object("/d/taiyi/npc/obj/black_cloth_boots")->wear();   // 黑布鞋
+    carry_object("/d/npc/obj/copper_hat")->wear();   // 青銅道冠
     carry_object("/custom/armor/cloth/gray_taoist_robe")->wear();   // 灰衣道袍
 }

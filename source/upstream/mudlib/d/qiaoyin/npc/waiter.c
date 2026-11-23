@@ -28,7 +28,7 @@ LONG
         "/obj/food/dumpling" : 50,
         "/obj/food/manto" : 50,
         "/obj/food/pork" : 50,
-        "/d/snow/npc/obj/roast_chicken" : 30,
+        "/d/npc/obj/roast_chicken" : 30,
     ]));
     set_power("C");
     setup();

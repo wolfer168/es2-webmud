@@ -27,7 +27,7 @@ void create()
     // merchandise 的數字是庫存份數，價錢是各物品自己的 value。
     set("merchandise", ([
         "/obj/food/manto" : 50,
-        "/d/shuiyue/obj/big_manto" : 50,
+        "/d/shuiyue/npc/obj/big_manto" : 50,
     ]));
     set_power("C");
     setup();

@@ -59,9 +59,9 @@ carry_object("/obj/area/obj/blade")->wield();   // 手上武器的技能也會�
 | NPC | 檔案 | 門派 | 等級 | 結果 |
 |---|---|---|---|---|
 | 高慎 | `d/oldpine/npc/kao_shen.c` | 虎刀門 | 30 | 內功對應到瘋虎功（手寫內功、瘋虎功 120 保留） |
-| 梅影風 | `d/wutang/npc/may_yin_fong.c` | 冷梅莊 | 60 | 原本就手寫對應寒梅心法，數值不變（S 級保留手寫） |
+| 梅影風 | `d/swaylan/lunmay/npc/may_yin_fong.c` | 冷梅莊 | 60 | 原本就手寫對應寒梅心法，數值不變（S 級保留手寫） |
 | 楊子陵 | `d/wutang/npc/yang_zlin.c` | 冷梅莊 | 45 | 學會內功、寒梅心法 135，內功對應到寒梅心法 |
-| 冷梅莊二代弟子 | `d/wutang/npc/apprentice.c` | 冷梅莊 | 25 | 學會內功、寒梅心法 75，內功對應到寒梅心法 |
+| 冷梅莊二代弟子 | `d/swaylan/lunmay/npc/apprentice.c` | 冷梅莊 | 25 | 學會內功、寒梅心法 75，內功對應到寒梅心法 |
 
 手寫了內功等級但沒有寫對應的 NPC（例如高慎），系統仍會把內功對應到門派內功；
 手寫了 `map_skill("force", ...)` 的（例如梅影風）照手寫的。
@@ -83,10 +83,10 @@ carry_object("/obj/area/obj/blade")->wield();   // 手上武器的技能也會�
 
 | NPC | 檔案 | 職業 | 等級 | 新增的技能 |
 |---|---|---|---|---|
-| 朱衣派弟子 | `custom/taoism/npc/fire_taoist.c` | 道士 | 30 | 劍術 90、徒手搏鬥 60、拆招卸力之法 60、縱躍閃躲之法 60 |
-| 素衣派弟子 | `custom/taoism/npc/freeze_taoist.c` | 道士 | 30 | 劍術 90、徒手搏鬥 60、拆招卸力之法 60、縱躍閃躲之法 60 |
-| 玄衣派弟子 | `custom/taoism/npc/storm_taoist.c` | 道士 | 30 | 劍術 90、徒手搏鬥 60、拆招卸力之法 60、縱躍閃躲之法 60 |
-| 紫衣派弟子 | `custom/taoism/npc/thunder_taoist.c` | 道士 | 30 | 劍術 90、徒手搏鬥 60、拆招卸力之法 60、縱躍閃躲之法 60 |
+| 朱衣派弟子 | `d/snow/npc/fire_taoist.c` | 道士 | 30 | 劍術 90、徒手搏鬥 60、拆招卸力之法 60、縱躍閃躲之法 60 |
+| 素衣派弟子 | `d/snow/npc/freeze_taoist.c` | 道士 | 30 | 劍術 90、徒手搏鬥 60、拆招卸力之法 60、縱躍閃躲之法 60 |
+| 玄衣派弟子 | `d/snow/npc/storm_taoist.c` | 道士 | 30 | 劍術 90、徒手搏鬥 60、拆招卸力之法 60、縱躍閃躲之法 60 |
+| 紫衣派弟子 | `d/snow/npc/thunder_taoist.c` | 道士 | 30 | 劍術 90、徒手搏鬥 60、拆招卸力之法 60、縱躍閃躲之法 60 |
 | 魯熙年 | `custom/zhenwu/npc/lu_xinien.c` | 軍人 | 25 | 狂擊亂鬥之法 75、徒手搏鬥 50、縱躍閃躲之法 50、拆招卸力之法 50 |
 | 小兵 | `custom/zhenwu/npc/soldier.c` | 軍人 | 5 | 狂擊亂鬥之法 15、徒手搏鬥 10 |
 | 振武軍營士兵 | `custom/zhenwu/npc/zhenwu_soldier.c` | 軍人 | 15 | 狂擊亂鬥之法 45 |
@@ -122,10 +122,10 @@ carry_object("/obj/area/obj/blade")->wield();   // 手上武器的技能也會�
 
 | NPC | 檔案 | 職業 | 等級 | 手寫值 → 公式值 |
 |---|---|---|---|---|
-| 朱衣派弟子 | `custom/taoism/npc/fire_taoist.c` | 道士 | 30 | 咒術 160→90 |
-| 素衣派弟子 | `custom/taoism/npc/freeze_taoist.c` | 道士 | 30 | 咒術 160→90 |
-| 玄衣派弟子 | `custom/taoism/npc/storm_taoist.c` | 道士 | 30 | 咒術 160→90 |
-| 紫衣派弟子 | `custom/taoism/npc/thunder_taoist.c` | 道士 | 30 | 咒術 160→90 |
+| 朱衣派弟子 | `d/snow/npc/fire_taoist.c` | 道士 | 30 | 咒術 160→90 |
+| 素衣派弟子 | `d/snow/npc/freeze_taoist.c` | 道士 | 30 | 咒術 160→90 |
+| 玄衣派弟子 | `d/snow/npc/storm_taoist.c` | 道士 | 30 | 咒術 160→90 |
+| 紫衣派弟子 | `d/snow/npc/thunder_taoist.c` | 道士 | 30 | 咒術 160→90 |
 | 米沛 | `custom/zhenwu/npc/mee_pei.c` | 軍人 | 40 | 狂擊亂鬥之法 180→120、縱躍閃躲之法 120→80、拆招卸力之法 120→80、徒手搏鬥 150→80、雙手斧術 150→120 |
 | 振武軍營士兵 | `custom/zhenwu/npc/zhenwu_soldier.c` | 軍人 | 15 | 縱躍閃躲之法 60→30、拆招卸力之法 60→30、徒手搏鬥 60→30 |
 | 李嘯天 | `d/lee/npc/lee_xiao_tian.c` | 武者 | 20 | 刀法 30→60 |
@@ -139,14 +139,14 @@ carry_object("/obj/area/obj/blade")->wield();   // 手上武器的技能也會�
 | 瞎眼老太婆 | `d/snow/npc/gammer.c` | 盜賊 | 20 | 杖法 40→60、縱躍閃躲之法 90→40、錐法 70→30 |
 | 官兵 | `d/snow/npc/garrison.c` | 軍人 | 15 | 拆招卸力之法 60→30、徒手搏鬥 50→30、縱躍閃躲之法 50→30 |
 | 白衣女子（S 級，保留手寫） | `d/snow/npc/girl.c` | 武者 | 25 | 劍術 140→75、縱躍閃躲之法 120→50、拆招卸力之法 120→50、徒手搏鬥 90→50 |
-| 青衣漢子 | `d/snow/npc/guard.c` | 武者 | 10 | 劍術 70→30、拆招卸力之法 50→20、徒手搏鬥 40→20、縱躍閃躲之法 70→20 |
+| 青衣漢子 | `d/snowkeep/npc/guard.c` | 武者 | 10 | 劍術 70→30、拆招卸力之法 50→20、徒手搏鬥 40→20、縱躍閃躲之法 70→20 |
 | 武官 | `d/snow/npc/lieutenant.c` | 軍人 | 24 | 縱躍閃躲之法 70→48 |
 | 巡邏官兵 | `d/snow/npc/patrol.c` | 軍人 | 15 | 拆招卸力之法 60→30 |
 | 王懷芝 | `d/snow/npc/teacher.c` | 書生 | 5 | 讀書識字 60→15 |
-| 護院武師 | `d/wutang/npc/guard.c` | 武者 | 5 | 徒手搏鬥 40→10、刀法 40→15、縱躍閃躲之法 40→10、拆招卸力之法 40→10 |
+| 護院武師 | `d/npc/guard.c` | 武者 | 5 | 徒手搏鬥 40→10、刀法 40→15、縱躍閃躲之法 40→10、拆招卸力之法 40→10 |
 | 郭布（S 級，保留手寫） | `d/wutang/npc/guo_boo.c` | 道士 | 60 | 咒術 120→180 |
 | 呼延光 | `d/wutang/npc/huyen_guan.c` | 書生 | 35 | 徒手搏鬥 120→70 |
-| 梅影風（S 級，保留手寫） | `d/wutang/npc/may_yin_fong.c` | 武者 | 60 | 拆招卸力之法 160→120、縱躍閃躲之法 150→120、徒手搏鬥 140→120 |
+| 梅影風（S 級，保留手寫） | `d/swaylan/lunmay/npc/may_yin_fong.c` | 武者 | 60 | 拆招卸力之法 160→120、縱躍閃躲之法 150→120、徒手搏鬥 140→120 |
 | 紅衣道士 | `d/wutang/npc/red_taoist.c` | 道士 | 15 | 咒術 120→45 |
 | 煙波釣叟（S 級，保留手寫） | `d/wutang/npc/smoke_fisher.c` | 武者 | 40 | 徒手搏鬥 100→80、縱躍閃躲之法 100→80、拆招卸力之法 100→80、軟鞭鞭法 100→120 |
 | 白衣道士 | `d/wutang/npc/white_taoist.c` | 道士 | 15 | 咒術 120→45 |

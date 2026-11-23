@@ -18,6 +18,6 @@ LONG
     );
     set_power("C");
     setup();
-    carry_object("/custom/armor/cloth/blood_stained_cloth")->wear();
+    carry_object("/d/npc/obj/blood_stained_cloth")->wear();
     carry_object("/obj/area/obj/longsword")->wield();
 }

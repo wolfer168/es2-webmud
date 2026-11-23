@@ -1,5 +1,5 @@
 // 會攔人前往野羊山的官兵，專屬於雪亭鎮山路（/d/snow/ngate）。
-// 其他地方要放官兵，請用不會攔人的 /obj/area/garrison。
+// 其他地方要放官兵，請用不會攔人的 /d/npc/garrison。
 
 
 #include <npc.h>

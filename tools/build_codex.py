@@ -446,7 +446,7 @@ def traits(code, prefix):
 # --------------------------------------------------------------------------- 各類物件
 
 ROOM_INHERIT = re.compile(r'inherit\s+(ROOM|BANK|HOCKSHOP|INN|TEMPLE|"/std/room[^"]*")')
-NPC_INHERIT = re.compile(r'inherit\s+(NPC|F_VILLAGER|F_VENDOR|F_FIGHTER|F_SOLDIER|F_BANDIT|F_TRAINER|F_TEACHER|"/custom/ghost/std_ghost"|"/std/char/npc")')
+NPC_INHERIT = re.compile(r'inherit\s+(NPC|F_VILLAGER|F_VENDOR|F_FIGHTER|F_SOLDIER|F_BANDIT|F_TRAINER|F_TEACHER|"/d/npc/ghost/std_ghost"|"/std/char/npc")')
 WEAPON_INHERIT = re.compile(r'inherit\s+(F_(SWORD|BLADE|BLUNT|AXE|DAGGER|NEEDLE|STAFF|PIKE|WHIP)|SWORD|BLADE|THROWING)\b')
 ARMOR_INHERIT = re.compile(r'inherit\s+(F_(ARMOR|CLOTH|HEAD_EQ|HAND_EQ|FEET_EQ|NECK_EQ|FINGER_EQ|WAIST_EQ|LEG_EQ|WRIST_EQ)|CLOTH|EQUIP)\b')
 

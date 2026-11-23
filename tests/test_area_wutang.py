@@ -1,4 +1,5 @@
 from pathlib import Path
+from placement import current
 import re
 
 MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
@@ -9,7 +10,7 @@ OPP = {'north': 'south', 'south': 'north', 'east': 'west', 'west': 'east', 'nort
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def exits(name):
@@ -28,7 +29,7 @@ def test_rooms_and_npcs():
     boats = {'ferry_boat_ro', 'ferry_boat_huang'}
     rooms = sorted(p.stem for p in W.glob('*.c'))
     assert len(rooms) == 58
-    assert len(list((W / 'npc').glob('*.c'))) == 35
+    assert len(list((W / 'npc').glob('*.c'))) == 31   # 2026-11-23 NPC 歸位（docs/NPC_ITEM_PLACEMENT.md）：冷梅莊二代弟子、梅影風搬到冷梅莊，護院武師搬到 /d/npc，小黃搬到紫煙鎮
     for r in rooms:
         s = read(W / (r + '.c'))
         assert ('set("map/area", "羿水");' if r in boats else 'set("map/area", "五堂鎮");') in s, r
@@ -64,7 +65,7 @@ def test_beast_and_town_god():
     s = read(W / 'npc/boar.c')
     assert 'random(100) < 20' in s and 'kill_ob(ob)' in s
     s = read(W / 'npc/town_god.c')
-    assert 'inherit "/custom/ghost/std_ghost";' in s and 'CHAR_D->make_living(me);' in s
+    assert 'inherit "/d/npc/ghost/std_ghost";' in s and 'CHAR_D->make_living(me);' in s
 
 
 def test_items_and_shops():
@@ -72,7 +73,7 @@ def test_items_and_shops():
     s = read(W / 'obj/blue_cloth.c')
     assert 'set("value", 300);' in s and '"armor": 4' in s
     assert 'set("base_value", 30);' in read(W / 'obj/pie.c')
-    assert '"/d/wutang/obj/pie" : 20' in read(W / 'npc/seller.c')
-    for f in ('/custom/armor/finger/han_jade_ring', '/custom/armor/finger/white_jade_ring', '/d/lee/obj/yellow_jade_ring'):
+    assert '"/d/wutang/npc/obj/pie" : 20' in read(W / 'npc/seller.c')
+    for f in ('/d/npc/obj/han_jade_ring', '/d/wutang/npc/obj/white_jade_ring', '/d/npc/obj/yellow_jade_ring'):
         assert f in read(W / 'npc/jeweller.c')
         assert (MUD / (f.lstrip('/') + '.c')).exists()

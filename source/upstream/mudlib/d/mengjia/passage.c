@@ -16,7 +16,7 @@ LONG
         "north" : __DIR__"forest",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/hua_xing" : 1,
+        "/d/mengjia/npc/hua_xing" : 1,
     ]));
     set("map/area", "孟家莊");
     set("map/layer", "暗道");

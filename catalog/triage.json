@@ -1097,7 +1097,7 @@
       ]
     },
     {
-      "path": "/d/snow/npc/guard",
+      "path": "/d/snowkeep/npc/guard",
       "score": 6,
       "reasons": [
         {
@@ -1387,7 +1387,7 @@
       ]
     },
     {
-      "path": "/d/snow/npc/obj/crate",
+      "path": "/d/snow/obj/crate",
       "score": 4,
       "reasons": [
         {
@@ -1401,7 +1401,7 @@
       ]
     },
     {
-      "path": "/d/snow/npc/obj/wagon",
+      "path": "/d/snow/obj/wagon",
       "score": 4,
       "reasons": [
         {
@@ -1638,13 +1638,13 @@
       ]
     },
     {
-      "path": "/d/snow/npc/obj/hoe",
+      "path": "/d/npc/obj/hoe",
       "score": 4,
       "reasons": [
         {
           "kind": "unresolved_dependency",
           "detail": {
-            "from": "/d/snow/npc/obj/hoe",
+            "from": "/d/npc/obj/hoe",
             "kind": "weapon_wield_skill",
             "name": "twohanded pike",
             "matches": []
@@ -1668,13 +1668,13 @@
       ]
     },
     {
-      "path": "/d/snow/npc/obj/woodblade",
+      "path": "/d/snow/obj/woodblade",
       "score": 4,
       "reasons": [
         {
           "kind": "unresolved_dependency",
           "detail": {
-            "from": "/d/snow/npc/obj/woodblade",
+            "from": "/d/snow/obj/woodblade",
             "kind": "weapon_wield_skill",
             "name": "blade",
             "matches": []
@@ -2083,7 +2083,7 @@
       ]
     },
     {
-      "path": "/d/snow/npc/obj/pot",
+      "path": "/d/snow/obj/pot",
       "score": 2,
       "reasons": [
         {
@@ -2123,7 +2123,7 @@
       ]
     },
     {
-      "path": "/obj/area/traveller",
+      "path": "/d/oldpine/npc/traveller",
       "score": 2,
       "reasons": [
         {

@@ -48,9 +48,9 @@
 
 1. 房間要有 `fishing` 旗標。
 2. 身上要有**任意釣竿**：物品 id 含 `stick` 或 `rod`
-   （現有 `d/swaylan/obj/fishing_stick.c`、`custom/weapon/whip/` 三支釣竿，竹釣竿的 id 是 `rod`、
+   （現有 `d/swaylan/npc/obj/fishing_stick.c`、`custom/weapon/whip/` 三支釣竿，竹釣竿的 id 是 `rod`、
    不是 `stick`，所以兩種都認）。
-3. 身上要有**魚餌** `bait`（`d/swaylan/obj/bait.c`，疊加物品）。
+3. 身上要有**魚餌** `bait`（`d/npc/obj/bait.c`，疊加物品）。
 4. 已經在釣魚中不能再下竿；戰鬥中不能釣魚。
 5. 檢查不過時的提示（不提指令）：
 
@@ -186,11 +186,11 @@ n = 10：  必定釣起
 | 先天符 | `custom/item/scroll/nature.c` | 1000 | 5% |
 | 正陽符 | `custom/item/scroll/yang.c` | 1000 | 5% |
 | 少陰符 | `custom/item/scroll/yin.c` | 1000 | 5% |
-| 魚腸 fishy sword | `custom/weapon/sword/fishy_sword.c` | 1 | 5% |
-| 盤龍針 dragon needle | `custom/weapon/needle/dragon_needle.c` | 1 | 5% |
-| 戰神劈天刀 warlord blade | `custom/weapon/blade/warlord_blade.c` | 1 | 5% |
-| 谷玉 staff of wisdom | `custom/weapon/staff/staff_of_wisdom.c` | 1 | 5% |
-| 血月短斧 short axe of bloodmoon | `custom/weapon/axe/short_axe_of_bloodmoon.c` | 1 | 5% |
+| 魚腸 fishy sword | `d/wutang/npc/obj/fishy_sword.c` | 1 | 5% |
+| 盤龍針 dragon needle | `d/wutang/npc/obj/dragon_needle.c` | 1 | 5% |
+| 戰神劈天刀 warlord blade | `d/wutang/npc/obj/warlord_blade.c` | 1 | 5% |
+| 谷玉 staff of wisdom | `d/wutang/npc/obj/staff_of_wisdom.c` | 1 | 5% |
+| 血月短斧 short axe of bloodmoon | `d/wutang/npc/obj/short_axe_of_bloodmoon.c` | 1 | 5% |
 | 金元寶 sycee | `obj/money/sycee.c` | 1 | 0.01% |
 | 混元一氣袋 | `custom/item/super_skin.c` | 1 | 5% |
 

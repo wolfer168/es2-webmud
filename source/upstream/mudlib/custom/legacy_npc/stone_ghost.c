@@ -22,6 +22,6 @@ void create()
     set("legacy_aggressive", 1);   // 看到玩家就下殺手
     set_power("A");
     setup();
-    carry_object("/custom/armor/feet/forgod_boots")->wear();   // 封神靴
+    carry_object("/d/npc/obj/forgod_boots")->wear();   // 封神靴
     carry_object("/custom/weapon/blunt/crasher_maul")->wield();   // 碎腦鎚
 }

@@ -25,5 +25,5 @@ void create()
     carry_object("/custom/armor/feet/flower_boots")->wear();   // 小繡花鞋
     carry_object("/custom/armor/head/jade_hairpin")->wear();   // 翠玉髮簪
     carry_object("/custom/armor/cloth/tender_cloth")->wear();   // 絲綢小服
-    carry_object("/custom/weapon/sword/steel_longsword")->wield();   // 精鋼長劍
+    carry_object("/d/fengcheng/npc/obj/steel_longsword")->wield();   // 精鋼長劍
 }

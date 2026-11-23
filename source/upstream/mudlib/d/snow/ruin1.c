@@ -32,7 +32,7 @@ LONG
 
 	set("map/area", "雪亭鎮");
 	set("objects", ([
-		"/custom/ghost/npc/wandering_soul": 1,
+		"/d/npc/ghost/wandering_soul": 1,
 	]));
     setup();
 }
@@ -68,7 +68,7 @@ int do_search(string arg)
 		return 1;
 	}
 	flag = 1;
-	ob = new(__DIR__"npc/obj/hairpin");
+	ob = new("/d/snow/obj/hairpin");
 	ob->move(this_player());
 	message_vision("$N在草叢裡找來找去﹐結果發現了一支髮簪﹗\n", this_player());
 	return 1;

@@ -27,5 +27,5 @@ void create()
     carry_object("/custom/armor/armor/shoulder_armor")->wear();   // 藍鋼肩甲
     carry_object("/custom/armor/feet/flycloud_boots")->wear();   // 流雲鐵靴
     carry_object("/custom/armor/cloth/broken_iron_cloth")->wear();   // 殘鐵衣
-    carry_object("/custom/weapon/blade/ghosts_blade")->wield();   // 百鬼刀
+    carry_object("/d/npc/obj/ghosts_blade")->wield();   // 百鬼刀
 }

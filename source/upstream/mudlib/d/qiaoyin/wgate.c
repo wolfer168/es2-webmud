@@ -16,8 +16,8 @@ LONG
         "south" : __DIR__"west_lane1",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/han_wen_suei" : 1,
-        "/obj/area/garrison" : 4,
+        "/d/qiaoyin/npc/han_wen_suei" : 1,
+        "/d/npc/garrison" : 4,
     ]));
     set("map/area", "喬陰縣");
     setup();

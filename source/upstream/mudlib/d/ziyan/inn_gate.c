@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"inn",
     ]));
     set("objects", ([
-        "/d/qiaoyin/npc/wild_dog" : 1,
+        "/d/npc/wild_dog" : 1,
     ]));
     set("map/area", "水嵐縣");
     setup();

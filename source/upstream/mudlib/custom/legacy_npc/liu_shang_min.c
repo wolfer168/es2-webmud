@@ -22,6 +22,6 @@ void create()
     set_power("C");
     setup();
     carry_object("/obj/cloth")->wear();   // 布衣
-    carry_object("/custom/armor/feet/straw_boots")->wear();   // 草鞋
-    carry_object("/d/lee/obj/brow_staff")->wield();   // 齊眉棍
+    carry_object("/d/baihua/npc/obj/straw_boots")->wear();   // 草鞋
+    carry_object("/d/lee/npc/obj/brow_staff")->wield();   // 齊眉棍
 }

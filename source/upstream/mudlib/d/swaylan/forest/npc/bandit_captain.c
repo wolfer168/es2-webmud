@@ -7,7 +7,7 @@
 #include <ansi.h>
 inherit F_FIGHTER;
 
-#define BLADE  "/custom/weapon/blade/steelblade"
+#define BLADE  "/d/npc/obj/steelblade"
 #define ASKING "soonlight/asking"     // 大統領暫存：正在等誰回答
 #define HOLD   "soonlight/blade"      // 大統領暫存：暫時收著的砍刀
 
@@ -38,8 +38,8 @@ LONG
     set("bounty", ([ "military service": 750 ]));
     set_power("A");
     setup();
-    carry_object("/custom/weapon/axe/large_axe")->wield();
-    carry_object("/custom/weapon/axe/dragon_tiger_axe")->wield("secondhand axe");   // 青龍白虎斧
+    carry_object("/d/swaylan/forest/npc/obj/large_axe")->wield();
+    carry_object("/d/swaylan/forest/npc/obj/dragon_tiger_axe")->wield("secondhand axe");   // 青龍白虎斧
     carry_money("silver", 5 + random(26));
 }
 

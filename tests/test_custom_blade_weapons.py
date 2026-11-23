@@ -1,8 +1,9 @@
 from pathlib import Path
+from placement import LibDir
 import re
 
 MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
-BLADE = MUD / 'custom' / 'weapon' / 'blade'
+BLADE = LibDir(MUD / 'custom' / 'weapon' / 'blade')
 
 
 def read(p):

@@ -22,5 +22,5 @@ LONG
     set_skill("parry", 2);
     set_power("C");
     setup();
-    carry_object("/d/oldpine/obj/dragon_pill");
+    carry_object("/d/npc/obj/dragon_pill");
 }

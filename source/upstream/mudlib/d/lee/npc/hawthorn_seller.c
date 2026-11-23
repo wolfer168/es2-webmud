@@ -18,8 +18,8 @@ LONG
     );
     // merchandise 的數字是庫存份數，不是價錢——價錢是各道具檔自己的 "value"。
     set("merchandise", ([
-        "/d/lee/obj/candied_hawthorn" : 20,
-        "/d/lee/obj/big_candied_hawthorn" : 10,
+        "/d/lee/npc/obj/candied_hawthorn" : 20,
+        "/d/lee/npc/obj/big_candied_hawthorn" : 10,
     ]));
     set_power("C");
     setup();

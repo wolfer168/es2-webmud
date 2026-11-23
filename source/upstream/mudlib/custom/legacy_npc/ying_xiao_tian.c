@@ -26,7 +26,7 @@ void create()
     set_power("A");
     setup();
     carry_object("/custom/weapon/sword/sword_of_holy_frost")->wield();   // 凝霜
-    carry_object("/custom/armor/cloth/white_scholar_dress")->wear();   // 白色長衫
-    carry_object("/custom/armor/leg/red_dust_legs")->wear();   // 風塵腿護
+    carry_object("/d/npc/obj/white_scholar_dress")->wear();   // 白色長衫
+    carry_object("/d/mengjia/npc/obj/red_dust_legs")->wear();   // 風塵腿護
     carry_object("/custom/armor/armor/shoulder_armor")->wear();   // 藍鋼肩甲
 }

@@ -28,5 +28,5 @@ void create()
     carry_object("/custom/weapon/sword/snake_sword")->wield();   // 金蛇劍
     carry_object("/custom/armor/hand/black_gauntlets")->wear();   // 黑鐵護手
     carry_object("/custom/armor/armor/iron_armor")->wear();   // 鐵戰甲
-    carry_object("/custom/armor/cloth/iron_cloth")->wear();   // 鐵布衫
+    carry_object("/d/npc/obj/iron_cloth")->wear();   // 鐵布衫
 }

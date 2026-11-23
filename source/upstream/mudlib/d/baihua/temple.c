@@ -15,7 +15,7 @@ LONG
         "northeast" : __DIR__"road2",
     ]));
     set("objects", ([
-        __DIR__"npc/stone_lion" : 1,
+        "/d/npc/stone_lion" : 1,
     ]));
     set("map/area", "百花村");
     setup();

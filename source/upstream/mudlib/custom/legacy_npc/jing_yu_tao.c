@@ -27,10 +27,10 @@ void create()
     set("custom_faction", "fighter.au-chan");   // 古劍門（docs/martial_arts/門派武功對照表.md）
     set_power("S");
     setup();
-    carry_object("/custom/armor/finger/white_ring")->wear();   // 白玉戒指
-    carry_object("/custom/armor/feet/boots_of_cleanse")->wear();   // 塵不沾
+    carry_object("/d/swaylan/lunmay/npc/obj/white_ring")->wear();   // 白玉戒指
+    carry_object("/d/qiaoyin_east/npc/obj/boots_of_cleanse")->wear();   // 塵不沾
     carry_object("/custom/armor/cloth/silver_cloth")->wear();   // 銀絲戰袍
-    carry_object("/custom/armor/waist/silver_girth")->wear();   // 銀彎束腰
+    carry_object("/d/swaylan/lunmay/npc/obj/silver_girth")->wear();   // 銀彎束腰
     carry_object("/custom/armor/armor/white_dragon_plate")->wear();   // 混天白龍
     carry_object("/custom/weapon/sword/flurry_sword")->wield();   // 古岳風刃
 }

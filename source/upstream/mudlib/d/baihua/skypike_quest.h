@@ -19,11 +19,11 @@
 #define SQ_POWDER   7                       // 肉塊交了，再交化屍粉
 #define SQ_MEDICINE 8                       // 老王回贈血靈芝粉，送去懸崖平台給高玉
 
-#define SQ_MEAT_FILE   "/d/oldpine/obj/meat"
+#define SQ_MEAT_FILE   "/d/npc/obj/meat"
 #define SQ_DUST_FILE   "/obj/dust"
-#define SQ_LETTER_FILE "/d/baihua/obj/sister_letter"
-#define SQ_MED_FILE    "/d/baihua/obj/ling_tzi"
-#define SQ_PILL_FILE   "/d/oldpine/obj/dragon_pill"
+#define SQ_LETTER_FILE "/d/npc/obj/sister_letter"
+#define SQ_MED_FILE    "/d/baihua/npc/obj/ling_tzi"
+#define SQ_PILL_FILE   "/d/npc/obj/dragon_pill"
 
 private int sq_stage(object who) { return who->query(SQ_STAGE); }
 

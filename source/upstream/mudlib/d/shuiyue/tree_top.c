@@ -35,7 +35,7 @@ LONG
         "down" : __DIR__"sky_tree",
     ]));
     set("objects", ([
-        "/d/oldpine/npc/squirrel" : 4,
+        "/d/npc/squirrel" : 4,
     ]));
     set("map/area", "水月村");
     set("map/layer", "樹上");

@@ -22,6 +22,6 @@ void create()
         "女。\n");
     set_power("C");
     setup();
-    carry_object("/d/snow/npc/obj/white_dress")->wear();   // 白綢羽衫
+    carry_object("/d/npc/obj/white_dress")->wear();   // 白綢羽衫
     carry_object("/custom/armor/neck/ruby_necklace")->wear();   // 紅寶石項鍊
 }

@@ -25,8 +25,8 @@ void create()
     set("custom_faction", "fighter.fonxan");   // 封山派（docs/martial_arts/門派武功對照表.md）
     set_power("A");
     setup();
-    carry_object("/custom/armor/feet/cloud_boots")->wear();   // 流雲靴
-    carry_object("/custom/armor/waist/lion_belt")->wear();   // 獅蠻帶
-    carry_object("/d/wutang/obj/blue_cloth")->wear();   // 青布衣
-    carry_object("/custom/weapon/sword/colosus_sword")->wield();   // 巨劍
+    carry_object("/d/npc/obj/cloud_boots")->wear();   // 流雲靴
+    carry_object("/d/npc/obj/lion_belt")->wear();   // 獅蠻帶
+    carry_object("/d/wutang/npc/obj/blue_cloth")->wear();   // 青布衣
+    carry_object("/d/shuiyue/npc/obj/colosus_sword")->wield();   // 巨劍
 }

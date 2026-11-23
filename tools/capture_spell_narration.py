@@ -45,7 +45,7 @@ OTHERS = [
      [('conjure memory', '記憶'), ('north', ''), ('conjure recall', '招魂'), ('clone /d/graveyard/npc/barbarian', ''),
       ('call barbarian->die()', ''), ('conjure collect on corpse', '收魂'), ('clone /d/graveyard/npc/barbarian', ''),
       ('clone /d/graveyard/npc/barbarian', ''), ('conjure slave on barbarian', '役使'), ('conjure devour', '吞噬')], ['taoism of darkness']),
-    ('taoism of dunja', 'magic', '茅山奇術【遁甲書】', ['clone /custom/legacy_npc/barbarian_chief'],
+    ('taoism of dunja', 'magic', '茅山奇術【遁甲書】', ['clone /d/graveyard/npc/barbarian_chief'],
      [('conjure fate', '天命'), ('conjure experience on chief', '經驗'), ('call chief->die()', '')], []),
     ('chivi sutra', 'magic', '天師道法【紫薇心經】', [],
      [('conjure fire_defence', '火防'), ('conjure storm_defence', '風防'), ('conjure freeze_defence', '冰防'),
@@ -56,7 +56,7 @@ OTHERS = [
      [('conjure silver_seal on scroll', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),
     ('alchemy-medication', 'magic', '丹道【神農之術】', ['clone /obj/alchemist/heat_reactor'],
      [('conjure red_seal on reactor', '赤印封'), ('conjure red_dispel on reactor', '赤印解')], []),
-    ('amazing-needle', 'cauterization', '武陀灸術【驚異二針】', ['unwield sword', 'clone /custom/weapon/needle/iron_needle', 'wield needle'],
+    ('amazing-needle', 'cauterization', '武陀灸術【驚異二針】', ['unwield sword', 'clone /d/qiaoyin_east/npc/obj/iron_needle', 'wield needle'],
      [('acupuncture amazing_armor to stake', '驚異霸甲針'), ('acupuncture amazing_power to stake', '驚異霸氣針'),
       ('acupuncture self_test', '自測')], []),
     ('wuto-needle', 'cauterization', '武陀灸術【五敗針法】', [],
@@ -133,7 +133,7 @@ def main():
             for f in ('set_stat_maximum', 'set_stat_effective', 'set_stat_current'):
                 run('call me->%s("%s",9000)' % (f, st), 0.4)
         run('clone /d/qiaoyin_east/npc/stone_stake', 1.5)
-        run('clone /custom/legacy_npc/barbarian_chief', 1.5)
+        run('clone /d/graveyard/npc/barbarian_chief', 1.5)
 
         for skill, cname, cmd, spells, scroll, target in SCHOOLS:
             if not want(skill, cname):
@@ -146,7 +146,7 @@ def main():
                 tgt = target
                 if sid == 'hydra':
                     tgt = 'chief'
-                    run('clone /custom/legacy_npc/barbarian_chief', 1.5)
+                    run('clone /d/graveyard/npc/barbarian_chief', 1.5)
                     run('kill chief', 1.5)
                 else:
                     run('call me->start_busy(0)', 0.3)

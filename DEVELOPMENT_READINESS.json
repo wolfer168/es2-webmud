@@ -214,8 +214,8 @@
       ]
     },
     {
-      "path": "/d/snow/npc/guard",
-      "file": "d/snow/npc/guard.c",
+      "path": "/d/snowkeep/npc/guard",
+      "file": "d/snowkeep/npc/guard.c",
       "reasons": [
         "custom_action"
       ]
@@ -236,8 +236,8 @@
       ]
     },
     {
-      "path": "/d/snow/npc/obj/crate",
-      "file": "d/snow/npc/obj/crate.c",
+      "path": "/d/snow/obj/crate",
+      "file": "d/snow/obj/crate.c",
       "reasons": [
         "custom_action"
       ]
@@ -250,8 +250,8 @@
       ]
     },
     {
-      "path": "/d/snow/npc/obj/wagon",
-      "file": "d/snow/npc/obj/wagon.c",
+      "path": "/d/snow/obj/wagon",
+      "file": "d/snow/obj/wagon.c",
       "reasons": [
         "custom_action"
       ]

@@ -41,7 +41,7 @@ def test_storage_chest_keeps_affix():
 
 
 def test_bamboo_fishing_rod_keeps_base_trait():
-    s = (MUD / 'custom/weapon/whip/bamboo_fishing_rod.c').read_text(encoding='utf-8')
+    s = (MUD / 'd/wutang/npc/obj/bamboo_fishing_rod.c').read_text(encoding='utf-8')
     assert '"halieutics": 3,' in s and 'ENHANCE_D->roll_affix(this_object());' in s
     d = (MUD / 'adm/daemons/enhanced.c').read_text(encoding='utf-8')
     assert 'affix_base_apply/' in d   # 詞綴加在原本特性上，不會蓋掉
@@ -58,11 +58,11 @@ def test_affix_name_uses_weapon_kind_and_both_colors():
     assert '(scolor ? scolor + suffix + name + NOR : suffix + name)' in src
     assert 'name = affix_short_name(ob, name);' in src
     assert 'set("affix_short_name", "鞭");' in (MUD / 'obj/area/obj/rod.c').read_text(encoding='utf-8')
-    assert 'set("affix_short_name", "竿");' in (MUD / 'custom/weapon/whip/bamboo_fishing_rod.c').read_text(encoding='utf-8')
+    assert 'set("affix_short_name", "竿");' in (MUD / 'd/wutang/npc/obj/bamboo_fishing_rod.c').read_text(encoding='utf-8')
 
 
 def test_wutang_guard_wields_blade():
-    s = (MUD / 'd/wutang/npc/guard.c').read_text(encoding='utf-8')
+    s = (MUD / 'd/npc/guard.c').read_text(encoding='utf-8')
     # 刀法改由 NPC 自動技能依手上武器補上（docs/CUSTOM_NPC_SKILL.md），不再手寫。
     assert 'set_skill("blade"' not in s
     assert 'set_power("B");' in s
@@ -70,8 +70,8 @@ def test_wutang_guard_wields_blade():
 
 
 def test_dagger_and_staffs_roll_affix():
-    for f, short in (('obj/area/obj/dagger.c', None), ('d/lee/obj/brow_staff.c', '棍'),
-                     ('custom/weapon/staff/long_staff.c', None), ('custom/weapon/staff/zenstaff.c', '禪杖')):
+    for f, short in (('obj/area/obj/dagger.c', None), ('d/lee/npc/obj/brow_staff.c', '棍'),
+                     ('custom/weapon/staff/long_staff.c', None), ('d/npc/obj/zenstaff.c', '禪杖')):
         s = (MUD / f).read_text(encoding='utf-8')
         assert 'if( clonep() ) ENHANCE_D->roll_affix(this_object());' in s, f
         if short:
@@ -88,7 +88,7 @@ def test_vendor_sells_plain_weapons():
 
 def test_colosus_sword_rolls_affix_three_times_as_often():
     # 巨劍（巨神劍）加入詞綴行列，出詞綴機會 3 倍：前綴 60%、前綴＋後綴 15%。
-    s = (MUD / 'custom/weapon/sword/colosus_sword.c').read_text(encoding='utf-8')
+    s = (MUD / 'd/shuiyue/npc/obj/colosus_sword.c').read_text(encoding='utf-8')
     assert 'if( clonep() ) ENHANCE_D->roll_affix(this_object(), 3);' in s
     e = (MUD / 'adm/daemons/enhanced.c').read_text(encoding='utf-8')
     assert 'varargs void roll_affix(object ob, int chance_mult)' in e

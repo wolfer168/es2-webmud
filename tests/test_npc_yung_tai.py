@@ -22,7 +22,7 @@ def test_greeting_on_enter():
 
 def test_ring_urn_and_teaching():
     s = read('d/wutang/npc/yung_tai.c')
-    assert '"/d/graveyard/obj/chrysoberyl_ring"' in s and '"/d/graveyard/obj/urn"' in s
+    assert '"/d/npc/obj/chrysoberyl_ring"' in s and '"/d/npc/obj/urn"' in s
     assert 'strsrch(msg, "雍順")' in s
     assert '#define FAINT_TICKS 5' in s and 'call_out("revive", FAINT_TICKS * TICK);' in s
     assert 'who->query_temp("yung_tai/ring")' in s
@@ -30,7 +30,7 @@ def test_ring_urn_and_teaching():
     for line in ['怔怔地流下淚來。', '只剩下我一個人了', '家傳的拳法傳給恩公作為答謝之禮。',
                  '(雍泰將風嘯拳法的秘要盡數傳了給你)']:
         assert line in s, line
-    for f in ('d/graveyard/obj/chrysoberyl_ring.c', 'd/graveyard/obj/urn.c'):
+    for f in ('d/npc/obj/chrysoberyl_ring.c', 'd/npc/obj/urn.c'):
         assert (MUD / f).exists(), f
 
 

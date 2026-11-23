@@ -15,7 +15,7 @@ LONG
         "up" : __DIR__"ghost_realm",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/ma_zhong_shen" : 1,
+        "/d/baobao/npc/ma_zhong_shen" : 1,
     ]));
     set("map/area", "八寶樓");
     set("map/mode", "maze");

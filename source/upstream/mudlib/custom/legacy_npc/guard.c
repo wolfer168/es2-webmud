@@ -22,8 +22,8 @@ void create()
     set_power("B");
     setup();
     carry_object("/custom/armor/feet/buskins")->wear();   // 短靴
-    carry_object("/custom/armor/waist/iron_girth")->wear();   // 精鐵環扣
+    carry_object("/d/npc/obj/iron_girth")->wear();   // 精鐵環扣
     carry_object("/custom/weapon/pike/huge_halberd")->wield();   // 方天畫戟
-    carry_object("/custom/armor/head/iron_helmet")->wear();   // 鐵盔
-    carry_object("/custom/armor/armor/ring_mail")->wear();   // 鎖子鎧
+    carry_object("/d/npc/obj/iron_helmet")->wear();   // 鐵盔
+    carry_object("/d/swaylan/npc/obj/ring_mail")->wear();   // 鎖子鎧
 }

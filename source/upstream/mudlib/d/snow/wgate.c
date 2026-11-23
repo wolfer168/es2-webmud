@@ -21,7 +21,7 @@ LONG
 	"northwest" : "/d/graveyard/grave1",   // 亂葬崗（2026-11-04）
   ]));
   set("objects", ([
-	"/custom/ghost/npc/mountain_sprite": 1,
+	"/d/npc/ghost/mountain_sprite": 1,
   ]));
 
     setup();

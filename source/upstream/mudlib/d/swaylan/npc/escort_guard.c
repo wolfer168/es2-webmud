@@ -17,6 +17,6 @@ LONG
     );
     set_power("B");
     setup();
-    carry_object("/custom/armor/cloth/cowhide_vest")->wear();
+    carry_object("/d/npc/obj/cowhide_vest")->wear();
     carry_object("/obj/area/obj/blade")->wield();
 }

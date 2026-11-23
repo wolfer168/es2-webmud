@@ -17,7 +17,7 @@ LONG
         "west" : __DIR__"escort_back",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/huang_tien_ba" : 1,
+        "/d/swaylan/npc/huang_tien_ba" : 1,
     ]));
     set("map/area", "水嵐縣");
     setup();

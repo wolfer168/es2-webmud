@@ -7,17 +7,17 @@
 
 | # | 地點 | 名稱 | 檔案 | 職業 | 等級 | 強度 |
 |---|---|---|---|---|---|---|
-| 1 | 鬼怪 | 餓鬼 | `custom/ghost/npc/hungry_ghost.c` | — | — | 不動（鬼魂） |
-| 2 | 鬼怪 | 魑魅 | `custom/ghost/npc/mountain_sprite.c` | — | — | 不動（鬼魂） |
-| 3 | 鬼怪 | 倀鬼 | `custom/ghost/npc/tiger_thrall.c` | — | — | 不動（鬼魂） |
-| 4 | 鬼怪 | 遊魂 | `custom/ghost/npc/wandering_soul.c` | — | — | 不動（鬼魂） |
-| 5 | 鬼怪 | 魍魎 | `custom/ghost/npc/water_goblin.c` | — | — | 不動（鬼魂） |
-| 6 | 鬼怪 | 枉死鬼 | `custom/ghost/npc/wronged_ghost.c` | — | — | 不動（鬼魂） |
+| 1 | 鬼怪 | 餓鬼 | `d/npc/ghost/hungry_ghost.c` | — | — | 不動（鬼魂） |
+| 2 | 鬼怪 | 魑魅 | `d/npc/ghost/mountain_sprite.c` | — | — | 不動（鬼魂） |
+| 3 | 鬼怪 | 倀鬼 | `d/npc/ghost/tiger_thrall.c` | — | — | 不動（鬼魂） |
+| 4 | 鬼怪 | 遊魂 | `d/npc/ghost/wandering_soul.c` | — | — | 不動（鬼魂） |
+| 5 | 鬼怪 | 魍魎 | `d/npc/ghost/water_goblin.c` | — | — | 不動（鬼魂） |
+| 6 | 鬼怪 | 枉死鬼 | `d/npc/ghost/wronged_ghost.c` | — | — | 不動（鬼魂） |
 | 7 | 家園 | （butler） | `custom/home/npc/butler.c` | 平民 | 1 | C |
-| 8 | 天師道 | 朱衣派弟子 | `custom/taoism/npc/fire_taoist.c` | 道士 | 30 | B |
-| 9 | 天師道 | 素衣派弟子 | `custom/taoism/npc/freeze_taoist.c` | 道士 | 30 | B |
-| 10 | 天師道 | 玄衣派弟子 | `custom/taoism/npc/storm_taoist.c` | 道士 | 30 | B |
-| 11 | 天師道 | 紫衣派弟子 | `custom/taoism/npc/thunder_taoist.c` | 道士 | 30 | B |
+| 8 | 天師道 | 朱衣派弟子 | `d/snow/npc/fire_taoist.c` | 道士 | 30 | B |
+| 9 | 天師道 | 素衣派弟子 | `d/snow/npc/freeze_taoist.c` | 道士 | 30 | B |
+| 10 | 天師道 | 玄衣派弟子 | `d/snow/npc/storm_taoist.c` | 道士 | 30 | B |
+| 11 | 天師道 | 紫衣派弟子 | `d/snow/npc/thunder_taoist.c` | 道士 | 30 | B |
 | 12 | 振武營 | 魯熙年 | `custom/zhenwu/npc/lu_xinien.c` | 軍人 | 50 | A |
 | 13 | 振武營 | 米沛 | `custom/zhenwu/npc/mee_pei.c` | 軍人 | 40 | A |
 | 14 | 振武營 | 小兵 | `custom/zhenwu/npc/soldier.c` | 軍人 | 5 | B |
@@ -52,7 +52,7 @@
 | 43 | 迷霧森林 | 小黑熊 | `d/oldpine/npc/little_bear.c` | 野獸 | — | 野獸強度 4 |
 | 44 | 迷霧森林 | 老鼠 | `d/oldpine/npc/rat.c` | 野獸 | — | 野獸強度 1 |
 | 45 | 迷霧森林 | 旅行小販 | `d/oldpine/npc/seller.c` | 平民 | 1 | C |
-| 46 | 迷霧森林 | 松鼠 | `d/oldpine/npc/squirrel.c` | 野獸 | — | 野獸強度 1 |
+| 46 | 迷霧森林 | 松鼠 | `d/npc/squirrel.c` | 野獸 | — | 野獸強度 1 |
 | 47 | 迷霧森林 | 店小二 | `d/oldpine/npc/waiter.c` | 平民 | 1 | C |
 | 48 | 迷霧森林 | 凶暴的野熊 | `d/oldpine/npc/wild_bear.c` | 野獸 | — | 野獸強度 7 |
 | 49 | 迷霧森林 | 土狼 | `d/oldpine/npc/wolf.c` | 野獸 | — | 野獸強度 4 |
@@ -67,7 +67,7 @@
 | 58 | 雪亭鎮 | 瞎眼老太婆 | `d/snow/npc/gammer.c` | 盜賊 | 20 | A |
 | 59 | 雪亭鎮 | 官兵 | `d/snow/npc/garrison.c` | 軍人 | 15 | B |
 | 60 | 雪亭鎮 | 白衣女子 | `d/snow/npc/girl.c` | 武者 | 25 | S |
-| 61 | 雪亭鎮 | 青衣漢子 | `d/snow/npc/guard.c` | 武者 | 10 | C |
+| 61 | 雪亭鎮 | 青衣漢子 | `d/snowkeep/npc/guard.c` | 武者 | 10 | C |
 | 62 | 雪亭鎮 | 藥鋪掌櫃 | `d/snow/npc/herbalist.c` | 平民 | 3 | C |
 | 63 | 雪亭鎮 | （innkeeper） | `d/snow/npc/innkeeper.c` | 平民 | 4 | C |
 | 64 | 雪亭鎮 | 拾荒老頭 | `d/snow/npc/junkman.c` | 平民 | 2 | C |
@@ -80,13 +80,13 @@
 | 71 | 雪亭鎮 | （waiter） | `d/snow/npc/waiter.c` | 平民 | 2 | C |
 | 72 | 雪亭鎮 | 少婦 | `d/snow/npc/woman.c` | 平民 | 2 | C |
 | 73 | 雪亭鎮 | 魚天 | `d/snow/npc/yu.c` | 平民 | 1 | C |
-| 74 | 五堂鎮 | 冷梅莊二代弟子 | `d/wutang/npc/apprentice.c` | 武者 | 25 | B |
+| 74 | 五堂鎮 | 冷梅莊二代弟子 | `d/swaylan/lunmay/npc/apprentice.c` | 武者 | 25 | B |
 | 75 | 五堂鎮 | 大野豬 | `d/wutang/npc/big_boar.c` | 野獸 | — | 野獸強度 5 |
 | 76 | 五堂鎮 | 野豬 | `d/wutang/npc/boar.c` | 野獸 | — | 野獸強度 4 |
 | 77 | 五堂鎮 | 釣客 | `d/wutang/npc/fisher.c` | 平民 | 1 | C |
-| 78 | 五堂鎮 | 護院武師 | `d/wutang/npc/guard.c` | 武者 | 5 | B |
+| 78 | 五堂鎮 | 護院武師 | `d/npc/guard.c` | 武者 | 5 | B |
 | 79 | 五堂鎮 | 郭布 | `d/wutang/npc/guo_boo.c` | 道士 | 60 | S |
-| 80 | 五堂鎮 | 小黃 | `d/wutang/npc/huang.c` | 平民 | 1 | C |
+| 80 | 五堂鎮 | 小黃 | `d/ziyan/npc/huang.c` | 平民 | 1 | C |
 | 81 | 五堂鎮 | 呼延光 | `d/wutang/npc/huyen_guan.c` | 書生 | 35 | A |
 | 82 | 五堂鎮 | 珍寶商人 | `d/wutang/npc/jeweller.c` | 平民 | 10 | C |
 | 83 | 五堂鎮 | 廟祝 | `d/wutang/npc/keeper.c` | 平民 | 1 | C |
@@ -111,4 +111,4 @@
 | 102 | 五堂鎮 | 小鼠兒 | `d/wutang/npc/young_man.c` | 平民 | 1 | C |
 | 103 | 五堂鎮 | 青年書生 | `d/wutang/npc/young_scholar.c` | 平民 | 10 | C |
 | 104 | 五堂鎮 | 雍泰 | `d/wutang/npc/yung_tai.c` | 武者 | 20 | B |
-| 105 | 五堂鎮 | 梅影風 | `d/wutang/npc/may_yin_fong.c` | 武者 | 60 | S |
+| 105 | 五堂鎮 | 梅影風 | `d/swaylan/lunmay/npc/may_yin_fong.c` | 武者 | 60 | S |

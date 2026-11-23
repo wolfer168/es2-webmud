@@ -20,5 +20,5 @@ LONG
     set_skill("parry", 2);
     set_power("C");
     setup();
-    carry_object("/custom/weapon/whip/bamboo_fishing_rod")->wield();
+    carry_object("/d/wutang/npc/obj/bamboo_fishing_rod")->wield();
 }

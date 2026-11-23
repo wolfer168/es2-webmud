@@ -16,6 +16,6 @@ LONG
     );
     set_power("B");
     setup();
-    carry_object("/d/graveyard/obj/brass_zenstaff")->wield();
-    carry_object("/d/graveyard/obj/rosary")->wear();
+    carry_object("/d/graveyard/npc/obj/brass_zenstaff")->wield();
+    carry_object("/d/graveyard/npc/obj/rosary")->wear();
 }

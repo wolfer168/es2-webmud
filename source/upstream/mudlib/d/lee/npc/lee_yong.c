@@ -19,7 +19,7 @@ LONG
     );
     set_power("B");
     setup();
-    carry_object("/d/lee/obj/leather_boots")->wear();
-    carry_object("/d/lee/obj/tight_cloth")->wear();
-    carry_object("/d/lee/obj/hunter_pike")->wield();
+    carry_object("/d/lee/npc/obj/leather_boots")->wear();
+    carry_object("/d/lee/npc/obj/tight_cloth")->wear();
+    carry_object("/d/lee/npc/obj/hunter_pike")->wield();
 }

@@ -21,5 +21,5 @@ void create()
     set_power("B");
     setup();
     carry_object("/obj/area/obj/pen")->wield();   // 判官筆
-    carry_object("/custom/armor/cloth/cyan_cloth")->wear();   // 青布官服
+    carry_object("/d/qiaoyin/npc/obj/cyan_cloth")->wear();   // 青布官服
 }

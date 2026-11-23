@@ -20,7 +20,7 @@ LONG
     set_skill("parry", 20);
     set_power("C");
     setup();
-    carry_object("/custom/weapon/sword/jeweled_shortsword")->wield();
-    carry_object("/d/wutang/obj/blue_cloth")->wear();
+    carry_object("/d/wutang/npc/obj/jeweled_shortsword")->wield();
+    carry_object("/d/wutang/npc/obj/blue_cloth")->wear();
     carry_object("/obj/books/anthology_of_classical_prose");
 }

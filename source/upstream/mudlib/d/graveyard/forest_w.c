@@ -16,7 +16,7 @@ LONG
         "east" : __DIR__"forest",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/wu_changuei" : 1,
+        "/d/graveyard/npc/wu_changuei" : 1,
     ]));
     set("map/area", "亂葬崗");
     setup();

@@ -15,7 +15,7 @@ LONG
         "west" : __DIR__"fonxan_hall",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/wu_yu_nun" : 1,
+        "/d/qiaoyin/npc/wu_yu_nun" : 1,
     ]));
     set("map/area", "喬陰縣");
     setup();

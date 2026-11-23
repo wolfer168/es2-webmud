@@ -38,7 +38,7 @@ LONG
     ]));
     set_power("S");
     setup();
-    carry_object("/custom/weapon/staff/zenstaff")->wield();
-    carry_object("/d/swaylan/temple/obj/dabei_robe")->wear();
-    carry_object("/d/swaylan/temple/obj/rosary")->wear();
+    carry_object("/d/npc/obj/zenstaff")->wield();
+    carry_object("/d/swaylan/temple/npc/obj/dabei_robe")->wear();
+    carry_object("/d/swaylan/temple/npc/obj/rosary")->wear();
 }

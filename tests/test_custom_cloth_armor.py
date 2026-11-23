@@ -1,12 +1,13 @@
 from pathlib import Path
+from placement import LibDir, current
 import re
 
 MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
-CLOTH = MUD / 'custom' / 'armor' / 'cloth'
+CLOTH = LibDir(MUD / 'custom' / 'armor' / 'cloth')
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def test_every_cloth_is_worn_as_cloth():

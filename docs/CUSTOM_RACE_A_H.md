@@ -178,18 +178,18 @@ Soldier and taoist keep their earlier formulas. Joining thief / alchemist / scho
 
 ## Ghost NPCs (for yaksa `devour`)
 
-`custom/ghost/std_ghost.c` is the base: human race, `life_form` ghost (no kee, only visible with 陰陽眼, ordinary attacks pass through), peaceful, refuses `fight`. Talking and moving work like 瞎眼老太婆 (`d/snow/npc/gammer.c`): `chat_chance` 9 gives a 10% chance each tick to act, then one of three `chat_msg` entries is picked (one says one of its two lines, two do `random_move`). On average it talks every ~30 ticks and moves every ~15 ticks, at random times. It does neither while busy (for example while being devoured).
+`d/npc/ghost/std_ghost.c` is the base: human race, `life_form` ghost (no kee, only visible with 陰陽眼, ordinary attacks pass through), peaceful, refuses `fight`. Talking and moving work like 瞎眼老太婆 (`d/snow/npc/gammer.c`): `chat_chance` 9 gives a 10% chance each tick to act, then one of three `chat_msg` entries is picked (one says one of its two lines, two do `random_move`). On average it talks every ~30 ticks and moves every ~15 ticks, at random times. It does neither while busy (for example while being devoured).
 
-Color rule: every ghost is shown in dark gray (`HIK`, the same color as a dead player's ghost). The base colors the ghost's name (`name()`, so movement and `$N` action messages), its room short description and its chat lines. All future ghost NPCs must inherit `custom/ghost/std_ghost.c` so they follow this rule.
+Color rule: every ghost is shown in dark gray (`HIK`, the same color as a dead player's ghost). The base colors the ghost's name (`name()`, so movement and `$N` action messages), its room short description and its chat lines. All future ghost NPCs must inherit `d/npc/ghost/std_ghost.c` so they follow this rule.
 
 | NPC | File | id | gin / sen |
 |---|---|---|---|
-| 餓鬼 | `custom/ghost/npc/hungry_ghost.c` | hungry ghost | 20 / 20 |
-| 遊魂 | `custom/ghost/npc/wandering_soul.c` | wandering soul | 40 / 20 |
-| 枉死鬼 | `custom/ghost/npc/wronged_ghost.c` | wronged ghost | 50 / 25 |
-| 倀鬼 | `custom/ghost/npc/tiger_thrall.c` | tiger thrall | 60 / 30 |
-| 魑魅 | `custom/ghost/npc/mountain_sprite.c` | mountain sprite | 100 / 20 |
-| 魍魎 | `custom/ghost/npc/water_goblin.c` | water goblin | 100 / 20 |
+| 餓鬼 | `d/npc/ghost/hungry_ghost.c` | hungry ghost | 20 / 20 |
+| 遊魂 | `d/npc/ghost/wandering_soul.c` | wandering soul | 40 / 20 |
+| 枉死鬼 | `d/npc/ghost/wronged_ghost.c` | wronged ghost | 50 / 25 |
+| 倀鬼 | `d/npc/ghost/tiger_thrall.c` | tiger thrall | 60 / 30 |
+| 魑魅 | `d/npc/ghost/mountain_sprite.c` | mountain sprite | 100 / 20 |
+| 魍魎 | `d/npc/ghost/water_goblin.c` | water goblin | 100 / 20 |
 
 All of them also answer to `ghost`.
 

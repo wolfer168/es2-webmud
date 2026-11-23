@@ -51,7 +51,7 @@ LONG
         "north" : __DIR__"yamen_hall",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/zhao_hong_chun" : 1,
+        "/d/ziyan/npc/zhao_hong_chun" : 1,
     ]));
     set("map/area", "水嵐縣");
     // 大堂與內廳之間的木門，平時上鎖，用大堂金蟾掉出的石鑰匙打開。

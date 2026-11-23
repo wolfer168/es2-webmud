@@ -22,9 +22,9 @@ void create()
         "請命再次發兵征討黑風山，為神將復仇。\n");
     set_power("A");
     setup();
-    carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶
-    carry_object("/custom/armor/finger/ring_of_mighty_lord")->wear();   // 霸王指環
-    carry_object("/custom/armor/head/royal_helmet")->wear();   // 霸王銅冠
-    carry_object("/custom/armor/armor/royal_armor")->wear();   // 霸王鎧
+    carry_object("/d/npc/obj/water_dragon_girdle")->wear();   // 蛟龍帶
+    carry_object("/d/npc/obj/ring_of_mighty_lord")->wear();   // 霸王指環
+    carry_object("/d/baobao/npc/obj/royal_helmet")->wear();   // 霸王銅冠
+    carry_object("/d/baobao/npc/obj/royal_armor")->wear();   // 霸王鎧
     carry_object("/custom/weapon/blunt/whirlwind_blunt")->wield();   // 旋風流星槌
 }

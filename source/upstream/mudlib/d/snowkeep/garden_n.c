@@ -16,8 +16,8 @@ LONG
         "south" : __DIR__"garden_s",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/yu_pingyin" : 1,
-        "/d/snow/npc/guard" : 1,
+        "/d/snowkeep/npc/yu_pingyin" : 1,
+        "/d/snowkeep/npc/guard" : 1,
     ]));
     set("map/area", "雪吟莊");
     setup();

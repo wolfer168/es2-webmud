@@ -1,4 +1,5 @@
 from pathlib import Path
+from placement import current
 import json
 import re
 import unicodedata
@@ -16,7 +17,7 @@ NO_LINE_START = '﹗！？﹖，﹐。﹒、；﹔：﹕」』）】〉》…'
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def exits(room_id):

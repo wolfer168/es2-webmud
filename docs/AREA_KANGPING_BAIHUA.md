@@ -52,7 +52,7 @@
 | J4 | `kangping/inn` | 小客店（非戰區、可存檔） | 沿用，「往東／往北」改為「往西」 | 歐陽無極、柳淳風、客店主人 |
 | H6 | `kangping/square` | 廣場 | 撰寫（古井） | 阿桂 |
 | J6 | `kangping/hut` | 草廬 | 沿用（房名「草蘆」改「草廬」，與敘述一致） | 安懶道人 |
-| F10 | `baihua/hillside` | 山腰上 | 沿用 | 山羊 ×3（`/d/oldpine/npc/goat`，2026-10-24） |
+| F10 | `baihua/hillside` | 山腰上 | 沿用 | 山羊 ×3（`/d/npc/goat`，2026-10-24） |
 | H8 | `baihua/platform` | 懸崖平台 | 沿用 | 高玉 |
 | H10 | `baihua/cliff` | 百花崖 | 沿用 | 杜福 |
 | J10 | `baihua/tile_house` | 瓦屋 | 沿用 | 王燕 |
@@ -82,15 +82,15 @@
 | 老王 | `baihua/npc/old_wang` | 平民 1 C | 沿用敘述 |
 | 牧童 | `baihua/npc/shepherd` | 平民 1 C | 牧羊杖 |
 | 阿三哥 | `baihua/npc/san` | 平民 1 C | 壯碩青年；年齡表上寫 8，依「青年」改為 18 |
-| 小姑娘 | `baihua/npc/girl` | 平民 1 C | 做羹湯照顧村民、喜歡阿三哥；年齡表上寫 4，改為 14；腰間繫著虹緞帶（`custom/armor/waist/rainbow_ribbon`，靈性 +1、防禦力 +3，使用者指定 2026-11-06） |
+| 小姑娘 | `baihua/npc/girl` | 平民 1 C | 做羹湯照顧村民、喜歡阿三哥；年齡表上寫 4，改為 14；腰間繫著虹緞帶（`d/baihua/npc/obj/rainbow_ribbon`，靈性 +1、防禦力 +3，使用者指定 2026-11-06） |
 | 「落山風」南宮恨 | `baihua/npc/nan_kong_hen` | 道士 40 A | 玄衣派（`taoist.storm`） |
 | 掌櫃 | `baihua/npc/innkeeper` | 平民 1 C | 紅燈客棧，櫃台打算盤 |
-| 過路客 | `baihua/npc/traveller` | — | 複製 `obj/area/traveller.c`，改拿路人的短劍（產生時擲隨機附加屬性） |
+| 過路客 | `baihua/npc/traveller` | — | 複製 `d/oldpine/npc/traveller.c`，改拿路人的短劍（產生時擲隨機附加屬性） |
 | 石獅子 | `baihua/npc/stone_lion` | — | 比照振武軍營假人（不還手、不損壞，命中敘述不提部位） |
 | 客店主人 | `kangping/npc/innkeeper` | 平民 1 C | 小客店，一人兼掌櫃與店小二 |
 | 阿桂 | `kangping/npc/kid` | 平民 1 C | 熱心的小孩 |
 
-沿用既有檔案：公孫志、安懶道人、歐陽無極、柳淳風（`custom/legacy_npc/`）、路人（`obj/area/man.c`）。
+沿用既有檔案：公孫志、安懶道人、歐陽無極、柳淳風（`custom/legacy_npc/`）、路人（`d/npc/man.c`）。
 
 **兩間客店販售**：紅燒雞 30、牛肉包子 20、白切肉 10（表上「燒雞」用遊戲既有的紅燒雞）。
 
@@ -98,8 +98,8 @@
 
 | 武器 | 檔案 | 設定 |
 |---|---|---|
-| 辛木杖 (Sinia staff) | `custom/weapon/staff/sinia_staff.c` | 強度同木杖（雙手杖 3-12），另加防禦力 5、防禦能力值 25；價值 100 兩銀子 |
-| 牧羊杖 (Cane) | `custom/weapon/staff/shepherd_cane.c` | 強度同短劍，單手杖，價值 1000 文 |
+| 辛木杖 (Sinia staff) | `d/baihua/npc/obj/sinia_staff.c` | 強度同木杖（雙手杖 3-12），另加防禦力 5、防禦能力值 25；價值 100 兩銀子 |
+| 牧羊杖 (Cane) | `d/baihua/npc/obj/shepherd_cane.c` | 強度同短劍，單手杖，價值 1000 文 |
 
 ## 網頁地圖
 

@@ -1,4 +1,5 @@
 from pathlib import Path
+from placement import current
 import json
 import re
 
@@ -13,7 +14,7 @@ OLD_ROOMS = ['garden_n', 'hall', 'inner_hall', 'east_room', 'court']
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def exits(path):
@@ -31,7 +32,8 @@ def long_text(path):
 def test_rooms_and_npcs():
     rooms = sorted(p.stem for p in K.glob('*.c'))
     assert rooms == sorted(NEW_ROOMS + OLD_ROOMS)
-    assert sorted(p.stem for p in (K / 'npc').glob('*.c')) == ['apprentice', 'blademan', 'jailer', 'wang_hsian']
+    assert sorted(p.stem for p in (K / 'npc').glob('*.c')) == ['apprentice', 'blademan', 'chu_xang_when', 'guard', 'hsu_yen_chih', 'jailer',
+                                                             'ku_wu_wang', 'phoxin', 'wang_hsian', 'yu_lan_jian_yi', 'yu_pingyin', 'yu_tieshan']   # 2026-11-23 NPC 歸位（docs/NPC_ITEM_PLACEMENT.md）
     for r in rooms:
         s = read(K / (r + '.c'))
         assert 'set("map/area", "雪吟莊");' in s, r
@@ -83,14 +85,14 @@ def test_dungeon_door_and_key():
     e = read(K / 'dungeon_e.c')
     assert 'create_door("west",' in e and 'varargs int open_door' in e and 'replace_program' not in e
     assert 'set("lock", "snowkeep_dungeon");' in read(K / 'obj/brass_key.c')
-    assert '"/d/snowkeep/obj/brass_key"' in read(MUD / 'custom/legacy_npc/yu_tieshan.c')
+    assert '"/d/snowkeep/npc/obj/brass_key"' in read(MUD / 'd/snowkeep/npc/yu_tieshan.c')
     assert 'set_name("黃銅鑰匙", ({ "brass key", "key" }));' in read(K / 'obj/brass_key.c')
-    h = read(MUD / 'custom/armor/armor/heart_plate.c')
+    h = read(MUD / 'd/snowkeep/npc/obj/heart_plate.c')
     assert '"armor": 10,' in h and '"wittiness": 10,' in h
 
 
 def test_yu_tieshan_combat():
-    s = read(MUD / 'custom/legacy_npc/yu_tieshan.c')
+    s = read(MUD / 'd/snowkeep/npc/yu_tieshan.c')
     assert 'map_skill("force", "celestial force");' in s
     assert 'set_stat_maximum("gin", 3000);' in s and 'set_stat_maximum("kee", 2800);' in s
     assert 'set_stat_maximum("sen", 1200);' in s
@@ -112,7 +114,7 @@ def test_web_map():
 
 
 def test_yu_lan_jian_yi_combat():
-    s = read(MUD / 'custom/legacy_npc/yu_lan_jian_yi.c')
+    s = read(MUD / 'd/snowkeep/npc/yu_lan_jian_yi.c')
     assert 'map_skill("force", "celestial force");' in s and 'map_skill("unarmed", "celestial palm");' in s
     assert 'set_stat_maximum("gin", 3000);' in s and 'set_stat_maximum("kee", 4000);' in s
     assert 'set_stat_maximum("sen", 1500);' in s
@@ -122,7 +124,7 @@ def test_yu_lan_jian_yi_combat():
 
 
 def test_guard_no_longer_blocks():
-    s = read(MUD / 'd/snow/npc/guard.c')
+    s = read(MUD / 'd/snowkeep/npc/guard.c')
     assert 'do_go' not in s and 'seteuid(getuid());' in s
 
 

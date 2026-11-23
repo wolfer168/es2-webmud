@@ -19,8 +19,8 @@ LONG
 ]));
 	set("objects", ([
 		__DIR__"npc/foreman": 1,
-		__DIR__"npc/obj/wagon": 1,
-		__DIR__"npc/obj/crate": 3,
+		"/d/snow/obj/wagon": 1,
+		"/d/snow/obj/crate": 3,
 	]));
 set("no_fight", 1);
 

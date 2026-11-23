@@ -1,5 +1,5 @@
 // /d/shuiyue/obj/tea_pot.c — 水月村十字路口的茶水桶：固定在房間裡、裝 100 升清水，喝完會補滿。
-// 做法同 d/lee/obj/well.c。
+// 做法同 d/obj/well.c。
 
 inherit ITEM;
 

@@ -15,7 +15,7 @@ LONG
         "west" : __DIR__"stone_road1",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/li_ru" : 1,
+        "/d/fengcheng/npc/li_ru" : 1,
     ]));
     set("map/area", "風城");
     setup();

@@ -19,8 +19,8 @@ void create()
     set("snowkeep_jailer", 1);
     set_power("A");
     setup();
-    carry_object("/custom/weapon/blade/blade_of_hydra_bone")->wield();   // 蛟骨刀
-    carry_object("/custom/armor/cloth/force_cloth")->wear();             // 真元戰袍
-    carry_object("/custom/armor/leg/sun_legs")->wear();                  // 烈陽護膝
-    carry_object("/custom/armor/waist/perl_girth")->wear();              // 鑲珠束腰
+    carry_object("/d/snowkeep/npc/obj/blade_of_hydra_bone")->wield();   // 蛟骨刀
+    carry_object("/d/snowkeep/npc/obj/force_cloth")->wear();             // 真元戰袍
+    carry_object("/d/snowkeep/npc/obj/sun_legs")->wear();                  // 烈陽護膝
+    carry_object("/d/snowkeep/npc/obj/perl_girth")->wear();              // 鑲珠束腰
 }

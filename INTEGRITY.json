@@ -4432,12 +4432,12 @@
       "bytes": 467
     },
     {
-      "path": "source/upstream/mudlib/d/lee/obj/heaven_dew.c",
+      "path": "source/upstream/mudlib/d/lee/npc/obj/heaven_dew.c",
       "sha256": "3f887e4c9a6290803ddd8b8b6409f6f3058dfffae15b5d0a7fd047d9e8758d82",
       "bytes": 385
     },
     {
-      "path": "source/upstream/mudlib/d/lee/obj/medicine_bottle.c",
+      "path": "source/upstream/mudlib/d/lee/npc/obj/medicine_bottle.c",
       "sha256": "03fb0049cf83ddfaa801f8d11f8902a4c6efee498bdee981372c73ed44b9f5e0",
       "bytes": 451
     },
@@ -4702,7 +4702,7 @@
       "bytes": 3307
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/guard.c",
+      "path": "source/upstream/mudlib/d/snowkeep/npc/guard.c",
       "sha256": "7ef02a4d754ef33adff86676bb565d83fcec37c13ea1e209ddd60ba1094c9128",
       "bytes": 1741
     },
@@ -4757,7 +4757,7 @@
       "bytes": 408
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/clothboot.c",
+      "path": "source/upstream/mudlib/d/npc/obj/clothboot.c",
       "sha256": "0bc8cb2a4d13a476708524e92eb41883607faf43191d7c5087495c28e58559f5",
       "bytes": 450
     },
@@ -4772,27 +4772,27 @@
       "bytes": 311
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/crate.c",
+      "path": "source/upstream/mudlib/d/snow/obj/crate.c",
       "sha256": "e849d78c55e432c0741d191d20b4133c516e0a4ba4eb35165d1f6bafe631cc2d",
       "bytes": 750
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/fur_hat.c",
+      "path": "source/upstream/mudlib/d/npc/obj/fur_hat.c",
       "sha256": "a7621e3c6123755692da49cd1ced8592e09d81dcfb896b2423d89b5d5baa4594",
       "bytes": 410
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/hairpin.c",
+      "path": "source/upstream/mudlib/d/snow/obj/hairpin.c",
       "sha256": "8160e65ad1c9d65db6f970a186503922c827b61d454d0c3472f5aaa52b007ad6",
       "bytes": 397
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/helmet.c",
+      "path": "source/upstream/mudlib/d/npc/obj/helmet.c",
       "sha256": "313ece07edecd284bf0f48e3eeebd4566314cf057b9dc56338b33763d5f9ecb5",
       "bytes": 451
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/hoe.c",
+      "path": "source/upstream/mudlib/d/npc/obj/hoe.c",
       "sha256": "086f95d35659084f03df15569b4f0a313a07a9741b2cedd50af980d1d8d5e69d",
       "bytes": 358
     },
@@ -4802,7 +4802,7 @@
       "bytes": 385
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/leather_armor.c",
+      "path": "source/upstream/mudlib/d/npc/obj/leather_armor.c",
       "sha256": "6db7bdd19082fdd32134867d5ff0edcee8a4813b93d16df9c24d5779326cb9eb",
       "bytes": 549
     },
@@ -4812,12 +4812,12 @@
       "bytes": 2454
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/pot.c",
+      "path": "source/upstream/mudlib/d/snow/obj/pot.c",
       "sha256": "891ad396da1720db213df464adadcb0001cf41da80993937513019b21bd02d7a",
       "bytes": 704
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/roast_chicken.c",
+      "path": "source/upstream/mudlib/d/npc/obj/roast_chicken.c",
       "sha256": "aa5b032590a0b4bb79bc7af3a84ec27a2be2d207c83616691a457b1484365e05",
       "bytes": 432
     },
@@ -4837,7 +4837,7 @@
       "bytes": 809
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/smock.c",
+      "path": "source/upstream/mudlib/d/npc/obj/smock.c",
       "sha256": "e8bfc6c0bf9b525e21af6806c5272668feb697140464b9b20a6ae8d885be794d",
       "bytes": 451
     },
@@ -4847,17 +4847,17 @@
       "bytes": 938
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/tummy_cover.c",
+      "path": "source/upstream/mudlib/d/npc/obj/tummy_cover.c",
       "sha256": "0fbff4f89c75164b8405d5136a1c3753c0593ad425e5da379938cb0c4a3da50e",
       "bytes": 448
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/wagon.c",
+      "path": "source/upstream/mudlib/d/snow/obj/wagon.c",
       "sha256": "1a0510c35e00e94d4e3d09fb4fe16a62057753d99f15570b05c4897c3824408e",
       "bytes": 1703
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/white_dress.c",
+      "path": "source/upstream/mudlib/d/npc/obj/white_dress.c",
       "sha256": "7ab460974583b078961426265bab6a3cc49adc8ecb3ee9ee6c64368b54204b6d",
       "bytes": 442
     },
@@ -4867,12 +4867,12 @@
       "bytes": 633
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/woodblade.c",
+      "path": "source/upstream/mudlib/d/snow/obj/woodblade.c",
       "sha256": "ad6c3b0748f5150a8e0c3c577cc74024bac2732c0646b45a67a62e7ac2368f1c",
       "bytes": 438
     },
     {
-      "path": "source/upstream/mudlib/d/snow/npc/obj/woodsword.c",
+      "path": "source/upstream/mudlib/d/snow/obj/woodsword.c",
       "sha256": "12d2bab11a150cc2a7a79fbc5cf013b1b8e0507b0956cf96120ffd0ff15af2a7",
       "bytes": 422
     },
@@ -6022,7 +6022,7 @@
       "bytes": 237
     },
     {
-      "path": "source/upstream/mudlib/obj/area/man.c",
+      "path": "source/upstream/mudlib/d/npc/man.c",
       "sha256": "9766bd11c625e0de58c99bc31c8f00d158e6ae808b43b6c4e47abfcec6ba130f",
       "bytes": 386
     },
@@ -6157,12 +6157,12 @@
       "bytes": 461
     },
     {
-      "path": "source/upstream/mudlib/obj/area/traveller.c",
+      "path": "source/upstream/mudlib/d/oldpine/npc/traveller.c",
       "sha256": "b153cefdfd2c6491119140ca9bc7fe7aab29b897d13c5b02765b571cff520087",
       "bytes": 946
     },
     {
-      "path": "source/upstream/mudlib/obj/area/vagabond.c",
+      "path": "source/upstream/mudlib/d/qiaoyin/npc/vagabond.c",
       "sha256": "30ecb675a0da2cbad498a59849f22f03fc9d44fa5930aec653a0ab4282b4c117",
       "bytes": 795
     },

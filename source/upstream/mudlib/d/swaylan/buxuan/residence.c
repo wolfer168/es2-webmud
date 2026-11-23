@@ -15,7 +15,7 @@ LONG
         "out" : __DIR__"steps2",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/ro_yi" : 1,
+        "/d/swaylan/buxuan/npc/ro_yi" : 1,
         __DIR__"npc/apprentice" : 2,
     ]));
     set("map/area", "水嵐縣");

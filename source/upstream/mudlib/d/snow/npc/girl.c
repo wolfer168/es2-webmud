@@ -32,7 +32,7 @@ void create()
         "別有一股靈秀之氣﹐令人凜然不敢輕侮。\n" );
     set_power("S");
     setup();
-    carry_object(__DIR__"obj/white_dress")->wear();
+    carry_object("/d/npc/obj/white_dress")->wear();
     carry_object(__DIR__"obj/slasher_sword")->wield();
 }
 

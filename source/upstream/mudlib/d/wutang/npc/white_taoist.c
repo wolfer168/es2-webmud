@@ -26,6 +26,6 @@ LONG
     set("custom_faction", "taoist.freeze");   // 門派記號（docs/martial_arts/門派武功對照表.md）
     set_power("B");
     setup();
-    carry_object("/custom/armor/cloth/white_taoist_robe")->wear();
+    carry_object("/d/wutang/npc/obj/white_taoist_robe")->wear();
     carry_object("/obj/example/weapon/longsword")->wield();
 }

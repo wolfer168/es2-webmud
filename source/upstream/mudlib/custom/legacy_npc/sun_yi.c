@@ -28,6 +28,6 @@ void create()
     carry_object("/custom/armor/armor/shapeless_heartguard")->wear();   // 無形心鏡
     carry_object("/custom/armor/waist/girl_girth")->wear();   // 束腰帶
     carry_object("/custom/armor/feet/embroidery_boots")->wear();   // 繡花鞋
-    carry_object("/d/snow/npc/obj/white_dress")->wear();   // 白綢羽衫
+    carry_object("/d/npc/obj/white_dress")->wear();   // 白綢羽衫
     carry_object("/custom/weapon/blade/snow_blade")->wield();   // 啐雪大刀
 }

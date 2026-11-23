@@ -16,7 +16,7 @@ LONG
         "west" : __DIR__"escort_yard",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/kao_fon" : 1,
+        "/d/swaylan/npc/kao_fon" : 1,
     ]));
     set("map/area", "水嵐縣");
     setup();

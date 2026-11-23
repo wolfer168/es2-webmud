@@ -26,7 +26,7 @@ LONG
         "south" : __DIR__"yamen_hall",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/lin_yu_lun" : 1,
+        "/d/ziyan/npc/lin_yu_lun" : 1,
         __DIR__"npc/constable" : 2,
     ]));
     set("map/area", "水嵐縣");

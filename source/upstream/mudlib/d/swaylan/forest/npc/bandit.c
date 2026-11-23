@@ -35,6 +35,6 @@ LONG
     set_power("B");
     setup();
     carry_object("/obj/area/obj/longsword")->wield();
-    carry_object("/d/oldpine/obj/coarse_cloth")->wear();
+    carry_object("/d/npc/obj/coarse_cloth")->wear();
     carry_money("silver", 5 + random(26));   // 隨機 5～30 兩
 }

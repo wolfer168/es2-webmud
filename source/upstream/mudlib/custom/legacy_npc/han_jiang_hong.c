@@ -24,10 +24,10 @@ void create()
         "早就告老還鄉，過著逗鵝戲竹的生活啦。\n");
     set_power("B");
     setup();
-    carry_object("/custom/weapon/sword/jeweled_shortsword")->wield();   // 鑲玉短劍
+    carry_object("/d/wutang/npc/obj/jeweled_shortsword")->wield();   // 鑲玉短劍
     carry_object("/custom/weapon/sword/jade_sword")->wield("secondhand sword");   // 冷玉寶劍
-    carry_object("/d/lee/obj/crystal_ring")->wear();   // 水晶戒指
-    carry_object("/custom/armor/feet/snakeskin_boots")->wear();   // 青蟒靴
+    carry_object("/d/lee/npc/obj/crystal_ring")->wear();   // 水晶戒指
+    carry_object("/d/swaylan/buxuan/npc/obj/snakeskin_boots")->wear();   // 青蟒靴
     carry_object("/custom/armor/cloth/dragon_cloth")->wear();   // 蟠龍朝服
     carry_object("/custom/armor/head/jade_hat")->wear();   // 綠玉頂戴
 }

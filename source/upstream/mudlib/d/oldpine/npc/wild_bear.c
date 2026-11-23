@@ -34,5 +34,5 @@ LONG
     // 野獸強度（1～10），數值見 daemon/race/beast.c。
     set_beast(7);
     setup();
-    carry_object("/d/oldpine/obj/meat");
+    carry_object("/d/npc/obj/meat");
 }

@@ -15,7 +15,7 @@ LONG
         "up" : __DIR__"forge",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/si_ma_lei" : 1,
+        "/d/baobao/npc/si_ma_lei" : 1,
     ]));
     set("map/area", "八寶樓");
     set("map/mode", "maze");

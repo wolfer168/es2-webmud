@@ -19,7 +19,7 @@ LONG
     );
     set_power("A");
     setup();
-    carry_object("/custom/armor/cloth/iron_cloth")->wear();
-    carry_object("/custom/armor/armor/battle_armor")->wear();
-    carry_object("/custom/armor/head/tiger_helmet")->wear();
+    carry_object("/d/npc/obj/iron_cloth")->wear();
+    carry_object("/d/qiaoyin/npc/obj/battle_armor")->wear();
+    carry_object("/d/qiaoyin/npc/obj/tiger_helmet")->wear();
 }

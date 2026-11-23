@@ -22,7 +22,7 @@ void create()
         "成長﹐對天朝的軍界政界都有不小的影響。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/finger/han_jade_ring")->wear();   // 漢玉戒指
+    carry_object("/d/npc/obj/han_jade_ring")->wear();   // 漢玉戒指
     carry_object("/custom/armor/cloth/dragon_cloth")->wear();   // 蟠龍朝服
     carry_object("/custom/armor/head/jade_hat")->wear();   // 綠玉頂戴
     carry_object("/custom/weapon/staff/serpent_cane")->wield();   // 冥魔杖

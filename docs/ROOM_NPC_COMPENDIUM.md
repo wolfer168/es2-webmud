@@ -100,7 +100,7 @@
 
 **NPC 敘述：**
 
-- **青衣漢子(Guard)** `/d/snow/npc/guard` ×2
+- **青衣漢子(Guard)** `/d/snowkeep/npc/guard` ×2
 
   ```text
   一個身穿藏青勁裝的漢子﹐雙目炯炯有神地盯著你。
@@ -110,7 +110,7 @@
   Ｖ長劍 (Long sword)
   ```
 
-- **枉死鬼(Wronged ghost)** `/custom/ghost/npc/wronged_ghost`
+- **枉死鬼(Wronged ghost)** `/d/npc/ghost/wronged_ghost`
 
   ```text
   一個因意外而亡的枉死鬼，無法投胎轉世，只能在事發地點附近遊蕩，
@@ -295,7 +295,7 @@
   Ｖ闊劍 (Broadsword)
   ```
 
-- **倀鬼(Tiger thrall)** `/custom/ghost/npc/tiger_thrall`
+- **倀鬼(Tiger thrall)** `/d/npc/ghost/tiger_thrall`
 
   ```text
   一個被老虎咬死的人所化的倀鬼。死後靈魂無法投胎，反而成為老虎的奴隸，
@@ -358,7 +358,7 @@
 
 **NPC 敘述：**
 
-- **遊魂(Wandering soul)** `/custom/ghost/npc/wandering_soul`
+- **遊魂(Wandering soul)** `/d/npc/ghost/wandering_soul`
 
   ```text
   一縷不屬於任何家族牌位的遊魂，無人祭祀、無處可歸，只能等待陽間的
@@ -378,7 +378,7 @@
 
 **NPC 敘述：**
 
-- **路人(Man)** `/obj/area/man`
+- **路人(Man)** `/d/npc/man`
 
   ```text
   一個普通的路人﹐像這樣的人一天可以在路上碰見幾十個。
@@ -417,7 +417,7 @@
 
 **NPC 敘述：**
 
-- **朱衣派弟子(Red-taoist)** `/custom/taoism/npc/fire_taoist`
+- **朱衣派弟子(Red-taoist)** `/d/snow/npc/fire_taoist`
 
   ```text
   這名朱衣派弟子精通天師道法【火術】，手持長劍，身穿布衣。
@@ -426,7 +426,7 @@
   Ｖ長劍 (Long sword)
   ```
 
-- **素衣派弟子(White-taoist)** `/custom/taoism/npc/freeze_taoist`
+- **素衣派弟子(White-taoist)** `/d/snow/npc/freeze_taoist`
 
   ```text
   這名素衣派弟子精通天師道法【冰咒】，手持長劍，身穿布衣。
@@ -435,7 +435,7 @@
   Ｖ長劍 (Long sword)
   ```
 
-- **玄衣派弟子(Black-taoist)** `/custom/taoism/npc/storm_taoist`
+- **玄衣派弟子(Black-taoist)** `/d/snow/npc/storm_taoist`
 
   ```text
   這名玄衣派弟子精通天師道法【風符】，手持長劍，身穿布衣。
@@ -444,7 +444,7 @@
   Ｖ長劍 (Long sword)
   ```
 
-- **紫衣派弟子(Purple-taoist)** `/custom/taoism/npc/thunder_taoist`
+- **紫衣派弟子(Purple-taoist)** `/d/snow/npc/thunder_taoist`
 
   ```text
   這名紫衣派弟子精通天師道法【雷法】，手持長劍，身穿布衣。
@@ -453,7 +453,7 @@
   Ｖ長劍 (Long sword)
   ```
 
-- **魍魎(Water goblin)** `/custom/ghost/npc/water_goblin`
+- **魍魎(Water goblin)** `/d/npc/ghost/water_goblin`
 
   ```text
   一隻皮膚紅黑、耳朵很長的魍魎，喜歡在夜間模仿人類的聲音來嚇人，
@@ -484,7 +484,7 @@
 
 **NPC 敘述：**
 
-- **遊魂(Wandering soul)** `/custom/ghost/npc/wandering_soul`
+- **遊魂(Wandering soul)** `/d/npc/ghost/wandering_soul`
 
   ```text
   一縷不屬於任何家族牌位的遊魂，無人祭祀、無處可歸，只能等待陽間的
@@ -645,7 +645,7 @@
   拾荒老頭屬於人類族。他的外表看起來約六十多歲。
   ```
 
-- **餓鬼(Hungry ghost)** `/custom/ghost/npc/hungry_ghost` ×2
+- **餓鬼(Hungry ghost)** `/d/npc/ghost/hungry_ghost` ×2
 
   ```text
   一隻肚子大如鼓、食道卻細如針孔的餓鬼。每當牠看到食物想要進食時，
@@ -693,7 +693,7 @@
   Ｖ木劍 (Wooden sword)
   ```
 
-- **武陀灸堂堂主「鬼華陀」武道通(Wu dauton)** `/custom/legacy_npc/wu_dauton`
+- **武陀灸堂堂主「鬼華陀」武道通(Wu dauton)** `/d/qiaoyin_east/npc/wu_dauton`
 
   ```text
   武道通年輕時本為龍圖丹派的方士, 因為一次因緣際會結識了一位江湖異人, 習得
@@ -812,7 +812,7 @@
 
 **NPC 敘述：**
 
-- **魑魅(Mountain sprite)** `/custom/ghost/npc/mountain_sprite`
+- **魑魅(Mountain sprite)** `/d/npc/ghost/mountain_sprite`
 
   ```text
   一隻由深山老林中的瘴氣、木石等自然異氣化生而成的精怪，身形忽濃忽淡，
@@ -1082,7 +1082,7 @@
   李半仙屬於人類族。他的外表看起來約五十多歲。
   ```
 
-- **幻霧觀觀主 杜風凌(Du feng ling)** `/custom/legacy_npc/du_feng_ling`
+- **幻霧觀觀主 杜風凌(Du feng ling)** `/d/lee/npc/du_feng_ling`
 
   ```text
   杜風凌本是西方大漠的巫首族人﹐自幼拜林遠為師﹐修習茅山道法。也許是
@@ -1500,7 +1500,7 @@
 
 **NPC 敘述：**
 
-- **護院武師(Guard)** `/d/wutang/npc/guard` ×4
+- **護院武師(Guard)** `/d/npc/guard` ×4
 
   ```text
   肌肉虯結一身橫肉，看起來並不好惹的樣子。
@@ -2133,7 +2133,7 @@
   Ｖ狼皮帽 (Woof hat)
   ```
 
-- **冷梅莊二代弟子(Apprentice)** `/d/wutang/npc/apprentice`
+- **冷梅莊二代弟子(Apprentice)** `/d/swaylan/lunmay/npc/apprentice`
 
   ```text
   冷梅莊弟子，在劍法、內功上已經有相當火侯。
@@ -2185,7 +2185,7 @@
   老駱屬於人類族。他的外表看起來約五十多歲。
   ```
 
-- **小黃(Shipman)** `/d/wutang/npc/huang`
+- **小黃(Shipman)** `/d/ziyan/npc/huang`
 
   ```text
   一位年輕氣壯、精力旺盛的小伙子。
@@ -2488,7 +2488,7 @@
 
 **NPC 敘述：**
 
-- **山羊(Goat)** `/d/oldpine/npc/goat` ×3
+- **山羊(Goat)** `/d/npc/goat` ×3
 
   ```text
   在山壁上到處爬來爬去，低頭吃著為數不多的野草。
@@ -2826,7 +2826,7 @@
 
 **NPC 敘述：**
 
-- **過路客(Traveller)** `/obj/area/traveller` ×2
+- **過路客(Traveller)** `/d/oldpine/npc/traveller` ×2
 
   ```text
   一位行色匆匆, 滿臉風霜的過路客, 一身勁裝, 似乎隨時又要上路去.
@@ -2855,7 +2855,7 @@
   旅行小販屬於人類族。他的外表看起來約四十多歲。
   ```
 
-- **路人(Man)** `/obj/area/man`
+- **路人(Man)** `/d/npc/man`
 
   ```text
   一個普通的路人﹐像這樣的人一天可以在路上碰見幾十個。
@@ -3022,7 +3022,7 @@
 
 **NPC 敘述：**
 
-- **松鼠(Squirrel)** `/d/oldpine/npc/squirrel` ×4
+- **松鼠(Squirrel)** `/d/npc/squirrel` ×4
 
   ```text
   森林裡的松鼠數量眾多，同時也是獵人的主要獵物之一。
@@ -3440,19 +3440,19 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 
 | NPC | 檔案 | 出現房間 |
 |---|---|---|
-| 餓鬼(Hungry ghost) | `/custom/ghost/npc/hungry_ghost` | 廣場中央（雪亭鎮） |
-| 魑魅(Mountain sprite) | `/custom/ghost/npc/mountain_sprite` | 雪亭鎮（雪亭鎮） |
-| 倀鬼(Tiger thrall) | `/custom/ghost/npc/tiger_thrall` | 山路（雪亭鎮） |
-| 遊魂(Wandering soul) | `/custom/ghost/npc/wandering_soul` | 街道（雪亭鎮）、破舊大宅（雪亭鎮） |
-| 魍魎(Water goblin) | `/custom/ghost/npc/water_goblin` | 溪邊（雪亭鎮） |
-| 枉死鬼(Wronged ghost) | `/custom/ghost/npc/wronged_ghost` | 木橋（雪亭鎮） |
+| 餓鬼(Hungry ghost) | `/d/npc/ghost/hungry_ghost` | 廣場中央（雪亭鎮） |
+| 魑魅(Mountain sprite) | `/d/npc/ghost/mountain_sprite` | 雪亭鎮（雪亭鎮） |
+| 倀鬼(Tiger thrall) | `/d/npc/ghost/tiger_thrall` | 山路（雪亭鎮） |
+| 遊魂(Wandering soul) | `/d/npc/ghost/wandering_soul` | 街道（雪亭鎮）、破舊大宅（雪亭鎮） |
+| 魍魎(Water goblin) | `/d/npc/ghost/water_goblin` | 溪邊（雪亭鎮） |
+| 枉死鬼(Wronged ghost) | `/d/npc/ghost/wronged_ghost` | 木橋（雪亭鎮） |
 | 家園管家(Home butler) | `/custom/home/npc/butler` | 家園大廳（玩家住宅） |
-| 幻霧觀觀主 杜風凌(Du feng ling) | `/custom/legacy_npc/du_feng_ling` | 小旅店（李家村） |
-| 武陀灸堂堂主「鬼華陀」武道通(Wu dauton) | `/custom/legacy_npc/wu_dauton` | 武陀灸堂（喬陰城外東側） |
-| 朱衣派弟子(Red-taoist) | `/custom/taoism/npc/fire_taoist` | 溪邊（雪亭鎮） |
-| 素衣派弟子(White-taoist) | `/custom/taoism/npc/freeze_taoist` | 溪邊（雪亭鎮） |
-| 玄衣派弟子(Black-taoist) | `/custom/taoism/npc/storm_taoist` | 溪邊（雪亭鎮） |
-| 紫衣派弟子(Purple-taoist) | `/custom/taoism/npc/thunder_taoist` | 溪邊（雪亭鎮） |
+| 幻霧觀觀主 杜風凌(Du feng ling) | `/d/lee/npc/du_feng_ling` | 小旅店（李家村） |
+| 武陀灸堂堂主「鬼華陀」武道通(Wu dauton) | `/d/qiaoyin_east/npc/wu_dauton` | 武陀灸堂（喬陰城外東側） |
+| 朱衣派弟子(Red-taoist) | `/d/snow/npc/fire_taoist` | 溪邊（雪亭鎮） |
+| 素衣派弟子(White-taoist) | `/d/snow/npc/freeze_taoist` | 溪邊（雪亭鎮） |
+| 玄衣派弟子(Black-taoist) | `/d/snow/npc/storm_taoist` | 溪邊（雪亭鎮） |
+| 紫衣派弟子(Purple-taoist) | `/d/snow/npc/thunder_taoist` | 溪邊（雪亭鎮） |
 | 徵兵官 魯熙年(Lu xinien) | `/custom/zhenwu/npc/lu_xinien` | 校場（振武軍營） |
 | 「振武軍提督」米沛(Mee-pei) | `/custom/zhenwu/npc/mee_pei` | 大帳（振武軍營） |
 | 小兵(Soldier) | `/custom/zhenwu/npc/soldier` | 振武軍營大門（振武軍營） |
@@ -3478,7 +3478,7 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 大黑熊(Big bear) | `/d/oldpine/npc/big_bear` | 山洞深處（迷霧森林） |
 | 彤雲寺住持 大觀和尚(Abbot da-gaun) | `/d/oldpine/npc/da_guan` | 大雄寶殿（老松林） |
 | 野鹿(Deer) | `/d/oldpine/npc/deer` | 迷霧森林（迷霧森林） |
-| 山羊(Goat) | `/d/oldpine/npc/goat` | 草叢（老松林） |
+| 山羊(Goat) | `/d/npc/goat` | 草叢（老松林） |
 | 採藥人(Herbalist) | `/d/oldpine/npc/herbalist` | 蘆葦叢（迷霧森林）、樹林（迷霧森林） |
 | 受傷的旅客(Injured traveller) | `/d/oldpine/npc/injured_traveller` | 空地（老松林） |
 | 虎刀門長老 高慎(Kao shen) | `/d/oldpine/npc/kao_shen` | 空地（老松林） |
@@ -3486,7 +3486,7 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 小黑熊(Little bear) | `/d/oldpine/npc/little_bear` | 山洞（迷霧森林）、山洞深處（迷霧森林） |
 | 老鼠(Rat) | `/d/oldpine/npc/rat` | 廚房（迷霧森林） |
 | 旅行小販(Seller) | `/d/oldpine/npc/seller` | 迷霧森林（迷霧森林） |
-| 松鼠(Squirrel) | `/d/oldpine/npc/squirrel` | 樹林深處（迷霧森林） |
+| 松鼠(Squirrel) | `/d/npc/squirrel` | 樹林深處（迷霧森林） |
 | 店小二(Waiter) | `/d/oldpine/npc/waiter` | 野店（迷霧森林） |
 | 凶暴的野熊(Bear) | `/d/oldpine/npc/wild_bear` | 山洞（老松林） |
 | 土匪 徐彪(Xue biaw) | `/d/oldpine/npc/xue_biao` | 林間空地（老松林） |
@@ -3499,7 +3499,7 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 瞎眼老太婆(Blind gammer) | `/d/snow/npc/gammer` | 廣場中央（雪亭鎮） |
 | 官兵(Garrison) | `/d/snow/npc/garrison` | 山路（雪亭鎮） |
 | 白衣女子(Girl) | `/d/snow/npc/girl` | 破舊大宅正廳（雪亭鎮） |
-| 青衣漢子(Guard) | `/d/snow/npc/guard` | 木橋（雪亭鎮） |
+| 青衣漢子(Guard) | `/d/snowkeep/npc/guard` | 木橋（雪亭鎮） |
 | 掌櫃(Innkeeper) | `/d/snow/npc/innkeeper` | 客棧大堂（雪亭鎮） |
 | 拾荒老頭(Junkman) | `/d/snow/npc/junkman` | 廣場中央（雪亭鎮） |
 | 武官(Lieutenant) | `/d/snow/npc/lieutenant` | 山路（雪亭鎮） |
@@ -3510,13 +3510,13 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 店小二(Waiter) | `/d/snow/npc/waiter` | 客棧大堂（雪亭鎮）、龍門客棧（巫師工作室） |
 | 少婦(Woman) | `/d/snow/npc/woman` | 溪邊小路（雪亭鎮） |
 | 魚天(Yu tan) | `/d/snow/npc/yu` | 魚記小鋪（雪亭鎮） |
-| 冷梅莊二代弟子(Apprentice) | `/d/wutang/npc/apprentice` | 涼亭（五堂鎮） |
+| 冷梅莊二代弟子(Apprentice) | `/d/swaylan/lunmay/npc/apprentice` | 涼亭（五堂鎮） |
 | 大野豬(Big boar) | `/d/wutang/npc/big_boar` | 菜田（五堂鎮） |
 | 野豬(Boar) | `/d/wutang/npc/boar` | 菜田（五堂鎮） |
 | 釣客(Fisher) | `/d/wutang/npc/fisher` | 鯉君渡口（五堂鎮） |
-| 護院武師(Guard) | `/d/wutang/npc/guard` | 景隆錢莊（五堂鎮） |
+| 護院武師(Guard) | `/d/npc/guard` | 景隆錢莊（五堂鎮） |
 | 朱衣派道士 郭布(Guo boo) | `/d/wutang/npc/guo_boo` | 交叉路口（五堂鎮） |
-| 小黃(Shipman) | `/d/wutang/npc/huang` | 河邊（五堂鎮） |
+| 小黃(Shipman) | `/d/ziyan/npc/huang` | 河邊（五堂鎮） |
 | 綠竹居士 呼延光(Huyen guan) | `/d/wutang/npc/huyen_guan` | 主廳（五堂鎮） |
 | 珍寶商人(Jeweller) | `/d/wutang/npc/jeweller` | 醇雨樓客棧三樓（五堂鎮） |
 | 廟祝(Keeper) | `/d/wutang/npc/keeper` | 鎮天神廟（五堂鎮） |
@@ -3541,5 +3541,5 @@ look bed 查看床；rest bed 或 上床開始休息；backhall 返回家園大�
 | 小鼠兒(Young man) | `/d/wutang/npc/young_man` | 五堂鎮口（五堂鎮） |
 | 青年書生(Young scholar) | `/d/wutang/npc/young_scholar` | 醇雨樓客棧三樓（五堂鎮） |
 | 雍泰(Yung tai) | `/d/wutang/npc/yung_tai` | 醇雨樓客棧（五堂鎮） |
-| 路人(Man) | `/obj/area/man` | 街道（雪亭鎮）、迷霧森林（迷霧森林） |
-| 過路客(Traveller) | `/obj/area/traveller` | 迷霧森林（迷霧森林） |
+| 路人(Man) | `/d/npc/man` | 街道（雪亭鎮）、迷霧森林（迷霧森林） |
+| 過路客(Traveller) | `/d/oldpine/npc/traveller` | 迷霧森林（迷霧森林） |

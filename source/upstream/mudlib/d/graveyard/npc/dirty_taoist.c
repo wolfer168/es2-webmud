@@ -36,9 +36,9 @@ LONG
     }));
     set_power("C");
     setup();
-    carry_object("/custom/armor/cloth/purple_taoist_robe")->wear();
-    carry_object("/d/graveyard/obj/chrysoberyl_ring")->wear();
-    carry_object("/d/graveyard/obj/urn");
+    carry_object("/d/npc/obj/purple_taoist_robe")->wear();
+    carry_object("/d/npc/obj/chrysoberyl_ring")->wear();
+    carry_object("/d/npc/obj/urn");
 }
 
 void drink()

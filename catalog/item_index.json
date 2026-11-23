@@ -164,7 +164,7 @@
     "manual_review": []
   },
   {
-    "path": "/obj/area/man",
+    "path": "/d/npc/man",
     "name": "路人",
     "ids": [
       "man"
@@ -671,7 +671,7 @@
     "manual_review": []
   },
   {
-    "path": "/obj/area/traveller",
+    "path": "/d/oldpine/npc/traveller",
     "name": "過路客",
     "ids": [
       "traveller"
@@ -692,7 +692,7 @@
     "manual_review": []
   },
   {
-    "path": "/obj/area/vagabond",
+    "path": "/d/qiaoyin/npc/vagabond",
     "name": "市井無賴",
     "ids": [
       "vagabond"

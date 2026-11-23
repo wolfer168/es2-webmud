@@ -25,8 +25,8 @@ void create()
         "主會面之前，先與歐陽無極會合。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/head/black_doli")->wear();   // 黑斗笠
-    carry_object("/custom/armor/finger/han_jade_ring")->wear();   // 漢玉戒指
-    carry_object("/custom/armor/cloth/green_robe")->wear();   // 青衣道袍
-    carry_object("/custom/weapon/sword/peachwood_sword")->wield();   // 桃木劍
+    carry_object("/d/npc/obj/black_doli")->wear();   // 黑斗笠
+    carry_object("/d/npc/obj/han_jade_ring")->wear();   // 漢玉戒指
+    carry_object("/d/npc/obj/green_robe")->wear();   // 青衣道袍
+    carry_object("/d/npc/obj/peachwood_sword")->wield();   // 桃木劍
 }

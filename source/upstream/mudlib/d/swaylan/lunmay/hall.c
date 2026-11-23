@@ -17,7 +17,7 @@ LONG
         "south" : __DIR__"courtyard",
     ]));
     set("objects", ([
-        "/d/wutang/npc/may_yin_fong" : 1,
+        "/d/swaylan/lunmay/npc/may_yin_fong" : 1,
         __DIR__"npc/goo" : 1,
     ]));
     set("map/area", "冷梅莊");

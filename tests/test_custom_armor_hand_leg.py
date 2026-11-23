@@ -1,11 +1,12 @@
 from pathlib import Path
+from placement import LibDir, current
 
 MUD = Path(__file__).resolve().parents[1] / 'source' / 'upstream' / 'mudlib'
-ARMOR = MUD / 'custom' / 'armor'
+ARMOR = LibDir(MUD / 'custom' / 'armor')
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def test_counts_and_slots():

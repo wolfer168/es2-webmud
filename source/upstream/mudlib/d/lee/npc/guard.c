@@ -11,9 +11,9 @@ void create()
     set("long", "一名負責巡看李家村出入口的守衛，穿著便於行動的短裝，目光時常警覺地掃視著來往的行人。\n");
     set_power("C");
     setup();
-    carry_object("/d/lee/obj/brow_staff")->wield();
-    carry_object("/d/lee/obj/hemp_cloth")->wear();
-    carry_object("/d/lee/obj/hemp_boots")->wear();
+    carry_object("/d/lee/npc/obj/brow_staff")->wield();
+    carry_object("/d/npc/obj/hemp_cloth")->wear();
+    carry_object("/d/lee/npc/obj/hemp_boots")->wear();
 }
 
 // MODIFIED: F_VILLAGER's default accept_fight() always refuses (return 0),

@@ -20,5 +20,5 @@ LONG
     );
     set_power("A");
     setup();
-    carry_object("/custom/armor/cloth/white_cloth")->wear();
+    carry_object("/d/npc/obj/white_cloth")->wear();
 }

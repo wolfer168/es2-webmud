@@ -17,7 +17,7 @@ LONG
         "east" : __DIR__"yard_w",
     ]));
     set("objects", ([
-        "/d/snow/npc/guard" : 2,
+        "/d/snowkeep/npc/guard" : 2,
     ]));
     set("map/area", "雪吟莊");
     setup();

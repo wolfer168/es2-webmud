@@ -16,7 +16,7 @@ LONG
         "south" : __DIR__"mid_lane2",
     ]));
     set("objects", ([
-        __DIR__"npc/wild_dog" : 1,
+        "/d/npc/wild_dog" : 1,
     ]));
     set("map/area", "喬陰縣");
     setup();

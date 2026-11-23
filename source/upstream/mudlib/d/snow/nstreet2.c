@@ -13,7 +13,7 @@ LONG
 	);
 	set("no_clean_up", 0);
 	set("objects", ([ /* sizeof() == 1 */
-		"/obj/area/man" : 1,
+		"/d/npc/man" : 1,
 ]));
 	set("exits", ([ /* sizeof() == 4 */
 		"west" : __DIR__"post_office",

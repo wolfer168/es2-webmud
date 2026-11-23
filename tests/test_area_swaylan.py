@@ -1,4 +1,5 @@
 from pathlib import Path
+from placement import current
 import json
 import re
 import unicodedata
@@ -31,7 +32,7 @@ def rid(p):
 
 
 def read(p):
-    return p.read_text(encoding='utf-8')
+    return current(p).read_text(encoding='utf-8')   # 搬走的檔案照 adm/etc/moved_paths 找（docs/NPC_ITEM_PLACEMENT.md）
 
 
 def exits(room_id):
@@ -117,8 +118,8 @@ def test_special_rooms():
         assert 'set("no_fight", 1);' in read(S / (r + '.c')), r
     s = read(S / 'north_gate.c')
     assert 'arg != "破洞"' in s and 'move("/d/swaylan/old_ferry")' in s
-    assert '"/custom/legacy_npc/huang_tien_ba" : 1' in read(S / 'escort_hall.c')
-    assert '"/custom/legacy_npc/kao_fon" : 1' in read(S / 'escort_side.c')
+    assert '"/d/swaylan/npc/huang_tien_ba" : 1' in read(S / 'escort_hall.c')
+    assert '"/d/swaylan/npc/kao_fon" : 1' in read(S / 'escort_side.c')
 
 
 def test_shops():
@@ -139,9 +140,9 @@ def test_web_map():
 
 def test_lunmay_manor():
     # 梅影風搬回冷梅莊正廳、不走動、不再傳授冷梅劍法（使用者指示，2026-10-30）。
-    assert '"/d/wutang/npc/may_yin_fong" : 1,' in read(L / 'hall.c')
+    assert '"/d/swaylan/lunmay/npc/may_yin_fong" : 1,' in read(L / 'hall.c')
     assert 'may_yin_fong' not in read(MUD / 'd/wutang/crossroad.c')
-    s = read(MUD / 'd/wutang/npc/may_yin_fong.c')
+    s = read(MUD / 'd/swaylan/lunmay/npc/may_yin_fong.c')
     assert 'wander' not in s
     assert '冷梅劍法的要訣需要自行體會，到前院去練習，等你能夠一劍七環時就算有所小成了。' in s
     assert '"north" : __DIR__"lunmay/gate",' in read(S / 'crossroad.c')
@@ -183,7 +184,7 @@ def test_temple_and_buxuan():
     s = read(BUXUAN / 'npc/luo_yun_feng.c')
     assert 'set_skill("uenfon", 80);' in s and 'SKILL_D("uenfon")->valid_learn(me)' in s
     assert (MUD / 'daemon/skill/uenfon.c').exists()
-    assert '"/custom/legacy_npc/ro_yi" : 1,' in read(BUXUAN / 'residence.c')
+    assert '"/d/swaylan/buxuan/npc/ro_yi" : 1,' in read(BUXUAN / 'residence.c')
 
 
 def test_forest():
@@ -210,12 +211,12 @@ def test_forest():
     assert 'bi_jade_armor' in read(FOREST / 'npc/bandit_chief.c')
     assert 'wolf_armor' not in read(FOREST / 'npc/bandit_captain.c')
     # 原資料物品改成設計表數值、敘述不變（使用者指示，2026-10-30）。
-    s = read(MUD / 'custom/weapon/sword/needle_sword.c')
+    s = read(MUD / 'd/swaylan/forest/npc/obj/needle_sword.c')
     assert 'set_weight(7500);' in s and 'init_damage(3, 15, 150, 3, "sword");' in s and 'void miss_ob' in s
     assert 'random(100) >= 50' in s and 'consume_stat("kee", 10, me)' in s
-    s = read(MUD / 'custom/weapon/axe/dragon_tiger_axe.c')
+    s = read(MUD / 'd/swaylan/forest/npc/obj/dragon_tiger_axe.c')
     assert 'set_weight(10000);' in s and 'set("value", 30000);' in s and '"damage": 10,' in s
-    s = read(MUD / 'custom/armor/armor/dragon_jade_robe.c')
+    s = read(MUD / 'd/swaylan/forest/npc/obj/dragon_jade_robe.c')
     assert '"defense": 10,' in s and '"armor_vs_fire": 10,' in s and '"armor_vs_ice": 20,' in s
     s = read(FOREST / 'obj/bi_jade_armor.c')
     assert '"armor": 15,' in s and '"con": 1,' in s and '"wis": 1,' in s

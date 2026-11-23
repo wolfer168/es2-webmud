@@ -26,6 +26,6 @@ void create()
     set_power("B");
     setup();
     carry_object("/custom/weapon/axe/eight_ghost_axe")->wield();   // 八鬼牙斧
-    carry_object("/custom/armor/cloth/blood_stained_cloth")->wear();   // 征衣「血染」
+    carry_object("/d/npc/obj/blood_stained_cloth")->wear();   // 征衣「血染」
     carry_object("/custom/armor/armor/soul_lapis_lazuli_plate")->wear();   // 靈中樞甲
 }

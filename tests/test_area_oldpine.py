@@ -21,7 +21,7 @@ def exits(name):
 def test_rooms_npcs_and_areas():
     rooms = sorted(p.stem for p in O.glob('*.c'))
     assert len(rooms) == 50   # 46 間房間，蘆葦叢迷宮多出 reeds2～reeds5 四間
-    assert len(list((O / 'npc').glob('*.c'))) == 18
+    assert len(list((O / 'npc').glob('*.c'))) == 17   # 2026-11-23：山羊、松鼠搬到 /d/npc，過路客由 /obj/area 搬進來
     areas = {}
     for r in rooms:
         s = read(O / (r + '.c'))
@@ -89,9 +89,10 @@ def test_bandit_bounty_and_aggression():
 
 
 def test_beast_strengths():
-    want = {'deer': 3, 'rat': 1, 'squirrel': 1, 'wolf': 4, 'wild_bear': 7, 'little_bear': 4, 'big_bear': 5}
+    want = {'deer': 3, 'rat': 1, 'wolf': 4, 'wild_bear': 7, 'little_bear': 4, 'big_bear': 5}
     for f, n in want.items():
         assert 'set_beast(%d);' % n in read(O / 'npc' / (f + '.c')), f
+    assert 'set_beast(1);' in read(MUD / 'd/npc/squirrel.c')   # 松鼠多區共用，2026-11-23 搬到 /d/npc
     assert 'set_beast(4);' in read(MUD / 'd/wutang/npc/boar.c')
     assert 'set_beast(5);' in read(MUD / 'd/wutang/npc/big_boar.c')
     assert 'set_beast(2);' in read(MUD / 'd/wutang/npc/sheep.c')

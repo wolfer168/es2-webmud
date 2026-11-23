@@ -8,7 +8,7 @@ string *weapons = ({
     "/obj/area/obj/pike",
     "/obj/area/obj/weirblade",
     "/obj/area/obj/broadsword",
-    "/custom/weapon/axe/huge_axe",
+    "/d/swaylan/npc/obj/huge_axe",
 });
 
 void create()
@@ -38,6 +38,6 @@ LONG
     set_power("A");
     setup();
     carry_object(weapons[random(sizeof(weapons))])->wield();
-    carry_object("/custom/armor/armor/ring_mail")->wear();
-    carry_object("/d/snow/npc/obj/clothboot")->wear();
+    carry_object("/d/swaylan/npc/obj/ring_mail")->wear();
+    carry_object("/d/npc/obj/clothboot")->wear();
 }

@@ -18,8 +18,8 @@ void create()
     set_skill("parry", 100);
     set_power("A");
     setup();
-    carry_object("/custom/armor/cloth/exorcist_cassock")->wear();   // 伏魔法衣
-    carry_object("/custom/armor/armor/side_armor")->wear();   // 肩鎧
-    carry_object("/custom/weapon/sword/peachwood_sword")->wield();   // 桃木劍
+    carry_object("/d/mengjia/npc/obj/exorcist_cassock")->wear();   // 伏魔法衣
+    carry_object("/d/npc/obj/side_armor")->wear();   // 肩鎧
+    carry_object("/d/npc/obj/peachwood_sword")->wield();   // 桃木劍
     carry_money("coin", 5);   // 五文錢
 }

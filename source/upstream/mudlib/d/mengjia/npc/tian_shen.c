@@ -15,7 +15,7 @@ void create()
     set("long", "田申是塞北雙熊中的老大，長得高高大大，打人全靠一身蠻力。自從弟弟田由迷戀孟憶柔起，他就待在這裡等待時機。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/feet/cloud_boots")->wear();   // 流雲靴
-    carry_object("/custom/armor/leg/star_studded_legs")->wear();   // 星雲腿護
-    carry_object("/custom/weapon/sword/copper_sword")->wield();   // 古銅重劍
+    carry_object("/d/npc/obj/cloud_boots")->wear();   // 流雲靴
+    carry_object("/d/mengjia/npc/obj/star_studded_legs")->wear();   // 星雲腿護
+    carry_object("/d/mengjia/npc/obj/copper_sword")->wield();   // 古銅重劍
 }

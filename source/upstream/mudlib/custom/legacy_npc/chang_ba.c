@@ -29,7 +29,7 @@ void create()
     set_power("A");
     setup();
     carry_object("/custom/armor/armor/shoulder_armor")->wear();   // 藍鋼肩甲
-    carry_object("/custom/armor/hand/skin_gloves")->wear();   // 鹿皮手套
+    carry_object("/d/snowkeep/npc/obj/skin_gloves")->wear();   // 鹿皮手套
     carry_object("/custom/armor/cloth/yellow_suit")->wear();   // 黃短衫
     carry_object("/custom/weapon/sword/daoist_sword");   // 指南劍
 }

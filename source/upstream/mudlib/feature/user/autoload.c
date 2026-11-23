@@ -58,6 +58,8 @@ void restore_autoload()
 			file = autoload[i];
 			param = 0;
 		}
+		// 檔案搬過家的，存檔裡的舊路徑先換成新路徑（docs/NPC_ITEM_PLACEMENT.md）。
+		file = MOVED_PATH_D->resolve(file);
 		err = catch(ob = new(file, this_object()));
 		if( err || !ob ) {
 			write("你覺得似乎失落了什麼重要的東西﹐最好通知一下巫師。\n");

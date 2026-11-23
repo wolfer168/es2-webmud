@@ -408,8 +408,8 @@
     "manual_review": []
   },
   {
-    "file": "obj/area/man.c",
-    "path": "/obj/area/man",
+    "file": "d/npc/man.c",
+    "path": "/d/npc/man",
     "type": "item",
     "sha256": "8616be9ad8bb444ff051ad72253cd6db8dc4b8f218f40ef722224e46b8e1a473",
     "inherits": [
@@ -1585,8 +1585,8 @@
     "manual_review": []
   },
   {
-    "file": "obj/area/traveller.c",
-    "path": "/obj/area/traveller",
+    "file": "d/oldpine/npc/traveller.c",
+    "path": "/d/oldpine/npc/traveller",
     "type": "item",
     "sha256": "d6cc6374742a5b8ba24cd2130f1b28e189987f0b3a200b50fa8ee9ed7bb7685b",
     "inherits": [
@@ -1673,8 +1673,8 @@
     "manual_review": []
   },
   {
-    "file": "obj/area/vagabond.c",
-    "path": "/obj/area/vagabond",
+    "file": "d/qiaoyin/npc/vagabond.c",
+    "path": "/d/qiaoyin/npc/vagabond",
     "type": "item",
     "sha256": "63b0b8ec622cebc6ac5acaeb99cd94c57c0e8106b5b89dbda735a817673be1fe",
     "inherits": [

@@ -13,7 +13,7 @@ LONG
     );
     set("objects", ([
         "/d/lee/npc/child" : 3,
-        __DIR__"obj/well" : 1
+        "/d/obj/well" : 1
     ]));
     set("exits", ([
         "west" : __DIR__"square_s",

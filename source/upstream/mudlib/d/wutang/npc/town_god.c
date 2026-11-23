@@ -1,7 +1,7 @@
 #include <ansi.h>
 // /d/wutang/npc/town_god.c — 五堂鎮 NPC：城隍爺（依五堂鎮設計表）。
 
-inherit "/custom/ghost/std_ghost";
+inherit "/d/npc/ghost/std_ghost";
 
 // 鬼魂向城隍爺報到（register）就能還陽復活，規則同雪亭鎮小廟的紅色漩渦。
 void init()

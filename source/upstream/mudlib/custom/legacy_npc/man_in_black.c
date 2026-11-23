@@ -20,9 +20,9 @@ void create()
         "一個一身黑衣的神秘男子，那雙充滿殺氣的眼睛讓人不敢直視。\n");
     set_power("B");
     setup();
-    carry_object("/custom/armor/neck/iron_rosary")->wear();   // 鐵佛珠
-    carry_object("/custom/armor/head/black_doli")->wear();   // 黑斗笠
-    carry_object("/custom/armor/hand/snake_bracers")->wear();   // 纏蛇護手
-    carry_object("/d/lee/obj/tight_cloth")->wear();   // 緊身衣
+    carry_object("/d/ziyan/npc/obj/iron_rosary")->wear();   // 鐵佛珠
+    carry_object("/d/npc/obj/black_doli")->wear();   // 黑斗笠
+    carry_object("/d/qiaoyin/npc/obj/snake_bracers")->wear();   // 纏蛇護手
+    carry_object("/d/lee/npc/obj/tight_cloth")->wear();   // 緊身衣
     carry_object("/custom/weapon/blade/blood_blade")->wield();   // 靈刀祭血
 }

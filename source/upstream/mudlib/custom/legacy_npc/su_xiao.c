@@ -24,8 +24,8 @@ void create()
         "，似乎有什麼心事....。\n");
     set_power("A");
     setup();
-    carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶
-    carry_object("/custom/armor/leg/red_dust_legs")->wear();   // 風塵腿護
-    carry_object("/custom/armor/cloth/silk_cloth")->wear();   // 天蠶寶衣
-    carry_object("/custom/weapon/sword/colosus_sword")->wield();   // 巨劍
+    carry_object("/d/npc/obj/water_dragon_girdle")->wear();   // 蛟龍帶
+    carry_object("/d/mengjia/npc/obj/red_dust_legs")->wear();   // 風塵腿護
+    carry_object("/d/npc/obj/silk_cloth")->wear();   // 天蠶寶衣
+    carry_object("/d/shuiyue/npc/obj/colosus_sword")->wield();   // 巨劍
 }

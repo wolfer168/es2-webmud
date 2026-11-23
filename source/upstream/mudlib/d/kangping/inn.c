@@ -15,8 +15,8 @@ LONG
         "west" : __DIR__"valley_mouth",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/ou_yan_wu_ji_2" : 1,
-        "/custom/legacy_npc/liuh_chuen_fon" : 1,
+        "/d/kangping/npc/ou_yan_wu_ji_2" : 1,
+        "/d/kangping/npc/liuh_chuen_fon" : 1,
         __DIR__"npc/innkeeper" : 1,
     ]));
     set("no_fight", 1);

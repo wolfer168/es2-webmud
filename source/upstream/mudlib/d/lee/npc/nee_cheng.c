@@ -19,7 +19,7 @@ LONG
     );
     set_power("A");
     setup();
-    carry_object("/d/snow/npc/obj/white_dress")->wear();
-    carry_object("/d/lee/obj/crystal_ring")->wear();
+    carry_object("/d/npc/obj/white_dress")->wear();
+    carry_object("/d/lee/npc/obj/crystal_ring")->wear();
     carry_object("/obj/area/obj/leather_whip")->wield();
 }

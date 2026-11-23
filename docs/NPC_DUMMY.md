@@ -17,7 +17,7 @@
 |---|---|
 | 振武軍營假人 | `custom/zhenwu/npc/target_stake.c` |
 | 冷梅莊假人 | `d/swaylan/lunmay/npc/stake.c` |
-| 百花村石獅子 | `d/baihua/npc/stone_lion.c` |
+| 百花村石獅子 | `d/npc/stone_lion.c` |
 | 白雲觀石假人 | `d/qiaoyin_east/npc/stone_stake.c` |
 | 石製假人（測試用，巫師房間） | `custom/wizroom/w/windstory/obj/stone_stake.c` |
 

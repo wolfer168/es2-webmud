@@ -23,6 +23,6 @@ void create()
         "禁有些心疼...。\n");
     set_power("B");
     setup();
-    carry_object("/d/snow/npc/obj/white_dress")->wear();   // 白綢羽衫
-    carry_object("/custom/weapon/dagger/black_iron_dagger")->wield();   // 黑鋼短刃
+    carry_object("/d/npc/obj/white_dress")->wear();   // 白綢羽衫
+    carry_object("/d/npc/obj/black_iron_dagger")->wield();   // 黑鋼短刃
 }

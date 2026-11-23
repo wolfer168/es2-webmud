@@ -15,7 +15,7 @@ LONG
         "out" : __DIR__"narrow_street",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/cheng_huai" : 1,
+        "/d/ziyan/npc/cheng_huai" : 1,
     ]));
     set("map/area", "水嵐縣");
     setup();

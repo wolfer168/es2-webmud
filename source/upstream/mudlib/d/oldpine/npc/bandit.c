@@ -38,6 +38,6 @@ LONG
     set_power("C");
     setup();
     carry_object("/obj/area/obj/blade")->wield();
-    carry_object("/custom/armor/cloth/leather_vest")->wear();
+    carry_object("/d/oldpine/npc/obj/leather_vest")->wear();
     carry_money("silver", 5);
 }

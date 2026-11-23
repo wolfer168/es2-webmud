@@ -17,7 +17,7 @@ LONG
         "east" : "/d/graveyard/grave8",
     ]));
     set("objects", ([
-        "/d/baihua/npc/stone_lion" : 2,
+        "/d/npc/stone_lion" : 2,
     ]));
     set("map/area", "太乙觀");
     setup();

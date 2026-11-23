@@ -22,10 +22,10 @@ LONG
     set_skill("sky_pike", 105);
     set_power("B");
     setup();
-    carry_object("/custom/weapon/pike/dragon_bone_pike")->wield();
-    carry_object("/custom/armor/head/golden_feather_helm")->wear();
-    carry_object("/custom/armor/armor/ringmail")->wear();
-    carry_object("/custom/armor/feet/forgod_boots")->wear();
+    carry_object("/d/baihua/npc/obj/dragon_bone_pike")->wield();
+    carry_object("/d/npc/obj/golden_feather_helm")->wear();
+    carry_object("/d/baihua/npc/obj/ringmail")->wear();
+    carry_object("/d/npc/obj/forgod_boots")->wear();
 }
 
 // 穹槍訣任務的終點（設計見 docs/martial_arts/穹槍訣.md）：收下血靈芝粉，傷癒後傳授穹槍訣；

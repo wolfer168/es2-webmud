@@ -24,7 +24,7 @@ void create()
 LONG
     );
     set("merchandise", ([
-        "/d/snow/npc/obj/roast_chicken" : 30,   // 紅燒雞
+        "/d/npc/obj/roast_chicken" : 30,   // 紅燒雞
         "/obj/food/dumpling" : 20,               // 牛肉包子
         "/obj/food/pork" : 10,                   // 白切肉
     ]));

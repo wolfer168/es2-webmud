@@ -1,6 +1,6 @@
 // /d/lee/npc/traveller.c
 // NEW（李家村復原版新增角色，非原始 ES2 資料，由專案成員指定人設）
-// 註：obj/area/traveller.c 已存在同名「過路客」角色，但人設完全不同（jiaojao 種族、
+// 註：d/oldpine/npc/traveller.c 已存在同名「過路客」角色，但人設完全不同（jiaojao 種族、
 // 女性、盜賊職、20 級、佩鞭），與此處要求的一般路人不符，故另外新建。
 
 #include <npc.h>

@@ -1,6 +1,6 @@
 # 冷梅莊莊主 梅影風（may yin fong）
 
-> CUSTOM NPC（NEW）。設定由使用者提供（2026-10-09）。檔案：`source/upstream/mudlib/d/wutang/npc/may_yin_fong.c`。
+> CUSTOM NPC（NEW）。設定由使用者提供（2026-10-09）。檔案：`source/upstream/mudlib/d/swaylan/lunmay/npc/may_yin_fong.c`。
 
 ## 基本
 
@@ -25,7 +25,7 @@
 ## 所在（2026-10-30 起）
 
 - 在冷梅莊正廳 `/d/swaylan/lunmay/hall` 出生，**不走動**（使用者指示，2026-10-30）。
-- 檔案仍放在 `d/wutang/npc/may_yin_fong.c`。過去在五堂鎮交叉路口出生、在五堂鎮內走動，已取消。
+- 檔案仍放在 `d/swaylan/lunmay/npc/may_yin_fong.c`。過去在五堂鎮交叉路口出生、在五堂鎮內走動，已取消。
 
 ## 拜師（apprentice may）
 

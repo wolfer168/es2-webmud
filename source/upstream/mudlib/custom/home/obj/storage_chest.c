@@ -123,7 +123,8 @@ int do_retrieve(string arg) {
         return notify_fail("沒有這個儲物格。\n");
 
     data = items[n - 1];
-    ob = new(data["file"]);
+    // 檔案搬過家的，存檔裡的舊路徑先換成新路徑（docs/NPC_ITEM_PLACEMENT.md）。
+    ob = new(MOVED_PATH_D->resolve(data["file"]));
     if (!ob) return notify_fail("這件物品暫時無法從儲物箱取出。\n");
 
     if (!undefinedp(data["amount"]) && function_exists("set_amount", ob))

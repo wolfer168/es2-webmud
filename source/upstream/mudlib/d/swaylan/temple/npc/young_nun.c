@@ -26,7 +26,7 @@ LONG
     set_skill("parry", 10);
     set_power("C");
     setup();
-    carry_object("/d/swaylan/temple/obj/rosary")->wear();
+    carry_object("/d/swaylan/temple/npc/obj/rosary")->wear();
     if( clonep() ) call_out("wander", WANDER_INTERVAL);
 }
 

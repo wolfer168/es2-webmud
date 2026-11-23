@@ -74,7 +74,7 @@ LONG
         "east" : __DIR__"drill_s",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/may_lan_wu" : 1,
+        "/d/swaylan/lunmay/npc/may_lan_wu" : 1,
     ]));
     set("map/area", "冷梅莊");
     setup();

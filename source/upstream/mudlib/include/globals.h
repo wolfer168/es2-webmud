@@ -30,6 +30,7 @@ author: Annihilator <taedlar@gmail.com>
 #define ENTER_D "/adm/daemons/enterd.c"
 #define EMOTE_D "/adm/daemons/emoted.c"
 #define ENHANCE_D "/adm/daemons/enhanced.c"
+#define MOVED_PATH_D "/adm/daemons/moved_pathd.c"
 #define FINGER_D "/adm/daemons/fingerd.c"
 #define IDENT_D "/adm/daemons/userid.c"
 #define LOGIN_D "/adm/daemons/logind.c"

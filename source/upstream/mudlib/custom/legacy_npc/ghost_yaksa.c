@@ -23,6 +23,6 @@ void create()
     set_power("B");
     setup();
     carry_object("/custom/weapon/blade/colosus_blade")->wield();   // 巨刀
-    carry_object("/custom/armor/waist/water_dragon_girdle")->wear();   // 蛟龍帶
-    carry_object("/custom/armor/leg/bamboo_legs")->wear();   // 青竹腿護
+    carry_object("/d/npc/obj/water_dragon_girdle")->wear();   // 蛟龍帶
+    carry_object("/d/snowkeep/npc/obj/bamboo_legs")->wear();   // 青竹腿護
 }

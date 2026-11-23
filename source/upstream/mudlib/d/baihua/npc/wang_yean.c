@@ -33,7 +33,7 @@ LONG
     ]));
     set_power("B");
     setup();
-    carry_object("/custom/weapon/dagger/shennong_dagger")->wield();
-    carry_object("/custom/armor/cloth/green_cloth")->wear();
-    carry_object("/custom/armor/head/goat_hat")->wear();
+    carry_object("/d/baihua/npc/obj/shennong_dagger")->wield();
+    carry_object("/d/npc/obj/green_cloth")->wear();
+    carry_object("/d/baihua/npc/obj/goat_hat")->wear();
 }

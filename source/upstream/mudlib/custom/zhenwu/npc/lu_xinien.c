@@ -28,10 +28,10 @@ void create(){
     foreach(string sk in taught_skills)
         set_skill(sk, 70);
     // 裝備（使用者指定，2026-10-19）
-    carry_object("/custom/weapon/blade/steelblade")->wield();
-    carry_object("/custom/armor/head/iron_helmet")->wear();
-    carry_object("/custom/armor/waist/iron_girth")->wear();
-    carry_object("/custom/armor/armor/ring_armor")->wear();
+    carry_object("/d/npc/obj/steelblade")->wield();
+    carry_object("/d/npc/obj/iron_helmet")->wear();
+    carry_object("/d/npc/obj/iron_girth")->wear();
+    carry_object("/d/npc/obj/ring_armor")->wear();
 }
 
 int accept_info(object ob, string type)

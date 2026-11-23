@@ -29,8 +29,8 @@ LONG
     set("merchandise", ([
         "/obj/area/obj/shortsword" : 5,
         "/obj/area/obj/dagger" : 5,
-        "/custom/weapon/needle/silver_needle" : 5,
-        "/d/snow/npc/obj/hoe" : 5,
+        "/d/npc/obj/silver_needle" : 5,
+        "/d/npc/obj/hoe" : 5,
     ]));
     set_power("C");
     setup();

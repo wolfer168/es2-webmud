@@ -24,5 +24,5 @@ void create()
     setup();
     carry_object("/custom/armor/feet/embroidery_boots")->wear();   // 繡花鞋
     carry_object("/custom/armor/waist/girl_girth")->wear();   // 束腰帶
-    carry_object("/custom/armor/cloth/green_cloth")->wear();   // 翠綠短杉
+    carry_object("/d/npc/obj/green_cloth")->wear();   // 翠綠短杉
 }

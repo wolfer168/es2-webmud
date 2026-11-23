@@ -28,9 +28,9 @@ void create()
     set("custom_faction", FACTION);   // 紫衣派（docs/martial_arts/門派武功對照表.md）
     set_power("S");
     setup();
-    carry_object("/custom/weapon/sword/numinous_sword")->wield();   // 虛靈劍
-    carry_object("/custom/armor/head/purple_helmet")->wear();   // 紫雲盔
-    carry_object("/custom/armor/cloth/purple_taoist_robe")->wear();   // 紫陽道袍
+    carry_object("/d/fengcheng/npc/obj/numinous_sword")->wield();   // 虛靈劍
+    carry_object("/d/fengcheng/npc/obj/purple_helmet")->wear();   // 紫雲盔
+    carry_object("/d/npc/obj/purple_taoist_robe")->wear();   // 紫陽道袍
 }
 
 // ------------------------------------------------------------------

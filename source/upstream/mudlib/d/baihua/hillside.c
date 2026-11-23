@@ -38,7 +38,7 @@ LONG
         "northwest" : "/d/oldpine/grass2",
     ]));
     set("objects", ([
-        "/d/oldpine/npc/goat" : 3,
+        "/d/npc/goat" : 3,
     ]));
     set("outdoors", "baihua");
     set("map/area", "百花村");

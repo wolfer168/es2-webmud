@@ -50,7 +50,7 @@ def wrap(s, width=70, first=4):
 def test_rooms_and_npcs():
     rooms = sorted(p.stem for p in E.glob('*.c'))
     assert len(rooms) == 17
-    assert sorted(p.stem for p in (E / 'npc').glob('*.c')) == ['stone_stake', 'tianfong']
+    assert sorted(p.stem for p in (E / 'npc').glob('*.c')) == ['lay_ton', 'stone_stake', 'tianfong', 'wu_dauton']   # 2026-11-23 NPC 歸位（docs/NPC_ITEM_PLACEMENT.md）
     for r in rooms:
         s = read(E / (r + '.c'))
         assert re.search(r'set\("map/area", "(白雲觀|喬陰東郊)"\);', s), r
@@ -58,8 +58,8 @@ def test_rooms_and_npcs():
             assert (E / 'npc' / (npc + '.c')).exists(), (r, npc)
         for ob in re.findall(r'"(/(?:custom|d|obj)/[^"]+)" : \d', s):
             assert (MUD / (ob.lstrip('/') + '.c')).exists(), (r, ob)
-    for f in ['custom/armor/cloth/cyan_taoist_robe.c', 'custom/weapon/sword/peachwood_sword.c',
-              'custom/armor/head/copper_hat.c']:
+    for f in ['d/qiaoyin_east/npc/obj/cyan_taoist_robe.c', 'd/npc/obj/peachwood_sword.c',
+              'd/npc/obj/copper_hat.c']:
         assert (MUD / f).exists(), f
 
 
@@ -127,13 +127,13 @@ def test_clinic_text_centered():
 
 
 def test_npcs_placed():
-    assert 'lay_ton' in read(E / 'sutra_hall.c') and 'legacy_patrol' in read(MUD / 'custom/legacy_npc/lay_ton.c')
+    assert 'lay_ton' in read(E / 'sutra_hall.c') and 'legacy_patrol' in read(MUD / 'd/qiaoyin_east/npc/lay_ton.c')
     assert 'wu_dauton' in read(E / 'clinic.c')
     assert 'wu_dauton' not in read(MUD / 'd/snow/square_n.c')
-    assert 'legacy_patrol' not in read(MUD / 'custom/legacy_npc/wu_dauton.c').replace('不再巡邏', '')
+    assert 'legacy_patrol' not in read(MUD / 'd/qiaoyin_east/npc/wu_dauton.c').replace('不再巡邏', '')
     assert read(E / 'ground_w.c').count('stone_stake" : 3') == 1 and read(E / 'ground_e.c').count('stone_stake" : 3') == 1
     assert 'tianfong' in read(E / 'hall.c')
-    assert '/d/lee/obj/well' in read(E / 'yard.c')
+    assert '/d/obj/well' in read(E / 'yard.c')
 
 
 def test_tianfong_quest():

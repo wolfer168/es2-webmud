@@ -23,6 +23,6 @@ void create()
         "奉了巫首王的特命，也難怪他對天朝的書籍會感興趣。\n");
     set_power("B");
     setup();
-    carry_object("/custom/weapon/sword/peachwood_sword")->wield();   // 桃木劍
-    carry_object("/custom/armor/head/copper_hat")->wear();   // 青銅道冠
+    carry_object("/d/npc/obj/peachwood_sword")->wield();   // 桃木劍
+    carry_object("/d/npc/obj/copper_hat")->wear();   // 青銅道冠
 }

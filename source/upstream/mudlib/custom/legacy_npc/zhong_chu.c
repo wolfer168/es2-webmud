@@ -27,8 +27,8 @@ void create()
         "確確實實令許多對手聞風喪膽。\n");
     set_power("A");
     setup();
-    carry_object("/custom/zhenwu/obj/steel_boots")->wear();   // 精鋼戰靴
+    carry_object("/d/npc/obj/steel_boots")->wear();   // 精鋼戰靴
     carry_object("/custom/armor/armor/dragon_plate_of_knights")->wear();   // 龍騎戰甲
-    carry_object("/custom/armor/hand/steel_bracers")->wear();   // 精鋼護腕
+    carry_object("/d/baobao/npc/obj/steel_bracers")->wear();   // 精鋼護腕
     carry_object("/custom/weapon/blunt/crasher_maul")->wield();   // 碎腦鎚
 }

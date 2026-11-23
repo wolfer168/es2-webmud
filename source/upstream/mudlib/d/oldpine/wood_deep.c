@@ -15,7 +15,7 @@ LONG
         "north" : __DIR__"wood4",
     ]));
     set("objects", ([
-        __DIR__"npc/squirrel" : 4,
+        "/d/npc/squirrel" : 4,
     ]));
     set("map/area", "迷霧森林");
     setup();

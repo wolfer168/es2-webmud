@@ -23,7 +23,7 @@ LONG
   set("objects", ([
 	__DIR__"npc/garrison": 4,
 	__DIR__"npc/lieutenant": 1,
-	"/custom/ghost/npc/tiger_thrall": 1,
+	"/d/npc/ghost/tiger_thrall": 1,
   ]) );
 
     setup();

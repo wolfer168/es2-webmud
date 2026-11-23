@@ -22,5 +22,5 @@ void create()
     set_power("B");
     setup();
     carry_object("/custom/armor/feet/bull_boots")->wear();   // 蠻牛靴
-    carry_object("/custom/armor/waist/iron_girth")->wear();   // 精鐵環扣
+    carry_object("/d/npc/obj/iron_girth")->wear();   // 精鐵環扣
 }

@@ -15,7 +15,7 @@ LONG
         "west" : __DIR__"fork",
     ]));
     set("objects", ([
-        "/custom/legacy_npc/mountain_god" : 1,
+        "/d/tianshan/npc/mountain_god" : 1,
     ]));
     set("map/area", "天山");
     setup();

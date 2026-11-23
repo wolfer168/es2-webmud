@@ -25,8 +25,8 @@ void create()
     set_power("A");
     setup();
     carry_object("/custom/armor/feet/wonder_boots")->wear();   // 六合玲瓏靴
-    carry_object("/custom/armor/head/black_doli")->wear();   // 黑斗笠
-    carry_object("/custom/armor/neck/psakaml")->wear();   // 金剛念珠
+    carry_object("/d/npc/obj/black_doli")->wear();   // 黑斗笠
+    carry_object("/d/npc/obj/psakaml")->wear();   // 金剛念珠
     carry_object("/custom/weapon/staff/flower_cane")->wield();   // 蓮花禪杖
-    carry_object("/custom/armor/cloth/gold_robe")->wear();   // 金線僧袍
+    carry_object("/d/snowkeep/npc/obj/gold_robe")->wear();   // 金線僧袍
 }

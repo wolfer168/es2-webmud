@@ -23,9 +23,9 @@ void create()
     set("custom_faction", "fighter.tiger");   // 虎刀門（docs/martial_arts/門派武功對照表.md）
     set_power("B");
     setup();
-    carry_object("/custom/armor/waist/lion_belt")->wear();   // 獅蠻帶
+    carry_object("/d/npc/obj/lion_belt")->wear();   // 獅蠻帶
     carry_object("/custom/armor/armor/iron_armor")->wear();   // 鐵戰甲
     carry_object("/custom/armor/finger/beast_ring")->wear();   // 獸面玉戒
-    carry_object("/custom/armor/leg/red_dust_legs")->wear();   // 風塵腿護
+    carry_object("/d/mengjia/npc/obj/red_dust_legs")->wear();   // 風塵腿護
     carry_object("/custom/weapon/blade/ceremonial_moon")->wield();   // 井中月
 }

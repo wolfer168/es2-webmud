@@ -36,9 +36,9 @@ void create()
     set_skill(SKILL_ID, 180);
     set_power("A");
     setup();
-    carry_object("/custom/weapon/sword/peachwood_sword")->wield();   // 桃木劍
-    carry_object("/custom/armor/cloth/cyan_taoist_robe")->wear();    // 青色道袍
-    carry_object("/custom/armor/head/copper_hat")->wear();           // 青銅道冠
+    carry_object("/d/npc/obj/peachwood_sword")->wield();   // 桃木劍
+    carry_object("/d/qiaoyin_east/npc/obj/cyan_taoist_robe")->wear();    // 青色道袍
+    carry_object("/d/npc/obj/copper_hat")->wear();           // 青銅道冠
 }
 
 int accept_info(object ob, string type)

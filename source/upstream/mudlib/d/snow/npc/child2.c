@@ -21,7 +21,7 @@ void create()
 	set_power("C");
 	setup();
 	carry_money("coin", 1);
-	carry_object(__DIR__"obj/woodsword")->wield();
+	carry_object("/d/snow/obj/woodsword")->wield();
 }
 
 int accept_fight(object ob)

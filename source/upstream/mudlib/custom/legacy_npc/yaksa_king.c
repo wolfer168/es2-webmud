@@ -24,6 +24,6 @@ void create()
     set("legacy_patrol", 1);       // 在同一區域內巡邏
     set_power("A");
     setup();
-    carry_object("/d/wutang/obj/blue_cloth")->wear();   // 青布衣
-    carry_object("/custom/armor/feet/forgod_boots")->wear();   // 封神靴
+    carry_object("/d/wutang/npc/obj/blue_cloth")->wear();   // 青布衣
+    carry_object("/d/npc/obj/forgod_boots")->wear();   // 封神靴
 }
