@@ -50,3 +50,16 @@ def test_weights_and_snow_dagger():
     assert 'set_weight(36000);' in read(W / 'staff' / 'rainlords_tooth_invoke.c')
     s = read(W / 'dagger' / 'snow_dagger.c')
     assert 'F_UNIQUE' not in s and '"con": 2,' in s and '"cor": 1,' in s and '"armor_vs_ice": 30,' in s and '"attack": 5,' in s
+
+
+def test_mee_pei_steel_axe_fallback():
+    # 精鋼戰斧：萬夫莫敵的替代武器（使用者指定，2026-11-23）
+    s = read(MUD / 'custom' / 'zhenwu' / 'npc' / 'obj' / 'steel_axe.c')
+    assert 'set_name("精鋼戰斧", ({ "steel axe", "axe" }));' in s
+    assert 'set_weight(12000);' in s and 'set("value", 12000);' in s
+    assert 'init_damage(4, 24, 146, 4, "twohanded axe");' in s   # 傷害 8～100，加成上限 140
+    assert 'F_UNIQUE' not in s
+    for k, v in (('cor', 1), ('str', 1), ('berserk', 10)):
+        assert '"%s": %d,' % (k, v) in s
+    m = read(MUD / 'custom' / 'zhenwu' / 'npc' / 'mee_pei.c')
+    assert m.index('great_axe_of_mighty') < m.index('environment(axe) != this_object()') < m.index('npc/obj/steel_axe')
