@@ -99,7 +99,9 @@ do_give(object me, object item, object who)
         // 要不要刪掉由各 NPC 自己處理（例：call_out("drop_item", 1, ob)）。
         if( item->value() ) {
 
-            message_vision("$N拿出" + item->short() + "交給$n。\n", me, who);
+            // 只顯示數量與中文名稱（例：五兩黃金），不帶英文 ID（使用者指示，2026-11-24）。
+            message_vision("$N拿出" + chinese_number(item->query_amount())
+                + item->query("base_unit") + item->name() + "交給$n。\n", me, who);
             destruct(item);
             return 1;
         }
