@@ -1,5 +1,5 @@
 /*---
-description: 大邪心法（NEW）。哭笑門內功。練成 20 級；功能：修習、refresh、recover（噴血回氣）、
+description: 大邪心法（NEW）。哭笑門內功。練成 20 級；功能：修習、refresh、heal（噴血回氣）、
              armor（大邪金身）。設計見 docs/martial_arts/哭笑門_大邪心法與其他武功.md。
 ---*/
 #include <ansi.h>
@@ -70,7 +70,7 @@ void skill_advanced(object me, string sk)
     }
 }
 
-/* 修習：每次運功 氣 -3（受傷 2）、精 -3（受傷 2）。 */
+/* 修習：每次運功 氣 -4（受傷 1，即氣的上限 -1）、精 -3（受傷 2）。 */
 int do_exercise(object me)
 {
     if( me->query_stat("kee") < 5 || me->query_stat("gin") < 5 ) {
@@ -78,8 +78,8 @@ int do_exercise(object me)
         return 0;
     }
 
-    me->consume_stat("kee", 3);
-    me->damage_stat("kee", 2);
+    me->consume_stat("kee", 4);
+    me->damage_stat("kee", 1);
     me->consume_stat("gin", 3);
     me->damage_stat("gin", 2);
 
@@ -113,8 +113,8 @@ int do_refresh(object me)
     return 1;
 }
 
-/* recover：精的上限減少 15（受傷），恢復氣 大邪心法/2、氣的上限 大邪心法/6；自身停頓 2 回合。 */
-int do_recover(object me)
+/* heal：精的上限減少 15（受傷），恢復氣 大邪心法/2、氣的上限 大邪心法/6；自身停頓 2 回合。 */
+int do_heal(object me)
 {
     int sk;
 
@@ -167,8 +167,8 @@ varargs int exert_function(object me, string func, object target)
         return 1;
     case "refresh":
         return do_refresh(me);
-    case "recover":
-        return do_recover(me);
+    case "heal":
+        return do_heal(me);
     case "armor":
         return do_armor(me);
     default:
