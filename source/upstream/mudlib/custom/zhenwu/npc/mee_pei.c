@@ -5,6 +5,8 @@ inherit F_SOLDIER;
 
 void create()
 {
+    object axe;
+
     set_name("米沛", ({"mee-pei", "mee pei", "mee", "pei", "米沛"}));
     set_race("human");
     set_class("soldier"); set_level(40);
@@ -27,7 +29,11 @@ void create()
     carry_object("/d/npc/obj/steel_boots")->wear();
     carry_object("/custom/zhenwu/obj/fire_gauntlets")->wear();
     carry_object("/d/npc/obj/steel_armor")->wear();
-    carry_object("/custom/zhenwu/obj/great_axe_of_mighty")->wield("twohanded axe");
+    // 萬夫莫敵是唯一的一把；被玩家拿走（還在世上）時，米沛重生就改拿精鋼戰斧（照蔚楓的寫法）。
+    axe = carry_object("/custom/zhenwu/obj/great_axe_of_mighty");   // 萬夫莫敵
+    if( !objectp(axe) || environment(axe) != this_object() )
+        axe = carry_object("/custom/zhenwu/npc/obj/steel_axe");     // 精鋼戰斧
+    if( objectp(axe) ) axe->wield("twohanded axe");
     carry_object("/obj/books/book_of_assault");   // 【奇兵精意】（使用者指定，2026-10-16）
 }
 
