@@ -12,15 +12,15 @@ void init()
 
 /* 搜屋：先看到書櫃旁的血手印，搜書櫃找到血書（每次房間重置只有一封）。
  * 玄冰烈焰斧任務（docs/martial_arts/玄冰烈焰斧_任務設計.md）：另有三處可搜的線索（地板、封條、牆縫），
- * 每位玩家各發現一次，記在玩家身上 quest/ziyan_axe_clue（1 地板、2 封條、4 牆縫、8 拿過血書）；
- * 四項齊備時案情大白，quest/ziyan_axe 設為 2。 */
-#define QUEST  "quest/ziyan_axe"
-#define CLUES  "quest/ziyan_axe_clue"
+ * 每位玩家各發現一次，記在玩家身上的暫時記號 ziyan_axe/clue（1 地板、2 封條、4 牆縫、8 拿過血書）；
+ * 四項齊備時案情大白，ziyan_axe/stage 設為 2。暫時記號 quit 重新登入就歸零，解到一半可以從頭再解。 */
+#define QUEST  "ziyan_axe/stage"
+#define CLUES  "ziyan_axe/clue"
 
 private void check_story(object me)
 {
-    if( (int)me->query(CLUES) < 15 || (int)me->query(QUEST) >= 2 ) return;
-    me->set(QUEST, 2);
+    if( (int)me->query_temp(CLUES) < 15 || (int)me->query_temp(QUEST) >= 2 ) return;
+    me->set_temp(QUEST, 2);
     tell_object(me, "你把鏢單、告示與黑羽箭擺在一起，心裡漸漸有了輪廓：魏長青押的鏢被山賊劫了，"
         "縣令趙弘春與賊人同流合污，事後為了滅口，反誣魏長青私吞鏢銀，連他全家都不放過。"
         "這封血書，想必是要交給某個人的。\n");
@@ -28,13 +28,13 @@ private void check_story(object me)
 
 private int find_clue(object me, int bit, string msg)
 {
-    if( (int)me->query(CLUES) & bit ) {
+    if( (int)me->query_temp(CLUES) & bit ) {
         write("你把這裡又翻了一遍，再也找不到什麼。\n");
         return 1;
     }
-    me->set(CLUES, (int)me->query(CLUES) | bit);
+    me->set_temp(CLUES, (int)me->query_temp(CLUES) | bit);
     write(msg);
-    if( !(int)me->query(QUEST) ) me->set(QUEST, 1);
+    if( !(int)me->query_temp(QUEST) ) me->set_temp(QUEST, 1);
     check_story(me);
     return 1;
 }
@@ -66,8 +66,8 @@ int do_search(string arg)
     message_vision("$N在書櫃中發現一封血書。\n", me);
     letter = new("/d/ziyan/obj/bloody_letter");
     if( !letter->move(me) ) letter->move(this_object());
-    me->set(CLUES, (int)me->query(CLUES) | 8);
-    if( !(int)me->query(QUEST) ) me->set(QUEST, 1);
+    me->set_temp(CLUES, (int)me->query_temp(CLUES) | 8);
+    if( !(int)me->query_temp(QUEST) ) me->set_temp(QUEST, 1);
     check_story(me);
     return 1;
 }

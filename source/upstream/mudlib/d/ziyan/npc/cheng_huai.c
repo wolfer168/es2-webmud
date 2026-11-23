@@ -33,18 +33,22 @@ void create()
 
 // ------------------------------------------------------------------
 // 玄冰烈焰斧任務。玩家身上的記號：
-//   quest/ziyan_axe         0 未開始、1 查案中、2 案情大白、3 縣令伏誅（取得官印）
-//   quest/ziyan_axe_letter  已把血書交給程槐
-//   quest/ziyan_axe_seal    已把官印交給程槐
-//   quest/ziyan_axe_done    解過任務（永久記號；之後可向程槐求教斧法）
+// 進行中的進度都是暫時記號（set_temp），quit 重新登入就歸零，解到一半的玩家可以從頭來過（使用者指示，2026-11-23）：
+//   ziyan_axe/stage   0 未開始、1 查案中、2 案情大白、3 縣令伏誅（取得官印）
+//   ziyan_axe/clue    民宅線索（1 地板、2 封條、4 牆縫、8 拿過血書）
+//   ziyan_axe/letter  已把血書交給程槐
+//   ziyan_axe/seal    已把官印交給程槐
+//   ziyan_axe/secret  已拿過這一輪的密函
+// 只有解完任務的記號是永久的（存檔）：
+//   quest/ziyan_axe_done  解過任務（之後可向程槐求教斧法）
 // 任務可以一直重解（使用者指示，2026-11-18）：完成時把進度、線索、交付記號、密函記號全部清掉，
 // 只留 done；再解一次又會得到贈禮（非武者或已學過者）。
 // 每句話之間隔 1 tick（2 秒）；說話用 say，神情用 emote。
 // ------------------------------------------------------------------
 
-#define QUEST  "quest/ziyan_axe"
-#define LETTER "quest/ziyan_axe_letter"
-#define SEAL   "quest/ziyan_axe_seal"
+#define QUEST  "ziyan_axe/stage"
+#define LETTER "ziyan_axe/letter"
+#define SEAL   "ziyan_axe/seal"
 #define DONE   "quest/ziyan_axe_done"
 #define ASKING "ziyan_axe/asking"     // 程槐暫存：正在等誰回答「你殺了那個狗官」
 
@@ -82,7 +86,7 @@ void init()
     if( query_temp(key) > time() - 60 ) return;
     set_temp(key, time());
 
-    switch( (int)who->query(QUEST) ) {
+    switch( (int)who->query_temp(QUEST) ) {
     case 0: case 1:
         if( who->query(DONE) ) {
             if( who->query_class() == "fighter" && who->query_skill("ice-fire axe", 1) > 0 )
@@ -95,7 +99,7 @@ void init()
                      "say 這裡沒有你要找的人，請回吧。" }), 0);
         break;
     default:
-        if( who->query(LETTER) || who->query(SEAL) ) return;
+        if( who->query_temp(LETTER) || who->query_temp(SEAL) ) return;
         talk(who, ({ "emote 目光落在你身上，神色一動。",
                      "say 你是從魏家來的？",
                      "say 長青他……罷了，我身上有傷，進不了縣衙，沒有憑據，說什麼也沒人信。" }), 0);
@@ -118,8 +122,8 @@ void give_up(object who)
 
 private void after_handover(object who)
 {
-    if( !who->query(SEAL) ) return;
-    if( !who->query(LETTER) ) {
+    if( !who->query_temp(SEAL) ) return;
+    if( !who->query_temp(LETTER) ) {
         talk(who, ({ "say 官印我認得，可是光有官印，長青的冤屈還說不明白，他留下的東西呢？" }), 0);
         return;
     }
@@ -130,7 +134,7 @@ private void after_handover(object who)
 void got_letter(object who)
 {
     if( !still_here(who) ) return;
-    if( who->query(SEAL) ) { after_handover(who); return; }
+    if( who->query_temp(SEAL) ) { after_handover(who); return; }
     talk(who, ({ "emote 雙手發顫地接過血書，指尖撫過那一道道血痕，眼眶漸漸紅了。",
                  "say 這是長青的字，他臨死還惦記著我。",
                  "say 光憑這封信，還扳不倒趙弘春，你若有膽，去取他那方從不離身的縣令官印來。" }), 0);
@@ -158,22 +162,22 @@ int accept_object(object who, object ob)
 {
     string file = base_name(ob);
 
-    if( (int)who->query(QUEST) < 2 ) {
+    if( (int)who->query_temp(QUEST) < 2 ) {
         command("say 這是什麼東西？我不認得，你拿回去吧。");
         return 0;
     }
     if( query_temp(ASKING) ) return 0;   // 正在問話：先不收別的東西
 
     if( file == "/d/ziyan/obj/bloody_letter" ) {
-        if( who->query(LETTER) ) return 0;
-        who->set(LETTER, 1);
+        if( who->query_temp(LETTER) ) return 0;
+        who->set_temp(LETTER, 1);
         call_out("got_letter", 1, who);
     } else if( file == "/d/ziyan/npc/obj/magistrate_seal" ) {
-        if( who->query(SEAL) || ob->query("quest_owner") != who->query("id") ) {
+        if( who->query_temp(SEAL) || ob->query("quest_owner") != who->query("id") ) {
             command("say 這方官印不是你從趙弘春身上取來的吧？");
             return 0;
         }
-        who->set(SEAL, 1);
+        who->set_temp(SEAL, 1);
         call_out("got_seal", 1, who);
     } else if( file == "/d/ziyan/npc/obj/secret_letter" ) {
         if( ob->query("quest_owner") != who->query("id") ) return 0;
@@ -205,11 +209,11 @@ private void answered(object who, int yes)
     }
     // 解完任務：進度與各項記號清掉（可以重解），只留永久記號 done。
     who->set(DONE, 1);
-    who->set(QUEST, 0);
-    who->delete("quest/ziyan_axe_clue");
-    who->delete(LETTER);
-    who->delete(SEAL);
-    who->delete("quest/ziyan_axe_secret");
+    who->delete_temp(QUEST);
+    who->delete_temp("ziyan_axe/clue");
+    who->delete_temp(LETTER);
+    who->delete_temp(SEAL);
+    who->delete_temp("ziyan_axe/secret");
     // 學不了玄冰烈焰斧的人（不是武者，或已經學過）：道謝之後送一把闇雲雙刃斧答謝。
     if( who->query_class() != "fighter" || who->query_skill("ice-fire axe", 1) > 0 ) {
         talk(who, ({ "emote 重重地吐出一口長氣，眼角隱隱泛起淚光。",
