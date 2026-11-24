@@ -7,6 +7,20 @@ inherit F_VILLAGER;
 #define RAID_D "/daemon/misc/lee_raid_d"
 #define ASKING "lee_raid/asking"     // 李嘯天暫存：正在等誰回答「幫不幫忙」
 
+// 愁眉苦臉在當鋪裡來回踱步，接著自言自語（事件進行中就不唸了）。
+void pace()
+{
+    if( RAID_D->query_state() > 1 ) return;
+    command("emote 愁眉苦臉，在當鋪裡來回踱步。");
+    call_out("mutter", 2);
+}
+
+void mutter()
+{
+    if( RAID_D->query_state() > 1 ) return;
+    command("say 這孝敬該給還是不該給....");
+}
+
 void create()
 {
     set_name("李嘯天", ({ "lee xiao tian", "li xiao tian", "manager lee", "lee", "li", "xiao", "tian" }));
@@ -15,10 +29,12 @@ void create()
     set_level(20);
     set("age", 40);
     set("long", "李員外家的二總管為人精明，年少時好舞刀弄槍，被派任當鋪掌櫃之後，諸事都處理得緊緊有條。\n");
-    set("chat_chance", 1);
+    // 平常愁眉苦臉地踱步、嘴裡唸著孝敬的事；約 5～7 tick 一次。
+    set("chat_chance", 15);
     set("chat_msg", ({
+        (: pace :),
+        (: pace :),
         "李嘯天低頭翻著帳簿，偶爾撥動算盤珠。\n",
-        "李嘯天愁眉苦臉，在當鋪裡來回踱步，嘴裡唸著：這孝敬該給還是不該給...\n",
     }));
     set_power("B");
     setup();
