@@ -73,13 +73,14 @@ string parry_message(object me, object attacker, int full)
     })[random(5)];
 }
 
-/* 特技（使用者定案，2026-11-24）：內功 90、幻劍術 90 後，招架成功時無消耗自動施展幻劍術反擊，
+/* 特技（使用者定案，2026-11-24）：內功 90、幻劍術 100 後，招架成功時有 50% 機率無消耗自動施展幻劍術反擊，
  * 隨機放出各級咒文（機率見 virtual_sword.c 的 auto_cast）。
  * 等對方這一擊的訊息顯示完再放。 */
 void parry_success(object me, object attacker, int full)
 {
     if( !objectp(me) || !objectp(attacker) ) return;
-    if( me->query_skill("force", 1) < 90 || me->query_skill("virtual sword", 1) < 90 ) return;
+    if( me->query_skill("force", 1) < 90 || me->query_skill("virtual sword", 1) < 100 ) return;
+    if( random(100) >= 50 ) return;
     call_out("auto_virtual_sword", 0, me, attacker);
 }
 
