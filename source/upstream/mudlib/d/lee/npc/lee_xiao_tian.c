@@ -5,20 +5,38 @@
 inherit F_VILLAGER;
 
 #define RAID_D "/daemon/misc/lee_raid_d"
+#define BUSY   "lee_raid/busy"       // 李嘯天暫存：正在跟誰談任務（那位玩家離開房間前不閒聊）
 #define ASKING "lee_raid/asking"     // 李嘯天暫存：正在等誰回答「幫不幫忙」
 
-// 愁眉苦臉在當鋪裡來回踱步，接著自言自語（事件進行中就不唸了）。
+// 平常的自言自語與動作：有人在跟他談任務（從 ask 開始，直到那位玩家離開房間），
+// 或事件進行期間（探子等錢、煙火、入侵中），就安靜下來，不插嘴。
+private int quiet()
+{
+    object who = query_temp(BUSY);
+
+    if( RAID_D->query_state() != 0 ) return 1;
+    if( objectp(who) && environment(who) == environment() ) return 1;
+    if( who ) delete_temp(BUSY);
+    return 0;
+}
+
 void pace()
 {
-    if( RAID_D->query_state() > 1 ) return;
+    if( quiet() ) return;
     command("emote 愁眉苦臉，在當鋪裡來回踱步。");
     call_out("mutter", 2);
 }
 
 void mutter()
 {
-    if( RAID_D->query_state() > 1 ) return;
+    if( quiet() ) return;
     command("say 這孝敬該給還是不該給....");
+}
+
+void ledger()
+{
+    if( quiet() ) return;
+    command("emote 低頭翻著帳簿，偶爾撥動算盤珠。");
 }
 
 void create()
@@ -34,7 +52,7 @@ void create()
     set("chat_msg", ({
         (: pace :),
         (: pace :),
-        "李嘯天低頭翻著帳簿，偶爾撥動算盤珠。\n",
+        (: ledger :),
     }));
     set_power("B");
     setup();
@@ -78,6 +96,7 @@ void accept_inquiry(object who, string key)
         talk(who, ({ "say 已經有人去跟他們接頭了，您先等等看。" }), 0);
         return;
     }
+    set_temp(BUSY, who);
     talk(who, ({
         "say 原本這是我們的家事，不敢打擾" + who->rank("respectful"),
         "say 不過昨兒個當鋪招牌被射了一箭，上面還掛了封信",
