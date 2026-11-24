@@ -140,11 +140,13 @@ int accept_object(object who, object ob)
     return 1;
 }
 
-// 放煙火通知山寨。
+// 放煙火通知山寨：全頻廣播（沒有頻道標籤、玩家無法關掉），整句一行不斷行。
 private void fireworks()
 {
-    message_vision(HIG "砰！的一聲，一枚青綠色的煙火在空中迸射開來，化成了一顆羊頭的形狀。\n" NOR,
-        this_object());
+    message("system",
+        HIG "「砰」的一聲，一枚青綠色的煙火在空中迸射開來，化成了一顆羊頭的形狀。\n" NOR,
+        users());
+    RAID_D->signal_sent();
 }
 
 void after_signal(object who)
