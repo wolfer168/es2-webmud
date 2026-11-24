@@ -328,7 +328,7 @@
   "text": "\u001b[1;31m你消除【禦火術】﹐周身的靈光應聲散去。\n\u001b[0m\u001b[1;31m你的火系傷害防禦力降低了。\n\u001b[0m\u001b[1;35m你消除【禦風術】﹐周身的靈光應聲散去。\n\u001b[0m\u001b[1;35m你的風系傷害防禦力降低了。\n\u001b[0m\u001b[1;36m你消除【禦冰術】﹐周身的靈光應聲散去。\n\u001b[0m\u001b[1;36m你的冰系傷害防禦力降低了。\n\u001b[0m\u001b[1;33m你消除【禦雷術】﹐周身的靈光應聲散去。\n\u001b[0m\u001b[1;33m你的雷系傷害防禦力降低了。\n"
  },
  {
-  "school": "enchance",
+  "school": "enhance",
   "school_cname": "強化之術",
   "spell": "silver_mark",
   "spell_cname": "銀咒",
@@ -336,7 +336,7 @@
   "text": "你手捏法訣，對著黑色短劍唸動「銀咒」。\n黑色短劍的品質變了，傷害力 12 - 91（力量修正 90%，乘數等級 1）。\n"
  },
  {
-  "school": "enchance",
+  "school": "enhance",
   "school_cname": "強化之術",
   "spell": "gold_mark",
   "spell_cname": "金咒",
