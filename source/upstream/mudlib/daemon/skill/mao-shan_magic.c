@@ -110,7 +110,7 @@ int do_draw(object me, string kind)
     if( !spend_sen(me, 10) ) return 0;
     name = ([ "yin": "少陰符", "yang": "正陽符", "nature": "先天符" ])[kind];
     /* 符名的顏色（敘述顏色規劃）：少陰符 HIK、正陽符亮黃、先天符亮白。 */
-    message_vision("$N提筆蘸了硃砂在符紙上畫了幾筆﹐一張" + ([ "yin": HIK, "yang": HIY, "nature": HIW ])[kind] + name + NOR "便成了。\n", me, 0, 1);
+    message_vision(CYN "$N提筆蘸了硃砂在符紙上畫了幾筆﹐一張" + ([ "yin": HIK, "yang": HIY, "nature": HIW ])[kind] + name + CYN "便成了。\n" NOR, me, 0, 1);
     swap_scroll(me, ob, kind);
     magic_gain(me, 2);
     return 1;
