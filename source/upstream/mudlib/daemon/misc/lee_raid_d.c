@@ -20,6 +20,7 @@ inherit F_SAVE;
 #define BASE_PRICE   3000      // 第一次的孝敬（兩）
 #define STEP_PRICE   1000      // 連續開啟每次加價
 #define PAY_LIMIT    60        // 探子問過之後，多久沒交錢就算失敗（秒）
+#define ANNOUNCE_TICK 3        // 煙火後多少 tick 全頻廣播
 #define SIGNAL_MIN   10        // 煙火後多少 tick 開始入侵（一 tick 兩秒）
 #define SIGNAL_RANGE 11        // 再隨機加 0～10 tick
 #define SPARE_STEP   15        // 村裡每多一位玩家，村民被放過的機率增加多少 %
@@ -43,6 +44,7 @@ static int state = ST_IDLE;
 static string cur_who = "";           // 這一場的開啟者
 static object scout;                  // 正在等錢的探子
 static object *invaders = ({});
+static int signaled = 0;              // 這一場的煙火放了沒
 static int event_id = 0;              // 每一場不同，給村民記「這場我決定過了」用
 
 void finish();
@@ -162,7 +164,31 @@ void paid(object who)
     state = ST_SIGNAL;
     event_id = time();
     scout = 0;
+    signaled = 0;
+    // 探子萬一在放煙火前出了事，20 秒後照樣往下走，事件不會卡住。
+    remove_call_out("signal_sent");
+    call_out("signal_sent", 20);
+}
+
+// 探子放出煙火：從這一刻起算，3 tick 後全頻廣播、10～20 tick 後入侵。
+void signal_sent()
+{
+    if( state != ST_SIGNAL || signaled ) return;
+    signaled = 1;
+    remove_call_out("signal_sent");
+    remove_call_out("announce");
+    remove_call_out("launch");
+    call_out("announce", ANNOUNCE_TICK * 2);
     call_out("launch", (SIGNAL_MIN + random(SIGNAL_RANGE)) * 2);
+}
+
+// 煙火後 3 tick：全頻廣播，前後空一行、亮紅字（沒有頻道標籤、玩家無法關掉）。
+void announce()
+{
+    if( state != ST_SIGNAL && state != ST_RAID ) return;
+    message("system",
+        HIR "\n遠方傳來陣陣殺聲與此起彼落的哭聲，野羊山的匪子正洗劫李家村！\n\n" NOR,
+        users());
 }
 
 // ------------------------------------------------------------------
@@ -193,8 +219,6 @@ void launch()
     if( state != ST_SIGNAL ) return;
     state = ST_RAID;
     invaders = ({});
-
-    broadcast(HIR "\n遠方方向傳來陣陣殺聲與此起彼落的哭聲，野羊山的匪子正洗劫李家村！\n\n" NOR);
 
     // 四位當家每次隨機出兩位。
     bosses = BOSSES;
