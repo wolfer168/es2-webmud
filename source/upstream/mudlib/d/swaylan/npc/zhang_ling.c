@@ -95,6 +95,11 @@ private void start_teach(object who)
         command("say 你的劍術還不夠火候﹐連劍都使不順﹐如何放得出幻劍﹖先把劍練好再來。");
         return;
     }
+    if( who->query_score("kills") >= 3000 ) {
+        command("emote 目光一凝﹐在" + who->name() + "身上停了片刻﹐臉色沉了下來。");
+        command("say 你身上殺氣太重﹐幻劍術以咒御劍﹐殺心一起便要反噬自身﹐老夫不能傳你。");
+        return;
+    }
     set_temp(BUSY, 1);
     play(who, ({
         "emote 撫著斑白的鬍鬚﹐上下打量了$N一番。",
