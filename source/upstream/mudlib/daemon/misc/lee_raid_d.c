@@ -4,7 +4,7 @@
 // 流程：李嘯天（d/lee/npc/lee_xiao_tian.c）答應幫忙後，玩家到上山小路（d/lee/wroad5.c）把孝敬交給
 // 野羊山探子（d/lee/npc/bandit_scout.c）；探子放煙火、10～20 tick 後山賊入侵李家村，
 // 入侵者全部死亡就收尾。全服同一時間只有一場事件，伺服器重開（rb）後才能再觸發。
-// 「連續開啟」的紀錄（誰開的、連續幾次）存在 data/lee_raid.o，重開後仍然記得。
+// 「連續開啟」的紀錄（誰開的、連續幾次）存在 data/daemon/lee_raid.o，重開後仍然記得。
 //
 // 狀態：IDLE 閒置／WAIT_PAY 探子等人交錢／SIGNAL 煙火放了、等入侵／RAID 入侵中／DONE 結束（等重開）。
 
@@ -54,7 +54,7 @@ void create()
     restore();
 }
 
-string query_save_file() { return DATA_DIR + "lee_raid"; }
+string query_save_file() { return DATA_DIR + "daemon/lee_raid"; }
 
 int query_state() { return state; }
 int query_event_id() { return event_id; }
