@@ -2,7 +2,7 @@
 // smith.c
 // 撼山鎚法任務（2026-11-24，docs/martial_arts/共通_撼山鎚法.md）：把野羊山大當家西門智的黑鐵大槌
 // 交給鐵匠，他認出是師父打的槌子，請玩家替他掌鎚；他用小鎚點位置，玩家跟著落鎚 (forge)，
-// 連續三次落對，他就把大槌重打成一對撼山鎚，並傳授撼山鎚法。說話用 say、神情用 emote，每句間隔 1 tick。
+// 連續三次落對，他就把大槌重打成一對撼山鎚，並傳授撼山鎚法。任務可重複，已經會的人只拿鎚子。說話用 say、神情用 emote，每句間隔 1 tick。
 
 #include <npc.h>
 
@@ -121,23 +121,33 @@ private void talk(object who, string *lines, string after)
     call_out("play", 2, who, lines, 0, after);
 }
 
+// 已經會撼山鎚法，或已拿到點數還沒領悟。
+private int knows_hammer(object who)
+{
+    return who->query_skill(QH_SKILL, 1) > 0 || who->query_learn(QH_SKILL) > 0;
+}
+
 int accept_hammer(object who, object ob)
 {
     if( query_temp(WORKER) ) {
         command("say 沒看見我正忙著嗎﹖待會兒再說。");
         return 0;
     }
-    if( who->query_skill(QH_SKILL, 1) > 0 || who->query_learn(QH_SKILL) > 0 ) {
-        command("say 師父的鎚法你不是早就學會了嗎﹖這槌子你自己留著吧。");
-        return 0;
-    }
-    if( !SKILL_D(QH_SKILL)->valid_learn(who) ) {
+    if( !knows_hammer(who) && !SKILL_D(QH_SKILL)->valid_learn(who) ) {
         command("emote 接過黑鐵大槌掂了掂﹐又看了看你的胳膊﹐把槌子塞回你手裡。");
         command("say 你這身子骨還掄不動雙鎚﹐先去練練力氣吧。");
         return 0;
     }
     set_temp(WORKER, who);
     set_temp(HOLD, ob);
+    // 已經會撼山鎚法（或已拿到點數）的人可以再打一對鎚子，但不會再傳授一次（使用者指示，2026-11-24）。
+    if( knows_hammer(who) ) {
+        talk(who, ({ "emote 接過黑鐵大槌掂了掂﹐神色又驚又喜。",
+                     "say 又是一柄師父打的槌子﹗看來他老人家當年打的還不只一柄。",
+                     "say 老規矩﹐我把它熔了重打一對鎚子﹐你來替我掌鎚。",
+                     "emote 把黑鐵大槌送進火爐﹐把風箱拉得呼呼作響﹐爐火映得滿屋通紅。" }), "next_spot");
+        return 1;
+    }
     talk(who, ({ "emote 接過黑鐵大槌掂了掂﹐粗糙的手竟微微發起抖來。",
                  "say 這是我師父打的槌子……多少年了﹐竟還能再見到它。",
                  "say 我師父生前使一手雙鎚﹐左鎚點、右鎚落﹐打鐵是這樣﹐打架也是這樣。",
@@ -228,7 +238,7 @@ int do_forge(string arg)
     return 1;
 }
 
-// 交出一對撼山鎚，傳授撼山鎚法（補足到剛好學成）。
+// 交出一對撼山鎚；還不會的人另外傳授撼山鎚法（補足到剛好學成），已經會的不再傳授。
 void give_reward(object who)
 {
     object ob;
@@ -241,8 +251,11 @@ void give_reward(object who)
     if( objectp(ob) ) destruct(ob);
     for( i = 0; i < 2; i++ ) new(REWARD)->move(who);
     message_vision(CYN "鐵匠把一對撼山鎚交給了$N。\n" NOR, who);
-    if( who->query_skill(QH_SKILL, 1) <= 0 && who->query_learn(QH_SKILL) <= 0
-    &&  SKILL_D(QH_SKILL)->valid_learn(who) ) {
+    if( knows_hammer(who) ) {
+        talk(who, ({ "say 鎚法你早就會了﹐這對鎚子拿去﹐可別讓它們閒著。" }), 0);
+        return;
+    }
+    if( SKILL_D(QH_SKILL)->valid_learn(who) ) {
         tell_object(who, CYN "鐵匠拿起兩柄鎚子一左一右比劃給你看﹐把撼山鎚法的訣竅仔仔細細地教給了你。\n" NOR);
         // 補足到學成等級（20 級）的門檻，玩家領悟後直接練成。
         who->improve_skill_exact(QH_SKILL,
