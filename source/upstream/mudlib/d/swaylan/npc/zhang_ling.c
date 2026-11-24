@@ -85,9 +85,19 @@ private void start_teach(object who)
         command("say 你的根基太淺﹐現在教你﹐只怕連劍訣都捏不穩﹐先去江湖上歷練歷練吧。");
         return;
     }
+    if( who->query_skill("spells", 1) < 90 ) {
+        command("emote 捻著鬍鬚﹐搖了搖頭。");
+        command("say 幻劍術要以咒御劍﹐你的咒術根基還太淺﹐念不動這路咒訣﹐先把咒術練深厚了再來。");
+        return;
+    }
     if( who->query_skill("sword", 1) < 30 ) {
         command("emote 瞧了瞧" + who->name() + "的手﹐皺起眉頭。");
         command("say 你的劍術還不夠火候﹐連劍都使不順﹐如何放得出幻劍﹖先把劍練好再來。");
+        return;
+    }
+    if( who->query_score("kills") >= 3000 ) {
+        command("emote 目光一凝﹐在" + who->name() + "身上停了片刻﹐臉色沉了下來。");
+        command("say 你身上殺氣太重﹐幻劍術以咒御劍﹐殺心一起便要反噬自身﹐老夫不能傳你。");
         return;
     }
     set_temp(BUSY, 1);

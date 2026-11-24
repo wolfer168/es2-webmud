@@ -21,15 +21,19 @@ private void create()
     setup();
 }
 
-/* 學習條件：道士、人物等級 5、劍術 30（說出口的敘述不提數字）。 */
+/* 學習條件：道士、人物等級 5、咒術 90、劍術 30、殺業小於 3000（說出口的敘述不提數字）。 */
 int valid_learn(object me)
 {
     if( me->query("class") != "taoist" )
         return notify_fail("幻劍術是道士的咒術﹐你無法修練。\n");
     if( me->query_level() < 5 )
         return notify_fail("你的根基尚淺﹐還參不透幻劍術的門道。\n");
+    if( me->query_skill("spells", 1) < 90 )
+        return notify_fail("你的咒術根基不夠深厚﹐還參不透幻劍術的咒訣。\n");
     if( me->query_skill("sword", 1) < 30 )
         return notify_fail("你的劍術火候未到﹐還使不出幻劍術的運劍法門。\n");
+    if( me->query_score("kills") >= 3000 )
+        return notify_fail("你身上殺氣太重﹐幻劍術的咒訣在你手裡只會走偏。\n");
     return 1;
 }
 
