@@ -15,7 +15,8 @@ LONG
         "/d/lee/npc/guard" : 2
     ]));
     set("exits", ([
-        "east" : __DIR__"wroad1"
+        "east" : __DIR__"wroad1",
+        "west" : __DIR__"wroad5"
     ]));
     setup();
     replace_program(ROOM);
