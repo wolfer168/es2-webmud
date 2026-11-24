@@ -157,6 +157,28 @@ void spell_gain(object me, int rank, int hit)
     if( exp > 0 ) me->improve_skill_exact("virtual sword", exp);
 }
 
+/* 放出幻劍：起手、效果、命中或落空；傳回是否命中。cast 與太乙劍法的自動施展共用。 */
+private int release(object me, object target, string spell, int power)
+{
+    int dealt, hit;
+
+    say_line(me, target, start_line(me, spell));
+    blank(me);
+    say_line(me, target, effect_line(spell));
+    blank(me);
+
+    hit = SPELLS_D->spell_hits(me, target, "virtual", 1);
+    if( !hit ) {
+        say_line(me, target, miss_line(spell));
+    } else {
+        dealt = target->receive_damage(power, me, me);
+        say_line(me, target, SPELLS_D->is_dummy(target) ? dummy_hit_line(spell) : hit_line(spell));
+        if( objectp(target) ) COMBAT_D->report_status(target);
+        if( userp(me) ) me->gain_score("combat", (1 + dealt / 40) > 20 ? 20 : (1 + dealt / 40));
+    }
+    return hit;
+}
+
 // ------------------------------------------------------------------
 // 施咒：傷害 = 人物附加傷害 + 招式數字；耗神 = 總傷害的一半；自身停頓 1 回合。
 // ------------------------------------------------------------------
@@ -164,7 +186,7 @@ void spell_gain(object me, int rank, int hit)
 varargs int cast_spell(object me, string spell, object target)
 {
     object *enemies;
-    int sk, power, cost, dealt, hit;
+    int sk, power, cost, hit;
 
     if( me->skill_mapped("spells") != "virtual sword" )
         return notify_fail("你沒有使用幻劍術。\n");
@@ -200,22 +222,34 @@ varargs int cast_spell(object me, string spell, object target)
     // 每次施展得法術修為 random(靈性/2) + 1（比照天師咒術）。
     me->gain_score("magic", random(me->query_attr("spi") / 2) + 1);
 
-    say_line(me, target, start_line(me, spell));
-    blank(me);
-    say_line(me, target, effect_line(spell));
-    blank(me);
-
-    hit = SPELLS_D->spell_hits(me, target, "virtual", 1);
-    if( !hit ) {
-        say_line(me, target, miss_line(spell));
-    } else {
-        dealt = target->receive_damage(power, me, me);
-        say_line(me, target, SPELLS_D->is_dummy(target) ? dummy_hit_line(spell) : hit_line(spell));
-        if( objectp(target) ) COMBAT_D->report_status(target);
-        if( userp(me) ) me->gain_score("combat", (1 + dealt / 40) > 20 ? 20 : (1 + dealt / 40));
-    }
+    hit = release(me, target, spell, power);
 
     spell_gain(me, SPELLS[spell][4], hit);
     me->start_busy(1);
+    return 1;
+}
+
+/* 太乙劍法的招架特技（使用者定案，2026-11-24）：招架成功時自動放出幻劍術，
+ * 不耗神、不停頓、不看技能等級與 enable，也不累積修練點數。
+ * 觸發後（50% 由太乙劍法判斷）隨機挑一招：十面埋伏、無極幻影各 10%，六陰六陽劍、九九陽極幻劍各 15%，四九歸元、六十四爻誅殺訣各 25%。 */
+int auto_cast(object me, object target)
+{
+    int n, power;
+    string spell;
+
+    if( !objectp(me) || !objectp(target) || !living(target) || target == me
+    ||  environment(target) != environment(me) ) return 0;
+
+    n = random(100);
+    if( n < 10 ) spell = "ten";
+    else if( n < 25 ) spell = "thirty-six";
+    else if( n < 50 ) spell = "forty-nine";
+    else if( n < 75 ) spell = "sixty-four";
+    else if( n < 90 ) spell = "eighty-one";
+    else spell = "ninety-nine";
+
+    power = me->query_temp("apply/damage") + SPELLS[spell][1];
+    if( power < 1 ) power = 1;
+    release(me, target, spell, power);
     return 1;
 }
