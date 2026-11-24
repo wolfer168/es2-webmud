@@ -3,10 +3,10 @@
 //
 // 流程：李嘯天（d/lee/npc/lee_xiao_tian.c）答應幫忙後，玩家到上山小路（d/lee/wroad5.c）把孝敬交給
 // 野羊山探子（d/lee/npc/bandit_scout.c）；探子放煙火、10～20 tick 後山賊入侵李家村，
-// 入侵者全部死亡就收尾。全服同一時間只有一場事件，伺服器重開（rb）後才能再觸發。
+// 入侵者全部死亡就收尾。事件可以連續開啟、不限次數，但全服同一時間只有一場進行中。
 // 「連續開啟」的紀錄（誰開的、連續幾次）存在 data/daemon/lee_raid.o，重開後仍然記得。
 //
-// 狀態：IDLE 閒置／WAIT_PAY 探子等人交錢／SIGNAL 煙火放了、等入侵／RAID 入侵中／DONE 結束（等重開）。
+// 狀態：IDLE 閒置／WAIT_PAY 探子等人交錢／SIGNAL 煙火放了、等入侵／RAID 入侵中；結束後回到 IDLE，可以再開。
 
 #include <ansi.h>
 
@@ -16,7 +16,6 @@ inherit F_SAVE;
 #define ST_WAIT_PAY  1
 #define ST_SIGNAL    2
 #define ST_RAID      3
-#define ST_DONE      4
 
 #define BASE_PRICE   3000      // 第一次的孝敬（兩）
 #define STEP_PRICE   1000      // 連續開啟每次加價
@@ -236,7 +235,9 @@ void watch()
 void finish()
 {
     if( state != ST_RAID ) return;
-    state = ST_DONE;
+    state = ST_IDLE;
+    cur_who = "";
+    invaders = ({});
     remove_call_out("watch");
     broadcast(HIY "\n山頭方向又砰地升起一枚煙火，在空中散成一團殘紅，隨風飄散。\n" NOR
         "遠處傳來一陣雜亂的呼喝與腳步聲，野羊山的匪眾丟盔棄甲，一路往山裡奔逃而去。\n\n");

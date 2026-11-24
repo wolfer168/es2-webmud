@@ -1,6 +1,6 @@
 // /d/lee/npc/raider.c — 野羊山入侵者的共用程式（李家村事件，設計見 docs/LEE_BANDIT_RAID.md）。
 //
-// 入侵者在李家村裡四處走動，碰到村民或玩家就動手；一律只「打」（fight），不下死手，
+// 入侵者在李家村裡四處走動，碰到村民或玩家就動手；對玩家下死手（kill），對村民只「打」（fight），
 // 所以村民被打昏而不會死。走動頻率略快於鬼魂，而且絕不離開李家村（由 raid_d 判定哪些房間算李家村）。
 // 村民會不會被打，看村裡有多少玩家：人越多，被放過的機率越高（raid_d 的 spare_chance）。
 // 死亡時先回報 raid_d，全部死光事件就結束。
@@ -55,7 +55,9 @@ private int attack_target(object ob)
         HIR "$N獰笑著逼近$n﹐擺開架勢動起手來﹗\n" NOR,
         HIR "$N朝地上啐了一口﹐扯開嗓門罵著衝向$n﹗\n" NOR,
     })[random(3)], this_object(), ob);
-    fight_ob(ob);
+    // 玩家要被打死（kill）；村民只打昏（fight）。
+    if( userp(ob) ) kill_ob(ob);
+    else fight_ob(ob);
     ob->fight_ob(this_object());
     return 1;
 }

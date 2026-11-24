@@ -58,10 +58,6 @@ void accept_inquiry(object who, string key)
         talk(who, ({ "say 野羊山的人已經殺進村子裡了，快去幫忙！" }), 0);
         return;
     }
-    if( st == 4 ) {
-        talk(who, ({ "say 多虧您出手，野羊山的人暫時是不敢再來了。" }), 0);
-        return;
-    }
     if( st == 1 ) {
         talk(who, ({ "say 已經有人去跟他們接頭了，您先等等看。" }), 0);
         return;

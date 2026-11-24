@@ -7,7 +7,8 @@ inherit "/d/lee/npc/raider";
 void create()
 {
     seteuid(getuid());
-    set_name("野羊山三當家", ({ "bandit third", "third" }));
+    set_name("公孫歸", ({ "gong-sun gui", "gong-sun", "gui", "bandit third", "third" }));
+    set("title", "野羊山三當家");
     set_race("human");
     set_class("fighter");
     set_level(70);

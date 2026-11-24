@@ -7,7 +7,8 @@ inherit "/d/lee/npc/raider";
 void create()
 {
     seteuid(getuid());
-    set_name("野羊山二當家", ({ "bandit second", "second" }));
+    set_name("歐陽建", ({ "ou-yang chien", "ou-yang", "chien", "bandit second", "second" }));
+    set("title", "野羊山二當家");
     set_race("human");
     set_class("fighter");
     set_level(70);

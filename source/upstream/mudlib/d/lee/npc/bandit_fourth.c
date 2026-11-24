@@ -7,7 +7,8 @@ inherit "/d/lee/npc/raider";
 void create()
 {
     seteuid(getuid());
-    set_name("野羊山四當家", ({ "bandit fourth", "fourth" }));
+    set_name("司馬強", ({ "si-ma chiang", "si-ma", "chiang", "bandit fourth", "fourth" }));
+    set("title", "野羊山四當家");
     set_race("human");
     set_class("fighter");
     set_level(70);
