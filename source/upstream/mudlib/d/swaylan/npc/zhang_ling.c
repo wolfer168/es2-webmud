@@ -3,7 +3,7 @@
 /*
 張齡自創幻劍術（virtual sword），設計見 docs/martial_arts/道士共通_幻劍術.md：
 對他 say 幻劍術，或 ask zhang about 幻劍術 → 他談起這套劍術 → 傳授。
-人物等級要夠（說出口的敘述不提數字）；每人只傳一次。
+道士、人物等級與劍術都要夠（說出口的敘述不提數字）；每人只傳一次。
 說話用 say、動作用 emote，一句一行不斷行（使用者指示，2026-11-14）。
 */
 #include <ansi.h>
@@ -75,9 +75,19 @@ private void start_teach(object who)
         command("say 稍等﹐老夫正和人說話。");
         return;
     }
+    if( who->query_class() != "taoist" ) {
+        command("emote 瞥了" + who->name() + "一眼﹐淡淡一笑。");
+        command("say 這是道門的法門﹐與你無緣。");
+        return;
+    }
     if( who->query_level() < 5 ) {
         command("emote 上下打量了" + who->name() + "一眼﹐搖了搖頭。");
         command("say 你的根基太淺﹐現在教你﹐只怕連劍訣都捏不穩﹐先去江湖上歷練歷練吧。");
+        return;
+    }
+    if( who->query_skill("sword", 1) < 30 ) {
+        command("emote 瞧了瞧" + who->name() + "的手﹐皺起眉頭。");
+        command("say 你的劍術還不夠火候﹐連劍都使不順﹐如何放得出幻劍﹖先把劍練好再來。");
         return;
     }
     set_temp(BUSY, 1);

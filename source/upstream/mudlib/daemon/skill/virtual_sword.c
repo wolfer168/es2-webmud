@@ -21,11 +21,15 @@ private void create()
     setup();
 }
 
-/* 學習條件：人物等級 5（說出口的敘述不提數字）。 */
+/* 學習條件：道士、人物等級 5、劍術 30（說出口的敘述不提數字）。 */
 int valid_learn(object me)
 {
+    if( me->query("class") != "taoist" )
+        return notify_fail("幻劍術是道士的咒術﹐你無法修練。\n");
     if( me->query_level() < 5 )
         return notify_fail("你的根基尚淺﹐還參不透幻劍術的門道。\n");
+    if( me->query_skill("sword", 1) < 30 )
+        return notify_fail("你的劍術火候未到﹐還使不出幻劍術的運劍法門。\n");
     return 1;
 }
 
@@ -43,12 +47,12 @@ void skill_completed(object me, string skill)
 
 /* 咒文：可用技能等級、傷害加成（數字）、名稱、名稱顏色、乘數（練功點數用）。 */
 mapping SPELLS = ([
-    "ten":          ({  0, 10, "十面埋伏",       HIY, 1 }),
+    "ten":          ({  0, 10, "十面埋伏",       HIW, 1 }),
     "thirty-six":   ({ 36, 36, "六陰六陽劍",     HIY, 2 }),
     "forty-nine":   ({ 49, 49, "四九歸元",       HIY, 3 }),
     "sixty-four":   ({ 64, 64, "六十四爻誅殺訣", HIY, 4 }),
     "eighty-one":   ({ 81, 81, "九九陽極幻劍",   HIY, 5 }),
-    "ninety-nine":  ({ 99, 99, "無極幻影",       HIY, 6 }),
+    "ninety-nine":  ({ 99, 99, "無極幻影",       HIR, 6 }),
 ]);
 
 string spell_title(string spell)
