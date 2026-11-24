@@ -115,8 +115,8 @@ def test_npcs_and_purple_helmet():
     assert 'who->query_skill("magic", 1) < 60' in chen and 'who->query_level() < 10' in chen
     assert 'who->query_score("weapon mastery") < 50000' in chen
     assert chen.count('call_out("say_to"') == 2 and 'call_out("teach", 3 * TICK, who);' in chen
-    assert 'who->set_skill(SKILL_ID, 1);' in chen and '#define SKILL_ID  "enchance"' in chen
-    assert (MUD / 'daemon/skill/enchance.c').exists()
+    assert 'who->set_skill(SKILL_ID, 1);' in chen and '#define SKILL_ID  "enhance"' in chen
+    assert (MUD / 'daemon/skill/enhance.c').exists()
     assert '/d/npc/garrison' in read(S / 'tower.c') and 'si_ma_wei' in read(S / 'tower.c')
 
 

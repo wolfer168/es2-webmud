@@ -35,7 +35,7 @@
   halieutics         捕魚技巧      soonlight_axe      迅雷斧法
   fonxiaoken         風嘯拳法      uenfon             雲峰筆招
   sky_pike           穹槍訣        kee_anatomy        經脈穴道之學
-  enchance           強化之術      ice-fire_axe       玄冰烈焰斧
+  enhance            強化之術      ice-fire_axe       玄冰烈焰斧
   taiyie             太乙劍法      chivi_sutra        天師道法【紫薇心經】
   butterfly-steps    蝶影幻步
 

@@ -1,6 +1,6 @@
 /*---
-description: 強化之術（enchance）。劍甲門的法術類技能，安裝在 magic
-             （enable magic with enchance），以 conjure 施展銀咒（silver mark）、
+description: 強化之術（enhance）。劍甲門的法術類技能，安裝在 magic
+             （enable magic with enhance），以 conjure 施展銀咒（silver mark）、
              金咒（gold mark），重新隨機決定武器的傷害力。
 design: docs/martial_arts/劍甲門_強化之術.md（2026-11-14）
 note: 兩種咒每次都消耗 20 點神，金咒另付 2.5 兩黃金；金咒不會損毀武器、不給技能經驗。
@@ -13,7 +13,7 @@ note: 兩種咒每次都消耗 20 點神，金咒另付 2.5 兩黃金；金咒�
 
 inherit SKILL;
 
-#define SKILL_ID    "enchance"
+#define SKILL_ID    "enhance"
 #define SEN_COST    20
 #define GOLD_COST   25000      // 2.5 兩黃金（1 兩黃金 = 10000 文）
 #define MIN_BREAK   10         // 損毀機率下限（％）

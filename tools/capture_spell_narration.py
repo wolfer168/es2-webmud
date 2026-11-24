@@ -50,7 +50,7 @@ OTHERS = [
     ('chivi sutra', 'magic', '天師道法【紫薇心經】', [],
      [('conjure fire_defence', '火防'), ('conjure storm_defence', '風防'), ('conjure freeze_defence', '冰防'),
       ('conjure thunder_defence', '雷防'), ('conjure dispel', '解除')], []),
-    ('enchance', 'magic', '強化之術', ['clone /custom/weapon/sword/black_shortsword', 'wield sword', 'clone 20 /obj/money/gold'],
+    ('enhance', 'magic', '強化之術', ['clone /custom/weapon/sword/black_shortsword', 'wield sword', 'clone 20 /obj/money/gold'],
      [('conjure silver_mark on sword', '銀咒'), ('conjure gold_mark on sword', '金咒')], []),
     ('alchemy-wealth', 'magic', '丹道【黃白之術】', ['unwield sword', 'clone 3 /custom/item/scroll/yin', 'clone /custom/weapon/sword/black_shortsword'],
      [('conjure silver_seal on scroll', '銀咒'), ('conjure gold_seal on sword', '金咒')], []),

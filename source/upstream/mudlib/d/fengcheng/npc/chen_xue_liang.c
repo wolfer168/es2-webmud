@@ -1,6 +1,6 @@
 // /d/fengcheng/npc/chen_xue_liang.c — 風城 NPC：劍甲門傳人 陳學亮（D16 交叉路口）。
 //
-// 教強化之術（enchance，設計見 docs/martial_arts/劍甲門_強化之術.md）：
+// 教強化之術（enhance，設計見 docs/martial_arts/劍甲門_強化之術.md）：
 //   ask chen about 強化之術 → 條件夠了，他說三句話（遇到同好開心、樂意分享所學、教給玩家）後傳授。
 //   條件（程式內部）：法術（magic）60、等級 10、兵刃精熟（weapon mastery）經驗 50000。
 //   條件不夠時只說江湖口吻的婉拒，不提數字。
@@ -10,7 +10,7 @@
 
 inherit F_VILLAGER;
 
-#define SKILL_ID  "enchance"
+#define SKILL_ID  "enhance"
 #define TICK      2   // 1 tick 約 2 秒
 
 void create()
@@ -39,7 +39,7 @@ void say_to(object who, string msg)
 
 void accept_inquiry(object who, string key)
 {
-    if( key != "強化之術" && key != "enchance" ) return;
+    if( key != "強化之術" && key != "enhance" ) return;
     if( who->query_skill(SKILL_ID, 1) > 0 ) {
         command("say 強化之術你已經會了，往後多下些苦功便是。");
         return;

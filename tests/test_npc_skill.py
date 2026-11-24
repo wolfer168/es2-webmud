@@ -101,7 +101,7 @@ def test_unbuilt_arts_not_mapped():
 def test_new_chinese_names():
     s = read('data/chinese.o')
     for k, v in (('sky force', '玄天心法'), ('devil force', '大邪心經'), ('tidy force', '凌潮心法'),
-                 ('nine-dragon force', '九龍神功'), ('reflecting star sword', '清河映星劍'), ('enchance', '強化之術')):
+                 ('nine-dragon force', '九龍神功'), ('reflecting star sword', '清河映星劍'), ('enhance', '強化之術')):
         assert '"%s":"%s"' % (k, v) in s
 
 
