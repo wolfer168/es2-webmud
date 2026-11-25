@@ -302,11 +302,16 @@ def attr_calc_data(skill_by_code):
         raise SystemExit('屬性成長計算機：skill.c 的成長規則格式變了，請更新 attr_calc_data()')
     slow = re.findall(r'skill\s*==\s*"([^"]+)"', ms.group(1))
     fixed = {k: int(v) for k, v in re.findall(r'skill\s*==\s*"([^"]+)"\s*&&\s*lv\s*==\s*(\d+)\s*\)\s*continue', src)}
+    # 個別技能的擲骰間隔（例如捕魚技巧 step = 10，不分職業）與起擲等級（lv < N 不擲）。
+    own_step = {k: int(v) for k, v in re.findall(r'if\(\s*skill\s*==\s*"([^"]+)"\s*\)\s*step\s*=\s*(\d+)\s*;', src)}
+    min_lv = {k: int(v) for k, v in re.findall(r'skill\s*==\s*"([^"]+)"\s*&&\s*lv\s*<\s*(\d+)\s*\)\s*continue', src)}
     skills = []
     for code, attr in table.items():
         s = skill_by_code.get(code) or skill_by_code.get(code.replace(' ', '_')) or {}
         skills.append({'code': code, 'name': s.get('name') or bc.zh(code), 'attr': ATTR_ZH.get(attr, attr),
-                       'step': int(ms.group(3)), 'slowStep': int(ms.group(2)) if code in slow else 0,
+                       'step': own_step.get(code, int(ms.group(3))),
+                       'slowStep': 0 if code in own_step else (int(ms.group(2)) if code in slow else 0),
+                       'minLv': min_lv.get(code, 0),
                        'fixed': fixed.get(code, 0)})
     return {'skills': skills, 'base': base, 'baseMax': int(tail[-1]), 'mulNum': int(mm.group(1)), 'mulDen': int(mm.group(2))}
 

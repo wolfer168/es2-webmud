@@ -685,16 +685,23 @@ html.embed .tools { padding-top: 10px; }
   // 機率以萬分之一計，和遊戲程式一樣先乘後除再取整數。
   const acChance = (v, lv) => Math.min(10000, Math.floor(acBase(v) * (100 + lv) * AC.mulNum / AC.mulDen));
   const pct1 = x => (Math.round(x) / 100).toFixed(1) + ' %';
+  // 下一個會擲骰的等級：整倍數，且不早於這個技能的起擲等級（例如捕魚技巧 100 級起）。
+  function acNext(lv) {
+    const st = acStep(), k = acSkill();
+    let t = (Math.floor(lv / st) + 1) * st;
+    if (k.minLv && t < k.minLv) t = Math.ceil(k.minLv / st) * st;
+    return t;
+  }
   function acThresholds(lv, cap) {
     const st = acStep(), out = [];
-    for (let t = (Math.floor(lv / st) + 1) * st; t <= cap; t += st) out.push(t);
+    for (let t = acNext(lv); t <= cap; t += st) out.push(t);
     return out;
   }
   function attrOnce() {
     const k = acSkill();
     if (attrVals.attr === '' || attrVals.lv === '')
       return '<h3>下一次增加屬性的機會</h3><p class="hint" style="margin:0">填入目前' + esc(k.attr) + '和目前技能等級後，這裡會顯示結果。</p>';
-    const a = num(attrVals.attr), lv = num(attrVals.lv), t = (Math.floor(lv / acStep()) + 1) * acStep();
+    const a = num(attrVals.attr), lv = num(attrVals.lv), t = acNext(lv);
     const head = `<h3>下一次增加屬性的機會</h3><p style="margin:0">下一次擲骰：技能 <b>${t}</b> 級（還差 <b>${t - lv}</b> 級）</p>`;
     if (k.fixed === t) return head + `<p class="calc-verdict ok">這一級固定${esc(k.attr)} +3，不用擲骰</p>`;
     return head + `<p style="margin:0">增加${esc(k.attr)} +1 的機率　<span class="attr-big">${pct1(acChance(a, t))}</span></p>`;
