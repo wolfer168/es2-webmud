@@ -205,7 +205,7 @@ void arrived(object ob, object old)
         if (burning && old && old->is_heat_furnace()) phase = old->query_fuel_phase();
         // Rooms and characters are not "new containers" for rule 109.
         if (burning && env != old && !env->is_character()
-        && !inherits(ROOM, env) && !env->is_room()) phase = 0;
+        && !env->is_room()) phase = 0;
         foreach (other in inventory(env)) {
             if (other == ob || !other->is_heat_wood()) continue;
             if (other->query_burning()) {
