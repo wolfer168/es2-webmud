@@ -15,6 +15,7 @@ string best_skill = "";
 varargs int query_attr(string attr, int raw);
 int set_attr(string what, int value);
 varargs void advance_skill(string skill, int amount);
+private void advance_skill_step(string skill, int amount);
 void apply_restored_skill_progression(string skill);
 int query_personal_skill_cap(string skill);
 
@@ -298,7 +299,7 @@ private void raise_skill_to(string skill, int next)
         if( objectp(daemon) && function_exists("skill_completed", daemon) )
             call_other(daemon, "skill_completed", this_object(), skill);
     }
-    advance_skill(skill, next - skills[skill]);
+    advance_skill_step(skill, next - skills[skill]);
 }
 
 // gain 指令呼叫：gained 是這段時間拿到點數的技能。
@@ -561,11 +562,12 @@ private void basic_skill_martial_art(string skill, int old_level, int new_level)
     if( gain > 0 ) this_object()->gain_score("martial art", gain);
 }
 
-varargs void advance_skill(string skill, int amount)
+/* 升一步：照原本的做法加上 amount 級，通知技能檔一次（skill_advanced），
+ * 再處理法術修為、咒術道行、屬性成長、基本技能武術造詣（這幾項本身會補齊跳過的級數）。 */
+private void advance_skill_step(string skill, int amount)
 {
     int old_level;
 
-    if( !amount ) amount = 1;
     old_level = skills[skill];
 
     if( undefinedp(skills[skill]) )
@@ -582,6 +584,43 @@ varargs void advance_skill(string skill, int amount)
     basic_skill_martial_art(skill, old_level, skills[skill]);
 
     if( skills[skill] > skills[best_skill] ) best_skill = skill;
+}
+
+/* advance_skill()（使用者定案，2026-11-26，甲案）
+ * 一次加很多級（巫師測試用）時，改成一級一級升，每升一級就通知技能檔一次，
+ * 效果等同真的一級一級練上去：每級的精氣神、武術造詣、武學之道、屬性獎勵照發，
+ * 「剛好升到某一級」才觸發的效果也會觸發。
+ * 從 0 級跳上去時，先照學成流程一次升到學成等級（不超過目標），
+ * 升到學成等級就補發練成獎勵（skill_completed，使用者選 A）；之後再一級一級升。
+ * 一次一級、降級，照原本做法。玩家正常 gain 升級走 raise_skill_to()，不經過這裡的跳級處理。 */
+varargs void advance_skill(string skill, int amount)
+{
+    int target, entry, guard;
+    object daemon;
+
+    if( !amount ) amount = 1;
+    if( amount == 1 || amount < 0 ) {
+        advance_skill_step(skill, amount);
+        return;
+    }
+
+    target = skills[skill] + amount;
+    if( target > 200 ) target = 200;
+
+    if( skills[skill] <= 0 ) {
+        entry = skill_entry_level(skill);
+        if( entry <= target && entry > 1 ) {
+            daemon = SKILL_D(skill);
+            if( objectp(daemon) && function_exists("skill_completed", daemon) )
+                call_other(daemon, "skill_completed", this_object(), skill);
+        }
+        if( entry > target ) entry = target;
+        advance_skill_step(skill, entry - skills[skill]);
+    }
+
+    /* 技能檔可能在升級時自己跳級（例如瘋虎功 91 級分歧、黃白之術 80 級），所以每次重新讀目前等級。 */
+    while( skills[skill] < target && guard++ < 250 )
+        advance_skill_step(skill, 1);
 }
 
 // abandon_skill()

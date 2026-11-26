@@ -10,10 +10,25 @@ def read(p):
 
 def test_hook_in_advance_skill():
     s = read('feature/char/skill.c')
-    body = s[s.index('varargs void advance_skill(string skill, int amount)\n{'):]
+    # 2026-11-26：實際升級寫在 advance_skill_step()；advance_skill() 跳多級時一級一級呼叫它。
+    body = s[s.index('private void advance_skill_step(string skill, int amount)\n{'):]
     body = body[:body.index('\n}\n')]
     assert 'old_level = skills[skill];' in body
     assert 'roll_attr_growth(skill, old_level, skills[skill]);' in body
+
+
+def test_advance_skill_jumps_one_level_at_a_time():
+    # 使用者定案（2026-11-26，甲案＋A）：巫師一次跳多級時逐級升，每級都通知技能檔；
+    # 從 0 級跳上去補發練成獎勵；玩家正常學成仍走 raise_skill_to()，不重複發。
+    s = read('feature/char/skill.c')
+    body = s[s.index('varargs void advance_skill(string skill, int amount)\n{'):]
+    body = body[:body.index('\n}\n')]
+    assert 'while( skills[skill] < target && guard++ < 250 )' in body
+    assert 'advance_skill_step(skill, 1);' in body
+    assert 'call_other(daemon, "skill_completed", this_object(), skill);' in body
+    raise_fn = s[s.index('private void raise_skill_to(string skill, int next)'):]
+    raise_fn = raise_fn[:raise_fn.index('\n}\n')]
+    assert 'advance_skill_step(skill, next - skills[skill]);' in raise_fn
 
 
 def test_growth_table_and_message():
