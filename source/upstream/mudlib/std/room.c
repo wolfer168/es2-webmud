@@ -17,6 +17,10 @@ private mapping doors;
 private mapping guards;
 private mapping spawn_list = ([]);
 
+// 讓其他程式判斷「這是房間」。不用 inherits(ROOM, ob)：那要 /std/room 母本正好載入中、
+// 且沒有重新載入過才準，母本被閒置清除後就會一律判成不是房間。
+int is_room() { return 1; }
+
 int
 receive_object(object ob, int from_inventory)
 {
